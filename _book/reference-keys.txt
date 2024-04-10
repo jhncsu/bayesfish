@@ -14,7 +14,6 @@ normal
 lognormal
 gamma
 exercises
-title-placeholder
 Model-fit
 introduction-1
 ModelFitting_Sim
@@ -61,3 +60,4 @@ Recruit-DIC
 exercises-7
 PopModels
 exercises-8
+title-placeholder

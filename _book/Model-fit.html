@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Model Fitting | A Bayesian Introduction to Fish Population Analysis</title>
+  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Model Fitting | A Bayesian Introduction to Fish Population Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Model Fitting | A Bayesian Introduction to Fish Population Analysis" />
+  
+  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+<meta name="author" content="Joseph E. Hightower" />
+
+
+<meta name="date" content="2024-04-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Distributions.html"/>
+<link rel="next" href="Abundance.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Joe Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> A Brief Introduction to R and RStudio</a></li>
+<li class="chapter" data-level="3" data-path="Distributions.html"><a href="Distributions.html"><i class="fa fa-check"></i><b>3</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Distributions.html"><a href="Distributions.html#Discrete"><i class="fa fa-check"></i><b>3.1</b> Discrete</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
+<li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
+<li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#poisson"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#negative-binomial"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Distributions.html"><a href="Distributions.html#Uniform"><i class="fa fa-check"></i><b>3.2.1</b> Uniform</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Distributions.html"><a href="Distributions.html#beta"><i class="fa fa-check"></i><b>3.2.2</b> Beta</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Distributions.html"><a href="Distributions.html#normal"><i class="fa fa-check"></i><b>3.2.3</b> Normal</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Distributions.html"><a href="Distributions.html#lognormal"><i class="fa fa-check"></i><b>3.2.4</b> Lognormal</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Distributions.html"><a href="Distributions.html#gamma"><i class="fa fa-check"></i><b>3.2.5</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Distributions.html"><a href="Distributions.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Model-fit.html"><a href="Model-fit.html"><i class="fa fa-check"></i><b>4</b> Model Fitting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-fit.html"><a href="Model-fit.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="Model-fit.html"><a href="Model-fit.html#ModelFitting_Sim"><i class="fa fa-check"></i><b>4.2</b> Using simulation</a></li>
+<li class="chapter" data-level="4.3" data-path="Model-fit.html"><a href="Model-fit.html#JAGS-model-fit"><i class="fa fa-check"></i><b>4.3</b> Bayesian approach</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.1</b> Debugging code</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.2</b> Judging convergence</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.3</b> What is a likelihood?</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.4</b> Deviance as a measure of model fit</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.5</b> Model checking</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.6</b> Model selection</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-fit.html"><a href="Model-fit.html#exercises-1"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Abundance.html"><a href="Abundance.html"><i class="fa fa-check"></i><b>5</b> Abundance</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
+<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#mark-recapture"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
+<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#binomial-mixture"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
+<li class="chapter" data-level="5.4" data-path="Abundance.html"><a href="Abundance.html#exercises-2"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Survival.html"><a href="Survival.html"><i class="fa fa-check"></i><b>6</b> Survival</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Survival.html"><a href="Survival.html#AgeComp"><i class="fa fa-check"></i><b>6.1</b> Age-composition</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="Survival.html"><a href="Survival.html#CC_Selectivity"><i class="fa fa-check"></i><b>6.1.1</b> Accounting For Gear Selectivity</a></li>
+<li class="chapter" data-level="6.1.2" data-path="Survival.html"><a href="Survival.html#Cohort"><i class="fa fa-check"></i><b>6.1.2</b> Cohort model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="Survival.html"><a href="Survival.html#TelemetryBased"><i class="fa fa-check"></i><b>6.2</b> Telemetry-based</a></li>
+<li class="chapter" data-level="6.3" data-path="Survival.html"><a href="Survival.html#BrownieSurvival"><i class="fa fa-check"></i><b>6.3</b> Tag-based</a></li>
+<li class="chapter" data-level="6.4" data-path="Survival.html"><a href="Survival.html#exercises-3"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a></li>
+<li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
+<li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
+<li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry estimates of F and M</a></li>
+<li class="chapter" data-level="7.5" data-path="Mortality.html"><a href="Mortality.html#exercises-4"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Growth.html"><a href="Growth.html"><i class="fa fa-check"></i><b>8</b> Growth</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Growth.html"><a href="Growth.html#vonBert"><i class="fa fa-check"></i><b>8.1</b> Growth in length</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Growth.html"><a href="Growth.html#Otolith"><i class="fa fa-check"></i><b>8.1.1</b> Age-length</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Growth.html"><a href="Growth.html#GrowthInc"><i class="fa fa-check"></i><b>8.1.2</b> Using tagging data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Growth.html"><a href="Growth.html#LnWgt"><i class="fa fa-check"></i><b>8.2</b> Growth in weight</a></li>
+<li class="chapter" data-level="8.3" data-path="Growth.html"><a href="Growth.html#exercises-5"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Trend.html"><a href="Trend.html"><i class="fa fa-check"></i><b>9</b> Abundance trends</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Trend.html"><a href="Trend.html#Linear"><i class="fa fa-check"></i><b>9.1</b> Linear model</a></li>
+<li class="chapter" data-level="9.2" data-path="Trend.html"><a href="Trend.html#ExpGr"><i class="fa fa-check"></i><b>9.2</b> Exponential growth model</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="Trend.html"><a href="Trend.html#Forecast"><i class="fa fa-check"></i><b>9.2.1</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="Trend.html"><a href="Trend.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Recruit.html"><a href="Recruit.html"><i class="fa fa-check"></i><b>10</b> Recruitment</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Recruit.html"><a href="Recruit.html#Recruit-Fit"><i class="fa fa-check"></i><b>10.1</b> Fitting a stock-recruitment curve</a></li>
+<li class="chapter" data-level="10.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>10.2</b> Does spawning stock size affect recruitment?</a></li>
+<li class="chapter" data-level="10.3" data-path="Recruit.html"><a href="Recruit.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="PopModels.html"><a href="PopModels.html#exercises-8"><i class="fa fa-check"></i><b>11.1</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Introduction to Fish Population Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Model-fit" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Model Fitting<a href="Model-fit.html#Model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="float">
+<img src="https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/45268/full/full/0/default.jpg" alt="Elliot 1897" />
+<div class="figcaption">Elliot 1897</div>
+</div>
+<div id="introduction-1" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction<a href="Model-fit.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>What is a model in a fisheries context? It typically means one or more equations that describe a biological process of interest. There are two good reasons for developing a model. A model that simulates a field study can be used for planning purposes, before field work is conducted. Such a model might be used to determine the number of fish to tag or the level of electrofishing effort, in order for the field work to produce a useful result. A model can also be used to test an analytical approach. For example, we could generate simulated data and see whether our analysis agrees with the known true value(s). The other main use of a model is to analyze data from field work. One example from Chapter <a href="R-intro.html#R-intro">2</a> is a two-sample mark-recapture study to estimate population size. Fish in the first sample are tagged, and the fraction of marked fish in the second sample provides the information needed to estimate population size. The model in that case is the equation for population size (N<sub>hat</sub>), along with some assumptions about sampling. The equation is based on the assumption that the marked fraction of the second sample should (on average) be the same as the marked fraction in the underlying population. This method also requires some other assumptions that are more practical in nature, to help ensure that our field methods approximate the underlying model structure. For example, we assume that tagged and untagged fish are well mixed. In practice, this means that tagging effort should be well distributed throughout the study area so that our recapture effort does not encounter pockets with too many or too few tagged fish. We also assume that tags are not shed and that there are no deaths due to tagging. The mark-recapture model assumes that we know how many fish are in the tagged subpopulation. Tag loss or tagging mortality would affect that number and result in a biased estimate.</p>
+</div>
+<div id="ModelFitting_Sim" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Using simulation<a href="Model-fit.html#ModelFitting_Sim" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The equation for a two-sample mark-recapture study provides a point estimate of population size, but we could consider an improved version of the model that would allow us to more fully characterize the study results. For example, we could assume that the number of marked fish in the second sample comes from a binomial distribution. That distributional assumption allows us to generate estimates of uncertainty as well as the point estimate. The key to this sort of extended model is to think about the process generating the field data and determine which statistical distribution is appropriate. Let’s start with a simulation then consider an alternative (Bayesian) approach.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="Model-fit.html#cb24-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb24-2"><a href="Model-fit.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="Model-fit.html#cb24-3" tabindex="-1"></a><span class="co"># Two-sample population estimate</span></span>
+<span id="cb24-4"><a href="Model-fit.html#cb24-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Arbitrary assumed population size</span></span>
+<span id="cb24-5"><a href="Model-fit.html#cb24-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
+<span id="cb24-6"><a href="Model-fit.html#cb24-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb24-7"><a href="Model-fit.html#cb24-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb24-8"><a href="Model-fit.html#cb24-8" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> n2 <span class="sc">*</span> p.true <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb24-9"><a href="Model-fit.html#cb24-9" tabindex="-1"></a>N.hat <span class="ot">&lt;-</span> n1<span class="sc">*</span>n2<span class="sc">/</span>m2 <span class="co"># Store estimate as variable N_hat</span></span></code></pre></div>
+<p>This example uses the same estimator as in Chapter <a href="R-intro.html#R-intro">2</a>. The two samples could be fixed values and could differ, but here we assume they are equal in size, based on the capture probability (p.true). The number of recaptures in the second sample equals the expected number based on the fraction of the population that is marked (p.true). Because n<sub>1</sub>, n<sub>2</sub>, and m<sub>2</sub> take on their expected values based on p.true, the estimate (N<sub>hat</sub>) equals the true value (see Environment window).</p>
+<p>Now, let’s extend the model by introducing some randomness (stochasticity) in the number of recaptures. We assume that recaptures are the successes in a binomial trial. The size of the binomial trial is n<sub>2</sub>. The probability of success equals p.true here but we calculate it as n<sub>1</sub>/N.true in case n<sub>1</sub> and n<sub>2</sub> were given other fixed values.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="Model-fit.html#cb25-1" tabindex="-1"></a><span class="co"># Extend model to allow for stochasticity</span></span>
+<span id="cb25-2"><a href="Model-fit.html#cb25-2" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb25-3"><a href="Model-fit.html#cb25-3" tabindex="-1"></a>m2.vec <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Reps, <span class="at">prob=</span>n1<span class="sc">/</span>N.true, <span class="at">size=</span>n2)</span>
+<span id="cb25-4"><a href="Model-fit.html#cb25-4" tabindex="-1"></a>N.hat <span class="ot">&lt;-</span> n1 <span class="sc">*</span> n2 <span class="sc">/</span> m2.vec</span>
+<span id="cb25-5"><a href="Model-fit.html#cb25-5" tabindex="-1"></a><span class="fu">hist</span>(m2.vec, <span class="at">xlab=</span><span class="st">&quot;Number of recaptures&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb25-6"><a href="Model-fit.html#cb25-6" tabindex="-1"></a><span class="fu">hist</span>(N.hat, <span class="at">xlab=</span><span class="st">&quot;Population estimate&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb25-7"><a href="Model-fit.html#cb25-7" tabindex="-1"></a><span class="fu">mean</span>(N.hat)</span>
+<span id="cb25-8"><a href="Model-fit.html#cb25-8" tabindex="-1"></a><span class="fu">quantile</span>(N.hat, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="co"># Empirical confidence bounds and median</span></span></code></pre></div>
+<p>The <code>rbinom()</code> function produces a vector of recaptures, simulating a mark-recapture study repeated Reps times. Using that vector in the equation for N<sub>hat</sub> now produces a vector of population estimates. Plotting those estimates shows us that estimates are generally close to the true value but tend to have a long tail to the right (overestimates N<sub>hat</sub> when a low value is drawn for m<sub>2</sub>). The mean is higher than the true value (due to the tail of extreme values) but the median should be very close to N.true. There are less biased modifications to the basic two-sample estimator but this version is more intuitive and sufficient for our purposes. Also, the point estimate is less important than characterizing the uncertainty. Here we obtain an empirical estimate of the 95% bounds using the <code>quantile()</code> function. We provide a vector of probabilities and the function returns the estimates at those points. The 0.025 and 0.975 points provide the empirical 95% bounds, and the 0.5 point is the median. When interpreting a field study of this sort, the confidence bounds and overall shape of the distribution should be given more emphasis than the point estimate (which reduces concern about any statistical bias of the estimator).</p>
+</div>
+<div id="JAGS-model-fit" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Bayesian approach<a href="Model-fit.html#JAGS-model-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Next, we compare this simulation result to a formal statistical method. We use the same binomial distribution to describe the process of obtaining recaptures. Our results will be similar, and hopefully the comparison will provide a clearer picture of how statistical methods work. Our use of simulation in the remainder of the book will be limited to generating “sample” data. Model fitting will be done using formal statistical methods that work well for simple or complex models.</p>
+<p>The two paradigms for statistical methods are frequentist and Bayesian. Frequentist methods are dominant in statistics courses. They are so named because the focus is on how frequently a result would be expected to be observed under the null hypothesis. For example, we might compare two groups that differ in mean size by 10 cm, and estimate that a difference of that magnitude occurs rarely (say two percent of the time) under the null hypothesis. That indication of frequency (2%) might lead us to reject the null hypothesis and to conclude that the difference is meaningful and not due to chance. Bayesian statistics differs from frequentist statistics in that it takes into account not only the new data but also what is known before the study is conducted <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>; <a href="#ref-doll.jacquemin_2018">Doll and Jacquemin 2018</a>)</span>. This “prior” information is described using a statistical distribution, such as a uniform or normal. For example, we might know from a pilot study that the tag reporting rate is between 0.2 and 0.6. We could conduct the Bayesian analysis using a uniform prior distribution over that range rather than the default range of 0-1 (which would indicate no prior information). This aspect of Bayesian analysis generates a good bit of controversy, and it is often unclear that valid prior information can be found and characterized objectively. We avoid that controversy in this book by using uninformative prior distributions (e.g., uniform 0-1 for probabilities) to the extent possible. Typically the results we obtain will be very similar to results of a frequentist statistical approach. If there are situations where an informative prior distribution can be justified <span class="citation">(e.g., <a href="#ref-doll.jacquemin_2018">Doll and Jacquemin 2018</a>)</span>, then it is straightforward to include that in the Bayesian analysis.</p>
+<p>It is reasonable to ask why a Bayesian approach would be recommended, if we are going to avoid informative prior distributions? The answer is a practical one – to take advantage of the “BUGS” family of software <span class="citation">(<a href="#ref-lunn.etal2000">D. J. Lunn et al. 2000</a>; <a href="#ref-lunn.etal2009">D. Lunn et al. 2009</a>)</span>. This open-source software began with BUGS, followed by WinBUGS (for Windows PCs) then OpenBUGS (intended for multiple operating systems). There are several newer sources of Bayesian software that use the same or very similar code. Here we use R packages for JAGS <span class="citation">(<a href="#ref-plummer2003">Plummer 2003</a>)</span>, a popular and well-supported version. The code should transfer with little or no modification to other BUGS-family software versions. The code in the remainder of the book will generally follow the approach demonstrated by <span class="citation">Kéry (<a href="#ref-kéry_2010">2010</a>)</span> and <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span>, in that R simulation code will be used to generate sample data and JAGS Bayesian code will be used to fit the model.</p>
+<p>The following code provides for a Bayesian model fit to the mark-recapture data:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="Model-fit.html#cb26-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb26-2"><a href="Model-fit.html#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="Model-fit.html#cb26-3" tabindex="-1"></a><span class="co"># Arbitrary &#39;observed&#39; values for analysis</span></span>
+<span id="cb26-4"><a href="Model-fit.html#cb26-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Population size</span></span>
+<span id="cb26-5"><a href="Model-fit.html#cb26-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
+<span id="cb26-6"><a href="Model-fit.html#cb26-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb26-7"><a href="Model-fit.html#cb26-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb26-8"><a href="Model-fit.html#cb26-8" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> n2 <span class="sc">*</span> p.true <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb26-9"><a href="Model-fit.html#cb26-9" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="Model-fit.html#cb26-10" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb26-11"><a href="Model-fit.html#cb26-11" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb26-12"><a href="Model-fit.html#cb26-12" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb26-13"><a href="Model-fit.html#cb26-13" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="Model-fit.html#cb26-14" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb26-15"><a href="Model-fit.html#cb26-15" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;TwoSampleCR.txt&quot;</span>)</span>
+<span id="cb26-16"><a href="Model-fit.html#cb26-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb26-17"><a href="Model-fit.html#cb26-17" tabindex="-1"></a><span class="st">    model {</span></span>
+<span id="cb26-18"><a href="Model-fit.html#cb26-18" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="Model-fit.html#cb26-19" tabindex="-1"></a><span class="st">  # Prior</span></span>
+<span id="cb26-20"><a href="Model-fit.html#cb26-20" tabindex="-1"></a><span class="st">    N.hat ~ dlnorm(0, 1E-6) # Uninformative prior (N.hat&gt;0)</span></span>
+<span id="cb26-21"><a href="Model-fit.html#cb26-21" tabindex="-1"></a><span class="st">    MarkedFraction &lt;- n1/N.hat</span></span>
+<span id="cb26-22"><a href="Model-fit.html#cb26-22" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="Model-fit.html#cb26-23" tabindex="-1"></a><span class="st">  # Likelihood</span></span>
+<span id="cb26-24"><a href="Model-fit.html#cb26-24" tabindex="-1"></a><span class="st">    # Binomial distribution for observed recaptures</span></span>
+<span id="cb26-25"><a href="Model-fit.html#cb26-25" tabindex="-1"></a><span class="st">    m2 ~ dbin(MarkedFraction, n2)</span></span>
+<span id="cb26-26"><a href="Model-fit.html#cb26-26" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb26-27"><a href="Model-fit.html#cb26-27" tabindex="-1"></a></span>
+<span id="cb26-28"><a href="Model-fit.html#cb26-28" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-29"><a href="Model-fit.html#cb26-29" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb26-30"><a href="Model-fit.html#cb26-30" tabindex="-1"></a></span>
+<span id="cb26-31"><a href="Model-fit.html#cb26-31" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb26-32"><a href="Model-fit.html#cb26-32" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>)</span>
+<span id="cb26-33"><a href="Model-fit.html#cb26-33" tabindex="-1"></a></span>
+<span id="cb26-34"><a href="Model-fit.html#cb26-34" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb26-35"><a href="Model-fit.html#cb26-35" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">N.hat=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="fu">max</span>(n1,n2), <span class="at">max=</span><span class="dv">20000</span>))}</span>
+<span id="cb26-36"><a href="Model-fit.html#cb26-36" tabindex="-1"></a></span>
+<span id="cb26-37"><a href="Model-fit.html#cb26-37" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;TwoSampleCR.txt&#39;</span></span>
+<span id="cb26-38"><a href="Model-fit.html#cb26-38" tabindex="-1"></a></span>
+<span id="cb26-39"><a href="Model-fit.html#cb26-39" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb26-40"><a href="Model-fit.html#cb26-40" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;N.hat&quot;</span>, <span class="st">&quot;MarkedFraction&quot;</span>)</span>
+<span id="cb26-41"><a href="Model-fit.html#cb26-41" tabindex="-1"></a></span>
+<span id="cb26-42"><a href="Model-fit.html#cb26-42" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb26-43"><a href="Model-fit.html#cb26-43" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, <span class="at">inits=</span>jags.inits, jags.params,</span>
+<span id="cb26-44"><a href="Model-fit.html#cb26-44" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb26-45"><a href="Model-fit.html#cb26-45" tabindex="-1"></a>                model.file)</span>
+<span id="cb26-46"><a href="Model-fit.html#cb26-46" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb26-47"><a href="Model-fit.html#cb26-47" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>The first section of code sets up the experiment. The “observed” values for n<sub>1</sub>, n<sub>2</sub> and m<sub>2</sub> could be replaced by real data from a field study; in that case, N would be unknown.</p>
+<p>Before the first time of running JAGS code, you will need to download and install <a href="https://sourceforge.net/projects/mcmc-jags/files/">JAGS</a>. Next, use RStudio to install the packages for running JAGS. There are several options; this book uses <strong>rjags</strong> <span class="citation">(<a href="#ref-R-rjags"><strong>R-rjags?</strong></a>)</span> and <strong>R2jags</strong> <span class="citation">(<a href="#ref-R-R2jags"><strong>R-R2jags?</strong></a>)</span>. Both of these steps are done only once. Then each time that you want to access JAGS from R, you load the two packages using the <code>library()</code> function.</p>
+<p>The <code>cat()</code> function concatenates (merges together) the lines of JAGS code, which are written out as a text file using the <code>sink()</code> function. The name of the external file is arbitrary but just needs to match the model.file code further below. It can be helpful to use an informative name for the text file rather than something generic that might get overwritten or be hard to locate at a later date. The JAGS code can be thought of as consisting of two main parts: prior information and analysis of the new data. These two parts can come in any order but it seems logical to put the prior information first. In this case, our prior distribution is an uninformative lognormal <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span> for the population estimate N.hat. This ensures that the population estimate cannot be negative. The analysis of new data uses the likelihood (see Section <a href="Model-fit.html#Likelihood">4.3.3</a>) and is calculated in the final line of JAGS code. The observed number of recaptures is assumed to be binomally distributed. The parameter N.hat is used to estimate the fraction of the population that is marked, which is the probability for the binomial function <code>dbin()</code>.</p>
+<p>The next few lines of R code provide settings for the JAGS analysis (data to pass in, initial values for parameters, file name for the JAGS code, parameters to return). JAGS is sometimes tolerant of a wide range of initial values, but in this case, we need to provide a large enough initial value to avoid a run-time JAGS error. Population size must be at least as large (and likely much larger than) the sizes of the two samples, so for simplicity we use a broad uniform prior distribution ranging from <code>max(n1,n2)</code> to an arbitrarily large value (20,000). Parameters (true model parameters and functions of those parameters) for which we want JAGS to monitor and return results are listed in jags.params. The function call to <code>jags()</code> links to the data, initial values, etc., and provides some settings for the estimation process.</p>
+<p>BUGS software uses an iterative method of parameter estimation called Markov Chain Monte Carlo or MCMC <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>. The MCMC method produces a sequence of autocorrelated estimates. Each sequence or chain uses a different stream of pseudo-random numbers, so having multiple independent chains is necessary for judging convergence. Three chains is a good practical choice. Thinning (e.g., n.thin=10 to retain only every tenth MCMC result) is sometimes done to reduce the autocorrelation, but is not generally necessary <span class="citation">(<a href="#ref-link.eaton2012">Link and Eaton 2012</a>)</span> and is not done here. The number of MCMC iterations is arbitrary but it is better to err on the side of having too many (and can provide a valuable opportunity to stretch legs or get coffee). R returns a measure of convergence (Rhat) that can be useful in deciding if a larger number of iterations is needed. Rhat values less than 1.05 can indicate acceptable convergence <span class="citation">(<a href="#ref-lunn.etal2012">D. Lunn et al. 2012</a>)</span>, with values closer to 1 being preferred. More details about judging convergence are in Section <a href="Model-fit.html#Convergence">4.3.2</a>. The final MCMC setting is for the “burn-in” phase, where initial values are discarded so that the retained values are considered to be unaffected by the initial values. The default if n.burnin is not specified is to discard half the total number of updates. The best way to develop experience and intuition about MCMC settings (and Bayesian analysis in general) is to run and re-run code using different settings. For example, are the results different if n.iter is set to 10000?</p>
+<p>Results for this case are contained in the jagsfit object, which can be printed to the Console and viewed as plots. Summary statistics are produced for the two monitored parameters and deviance (See Section <a href="Model-fit.html#Deviance">4.3.4</a>), which is a measure of fit. Convergence was very good based on estimated Rhat values less than 1.01. The 95% Bayesian credible interval (comparable to a frequentist confidence interval) from one run was 277 to 670, with a median of 410 and mean of 425. Your results will differ slightly because of the pseudo-randomness of the MCMC process. The credible interval was not too different from the estimate obtained through simulation (three simulation runs produced 278-711, 278-640, and 278-640). (The upper bound estimates of 640 and 711 occur with ten and nine recaptures, respectively.)</p>
+<p>More information about Nhat can be obtained by plotting values from the jagsfit object:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="Model-fit.html#cb27-1" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>N.hat, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Population estimates&quot;</span>)</span></code></pre></div>
+<p>The jagsfit object is a data frame that can be inspected in the Environment window. Note that sims.list arrays contain 3000 elements, which is the combined length of 1000 retained values (2000-n.burnin) from each of three chains. (When entering a jagsfit object in the Source window or Console, typing $ after each level of the object will bring up an RStudio prompt for the next choice.)</p>
+<p>The model results include pD, which is an estimate of the number of effective parameters in the model. In simple models, we can often count the number of nominal parameters, but the number of effective parameters may be less; for example, parameters may be correlated or constrained by an informative prior distribution <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>. JAGS uses numerical methods to estimate pD. For this model, we would expect pD to be close to 1 for the estimate of N.hat; MarkedFraction is a calculated value and not a model parameter.</p>
+<p>JAGS also provides an estimate of the Deviance Information Criterion (DIC), which is a relative measure of how well a model fits the data <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>; <a href="#ref-lunn.etal2009">D. Lunn et al. 2009</a>)</span>. It is the Bayesian analog of the Akaike’s Information Criterion (AIC) that is widely used in a frequentist setting to compare alternative models. Like the AIC, the DIC results in a trade-off between model fit (likelihood) and complexity (number of parameters) <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>. The DIC score is calculated using a measure of fit (deviance at the mean of the posterior distribution) and a measure of model complexity (pD); lower values are better when comparing alternative models. DIC scores should be interpreted with caution because of the difficulty in estimating pD for some models <span class="citation">(<a href="#ref-lunn.etal2009">D. Lunn et al. 2009</a>)</span>.</p>
+<p>It is worth noting that this model may also be fit by using MarkedFraction as the model parameter. It is easy to specify the uninformative prior distribution (and initial values) in this case, as MarkedFraction is a proportion between 0 and 1. Now N.hat is a calculated value. One major advantage of Bayesian software is that we automatically get full information about parameters that are calculated functions of model parameters. In this case, the calculated value (N.hat) is of primary interest, rather than the actual model parameter MarkedFraction. Results for Nhat characterize its posterior distribution, which takes into account the prior information (none here) and the new data.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="Model-fit.html#cb28-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb28-2"><a href="Model-fit.html#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="Model-fit.html#cb28-3" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb28-4"><a href="Model-fit.html#cb28-4" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb28-5"><a href="Model-fit.html#cb28-5" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb28-6"><a href="Model-fit.html#cb28-6" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="Model-fit.html#cb28-7" tabindex="-1"></a><span class="co"># Arbitrary &#39;observed&#39; values for analysis</span></span>
+<span id="cb28-8"><a href="Model-fit.html#cb28-8" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Population size</span></span>
+<span id="cb28-9"><a href="Model-fit.html#cb28-9" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
+<span id="cb28-10"><a href="Model-fit.html#cb28-10" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb28-11"><a href="Model-fit.html#cb28-11" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb28-12"><a href="Model-fit.html#cb28-12" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> n2 <span class="sc">*</span> p.true <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb28-13"><a href="Model-fit.html#cb28-13" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="Model-fit.html#cb28-14" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb28-15"><a href="Model-fit.html#cb28-15" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;TwoSampleCR.txt&quot;</span>)</span>
+<span id="cb28-16"><a href="Model-fit.html#cb28-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb28-17"><a href="Model-fit.html#cb28-17" tabindex="-1"></a><span class="st">    model {</span></span>
+<span id="cb28-18"><a href="Model-fit.html#cb28-18" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="Model-fit.html#cb28-19" tabindex="-1"></a><span class="st">    # Priors</span></span>
+<span id="cb28-20"><a href="Model-fit.html#cb28-20" tabindex="-1"></a><span class="st">    MarkedFraction ~ dunif(0, 1)</span></span>
+<span id="cb28-21"><a href="Model-fit.html#cb28-21" tabindex="-1"></a></span>
+<span id="cb28-22"><a href="Model-fit.html#cb28-22" tabindex="-1"></a><span class="st">    # Calculated value</span></span>
+<span id="cb28-23"><a href="Model-fit.html#cb28-23" tabindex="-1"></a><span class="st">    N.hat &lt;- n1 /MarkedFraction</span></span>
+<span id="cb28-24"><a href="Model-fit.html#cb28-24" tabindex="-1"></a></span>
+<span id="cb28-25"><a href="Model-fit.html#cb28-25" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb28-26"><a href="Model-fit.html#cb28-26" tabindex="-1"></a><span class="st">    # Binomial distribution for observed recaptures</span></span>
+<span id="cb28-27"><a href="Model-fit.html#cb28-27" tabindex="-1"></a><span class="st">    m2 ~ dbin(MarkedFraction, n2)</span></span>
+<span id="cb28-28"><a href="Model-fit.html#cb28-28" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb28-29"><a href="Model-fit.html#cb28-29" tabindex="-1"></a></span>
+<span id="cb28-30"><a href="Model-fit.html#cb28-30" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-31"><a href="Model-fit.html#cb28-31" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb28-32"><a href="Model-fit.html#cb28-32" tabindex="-1"></a></span>
+<span id="cb28-33"><a href="Model-fit.html#cb28-33" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb28-34"><a href="Model-fit.html#cb28-34" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>)</span>
+<span id="cb28-35"><a href="Model-fit.html#cb28-35" tabindex="-1"></a></span>
+<span id="cb28-36"><a href="Model-fit.html#cb28-36" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb28-37"><a href="Model-fit.html#cb28-37" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">MarkedFraction=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb28-38"><a href="Model-fit.html#cb28-38" tabindex="-1"></a></span>
+<span id="cb28-39"><a href="Model-fit.html#cb28-39" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;TwoSampleCR.txt&#39;</span></span>
+<span id="cb28-40"><a href="Model-fit.html#cb28-40" tabindex="-1"></a></span>
+<span id="cb28-41"><a href="Model-fit.html#cb28-41" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb28-42"><a href="Model-fit.html#cb28-42" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;N.hat&quot;</span>, <span class="st">&quot;MarkedFraction&quot;</span>)</span>
+<span id="cb28-43"><a href="Model-fit.html#cb28-43" tabindex="-1"></a></span>
+<span id="cb28-44"><a href="Model-fit.html#cb28-44" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb28-45"><a href="Model-fit.html#cb28-45" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, <span class="at">inits=</span>jags.inits, jags.params,</span>
+<span id="cb28-46"><a href="Model-fit.html#cb28-46" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb28-47"><a href="Model-fit.html#cb28-47" tabindex="-1"></a>                model.file)</span>
+<span id="cb28-48"><a href="Model-fit.html#cb28-48" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb28-49"><a href="Model-fit.html#cb28-49" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>Another advantage of this way of parameterizing the model is that we avoid specifying an arbitrary upper bound for initial values for N.hat. Results of the two approaches appear to be comparable.</p>
+<div id="Debug" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Debugging code<a href="Model-fit.html#Debug" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Anyone who develops new code for fisheries data analysis will wrestle with the inevitable coding errors, not only in JAGS but also the R code that surrounds it. Let’s begin by looking at a few examples of R coding errors:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="Model-fit.html#cb29-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb29-2"><a href="Model-fit.html#cb29-2" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="Model-fit.html#cb29-3" tabindex="-1"></a><span class="co">#1</span></span>
+<span id="cb29-4"><a href="Model-fit.html#cb29-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb29-5"><a href="Model-fit.html#cb29-5" tabindex="-1"></a><span class="fu">lg</span>(x) <span class="co"># Incorrect function name</span></span>
+<span id="cb29-6"><a href="Model-fit.html#cb29-6" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="Model-fit.html#cb29-7" tabindex="-1"></a><span class="co">#2</span></span>
+<span id="cb29-8"><a href="Model-fit.html#cb29-8" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb29-9"><a href="Model-fit.html#cb29-9" tabindex="-1"></a>z <span class="ot">&lt;-</span> x<span class="sc">+</span>y <span class="co"># Typo (should have been x*y)</span></span>
+<span id="cb29-10"><a href="Model-fit.html#cb29-10" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="Model-fit.html#cb29-11" tabindex="-1"></a><span class="co">#3</span></span>
+<span id="cb29-12"><a href="Model-fit.html#cb29-12" tabindex="-1"></a>RandLength <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>) <span class="co"># Correct but poorly documented</span></span>
+<span id="cb29-13"><a href="Model-fit.html#cb29-13" tabindex="-1"></a>RandLength <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">2</span>) <span class="co"># Sample size omitted</span></span>
+<span id="cb29-14"><a href="Model-fit.html#cb29-14" tabindex="-1"></a>RandLength <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>,<span class="dv">10</span>) <span class="co"># sd omitted so default used (incorrectly)</span></span>
+<span id="cb29-15"><a href="Model-fit.html#cb29-15" tabindex="-1"></a>RandLength <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="dv">2</span>) <span class="co"># Correct and fully documented</span></span>
+<span id="cb29-16"><a href="Model-fit.html#cb29-16" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="Model-fit.html#cb29-17" tabindex="-1"></a><span class="co">#4</span></span>
+<span id="cb29-18"><a href="Model-fit.html#cb29-18" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="dv">5</span>)</span>
+<span id="cb29-19"><a href="Model-fit.html#cb29-19" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">mean=</span><span class="dv">20</span>, <span class="at">sd=</span><span class="dv">10</span>)</span>
+<span id="cb29-20"><a href="Model-fit.html#cb29-20" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> x2<span class="sc">+</span>x3</span>
+<span id="cb29-21"><a href="Model-fit.html#cb29-21" tabindex="-1"></a><span class="fu">mean</span>(x4)</span>
+<span id="cb29-22"><a href="Model-fit.html#cb29-22" tabindex="-1"></a><span class="fu">var</span>(x4)</span></code></pre></div>
+<p>The first example is easy to resolve, as we get a helpful error message in the Console. Rechecking the code, or doing an internet search for the correct function name, are approaches for addressing this type of error. The second example, if our intent was to assign x*y to z, is much more dangerous. The code will run but will give the wrong answer because of a typing error. It is always essential to review new code, line by line. Having a colleague (fresh set of eyes) check code can also be productive. R code can often be executed line by line, and checking calculated values in the Environment window can help in finding this sort of logic error, at least for simpler analyses.</p>
+<p>In the third example, we are simulating a random length observation, drawn from a normal distribution with a mean of 10 and standard deviation of 2. The first version of the code works correctly but is poorly documented. The second example runs but does not produce the intended result. We omitted the first argument and did not include parameter names, so R assumes incorrectly that the first argument is the sample size and the second one is the mean. The third argument is missing so R uses the default value (sd=1), which in this case is incorrect. Even if we wanted to use an sd of 1, it is better to specify it for clarity. RStudio is helpful in working with functions in that it displays the function arguments and any defaults, once the function name and “(” have been entered. The fourth version works as intended, and makes clear the values that are being used.</p>
+<p>The fourth example is coded correctly but illustrates another way of checking code. Simulation makes it easy to use a large sample size, to check sample statistics for x4. We verify that the mean is close to the expected value (10+20). The variance of a sum equals the sum of the variances so we confirm that the sample variance is close to the expected value (25+100).</p>
+<p>How many errors do you find in the following section of code? Review line by line and correct errors before executing the code. Once the code is working correctly, confirm that the sample median is very close to the expected population size:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="Model-fit.html#cb30-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb30-2"><a href="Model-fit.html#cb30-2" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="Model-fit.html#cb30-3" tabindex="-1"></a><span class="co"># Two-sample population estimate</span></span>
+<span id="cb30-4"><a href="Model-fit.html#cb30-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Arbitrary assumed population size</span></span>
+<span id="cb30-5"><a href="Model-fit.html#cb30-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span><span class="sc">-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
+<span id="cb30-6"><a href="Model-fit.html#cb30-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true X p.true <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb30-7"><a href="Model-fit.html#cb30-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb30-8"><a href="Model-fit.html#cb30-8" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="Model-fit.html#cb30-9" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb30-10"><a href="Model-fit.html#cb30-10" tabindex="-1"></a>m2.vec <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Rep, <span class="at">prob=</span>n1<span class="sc">/</span>N.true, <span class="at">size=</span>n2)</span>
+<span id="cb30-11"><a href="Model-fit.html#cb30-11" tabindex="-1"></a>N.hat <span class="ot">&lt;-</span> n1 <span class="sc">*</span> n2 <span class="sc">/</span> m2.vec</span>
+<span id="cb30-12"><a href="Model-fit.html#cb30-12" tabindex="-1"></a><span class="fu">hist</span>(N.hat, <span class="at">xlab=</span><span class="st">&quot;Population estimate&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb30-13"><a href="Model-fit.html#cb30-13" tabindex="-1"></a><span class="fu">mean</span>(Nhat)</span>
+<span id="cb30-14"><a href="Model-fit.html#cb30-14" tabindex="-1"></a><span class="fu">quantile</span>(N.hat, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.5</span>), <span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="er">)</span>  <span class="co"># Sample median</span></span></code></pre></div>
+<p>Debugging JAGS code can be more challenging. There is no option for executing single lines of code as is possible with R. It is usually a matter of fixing one error at a time until the code runs, then checking and testing the code to be confident that it is working correctly. Consider the following (correctly coded) example for a tagging study to estimate the exploitation rate (fraction of the population harvested). Our simulation generates the single observation for the number of tags returned (e.g., over a year). This observation is drawn from a binomial distribution and we use the same JAGS function (<code>dbin()</code>) as in the population estimate examples:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="Model-fit.html#cb31-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb31-2"><a href="Model-fit.html#cb31-2" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="Model-fit.html#cb31-3" tabindex="-1"></a><span class="co"># Arbitrary &#39;observed&#39; values for analysis</span></span>
+<span id="cb31-4"><a href="Model-fit.html#cb31-4" tabindex="-1"></a>N.tagged <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb31-5"><a href="Model-fit.html#cb31-5" tabindex="-1"></a>Exp.rate <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb31-6"><a href="Model-fit.html#cb31-6" tabindex="-1"></a>Tags.returned <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">prob=</span>Exp.rate, <span class="at">size=</span>N.tagged)</span>
+<span id="cb31-7"><a href="Model-fit.html#cb31-7" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="Model-fit.html#cb31-8" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb31-9"><a href="Model-fit.html#cb31-9" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb31-10"><a href="Model-fit.html#cb31-10" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb31-11"><a href="Model-fit.html#cb31-11" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="Model-fit.html#cb31-12" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb31-13"><a href="Model-fit.html#cb31-13" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;ExpRate.txt&quot;</span>)</span>
+<span id="cb31-14"><a href="Model-fit.html#cb31-14" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb31-15"><a href="Model-fit.html#cb31-15" tabindex="-1"></a><span class="st">    model {</span></span>
+<span id="cb31-16"><a href="Model-fit.html#cb31-16" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="Model-fit.html#cb31-17" tabindex="-1"></a><span class="st">    # Priors</span></span>
+<span id="cb31-18"><a href="Model-fit.html#cb31-18" tabindex="-1"></a><span class="st">    Exp.rate.est ~ dunif(0,1)</span></span>
+<span id="cb31-19"><a href="Model-fit.html#cb31-19" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="Model-fit.html#cb31-20" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb31-21"><a href="Model-fit.html#cb31-21" tabindex="-1"></a><span class="st">    Tags.returned ~ dbin(Exp.rate.est, N.tagged)</span></span>
+<span id="cb31-22"><a href="Model-fit.html#cb31-22" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb31-23"><a href="Model-fit.html#cb31-23" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb31-24"><a href="Model-fit.html#cb31-24" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb31-25"><a href="Model-fit.html#cb31-25" tabindex="-1"></a></span>
+<span id="cb31-26"><a href="Model-fit.html#cb31-26" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb31-27"><a href="Model-fit.html#cb31-27" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;N.tagged&quot;</span>, <span class="st">&quot;Tags.returned&quot;</span>)</span>
+<span id="cb31-28"><a href="Model-fit.html#cb31-28" tabindex="-1"></a></span>
+<span id="cb31-29"><a href="Model-fit.html#cb31-29" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb31-30"><a href="Model-fit.html#cb31-30" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">Exp.rate.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb31-31"><a href="Model-fit.html#cb31-31" tabindex="-1"></a></span>
+<span id="cb31-32"><a href="Model-fit.html#cb31-32" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;ExpRate.txt&#39;</span></span>
+<span id="cb31-33"><a href="Model-fit.html#cb31-33" tabindex="-1"></a></span>
+<span id="cb31-34"><a href="Model-fit.html#cb31-34" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb31-35"><a href="Model-fit.html#cb31-35" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Exp.rate.est&quot;</span>)</span>
+<span id="cb31-36"><a href="Model-fit.html#cb31-36" tabindex="-1"></a></span>
+<span id="cb31-37"><a href="Model-fit.html#cb31-37" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb31-38"><a href="Model-fit.html#cb31-38" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, <span class="at">inits=</span>jags.inits, jags.params,</span>
+<span id="cb31-39"><a href="Model-fit.html#cb31-39" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb31-40"><a href="Model-fit.html#cb31-40" tabindex="-1"></a>                model.file)</span>
+<span id="cb31-41"><a href="Model-fit.html#cb31-41" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb31-42"><a href="Model-fit.html#cb31-42" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>Begin by running the code as is, then try substituting each of the following (incorrect) lines, one at a time.</p>
+<ul>
+<li><code>ExpRate.est ~ dunif(0,1)</code></li>
+<li><code>Exp.rate.est ~ unif(0,1)</code></li>
+<li><code>Tags.returned ~ dbin(Exp.rate.est)</code></li>
+</ul>
+<p>The first error message points to line 8. JAGS correctly reports that the variable Exp.rate.est has not been previously defined. This is correct, but the error is actually on line 5, where the intended parameter name (Exp.rate.est) was mistyped. The second error is easy to diagnose because it specifies that the “unif” distribution on line 5 is unknown. The third error indicates that a discrete-valued parameter for function <code>dbin()</code> is missing. This makes sense because the size of the experiment (N.tagged) was omitted.</p>
+<p>As with R code, the first step is always to review the code line by line. Fitting a model to simulated data is always useful (even if there are field observations) because the correct answer is known. Another strategy is to start with the simplest possible analysis, then add complexity one piece at a time. For example, <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> discuss Cormack-Jolly-Seber models for estimating survival, beginning with constant parameters then gradually adding more complexity (e.g., models that allow for time and individual variation).</p>
+<p>Skill in debugging comes with experience. It is hoped that the above strategies will be useful in working through the inevitable coding errors.</p>
+</div>
+<div id="Convergence" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Judging convergence<a href="Model-fit.html#Convergence" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The MCMC process is iterative so it is important to ensure that the number of updates (iterations) is sufficient to achieve convergence. One practical approach is to fit the model with some arbitrary (but reasonably large) number of updates, then refit the model using larger numbers of updates. Results that are stable suggest that convergence has been achieved. The convergence statistic Rhat <span class="citation">(<a href="#ref-gelman.rubin1992">Gelman and Rubin 1992</a>; <a href="#ref-brooks.gelman1998">Brooks and Gelman 1998</a>; <a href="#ref-lunn.etal2012">D. Lunn et al. 2012</a>)</span> is also generally reliable as a measure of convergence. It compares between- and within-chain variance; their ratio should be close to 1 once chains have converged. Especially for models for which convergence appears to be slow, it can also be helpful to view “trace” plots that show how estimates change as updating occurs <span class="citation">(<a href="#ref-kéry_2010">Kéry 2010</a>)</span>. Add the following lines of code to the two-sample mark-recapture model used in Section <a href="Model-fit.html#JAGS-model-fit">4.3</a>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="Model-fit.html#cb32-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>)) <span class="co"># Multi-frame plot, 3 rows, 1 col</span></span>
+<span id="cb32-2"><a href="Model-fit.html#cb32-2" tabindex="-1"></a><span class="fu">matplot</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">1</span>], <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Marked fraction&quot;</span>)</span>
+<span id="cb32-3"><a href="Model-fit.html#cb32-3" tabindex="-1"></a><span class="fu">matplot</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">2</span>], <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;N hat&quot;</span>)</span>
+<span id="cb32-4"><a href="Model-fit.html#cb32-4" tabindex="-1"></a><span class="fu">matplot</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">3</span>], <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Deviance&quot;</span>)</span>
+<span id="cb32-5"><a href="Model-fit.html#cb32-5" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="Model-fit.html#cb32-6" tabindex="-1"></a>jagsfit.mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(jagsfit) <span class="co"># Creates an MCMC object for plotting</span></span>
+<span id="cb32-7"><a href="Model-fit.html#cb32-7" tabindex="-1"></a><span class="fu">plot</span>(jagsfit.mcmc) <span class="co"># Trace and density plots</span></span></code></pre></div>
+<p>The first approach follows an example from <span class="citation">Kéry (<a href="#ref-kéry_2010">2010</a>)</span>. We use the <code>par()</code> graphical function to set up a multi-frame plot (by row), with three rows and one column. This results in a compact set of three plots within a single RStudio plot window. The next three lines use the built-in <code>matplot()</code> function to plot columns of a matrix as overlaid lines. The Environment window can be viewed to see the structure of the sims.array, a matrix of type num[1:1000, 1:3, 1:3]. The first dimension is for the 1000 retained updates, the second is for chains 1-3, and the third is for the variable (MarkedFraction, Nhat, Deviance). Omitting the ranges for updates and chains results in a plot containing all updates, with a different colored line for each chain. We could also specify a subset of the range to see the initial pattern (e.g., …sims.array[1:100,,1], …). For this simple model, the estimates converge almost immediately so there is no obvious transitory pattern. Note that there is a lot of wasted space and it may be necessary to increase the size of the Plots window to see the plots adequately.</p>
+<p>The next two of code provide a more automated way of generating trace and density plots, using methods contained in the <strong>coda</strong> <span class="citation">(<a href="#ref-R-coda"><strong>R-coda?</strong></a>)</span> package (loaded automatically by rjags). The <code>as.mcmc()</code> function converts the original output object (jagsfit) into an MCMC object. The plot function here produces a nicely formatted set of trace and density plots that are very helpful in confirming convergence. If convergence has been achieved, the trace plots should appear to be a “grassy lawn” or “fuzzy caterpillar” without any trend, with overlapping (fully mixed) chains. Density plots show the estimated posterior distributions, and given convergence, should have an essentially identical pattern for the three chains. Convergence occurs very quickly here but we will see in later chapters with more complex models that convergence can sometimes be more difficult to achieve.</p>
+</div>
+<div id="Likelihood" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> What is a likelihood?<a href="Model-fit.html#Likelihood" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As mentioned above, Bayesian software uses the likelihood and prior information to estimate the posterior distribution. But what exactly is a likelihood? It is an expression or function that is used to estimate the <em>likelihood</em> of obtaining the sample observation(s), given some specific value for each model parameter. As an example, let’s return to the second version of the mark-recapture analysis, with the single model parameter MarkedFracton (the fraction of the population that is marked). We use the binomial distribution to model the number of recaptures. The likelihood function for the binomial is the same as the probability distribution: <span class="math inline">\(L(p | n, k) = {n \choose k} p^{k} (1-p)^{n-k}\)</span>, except that here, we estimate the likelihood of a certain value for p, given k successes in a trial of size n. We can look at likelihoods using the same parameter values as in the simulation:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="Model-fit.html#cb33-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb33-2"><a href="Model-fit.html#cb33-2" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="Model-fit.html#cb33-3" tabindex="-1"></a><span class="co"># Arbitrary &#39;observed&#39; values for analysis</span></span>
+<span id="cb33-4"><a href="Model-fit.html#cb33-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Population size</span></span>
+<span id="cb33-5"><a href="Model-fit.html#cb33-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
+<span id="cb33-6"><a href="Model-fit.html#cb33-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb33-7"><a href="Model-fit.html#cb33-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb33-8"><a href="Model-fit.html#cb33-8" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> n2 <span class="sc">*</span> p.true <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb33-9"><a href="Model-fit.html#cb33-9" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="Model-fit.html#cb33-10" tabindex="-1"></a><span class="co"># Calculate likelihood for specific value of p</span></span>
+<span id="cb33-11"><a href="Model-fit.html#cb33-11" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb33-12"><a href="Model-fit.html#cb33-12" tabindex="-1"></a><span class="fu">choose</span>(n2,m2) <span class="sc">*</span> p<span class="sc">^</span>m2 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n2<span class="sc">-</span>m2) <span class="co"># Likelihood for single value of p</span></span>
+<span id="cb33-13"><a href="Model-fit.html#cb33-13" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="Model-fit.html#cb33-14" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="at">x=</span>m2, <span class="at">size=</span>n2, <span class="at">prob=</span>p) <span class="co"># x successes, built-in function to obtain same result</span></span>
+<span id="cb33-15"><a href="Model-fit.html#cb33-15" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="Model-fit.html#cb33-16" tabindex="-1"></a><span class="co"># Create vector of possible p values, determine likelihood for each</span></span>
+<span id="cb33-17"><a href="Model-fit.html#cb33-17" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="fl">0.02</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.02</span>)</span>
+<span id="cb33-18"><a href="Model-fit.html#cb33-18" tabindex="-1"></a>l.vec <span class="ot">&lt;-</span> <span class="fu">choose</span>(n2,m2) <span class="sc">*</span> p<span class="sc">^</span>m2 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n2<span class="sc">-</span>m2)</span>
+<span id="cb33-19"><a href="Model-fit.html#cb33-19" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># Reset plot frame</span></span>
+<span id="cb33-20"><a href="Model-fit.html#cb33-20" tabindex="-1"></a><span class="fu">plot</span>(p, l.vec, <span class="at">ylab=</span><span class="st">&quot;Likelihood&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb33-21"><a href="Model-fit.html#cb33-21" tabindex="-1"></a></span>
+<span id="cb33-22"><a href="Model-fit.html#cb33-22" tabindex="-1"></a><span class="co"># Examine change in likelihood at higher number of recaptures</span></span>
+<span id="cb33-23"><a href="Model-fit.html#cb33-23" tabindex="-1"></a>new.m2 <span class="ot">&lt;-</span> <span class="dv">18</span></span>
+<span id="cb33-24"><a href="Model-fit.html#cb33-24" tabindex="-1"></a>new.l.vec <span class="ot">&lt;-</span> <span class="fu">choose</span>(n2,new.m2) <span class="sc">*</span> p<span class="sc">^</span>new.m2 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n2<span class="sc">-</span>new.m2)</span>
+<span id="cb33-25"><a href="Model-fit.html#cb33-25" tabindex="-1"></a><span class="fu">points</span>(p, new.l.vec, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p>The likelihood calculation at p=0.2 uses the <code>choose()</code> function, to determine how many ways m2=16 recaptures can be drawn from a sample of size 80. Type <code>choose(n2,m2)</code> in the Console to see that it is a very large number! The remainder of the expression determines the probability of 16 successes and 80-16 failures. We can obtain the same result from the built-in function <code>dbinom()</code>, although it seems more instructive to write out the full expression.</p>
+<p>The calculated likelihood (0.11) is really only of interest as a relative value, compared to other potential values for p. We use the <code>seq()</code> function to create a vector of potential p values, and obtain a vector of likelihoods from the p vector. Plotting the points shows that the likelihood peaks sharply at 0.2 (not surprisingly since that is the value that generated the 16 recaptures) and decreases to near 0 at about 0.08 and 0.32.</p>
+<p>We have assumed thus far that we obtained the expected number of recaptures (80*p), but in reality, the number of recaptures would be a binomially-distributed random variate. A different observed value for m<sub>2</sub> would shift the likelihood function. The next lines of code calculate the likelihood for a slightly higher number of recaptures. The points function adds the new likelihood values to the plot, using the col=“blue” plot option. The new values are shifted to the right because the number of recaptured fish was higher.</p>
+<p>If multiple independent samples are taken, the combined likelihood is a product. For our two assumed samples of 80 fish, with 16 recaptures in one and 18 in the other, the combined likelihood at each level of p would be the product l.vec * new.l.vec.</p>
+<p>We wrote out the expression for the likelihood for this example, but that is not needed when using the BUGS language. We need only specify the function name for the distribution describing our sample data. JAGS does the behind-the-scenes work to provide the code for the likelihood function. Working at a higher level allows us to focus on the study design and assumptions, which guide us to our choice of sample distribution.</p>
+</div>
+<div id="Deviance" class="section level3 hasAnchor" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Deviance as a measure of model fit<a href="Model-fit.html#Deviance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Likelihood calculations were introduced in Section <a href="Model-fit.html#Likelihood">4.3.3</a>. Here we show two related measures of model fit (log-likelihood and deviance) using the same mark-recapture example. There can be computational advantages to working with the log-likelihood compared to the likelihood <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="Model-fit.html#cb34-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb34-2"><a href="Model-fit.html#cb34-2" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="Model-fit.html#cb34-3" tabindex="-1"></a><span class="co"># Arbitrary &#39;observed&#39; values for analysis</span></span>
+<span id="cb34-4"><a href="Model-fit.html#cb34-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Population size</span></span>
+<span id="cb34-5"><a href="Model-fit.html#cb34-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
+<span id="cb34-6"><a href="Model-fit.html#cb34-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb34-7"><a href="Model-fit.html#cb34-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb34-8"><a href="Model-fit.html#cb34-8" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> n2 <span class="sc">*</span> p.true <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb34-9"><a href="Model-fit.html#cb34-9" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="Model-fit.html#cb34-10" tabindex="-1"></a><span class="co"># Create vector of possible p values, determine likelihood for each</span></span>
+<span id="cb34-11"><a href="Model-fit.html#cb34-11" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="fl">0.02</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.02</span>)</span>
+<span id="cb34-12"><a href="Model-fit.html#cb34-12" tabindex="-1"></a>l.vec <span class="ot">&lt;-</span> <span class="fu">choose</span>(n2,m2) <span class="sc">*</span> p<span class="sc">^</span>m2 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n2<span class="sc">-</span>m2)</span>
+<span id="cb34-13"><a href="Model-fit.html#cb34-13" tabindex="-1"></a><span class="fu">plot</span>(p, l.vec, <span class="at">ylab=</span><span class="st">&quot;Likelihood&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb34-14"><a href="Model-fit.html#cb34-14" tabindex="-1"></a></span>
+<span id="cb34-15"><a href="Model-fit.html#cb34-15" tabindex="-1"></a>log_l.vec <span class="ot">&lt;-</span> <span class="fu">log</span>(l.vec) <span class="co"># Log-likelihood</span></span>
+<span id="cb34-16"><a href="Model-fit.html#cb34-16" tabindex="-1"></a><span class="fu">plot</span>(p, log_l.vec, <span class="at">ylab=</span><span class="st">&quot;log-Likelihood&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb34-17"><a href="Model-fit.html#cb34-17" tabindex="-1"></a>dev.vec <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> log_l.vec <span class="co"># Deviance (-2 * ln_L)</span></span>
+<span id="cb34-18"><a href="Model-fit.html#cb34-18" tabindex="-1"></a><span class="fu">plot</span>(p, dev.vec, <span class="at">ylab=</span><span class="st">&quot;Deviance&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p>Compared to the likelihood, the log-likelihood curve has a different shape but the same peak at p=0.2 (the most likely value given 16 successes in a trial size of 80). The deviance is obtained by multiplying the log-likelihood by -2. The plotted pattern is now inverted so that now the curve has a <em>minimum</em> at p=0.2; i.e., a larger value for deviance indicates a poorer fit <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>. JAGS uses the deviance to obtain parameter estimates, but it is nice to know that we would obtain the same estimates from either the maximum likelihood or log-likelihood or the minimum deviance <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>.</p>
+</div>
+<div id="Model-checking" class="section level3 hasAnchor" number="4.3.5">
+<h3><span class="header-section-number">4.3.5</span> Model checking<a href="Model-fit.html#Model-checking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It is easy to fit the correct model to simulated data, but that is not the case for real (field) data. Any model fit to field data should be viewed as an approximation of the underlying ecological processes. We cannot prove that the model is correct, but we can examine whether it is a useful approximation. One method for doing this is the posterior predictive check <span class="citation">(<a href="#ref-kéry_2010">Kéry 2010</a>; <a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>; <a href="#ref-gelman.etal_2013">Gelman et al. 2013</a>; <a href="#ref-conn.etal_2018">Conn et al. 2018</a>)</span>. This method compares a measure of fit for replicated data generated under the fitted model compared to observed data. If the measure of fit (e.g., sum of squares or chi-square) is markedly different (usually higher) for the observed data, that suggests that the observed data contain some features not captured by the fitted model.</p>
+<p>Our first example uses simulated catch data from a Poisson distribution, as might be obtained by standardized electrofishing or trawling. Keep in mind that these are our “observed” catches, to be compared with replicate data obtained by simulation. We arbitrarily set the mean for the Poisson distribution at 7 and the sample size at 30. Before viewing the extended JAGS code that includes the posterior predictive check, let’s examine a version that simply fits the model:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="Model-fit.html#cb35-1" tabindex="-1"></a><span class="co"># Fit model to catch data from Poisson distribution</span></span>
+<span id="cb35-2"><a href="Model-fit.html#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="Model-fit.html#cb35-3" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb35-4"><a href="Model-fit.html#cb35-4" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="Model-fit.html#cb35-5" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb35-6"><a href="Model-fit.html#cb35-6" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb35-7"><a href="Model-fit.html#cb35-7" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>N, <span class="at">lambda=</span>mu) <span class="co"># Catches drawn from Poisson distribution</span></span>
+<span id="cb35-8"><a href="Model-fit.html#cb35-8" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(Catch)  <span class="co"># Distribution of simulated catches</span></span>
+<span id="cb35-9"><a href="Model-fit.html#cb35-9" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Catch&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb35-10"><a href="Model-fit.html#cb35-10" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="Model-fit.html#cb35-11" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb35-12"><a href="Model-fit.html#cb35-12" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb35-13"><a href="Model-fit.html#cb35-13" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb35-14"><a href="Model-fit.html#cb35-14" tabindex="-1"></a></span>
+<span id="cb35-15"><a href="Model-fit.html#cb35-15" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PoissonFit.txt&quot;</span>)</span>
+<span id="cb35-16"><a href="Model-fit.html#cb35-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb35-17"><a href="Model-fit.html#cb35-17" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb35-18"><a href="Model-fit.html#cb35-18" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="Model-fit.html#cb35-19" tabindex="-1"></a><span class="st"># Prior</span></span>
+<span id="cb35-20"><a href="Model-fit.html#cb35-20" tabindex="-1"></a><span class="st"> lambda.est ~ dunif(0, 100)</span></span>
+<span id="cb35-21"><a href="Model-fit.html#cb35-21" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="Model-fit.html#cb35-22" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb35-23"><a href="Model-fit.html#cb35-23" tabindex="-1"></a><span class="st">    for(i in 1:N) {</span></span>
+<span id="cb35-24"><a href="Model-fit.html#cb35-24" tabindex="-1"></a><span class="st">      Catch[i] ~ dpois(lambda.est)</span></span>
+<span id="cb35-25"><a href="Model-fit.html#cb35-25" tabindex="-1"></a><span class="st">      } #y</span></span>
+<span id="cb35-26"><a href="Model-fit.html#cb35-26" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb35-27"><a href="Model-fit.html#cb35-27" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb35-28"><a href="Model-fit.html#cb35-28" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb35-29"><a href="Model-fit.html#cb35-29" tabindex="-1"></a></span>
+<span id="cb35-30"><a href="Model-fit.html#cb35-30" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb35-31"><a href="Model-fit.html#cb35-31" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;Catch&quot;</span>)</span>
+<span id="cb35-32"><a href="Model-fit.html#cb35-32" tabindex="-1"></a></span>
+<span id="cb35-33"><a href="Model-fit.html#cb35-33" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb35-34"><a href="Model-fit.html#cb35-34" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">lambda.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>))}</span>
+<span id="cb35-35"><a href="Model-fit.html#cb35-35" tabindex="-1"></a></span>
+<span id="cb35-36"><a href="Model-fit.html#cb35-36" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PoissonFit.txt&#39;</span></span>
+<span id="cb35-37"><a href="Model-fit.html#cb35-37" tabindex="-1"></a></span>
+<span id="cb35-38"><a href="Model-fit.html#cb35-38" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb35-39"><a href="Model-fit.html#cb35-39" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;lambda.est&quot;</span>)</span>
+<span id="cb35-40"><a href="Model-fit.html#cb35-40" tabindex="-1"></a></span>
+<span id="cb35-41"><a href="Model-fit.html#cb35-41" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb35-42"><a href="Model-fit.html#cb35-42" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb35-43"><a href="Model-fit.html#cb35-43" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb35-44"><a href="Model-fit.html#cb35-44" tabindex="-1"></a>                model.file)</span>
+<span id="cb35-45"><a href="Model-fit.html#cb35-45" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb35-46"><a href="Model-fit.html#cb35-46" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>There are only a few lines of JAGS code. We use an uninformative uniform prior distribution for the single Poisson parameter lambda.est. The catches are assumed (correctly) to be drawn from a Poisson distribution, and the likelihood calculations use the Poisson distribution function <code>dpois()</code>. The initial value is obtained from the same uniform distribution as the prior. JAGS returns the estimated mean, which varies around the true value due to the relatively modest sample size. Try rerunning the code using a large sample size to see the improvement in the sample catch plot and the estimated mean.</p>
+<p>Next we add a few lines of code to carry out the posterior predictive check:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="Model-fit.html#cb36-1" tabindex="-1"></a><span class="co"># Fit model to catch data from Poisson distribution</span></span>
+<span id="cb36-2"><a href="Model-fit.html#cb36-2" tabindex="-1"></a><span class="co"># Includes code for posterior predictive check</span></span>
+<span id="cb36-3"><a href="Model-fit.html#cb36-3" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="Model-fit.html#cb36-4" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb36-5"><a href="Model-fit.html#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="Model-fit.html#cb36-6" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb36-7"><a href="Model-fit.html#cb36-7" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb36-8"><a href="Model-fit.html#cb36-8" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>N, <span class="at">lambda=</span>mu) <span class="co"># Counts drawn from Poisson distribution</span></span>
+<span id="cb36-9"><a href="Model-fit.html#cb36-9" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(Catch)  <span class="co"># Distribution of simulated catches</span></span>
+<span id="cb36-10"><a href="Model-fit.html#cb36-10" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Catch&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb36-11"><a href="Model-fit.html#cb36-11" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="Model-fit.html#cb36-12" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb36-13"><a href="Model-fit.html#cb36-13" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb36-14"><a href="Model-fit.html#cb36-14" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb36-15"><a href="Model-fit.html#cb36-15" tabindex="-1"></a></span>
+<span id="cb36-16"><a href="Model-fit.html#cb36-16" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PPC_Example.txt&quot;</span>)</span>
+<span id="cb36-17"><a href="Model-fit.html#cb36-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb36-18"><a href="Model-fit.html#cb36-18" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb36-19"><a href="Model-fit.html#cb36-19" tabindex="-1"></a></span>
+<span id="cb36-20"><a href="Model-fit.html#cb36-20" tabindex="-1"></a><span class="st"># Prior</span></span>
+<span id="cb36-21"><a href="Model-fit.html#cb36-21" tabindex="-1"></a><span class="st"> lambda.est ~ dunif(0, 100)</span></span>
+<span id="cb36-22"><a href="Model-fit.html#cb36-22" tabindex="-1"></a></span>
+<span id="cb36-23"><a href="Model-fit.html#cb36-23" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb36-24"><a href="Model-fit.html#cb36-24" tabindex="-1"></a><span class="st">    for(i in 1:N) {</span></span>
+<span id="cb36-25"><a href="Model-fit.html#cb36-25" tabindex="-1"></a><span class="st">      Catch[i] ~ dpois(lambda.est)</span></span>
+<span id="cb36-26"><a href="Model-fit.html#cb36-26" tabindex="-1"></a><span class="st">      Catch.new[i] ~ dpois(lambda.est) # Generating replicated new data for PPC</span></span>
+<span id="cb36-27"><a href="Model-fit.html#cb36-27" tabindex="-1"></a><span class="st">      chi.obs[i] &lt;- pow(Catch[i]-lambda.est,2)/lambda.est # chi-square discrepancy for obs</span></span>
+<span id="cb36-28"><a href="Model-fit.html#cb36-28" tabindex="-1"></a><span class="st">      chi.new[i] &lt;- pow(Catch.new[i]-lambda.est,2)/lambda.est # chi-square for replicate new data</span></span>
+<span id="cb36-29"><a href="Model-fit.html#cb36-29" tabindex="-1"></a><span class="st">      } #y</span></span>
+<span id="cb36-30"><a href="Model-fit.html#cb36-30" tabindex="-1"></a><span class="st">  Total.obs &lt;- sum(chi.obs[])</span></span>
+<span id="cb36-31"><a href="Model-fit.html#cb36-31" tabindex="-1"></a><span class="st">  Total.new &lt;- sum(chi.new[])</span></span>
+<span id="cb36-32"><a href="Model-fit.html#cb36-32" tabindex="-1"></a><span class="st">  Bayesian.p &lt;- step(Total.new - Total.obs)</span></span>
+<span id="cb36-33"><a href="Model-fit.html#cb36-33" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb36-34"><a href="Model-fit.html#cb36-34" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb36-35"><a href="Model-fit.html#cb36-35" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb36-36"><a href="Model-fit.html#cb36-36" tabindex="-1"></a></span>
+<span id="cb36-37"><a href="Model-fit.html#cb36-37" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb36-38"><a href="Model-fit.html#cb36-38" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;Catch&quot;</span>)</span>
+<span id="cb36-39"><a href="Model-fit.html#cb36-39" tabindex="-1"></a></span>
+<span id="cb36-40"><a href="Model-fit.html#cb36-40" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb36-41"><a href="Model-fit.html#cb36-41" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">lambda.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>))}</span>
+<span id="cb36-42"><a href="Model-fit.html#cb36-42" tabindex="-1"></a></span>
+<span id="cb36-43"><a href="Model-fit.html#cb36-43" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PPC_Example.txt&#39;</span></span>
+<span id="cb36-44"><a href="Model-fit.html#cb36-44" tabindex="-1"></a></span>
+<span id="cb36-45"><a href="Model-fit.html#cb36-45" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb36-46"><a href="Model-fit.html#cb36-46" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;lambda.est&quot;</span>, <span class="st">&quot;Bayesian.p&quot;</span>)</span>
+<span id="cb36-47"><a href="Model-fit.html#cb36-47" tabindex="-1"></a></span>
+<span id="cb36-48"><a href="Model-fit.html#cb36-48" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb36-49"><a href="Model-fit.html#cb36-49" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb36-50"><a href="Model-fit.html#cb36-50" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb36-51"><a href="Model-fit.html#cb36-51" tabindex="-1"></a>                model.file)</span>
+<span id="cb36-52"><a href="Model-fit.html#cb36-52" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb36-53"><a href="Model-fit.html#cb36-53" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>Within the likelihood looping section, we draw new replicate observations from the posterior distribution (Catch.new), and calculate chi-square values for observed and replicate data. The Bayesian p value is obtained using the <code>step()</code> function and the total chi-square values for the observed and replicate data sets. The Bayesian p values tend to be quite variable; ten trials produced values of 0.34, 0.42, 0.18, 0.16, 0.32, 0.30, 0.32, 0.67, 0.69, and 0.18. We would expect the total chi-square for observed and replicate data to be the same on average as the fitted model is known to be correct (i.e., our “observed” catches and the replicate data sets are drawn from Poisson distributions).</p>
+<p>Next consider a case where the “observed” data are obtained from something other than a Poisson distribution. The negative binomial distribution is a good choice for ecological data because it can allow for a skewed distribution (e.g. mostly low but a few large catches). The two negative binomial parameters are mu (mean catch) and the overdispersion parameter k <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. A small value for k produces more clumping or aggregation, whereas extreme values of k (&gt;10*mu) produce a Poisson-like distribution <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. Our JAGS code for model fitting remains unchanged but we replace the Poisson simulation code with the following:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="Model-fit.html#cb37-1" tabindex="-1"></a><span class="co"># Fit model to negative binomial data</span></span>
+<span id="cb37-2"><a href="Model-fit.html#cb37-2" tabindex="-1"></a><span class="co"># Includes code for posterior predictive check</span></span>
+<span id="cb37-3"><a href="Model-fit.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="Model-fit.html#cb37-4" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb37-5"><a href="Model-fit.html#cb37-5" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="Model-fit.html#cb37-6" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb37-7"><a href="Model-fit.html#cb37-7" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb37-8"><a href="Model-fit.html#cb37-8" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb37-9"><a href="Model-fit.html#cb37-9" tabindex="-1"></a>variance <span class="ot">&lt;-</span> mu<span class="sc">+</span>(mu<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>k</span>
+<span id="cb37-10"><a href="Model-fit.html#cb37-10" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k) <span class="co"># Catches drawn from negative binomial</span></span>
+<span id="cb37-11"><a href="Model-fit.html#cb37-11" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(Catch)  <span class="co"># Distribution of simulated counts</span></span>
+<span id="cb37-12"><a href="Model-fit.html#cb37-12" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
+<p>Now Bayesian p values are consistently extreme (0.00 for five replicate trials). The total chi-square for the replicate data sets (which <em>are</em> Poisson distributed) is always less than for the observed data (which are not). The fitted Poisson model lacks the flexibility to mimic the skew of the observed catch distribution. More intermediate Bayesian p values are only obtained if k takes on very large values (e.g., 1000), which results in a Poisson-like catch distribution.</p>
+<p><span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> list some concerns about the posterior predictive check. One is that the observed data are used twice: in fitting the model and in producing the Bayesian p value. Another is that the method is qualitative, in that there is not an objective p-value range that indicates an acceptable fit. Despite those concerns, we agree with <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> that the approach is a useful way of detecting cases where a model fits poorly. Simulation is helpful in gaining experience with the approach, because it is straightforward to obtain Bayesian p values for correct and incorrect fitted models.</p>
+</div>
+<div id="Model-selection" class="section level3 hasAnchor" number="4.3.6">
+<h3><span class="header-section-number">4.3.6</span> Model selection<a href="Model-fit.html#Model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It is often the case that more than one model may be considered as plausible. For example, survey catches could be modeled using either a Poisson or negative binomial distribution. A model for a tag-return study could include separate parameters for reporting rate of tags from commercial and recreational fishers, or just a single parameter if the sector reporting rates were similar. A third example is a model for survey catch rate, which might include covariates such as location, year, depth, or water temperature. Determining which covariates affected catch rate would make it possible to produce an improved survey index that was adjusted for environmental variation. For example, were low survey catches in the current year due to anomalously low water temperatures on sampling dates or to a real decline in abundance? The suite of candidate models should be chosen before data analysis begins <span class="citation">(<a href="#ref-burnham.anderson_2004">Burnham and Anderson 2004</a>)</span> to avoid the tendency to examine the study results and to choose candidate models that match observed patterns. For example, observing low recruitment in a recent year might spur us to search for environmental covariates with a similar temporal pattern.</p>
+<p>Choosing a preferred model among the suite of candidates (model selection) is a vast and complex topic <span class="citation">(<a href="#ref-link.barker_2010">Link and Barker 2010</a>)</span>, and there is no consensus among statisticians as to the best approach <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> suggest that one practical approach is to decide on a model that is biologically plausible and stick to that. They also sometimes eliminate candidate parameters that have credible intervals that include zero, similar to a backward stepwise regression. <span class="citation">Hooten and Hobbs (<a href="#ref-hooten.hobbs2015">2015</a>)</span> recommend model selection based on predictive ability, either in-sample (data used in fitting the model) or out-of-sample (new data). Out-of-sample validation is considered the gold standard <span class="citation">(<a href="#ref-hooten.hobbs2015">Hooten and Hobbs 2015</a>)</span>. The main disadvantage of that approach is the requirement for additional data not used in fitting the model.</p>
+<p>We illustrate here a simple approach of separately fitting candidate models and comparing DIC scores. Our “observed” data are simulated counts from a negative binomial distribution. Next we fit Poisson and negative binomial candidate models to the same observed data and compare DIC scores. The negative binomial distribution in JAGS uses the probability of success (p) and size (our overdispersion parameter k). We return the estimated mean for the negative binomial distribution, which is calculated internally using p.est and k.est.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="Model-fit.html#cb38-1" tabindex="-1"></a><span class="co"># DIC comparison for model selection, using &quot;observed&quot; data from a negative binomial distribution</span></span>
+<span id="cb38-2"><a href="Model-fit.html#cb38-2" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="Model-fit.html#cb38-3" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb38-4"><a href="Model-fit.html#cb38-4" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="Model-fit.html#cb38-5" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb38-6"><a href="Model-fit.html#cb38-6" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb38-7"><a href="Model-fit.html#cb38-7" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb38-8"><a href="Model-fit.html#cb38-8" tabindex="-1"></a>variance <span class="ot">&lt;-</span> mu<span class="sc">+</span>(mu<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>k</span>
+<span id="cb38-9"><a href="Model-fit.html#cb38-9" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k) <span class="co"># Counts drawn from negative binomial</span></span>
+<span id="cb38-10"><a href="Model-fit.html#cb38-10" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(Count)  <span class="co"># Distribution of simulated counts</span></span>
+<span id="cb38-11"><a href="Model-fit.html#cb38-11" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb38-12"><a href="Model-fit.html#cb38-12" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="Model-fit.html#cb38-13" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb38-14"><a href="Model-fit.html#cb38-14" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb38-15"><a href="Model-fit.html#cb38-15" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb38-16"><a href="Model-fit.html#cb38-16" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="Model-fit.html#cb38-17" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PoissonFit.txt&quot;</span>)</span>
+<span id="cb38-18"><a href="Model-fit.html#cb38-18" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb38-19"><a href="Model-fit.html#cb38-19" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb38-20"><a href="Model-fit.html#cb38-20" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="Model-fit.html#cb38-21" tabindex="-1"></a><span class="st"># Prior</span></span>
+<span id="cb38-22"><a href="Model-fit.html#cb38-22" tabindex="-1"></a><span class="st"> lambda.est ~ dunif(0, 100)</span></span>
+<span id="cb38-23"><a href="Model-fit.html#cb38-23" tabindex="-1"></a></span>
+<span id="cb38-24"><a href="Model-fit.html#cb38-24" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb38-25"><a href="Model-fit.html#cb38-25" tabindex="-1"></a><span class="st">    for(i in 1:N) {</span></span>
+<span id="cb38-26"><a href="Model-fit.html#cb38-26" tabindex="-1"></a><span class="st">      Count[i] ~ dpois(lambda.est)</span></span>
+<span id="cb38-27"><a href="Model-fit.html#cb38-27" tabindex="-1"></a><span class="st">      } #y</span></span>
+<span id="cb38-28"><a href="Model-fit.html#cb38-28" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb38-29"><a href="Model-fit.html#cb38-29" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb38-30"><a href="Model-fit.html#cb38-30" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb38-31"><a href="Model-fit.html#cb38-31" tabindex="-1"></a></span>
+<span id="cb38-32"><a href="Model-fit.html#cb38-32" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb38-33"><a href="Model-fit.html#cb38-33" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;Count&quot;</span>)</span>
+<span id="cb38-34"><a href="Model-fit.html#cb38-34" tabindex="-1"></a></span>
+<span id="cb38-35"><a href="Model-fit.html#cb38-35" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb38-36"><a href="Model-fit.html#cb38-36" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">lambda.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>))}</span>
+<span id="cb38-37"><a href="Model-fit.html#cb38-37" tabindex="-1"></a></span>
+<span id="cb38-38"><a href="Model-fit.html#cb38-38" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PoissonFit.txt&#39;</span></span>
+<span id="cb38-39"><a href="Model-fit.html#cb38-39" tabindex="-1"></a></span>
+<span id="cb38-40"><a href="Model-fit.html#cb38-40" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb38-41"><a href="Model-fit.html#cb38-41" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;lambda.est&quot;</span>)</span>
+<span id="cb38-42"><a href="Model-fit.html#cb38-42" tabindex="-1"></a></span>
+<span id="cb38-43"><a href="Model-fit.html#cb38-43" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb38-44"><a href="Model-fit.html#cb38-44" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb38-45"><a href="Model-fit.html#cb38-45" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb38-46"><a href="Model-fit.html#cb38-46" tabindex="-1"></a>                model.file)</span>
+<span id="cb38-47"><a href="Model-fit.html#cb38-47" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb38-48"><a href="Model-fit.html#cb38-48" tabindex="-1"></a><span class="co">#plot(jagsfit)</span></span>
+<span id="cb38-49"><a href="Model-fit.html#cb38-49" tabindex="-1"></a></span>
+<span id="cb38-50"><a href="Model-fit.html#cb38-50" tabindex="-1"></a>Poisson.DIC <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>DIC</span>
+<span id="cb38-51"><a href="Model-fit.html#cb38-51" tabindex="-1"></a></span>
+<span id="cb38-52"><a href="Model-fit.html#cb38-52" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;NBFit.txt&quot;</span>)</span>
+<span id="cb38-53"><a href="Model-fit.html#cb38-53" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb38-54"><a href="Model-fit.html#cb38-54" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb38-55"><a href="Model-fit.html#cb38-55" tabindex="-1"></a></span>
+<span id="cb38-56"><a href="Model-fit.html#cb38-56" tabindex="-1"></a><span class="st"># Prior</span></span>
+<span id="cb38-57"><a href="Model-fit.html#cb38-57" tabindex="-1"></a><span class="st"> p.est ~ dunif(0, 1)  # JAGS uses p (probability of success) for negative binomial</span></span>
+<span id="cb38-58"><a href="Model-fit.html#cb38-58" tabindex="-1"></a><span class="st"> k.est ~ dunif(0, 1000)</span></span>
+<span id="cb38-59"><a href="Model-fit.html#cb38-59" tabindex="-1"></a><span class="st"> mu.est &lt;- k.est*(1-p.est)/p.est</span></span>
+<span id="cb38-60"><a href="Model-fit.html#cb38-60" tabindex="-1"></a><span class="st"> </span></span>
+<span id="cb38-61"><a href="Model-fit.html#cb38-61" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb38-62"><a href="Model-fit.html#cb38-62" tabindex="-1"></a><span class="st">    for(i in 1:N) {</span></span>
+<span id="cb38-63"><a href="Model-fit.html#cb38-63" tabindex="-1"></a><span class="st">      Count[i] ~ dnbinom(p.est, k.est)</span></span>
+<span id="cb38-64"><a href="Model-fit.html#cb38-64" tabindex="-1"></a><span class="st">      } #y</span></span>
+<span id="cb38-65"><a href="Model-fit.html#cb38-65" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb38-66"><a href="Model-fit.html#cb38-66" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb38-67"><a href="Model-fit.html#cb38-67" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb38-68"><a href="Model-fit.html#cb38-68" tabindex="-1"></a></span>
+<span id="cb38-69"><a href="Model-fit.html#cb38-69" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb38-70"><a href="Model-fit.html#cb38-70" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;Count&quot;</span>)</span>
+<span id="cb38-71"><a href="Model-fit.html#cb38-71" tabindex="-1"></a></span>
+<span id="cb38-72"><a href="Model-fit.html#cb38-72" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb38-73"><a href="Model-fit.html#cb38-73" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">p.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="fl">1E-6</span>, <span class="at">max=</span><span class="dv">1</span>),</span>
+<span id="cb38-74"><a href="Model-fit.html#cb38-74" tabindex="-1"></a>                               <span class="at">k.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1000</span>))}</span>
+<span id="cb38-75"><a href="Model-fit.html#cb38-75" tabindex="-1"></a></span>
+<span id="cb38-76"><a href="Model-fit.html#cb38-76" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;NBFit.txt&#39;</span></span>
+<span id="cb38-77"><a href="Model-fit.html#cb38-77" tabindex="-1"></a></span>
+<span id="cb38-78"><a href="Model-fit.html#cb38-78" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb38-79"><a href="Model-fit.html#cb38-79" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mu.est&quot;</span>, <span class="st">&quot;k.est&quot;</span>)</span>
+<span id="cb38-80"><a href="Model-fit.html#cb38-80" tabindex="-1"></a></span>
+<span id="cb38-81"><a href="Model-fit.html#cb38-81" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb38-82"><a href="Model-fit.html#cb38-82" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb38-83"><a href="Model-fit.html#cb38-83" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb38-84"><a href="Model-fit.html#cb38-84" tabindex="-1"></a>                model.file)</span>
+<span id="cb38-85"><a href="Model-fit.html#cb38-85" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb38-86"><a href="Model-fit.html#cb38-86" tabindex="-1"></a><span class="co">#plot(jagsfit)</span></span>
+<span id="cb38-87"><a href="Model-fit.html#cb38-87" tabindex="-1"></a>NB.DIC <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>DIC</span>
+<span id="cb38-88"><a href="Model-fit.html#cb38-88" tabindex="-1"></a>Poisson.DIC <span class="sc">-</span> NB.DIC</span></code></pre></div>
+<p>The difference in DIC scores (printed to the Console for convenience) ranged from 50.4 to 90.4 in five trials using the default simulation settings. The substantially higher DIC score for the (incorrect) Poisson model is clear evidence of a poorer fit. <span class="citation">Burnham and Anderson (<a href="#ref-burnham.anderson_2004">2004</a>)</span> suggested that an alternative model with an AIC score within 1-2 of the best model merits consideration whereas a difference of 3-7 suggests much less support. <span class="citation">Spiegelhalter et al. (<a href="#ref-spiegelhalter.etal_2002">2002</a>)</span> noted that the <span class="citation">Burnham and Anderson (<a href="#ref-burnham.anderson_2004">2004</a>)</span> criteria appear to work well for DIC scores.</p>
+<p>Comparing DIC scores worked well for this case. Also, using simulated counts from a negative binomial distribution is convenient because we can adjust the overdispersion parameter (k) to obtain a more “Poisson-like” distribution. At what value for k do you obtain similar DIC scores for the two models? Observe the change in shape of the count frequency distribution as you vary k.</p>
+<p>If considering this approach to model selection, keep in mind that DIC scores are not reliable for some more complex models; for example, ones with categorical parameters <span class="citation">(<a href="#ref-lunn.etal2009">D. Lunn et al. 2009</a>)</span>. This is an advantage of starting with simulated data, in that the underlying distribution is known. Confirming that DIC scores reliably identify the correct model with simulated data is a useful first step before any analysis of field data.</p>
+</div>
+</div>
+<div id="exercises-1" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Exercises<a href="Model-fit.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Estimate uncertainty around a two-sample mark-recapture estimate Nhat using the simulation and Bayesian approaches for a capture probability of 0.4. How similar are the results and how do they compare to results using the original capture probability of 0.2?</p></li>
+<li><p><span class="citation">Robson and Regier (<a href="#ref-robson.regier1964">1964</a>)</span> provided practical advice on acceptable levels of accuracy and precision. They suggested that estimates within 10% of the true value be acceptable for research studies, versus 25% for management and 50% for preliminary studies. Bayesian credible intervals could be used as a proxy for their accuracy and precision targets. What capture probabilities (approximate) would correspond to those targets for the mark-recapture example?</p></li>
+<li><p>How many errors can you locate before running the following code? Fix all errors that you spotted then run the code to fix any remaining errors.</p></li>
+</ol>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="Model-fit.html#cb39-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb39-2"><a href="Model-fit.html#cb39-2" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="Model-fit.html#cb39-3" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb39-4"><a href="Model-fit.html#cb39-4" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb39-5"><a href="Model-fit.html#cb39-5" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb39-6"><a href="Model-fit.html#cb39-6" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="Model-fit.html#cb39-7" tabindex="-1"></a><span class="co"># Arbitrary &#39;observed&#39; values for analysis</span></span>
+<span id="cb39-8"><a href="Model-fit.html#cb39-8" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb39-9"><a href="Model-fit.html#cb39-9" tabindex="-1"></a>AveC <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb39-10"><a href="Model-fit.html#cb39-10" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>Reps <span class="at">lambda=</span>AveC)</span>
+<span id="cb39-11"><a href="Model-fit.html#cb39-11" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="Model-fit.html#cb39-12" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb39-13"><a href="Model-fit.html#cb39-13" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PoissonSim.txt&quot;</span>)</span>
+<span id="cb39-14"><a href="Model-fit.html#cb39-14" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb39-15"><a href="Model-fit.html#cb39-15" tabindex="-1"></a><span class="st">    model {</span></span>
+<span id="cb39-16"><a href="Model-fit.html#cb39-16" tabindex="-1"></a></span>
+<span id="cb39-17"><a href="Model-fit.html#cb39-17" tabindex="-1"></a><span class="st">    # Priors</span></span>
+<span id="cb39-18"><a href="Model-fit.html#cb39-18" tabindex="-1"></a><span class="st">    AveC.est ~ dunif(0, MaxCount)</span></span>
+<span id="cb39-19"><a href="Model-fit.html#cb39-19" tabindex="-1"></a><span class="st">   </span></span>
+<span id="cb39-20"><a href="Model-fit.html#cb39-20" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb39-21"><a href="Model-fit.html#cb39-21" tabindex="-1"></a><span class="st">    for (i in 1:Rep){</span></span>
+<span id="cb39-22"><a href="Model-fit.html#cb39-22" tabindex="-1"></a><span class="st">    Count[i] ~ dpois(AveCest)</span></span>
+<span id="cb39-23"><a href="Model-fit.html#cb39-23" tabindex="-1"></a><span class="st">    } #i</span></span>
+<span id="cb39-24"><a href="Model-fit.html#cb39-24" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb39-25"><a href="Model-fit.html#cb39-25" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-26"><a href="Model-fit.html#cb39-26" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb39-27"><a href="Model-fit.html#cb39-27" tabindex="-1"></a></span>
+<span id="cb39-28"><a href="Model-fit.html#cb39-28" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb39-29"><a href="Model-fit.html#cb39-29" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Count&quot;</span>)</span>
+<span id="cb39-30"><a href="Model-fit.html#cb39-30" tabindex="-1"></a></span>
+<span id="cb39-31"><a href="Model-fit.html#cb39-31" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb39-32"><a href="Model-fit.html#cb39-32" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">AveC.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>))}</span>
+<span id="cb39-33"><a href="Model-fit.html#cb39-33" tabindex="-1"></a></span>
+<span id="cb39-34"><a href="Model-fit.html#cb39-34" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PoisonSim.txt&#39;</span></span>
+<span id="cb39-35"><a href="Model-fit.html#cb39-35" tabindex="-1"></a></span>
+<span id="cb39-36"><a href="Model-fit.html#cb39-36" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb39-37"><a href="Model-fit.html#cb39-37" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AveC.est&quot;</span>)</span>
+<span id="cb39-38"><a href="Model-fit.html#cb39-38" tabindex="-1"></a></span>
+<span id="cb39-39"><a href="Model-fit.html#cb39-39" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb39-40"><a href="Model-fit.html#cb39-40" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, <span class="at">inits=</span>jags.inits, jags.params,</span>
+<span id="cb39-41"><a href="Model-fit.html#cb39-41" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb39-42"><a href="Model-fit.html#cb39-42" tabindex="-1"></a>                model.file)</span>
+<span id="cb39-43"><a href="Model-fit.html#cb39-43" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb39-44"><a href="Model-fit.html#cb39-44" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Consider a mark-recapture study with n<sub>1</sub> = 60 and two independent samples for recaptures (n<sub>2</sub>=90, m<sub>2</sub>=40; n<sub>3</sub>=55, m<sub>3</sub>=30). Use a vector for p at 0.01 intervals and produce a vector and plot of joint likelihoods (vector given the name “both”). Assume that only the initial sample (n<sub>1</sub>) is marked; samples n<sub>2</sub> and n<sub>3</sub> provide two independent snapshots of the marked fraction. Explain in detail how p[which.max(both)] works and what it produces.</p></li>
+<li><p>Use the approach from Section @(Model-selection) to compare model fits for a more “Poisson-like” negative binomial distribution (e.g., k=10).</p></li>
+</ol>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-bolker2008" class="csl-entry">
+Bolker, Benjamin M. 2008. <em>Ecological <span>Models</span> and <span>Data</span> in <span>R</span></em>. 1st ed. Princeton, New Jersey: Princeton University Press.
+</div>
+<div id="ref-brooks.gelman1998" class="csl-entry">
+Brooks, Stephen P., and Andrew Gelman. 1998. <span>“General <span>Methods</span> for <span>Monitoring Convergence</span> of <span>Iterative Simulations</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 7 (4): 434–55. <a href="https://doi.org/10.1080/10618600.1998.10474787">https://doi.org/10.1080/10618600.1998.10474787</a>.
+</div>
+<div id="ref-burnham.anderson_2004" class="csl-entry">
+Burnham, Kenneth P., and David R. Anderson, eds. 2004. <em>Model <span>Selection</span> and <span>Multimodel Inference</span></em>. New York, NY: Springer. <a href="https://doi.org/10.1007/b97636">https://doi.org/10.1007/b97636</a>.
+</div>
+<div id="ref-conn.etal_2018" class="csl-entry">
+Conn, Paul B., Devin S. Johnson, Perry J. Williams, Sharon R. Melin, and Mevin B. Hooten. 2018. <span>“A Guide to <span>Bayesian</span> Model Checking for Ecologists.”</span> <em>Ecological Monographs</em> 88 (4): 526–42. <a href="https://doi.org/10.1002/ecm.1314">https://doi.org/10.1002/ecm.1314</a>.
+</div>
+<div id="ref-doll.jacquemin_2018" class="csl-entry">
+Doll, Jason C., and Stephen J. Jacquemin. 2018. <span>“Introduction to <span>Bayesian Modeling</span> and <span>Inference</span> for <span>Fisheries Scientists</span>.”</span> <em>Fisheries</em> 43 (3): 152–61. <a href="https://doi.org/10.1002/fsh.10038">https://doi.org/10.1002/fsh.10038</a>.
+</div>
+<div id="ref-gelman.etal_2013" class="csl-entry">
+Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. <em>Bayesian <span>Data Analysis</span></em>. 3rd edition. Boca Raton London New York: <span>Chapman and Hall/CRC</span>.
+</div>
+<div id="ref-gelman.rubin1992" class="csl-entry">
+Gelman, Andrew, and Donald B. Rubin. 1992. <span>“Inference from <span>Iterative Simulation Using Multiple Sequences</span>.”</span> <em>Statistical Science</em> 7 (January): 457–72. <a href="https://doi.org/10.1214/ss/1177011136">https://doi.org/10.1214/ss/1177011136</a>.
+</div>
+<div id="ref-hooten.hobbs2015" class="csl-entry">
+Hooten, M. B., and N. T. Hobbs. 2015. <span>“A Guide to <span>Bayesian</span> Model Selection for Ecologists.”</span> <em>Ecological Monographs</em> 85 (1): 3–28. <a href="https://doi.org/10.1890/14-0661.1">https://doi.org/10.1890/14-0661.1</a>.
+</div>
+<div id="ref-kéry_2010" class="csl-entry">
+Kéry, Marc. 2010. <em>Introduction to <span>WinBUGS</span> for <span>Ecologists</span>: <span>Bayesian</span> Approach to Regression, <span>ANOVA</span>, Mixed Models and Related Analyses</em>. 1st edition. Amsterdam ; Boston: Academic Press.
+</div>
+<div id="ref-kéry.schaub_2011" class="csl-entry">
+Kéry, Marc, and Michael Schaub. 2011. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st edition. Boston: Academic Press.
+</div>
+<div id="ref-link.barker_2010" class="csl-entry">
+———. 2010. <span>“Bayesian Inference : With Ecological Applications - <span>NC State University Libraries Catalog</span>.”</span> 2010. <a href="https://catalog.lib.ncsu.edu/catalog/NCSU5404799">https://catalog.lib.ncsu.edu/catalog/NCSU5404799</a>.
+</div>
+<div id="ref-link.eaton2012" class="csl-entry">
+Link, William A., and Mitchell J. Eaton. 2012. <span>“On Thinning of Chains in <span>MCMC</span>.”</span> <em>Methods in Ecology and Evolution</em> 3 (1): 112–15. <a href="https://doi.org/10.1111/j.2041-210X.2011.00131.x">https://doi.org/10.1111/j.2041-210X.2011.00131.x</a>.
+</div>
+<div id="ref-lunn.etal2000" class="csl-entry">
+Lunn, David J., Andrew Thomas, Nicky Best, and David Spiegelhalter. 2000. <span>“<span>WinBUGS</span> - <span>A Bayesian</span> Modelling Framework: <span>Concepts</span>, Structure, and Extensibility.”</span> <em>Statistics and Computing</em> 10 (4): 325–37. <a href="https://doi.org/10.1023/A:1008929526011">https://doi.org/10.1023/A:1008929526011</a>.
+</div>
+<div id="ref-lunn.etal2012" class="csl-entry">
+Lunn, David, Chris Jackson, Nicky Best, Andrew Thomas, and David Spiegelhalter. 2012. <em>The <span>BUGS Book</span>: <span>A Practical Introduction</span> to <span>Bayesian Analysis</span></em>. 1st edition. <span>Chapman and Hall/CRC</span>.
+</div>
+<div id="ref-lunn.etal2009" class="csl-entry">
+Lunn, David, David Spiegelhalter, Andrew Thomas, and Nicky Best. 2009. <span>“The <span>BUGS</span> Project: <span>Evolution</span>, Critique and Future Directions.”</span> <em>Statistics in Medicine</em> 28 (25): 3049–67. <a href="https://doi.org/10.1002/sim.3680">https://doi.org/10.1002/sim.3680</a>.
+</div>
+<div id="ref-mccarthy2007" class="csl-entry">
+McCarthy, Michael A. 2007. <em>Bayesian <span>Methods</span> for <span>Ecology</span></em>. 1st edition. Cambridge, UK ; New York: Cambridge University Press.
+</div>
+<div id="ref-plummer2003" class="csl-entry">
+Plummer, M. 2003. <span>“<span>JAGS</span>: <span>A</span> Program for Analysis of <span>Bayesian</span> Graphical Models Using <span>Gibbs</span> Sampling.”</span> <em>Proceedings of the 3rd International Workshop on Distributed Statistical Computing</em>. <a href="https://doi.org/10.1023/A:1008929526011">https://doi.org/10.1023/A:1008929526011</a>.
+</div>
+<div id="ref-robson.regier1964" class="csl-entry">
+Robson, D. S., and H. A. Regier. 1964. <span>“Sample <span>Size</span> in <span>Petersen Mark</span>–<span>Recapture Experiments</span>.”</span> <em>Transactions of the American Fisheries Society</em> 93 (3): 215–26. <a href="https://doi.org/10.1577/1548-8659(1964)93[215:SSIPME]2.0.CO;2">https://doi.org/10.1577/1548-8659(1964)93[215:SSIPME]2.0.CO;2</a>.
+</div>
+<div id="ref-spiegelhalter.etal_2002" class="csl-entry">
+Spiegelhalter, David J., Nicola G. Best, Bradley P. Carlin, and Angelika Van Der Linde. 2002. <span>“Bayesian Measures of Model Complexity and Fit.”</span> <em>Journal of the Royal Statistical Society. Series B, Statistical Methodology</em> 64 (4): 583–639. <a href="https://doi.org/10.1111/1467-9868.00353">https://doi.org/10.1111/1467-9868.00353</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Abundance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/04-ModelFitting.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

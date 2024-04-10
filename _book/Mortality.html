@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Mortality Components | A Bayesian Introduction to Fish Population Analysis</title>
+  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Mortality Components | A Bayesian Introduction to Fish Population Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Mortality Components | A Bayesian Introduction to Fish Population Analysis" />
+  
+  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+<meta name="author" content="Joseph E. Hightower" />
+
+
+<meta name="date" content="2024-04-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Survival.html"/>
+<link rel="next" href="Growth.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Joe Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> A Brief Introduction to R and RStudio</a></li>
+<li class="chapter" data-level="3" data-path="Distributions.html"><a href="Distributions.html"><i class="fa fa-check"></i><b>3</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Distributions.html"><a href="Distributions.html#Discrete"><i class="fa fa-check"></i><b>3.1</b> Discrete</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
+<li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
+<li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#poisson"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#negative-binomial"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Distributions.html"><a href="Distributions.html#Uniform"><i class="fa fa-check"></i><b>3.2.1</b> Uniform</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Distributions.html"><a href="Distributions.html#beta"><i class="fa fa-check"></i><b>3.2.2</b> Beta</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Distributions.html"><a href="Distributions.html#normal"><i class="fa fa-check"></i><b>3.2.3</b> Normal</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Distributions.html"><a href="Distributions.html#lognormal"><i class="fa fa-check"></i><b>3.2.4</b> Lognormal</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Distributions.html"><a href="Distributions.html#gamma"><i class="fa fa-check"></i><b>3.2.5</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Distributions.html"><a href="Distributions.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Model-fit.html"><a href="Model-fit.html"><i class="fa fa-check"></i><b>4</b> Model Fitting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-fit.html"><a href="Model-fit.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="Model-fit.html"><a href="Model-fit.html#ModelFitting_Sim"><i class="fa fa-check"></i><b>4.2</b> Using simulation</a></li>
+<li class="chapter" data-level="4.3" data-path="Model-fit.html"><a href="Model-fit.html#JAGS-model-fit"><i class="fa fa-check"></i><b>4.3</b> Bayesian approach</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.1</b> Debugging code</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.2</b> Judging convergence</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.3</b> What is a likelihood?</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.4</b> Deviance as a measure of model fit</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.5</b> Model checking</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.6</b> Model selection</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-fit.html"><a href="Model-fit.html#exercises-1"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Abundance.html"><a href="Abundance.html"><i class="fa fa-check"></i><b>5</b> Abundance</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
+<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#mark-recapture"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
+<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#binomial-mixture"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
+<li class="chapter" data-level="5.4" data-path="Abundance.html"><a href="Abundance.html#exercises-2"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Survival.html"><a href="Survival.html"><i class="fa fa-check"></i><b>6</b> Survival</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Survival.html"><a href="Survival.html#AgeComp"><i class="fa fa-check"></i><b>6.1</b> Age-composition</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="Survival.html"><a href="Survival.html#CC_Selectivity"><i class="fa fa-check"></i><b>6.1.1</b> Accounting For Gear Selectivity</a></li>
+<li class="chapter" data-level="6.1.2" data-path="Survival.html"><a href="Survival.html#Cohort"><i class="fa fa-check"></i><b>6.1.2</b> Cohort model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="Survival.html"><a href="Survival.html#TelemetryBased"><i class="fa fa-check"></i><b>6.2</b> Telemetry-based</a></li>
+<li class="chapter" data-level="6.3" data-path="Survival.html"><a href="Survival.html#BrownieSurvival"><i class="fa fa-check"></i><b>6.3</b> Tag-based</a></li>
+<li class="chapter" data-level="6.4" data-path="Survival.html"><a href="Survival.html#exercises-3"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a></li>
+<li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
+<li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
+<li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry estimates of F and M</a></li>
+<li class="chapter" data-level="7.5" data-path="Mortality.html"><a href="Mortality.html#exercises-4"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Growth.html"><a href="Growth.html"><i class="fa fa-check"></i><b>8</b> Growth</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Growth.html"><a href="Growth.html#vonBert"><i class="fa fa-check"></i><b>8.1</b> Growth in length</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Growth.html"><a href="Growth.html#Otolith"><i class="fa fa-check"></i><b>8.1.1</b> Age-length</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Growth.html"><a href="Growth.html#GrowthInc"><i class="fa fa-check"></i><b>8.1.2</b> Using tagging data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Growth.html"><a href="Growth.html#LnWgt"><i class="fa fa-check"></i><b>8.2</b> Growth in weight</a></li>
+<li class="chapter" data-level="8.3" data-path="Growth.html"><a href="Growth.html#exercises-5"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Trend.html"><a href="Trend.html"><i class="fa fa-check"></i><b>9</b> Abundance trends</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Trend.html"><a href="Trend.html#Linear"><i class="fa fa-check"></i><b>9.1</b> Linear model</a></li>
+<li class="chapter" data-level="9.2" data-path="Trend.html"><a href="Trend.html#ExpGr"><i class="fa fa-check"></i><b>9.2</b> Exponential growth model</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="Trend.html"><a href="Trend.html#Forecast"><i class="fa fa-check"></i><b>9.2.1</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="Trend.html"><a href="Trend.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Recruit.html"><a href="Recruit.html"><i class="fa fa-check"></i><b>10</b> Recruitment</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Recruit.html"><a href="Recruit.html#Recruit-Fit"><i class="fa fa-check"></i><b>10.1</b> Fitting a stock-recruitment curve</a></li>
+<li class="chapter" data-level="10.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>10.2</b> Does spawning stock size affect recruitment?</a></li>
+<li class="chapter" data-level="10.3" data-path="Recruit.html"><a href="Recruit.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="PopModels.html"><a href="PopModels.html#exercises-8"><i class="fa fa-check"></i><b>11.1</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Introduction to Fish Population Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Mortality" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Mortality Components<a href="Mortality.html#Mortality" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="float">
+<img src="https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/34525/full/full/0/default.jpg" alt="Cobb 1917." />
+<div class="figcaption">Cobb 1917.</div>
+</div>
+<div id="ExpRate" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Exploitation rate<a href="Mortality.html#ExpRate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A tagging study can provide a real-time estimate of the exploitation rate, or the fraction of the population being harvested. Similar to the tag-return method of estimating survival (Section <a href="Survival.html#BrownieSurvival">6.3</a>), the only field work required is the initial tagging effort. Here there is a single release of fish with external tags at the start of the study, and the number of returned tags is recorded over a specified interval. The study duration could be an entire year, or a fishing season for a population managed by seasonal harvest. A high exploitation rate might indicate that harvest regulations such as a size limit or creel limit could be worthwhile. Alternatively a low estimate might indicate that other factors such as natural mortality or recruitment may be more important in regulating population size. With only a single release, we cannot estimate survival (or its complement, mortality) but it is nevertheless an important first step in judging the relative impact of fishing.</p>
+<p>There are several practical issues to consider in planning an exploitation rate study. We want to ensure that essentially all tags of harvested fish are reported, so high-reward tags (e.g., $100) could be used <span class="citation">(<a href="#ref-pollock.etal_2001">K. H. Pollock et al. 2001</a>)</span>. Tag loss is another potential source of bias. It can be estimated by double-tagging (giving some or all fish two tags, and recording returns of two versus only one tag), but it greatly complicates the analysis. For this example, we will keep things simple and assume that tag loss is negligible. We also assume that there is no immediate tagging mortality (i.e., due to capture, handling and tagging). This can be challenging to investigate. It is sometimes estimated by holding a sample of fish in a cage after tagging but this can itself be a source of mortality <span class="citation">(<a href="#ref-pollock.pine2007">K. Pollock and Pine 2007</a>)</span>. For now, we assume that there is no short- or long-term mortality associated with tagging. We assume that all caught fish are harvested. If catch-and-release was occurring, our model could be extended to estimate rates of harvest and catch-and-release. The decision of how many fish to tag will depend on the required precision of the study, and as usual can be examined through simulation. Finally, it is important that tagged fish be representative of the entire population. This refers not only to size or age, but also the spatial pattern. Tagging could be done at randomly selected locations, or when the entire study population is concentrated within a single area (e.g., winter holding area or spawning location). The key is for all fish, including the tagged subset, to have the same probability of being harvested.</p>
+<p>Our simulation code uses an assumed exploitation rate (u) of 0.4. The value could be based on a literature review or prior work from the study area or similar areas regionally. The number of returned tags has a binomial distribution:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="Mortality.html#cb60-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb60-2"><a href="Mortality.html#cb60-2" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="Mortality.html#cb60-3" tabindex="-1"></a><span class="co"># Tagging study to estimate exploitation rate</span></span>
+<span id="cb60-4"><a href="Mortality.html#cb60-4" tabindex="-1"></a>u.true <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb60-5"><a href="Mortality.html#cb60-5" tabindex="-1"></a>n.tagged <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb60-6"><a href="Mortality.html#cb60-6" tabindex="-1"></a>n.returned <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">prob=</span>u.true, <span class="at">size=</span>n.tagged)</span></code></pre></div>
+<p>We need only a single observation for the returned number of tags. What two lines of code could you add to look at the distribution of returned tags (using a new variable for the vector of tag returns)?</p>
+<p>The JAGS code is also extremely simple. We have one line of code for the uninformative prior distribution for the exploitation rate, and one for the likelihood.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="Mortality.html#cb61-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb61-2"><a href="Mortality.html#cb61-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb61-3"><a href="Mortality.html#cb61-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb61-4"><a href="Mortality.html#cb61-4" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="Mortality.html#cb61-5" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb61-6"><a href="Mortality.html#cb61-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;ExpRate.txt&quot;</span>)</span>
+<span id="cb61-7"><a href="Mortality.html#cb61-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb61-8"><a href="Mortality.html#cb61-8" tabindex="-1"></a><span class="st">model{</span></span>
+<span id="cb61-9"><a href="Mortality.html#cb61-9" tabindex="-1"></a><span class="st">    # Priors</span></span>
+<span id="cb61-10"><a href="Mortality.html#cb61-10" tabindex="-1"></a><span class="st">    u.est ~ dunif(0,1)  # Exploitation rate</span></span>
+<span id="cb61-11"><a href="Mortality.html#cb61-11" tabindex="-1"></a></span>
+<span id="cb61-12"><a href="Mortality.html#cb61-12" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb61-13"><a href="Mortality.html#cb61-13" tabindex="-1"></a><span class="st">    n.returned ~ dbin(u.est, n.tagged)</span></span>
+<span id="cb61-14"><a href="Mortality.html#cb61-14" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb61-15"><a href="Mortality.html#cb61-15" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb61-16"><a href="Mortality.html#cb61-16" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb61-17"><a href="Mortality.html#cb61-17" tabindex="-1"></a></span>
+<span id="cb61-18"><a href="Mortality.html#cb61-18" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb61-19"><a href="Mortality.html#cb61-19" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.returned&quot;</span>, <span class="st">&quot;n.tagged&quot;</span>)</span>
+<span id="cb61-20"><a href="Mortality.html#cb61-20" tabindex="-1"></a></span>
+<span id="cb61-21"><a href="Mortality.html#cb61-21" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb61-22"><a href="Mortality.html#cb61-22" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">u.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb61-23"><a href="Mortality.html#cb61-23" tabindex="-1"></a></span>
+<span id="cb61-24"><a href="Mortality.html#cb61-24" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;ExpRate.txt&#39;</span></span>
+<span id="cb61-25"><a href="Mortality.html#cb61-25" tabindex="-1"></a></span>
+<span id="cb61-26"><a href="Mortality.html#cb61-26" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb61-27"><a href="Mortality.html#cb61-27" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;u.est&quot;</span>)</span>
+<span id="cb61-28"><a href="Mortality.html#cb61-28" tabindex="-1"></a></span>
+<span id="cb61-29"><a href="Mortality.html#cb61-29" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb61-30"><a href="Mortality.html#cb61-30" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb61-31"><a href="Mortality.html#cb61-31" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
+<span id="cb61-32"><a href="Mortality.html#cb61-32" tabindex="-1"></a>                model.file)</span>
+<span id="cb61-33"><a href="Mortality.html#cb61-33" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb61-34"><a href="Mortality.html#cb61-34" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>A single run with Ntags=100 provided a credible interval of 0.27-0.46 (from a random return of 36 tags). Experiment with different sample sizes and consider what level of precision would be adequate for management purposes. As always, this is an optimistic scenario, with the number of returned tags perfectly conforming to a binomial distribution.</p>
+</div>
+<div id="Hearn" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Completed tagging study<a href="Mortality.html#Hearn" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A single release of tags (Section <a href="Mortality.html#ExpRate">7.1</a>) can also be used to estimate the rate of natural death. <span class="citation">Hearn, Sandland, and Hampton (<a href="#ref-hearn.etal1987">1987</a>)</span> provide a method that can be used in completed tagging studies; that is, a study of sufficient duration that no live tagged fish remain (and tag returns have ceased). Their method requires only that fishing mortality in each period be greater than zero, in order to establish the study’s endpoint. It is assumed that tags of harvested fish are always reported, there is no mortality associated with tagging, and there is no tag loss. The model assumes a constant rate of natural mortality, so the estimated rate would in practice represent the average over the study period.</p>
+<p>The following Bayesian version is a modification of the <span class="citation">Hearn, Sandland, and Hampton (<a href="#ref-hearn.etal1987">1987</a>)</span> method. We allow for zero harvest but assume that tag returns are monitored for a sufficiently long time to confirm the true study length (i.e., to allow for the possibility of an interspersed 0). The <span class="citation">Hearn, Sandland, and Hampton (<a href="#ref-hearn.etal1987">1987</a>)</span> model uses instantaneous rates, which we have to this point avoided. The relationship between probabilities (survival, death, exploitation, natural death) and instantaneous rates is as follows. The instantaneous rate of population decline is <span class="math inline">\(dN/dt = -Zt\)</span>, where N is population size and Z is the instantaneous total mortality rate (rate of decline due to fishing and natural sources). An advantage of instantaneous rates is that they are additive. We can partition Z into whatever categories are useful and estimable; for example, fishing versus natural mortality, commmercial versus recreational fishing, longline versus trawl, etc. The most common partitioning is for fishing (F) versus natural (M) sources: <span class="math inline">\(dN/dt = -(M+F)t\)</span>. Integrating this equation provides us with an expression for population size at any time t:
+<span class="math inline">\(N_t = N_0 * exp(-(M+F)*t)\)</span>
+where N<sub>0</sub> is initial abundance and <span class="math inline">\(S=exp(-(M+F)*t)\)</span> is the survival rate. The probability of dying from all causes is A=1-S. The exploitation rate is obtained as u=FA/Z, which makes sense as the fraction of total deaths due to fishing (F/Z). Similarly the probability of natural death is v=MA/Z. These expressions make it possible to go back and forth between probabilities and instantaneous rates, depending on which is more useful or traditional for a particular model. These expressions apply for the most common situation where fishing and natural mortality occur simultaneously (referred to by <span class="citation">Ricker (<a href="#ref-ricker1975">1975</a>)</span> as a Type 2 fishery). <span class="citation">Ricker (<a href="#ref-ricker1975">1975</a>)</span> provides alternate expressions for the less common case (a Type 1 fishery) where natural mortality occurs after a short fishing season.</p>
+<p>Unlike the probabilities for survival, harvest, etc., instantaneous rates are unbounded. In a Bayesian context, this makes them more challenging to estimate compared to probabilities, which are conveniently bounded by 0 and 1. Instantaneous rates are also less intuitive in terms of their magnitude compared to probabilities. There is typically more uncertainty about M than F because natural deaths are almost never observed. The joke about M is that it is often assumed to be 0.2, because .2 looks like a distored version of a question mark. In a review of actual published natural mortality estimates, <span class="citation">Vetter (<a href="#ref-vetter1988">1988</a>)</span> found that a majority were less than 0.5 but values exceeding 2.0 were occasionally reported.</p>
+<p>We begin with simulation code:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="Mortality.html#cb62-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb62-2"><a href="Mortality.html#cb62-2" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="Mortality.html#cb62-3" tabindex="-1"></a>n.tagged <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb62-4"><a href="Mortality.html#cb62-4" tabindex="-1"></a>Periods <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Set to high value to ensure that end of study is observed</span></span>
+<span id="cb62-5"><a href="Mortality.html#cb62-5" tabindex="-1"></a>F.true <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb62-6"><a href="Mortality.html#cb62-6" tabindex="-1"></a>M.true <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb62-7"><a href="Mortality.html#cb62-7" tabindex="-1"></a>S.true <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>F.true <span class="sc">-</span> M.true)</span>
+<span id="cb62-8"><a href="Mortality.html#cb62-8" tabindex="-1"></a>u.true <span class="ot">&lt;-</span> F.true <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>S.true) <span class="sc">/</span> (F.true <span class="sc">+</span> M.true)</span>
+<span id="cb62-9"><a href="Mortality.html#cb62-9" tabindex="-1"></a></span>
+<span id="cb62-10"><a href="Mortality.html#cb62-10" tabindex="-1"></a>TagsAtRisk <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Periods)</span>
+<span id="cb62-11"><a href="Mortality.html#cb62-11" tabindex="-1"></a>TagsAtRisk[<span class="dv">1</span>] <span class="ot">&lt;-</span> n.tagged</span>
+<span id="cb62-12"><a href="Mortality.html#cb62-12" tabindex="-1"></a>TagFates <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Periods) <span class="co"># Returns by period</span></span>
+<span id="cb62-13"><a href="Mortality.html#cb62-13" tabindex="-1"></a></span>
+<span id="cb62-14"><a href="Mortality.html#cb62-14" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Periods){</span>
+<span id="cb62-15"><a href="Mortality.html#cb62-15" tabindex="-1"></a>  TagsAtRisk[j] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>TagsAtRisk[j<span class="dv">-1</span>], <span class="at">prob=</span>S.true)</span>
+<span id="cb62-16"><a href="Mortality.html#cb62-16" tabindex="-1"></a>  TagFates[j<span class="dv">-1</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>(TagsAtRisk[j<span class="dv">-1</span>]</span>
+<span id="cb62-17"><a href="Mortality.html#cb62-17" tabindex="-1"></a>                        <span class="sc">-</span>TagsAtRisk[j]),(F.true<span class="sc">/</span>(F.true<span class="sc">+</span>M.true))) <span class="co"># Random realization: fishing deaths</span></span>
+<span id="cb62-18"><a href="Mortality.html#cb62-18" tabindex="-1"></a>  } <span class="co">#j</span></span>
+<span id="cb62-19"><a href="Mortality.html#cb62-19" tabindex="-1"></a>TagFates[Periods] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>(TagsAtRisk[Periods<span class="dv">-1</span>]</span>
+<span id="cb62-20"><a href="Mortality.html#cb62-20" tabindex="-1"></a>                        <span class="sc">-</span>TagsAtRisk[Periods]),(F.true<span class="sc">/</span>(F.true<span class="sc">+</span>M.true)))</span>
+<span id="cb62-21"><a href="Mortality.html#cb62-21" tabindex="-1"></a>t.Completed <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">which</span>(TagFates[]<span class="sc">&gt;</span><span class="dv">0</span>)) <span class="co"># Locate period when study completed (last return)</span></span>
+<span id="cb62-22"><a href="Mortality.html#cb62-22" tabindex="-1"></a>NatDeaths <span class="ot">&lt;-</span> n.tagged <span class="sc">-</span> <span class="fu">sum</span>(TagFates)</span>
+<span id="cb62-23"><a href="Mortality.html#cb62-23" tabindex="-1"></a>TagFates <span class="ot">&lt;-</span> <span class="fu">c</span>(TagFates[<span class="dv">1</span><span class="sc">:</span>t.Completed],NatDeaths) <span class="co"># Returns + all natural deaths</span></span></code></pre></div>
+<p>The vectors for tags-at-risk and fates are binomially distributed random realizations. Tags at risk are obtained using the number at risk in the previous period and the survival rate. Tag returns (stored in tag fates vector) are obtained from the number of deaths between periods and the fraction of deaths due to fishing (F/Z). The <code>which()</code> function provides a vector of periods when tag returns are greater than 0, and the max function chooses the final period with at least one tag return. Try <code>which(TagFates[]&gt;0)</code> in the Console to make clear how this expression works. The final version of the tag fates vector contains tag returns for the completed study length plus a final column for natural deaths (any tagged fish not seen in the completed tagging study).</p>
+<p>The JAGS code for fitting the model is similar to that for the tag-based method of estimating survival (Section <a href="Survival.html#BrownieSurvival">6.3</a>), except that our parameters now are instantaneous rates. We use an arbitrary uniform prior distribution, with an upper bound (2) set high enough to ensure that the interval contains the true value. The likelihood uses a multinomial distribution, where cell probabilities represent the fraction returned in each period plus the final column for fish not seen again (natural deaths in our completed study).</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="Mortality.html#cb63-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb63-2"><a href="Mortality.html#cb63-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb63-3"><a href="Mortality.html#cb63-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb63-4"><a href="Mortality.html#cb63-4" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="Mortality.html#cb63-5" tabindex="-1"></a><span class="do">######### JAGS code for estimating model parameters</span></span>
+<span id="cb63-6"><a href="Mortality.html#cb63-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;Hearn.txt&quot;</span>)</span>
+<span id="cb63-7"><a href="Mortality.html#cb63-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb63-8"><a href="Mortality.html#cb63-8" tabindex="-1"></a><span class="st">  model {</span></span>
+<span id="cb63-9"><a href="Mortality.html#cb63-9" tabindex="-1"></a><span class="st">  # Priors</span></span>
+<span id="cb63-10"><a href="Mortality.html#cb63-10" tabindex="-1"></a><span class="st">  M.est ~ dunif(0, 2)  # Instantaneous natural mortality rate</span></span>
+<span id="cb63-11"><a href="Mortality.html#cb63-11" tabindex="-1"></a><span class="st">  for (i in 1:t.Completed) {</span></span>
+<span id="cb63-12"><a href="Mortality.html#cb63-12" tabindex="-1"></a><span class="st">     F.est[i] ~ dunif(0,2) # Instantaneous fishing mortality rate</span></span>
+<span id="cb63-13"><a href="Mortality.html#cb63-13" tabindex="-1"></a><span class="st">     S.est[i] &lt;- exp(-M.est - F.est[i])</span></span>
+<span id="cb63-14"><a href="Mortality.html#cb63-14" tabindex="-1"></a><span class="st">     u.est[i] &lt;- F.est[i] * (1-S.est[i])/(F.est[i]+M.est) # FA/Z</span></span>
+<span id="cb63-15"><a href="Mortality.html#cb63-15" tabindex="-1"></a><span class="st">  } #i</span></span>
+<span id="cb63-16"><a href="Mortality.html#cb63-16" tabindex="-1"></a></span>
+<span id="cb63-17"><a href="Mortality.html#cb63-17" tabindex="-1"></a><span class="st"># Cell probabilities</span></span>
+<span id="cb63-18"><a href="Mortality.html#cb63-18" tabindex="-1"></a><span class="st">  p.est[1] &lt;- u.est[1]</span></span>
+<span id="cb63-19"><a href="Mortality.html#cb63-19" tabindex="-1"></a><span class="st">  for (i in 2:t.Completed) {</span></span>
+<span id="cb63-20"><a href="Mortality.html#cb63-20" tabindex="-1"></a><span class="st">    p.est[i] &lt;- prod(S.est[1:(i-1)])*u.est[i]</span></span>
+<span id="cb63-21"><a href="Mortality.html#cb63-21" tabindex="-1"></a><span class="st">      } #i</span></span>
+<span id="cb63-22"><a href="Mortality.html#cb63-22" tabindex="-1"></a><span class="st">    p.est[t.Completed+1] &lt;- 1 - sum(p.est[1:t.Completed])   # Prob of not being seen again</span></span>
+<span id="cb63-23"><a href="Mortality.html#cb63-23" tabindex="-1"></a><span class="st">  TagFates[1:(t.Completed+1)] ~ dmulti(p.est[1:(t.Completed+1)], n.tagged)</span></span>
+<span id="cb63-24"><a href="Mortality.html#cb63-24" tabindex="-1"></a><span class="st"> }</span></span>
+<span id="cb63-25"><a href="Mortality.html#cb63-25" tabindex="-1"></a><span class="st">  &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb63-26"><a href="Mortality.html#cb63-26" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb63-27"><a href="Mortality.html#cb63-27" tabindex="-1"></a></span>
+<span id="cb63-28"><a href="Mortality.html#cb63-28" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb63-29"><a href="Mortality.html#cb63-29" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;TagFates&quot;</span>, <span class="st">&quot;t.Completed&quot;</span>, <span class="st">&quot;n.tagged&quot;</span>)</span>
+<span id="cb63-30"><a href="Mortality.html#cb63-30" tabindex="-1"></a></span>
+<span id="cb63-31"><a href="Mortality.html#cb63-31" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb63-32"><a href="Mortality.html#cb63-32" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">M.est=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="at">F.est=</span><span class="fu">runif</span>(t.Completed, <span class="dv">0</span>, <span class="dv">2</span>))}</span>
+<span id="cb63-33"><a href="Mortality.html#cb63-33" tabindex="-1"></a></span>
+<span id="cb63-34"><a href="Mortality.html#cb63-34" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;Hearn.txt&#39;</span></span>
+<span id="cb63-35"><a href="Mortality.html#cb63-35" tabindex="-1"></a></span>
+<span id="cb63-36"><a href="Mortality.html#cb63-36" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb63-37"><a href="Mortality.html#cb63-37" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;M.est&quot;</span>, <span class="st">&quot;F.est&quot;</span>)</span>
+<span id="cb63-38"><a href="Mortality.html#cb63-38" tabindex="-1"></a></span>
+<span id="cb63-39"><a href="Mortality.html#cb63-39" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb63-40"><a href="Mortality.html#cb63-40" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb63-41"><a href="Mortality.html#cb63-41" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
+<span id="cb63-42"><a href="Mortality.html#cb63-42" tabindex="-1"></a>                model.file)</span>
+<span id="cb63-43"><a href="Mortality.html#cb63-43" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb63-44"><a href="Mortality.html#cb63-44" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>This approach works because there are only two fates for tagged fish: caught and reported or natural death. Using a completed tagging study means that the number of natural deaths is known exactly (number of tag releases - total returns). The model adjusts the estimate of M in order to account for (get rid of) all the natural deaths by the end of the completed study. The length of the completed study depends on the assumed values for F and M. The estimate of M will be higher when the study length is short and when many tagged fish are not seen again.</p>
+<p>For the default settings, estimates of M tend to be reliable, which is unsurprising given that it is modeled as a constant rate and estimated from multiple years of data. How does uncertainty about M change as you increase the number of tags released (e.g., 200 or 1000)?</p>
+<p>Estimates of F are reliable in the first few years but uncertainty increases dramatically towards the end of the completed study. This makes sense because the estimates of tags at risk are further and further from the known initial tagged population. There would likely be some improvement from simplifying the model to estimate only the average F rather than period-specific estimates, given that the true simulated F values vary stochastically around a fixed value.</p>
+</div>
+<div id="BrownieFandM" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Multi-year tagging study<a href="Mortality.html#BrownieFandM" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We return to the multi-year tagging study (Section <a href="Survival.html#BrownieSurvival">6.3</a>) but now assume that we have information about the tag-reporting rate. This information allows us to partition mortality into fishing and natural sources. Tag-reporting rate is fixed at 1.0 in the following code, as could be appropriate when using high-reward tags. In a later section of code, we estimate it internally, using planted tags <span class="citation">(<a href="#ref-hearn.etal2003">Hearn et al. 2003</a>)</span> and an additional likelihood component. Information about the tag-reporting rate is very powerful. For example, a 100% tag-reporting rate means that (assuming no other assumptions are violated) you ultimately know the number of natural deaths because all other tags will be reported (as in Section <a href="Mortality.html#Hearn">7.2</a>). There is uncertainty in the short term because tags not returned could belong to fish still alive and at risk, so information about natural deaths is clear only after sufficient time has passed.</p>
+<p>Our simulation code is similar to that of Section <a href="Survival.html#BrownieSurvival">6.3</a> except that we now specify the probabilities of harvest (u.true) and natural death (v.true). We use vectors so that the rates can vary by period. We have arbitrarily set the probabilities for harvest higher than for natural death, so it is useful to investigate whether we can reliably detect the predominant threat in our simulated study design.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="Mortality.html#cb64-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb64-2"><a href="Mortality.html#cb64-2" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="Mortality.html#cb64-3" tabindex="-1"></a><span class="co"># Parameter values for three-yr experiment</span></span>
+<span id="cb64-4"><a href="Mortality.html#cb64-4" tabindex="-1"></a>Periods <span class="ot">&lt;-</span> <span class="dv">3</span>  <span class="co"># Equal number of release and return periods assumed</span></span>
+<span id="cb64-5"><a href="Mortality.html#cb64-5" tabindex="-1"></a>NTags <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># Number released each period</span></span>
+<span id="cb64-6"><a href="Mortality.html#cb64-6" tabindex="-1"></a>NumTagged <span class="ot">&lt;-</span> <span class="fu">rep</span>(NTags, Periods) <span class="co"># Release NTags fish each period</span></span>
+<span id="cb64-7"><a href="Mortality.html#cb64-7" tabindex="-1"></a></span>
+<span id="cb64-8"><a href="Mortality.html#cb64-8" tabindex="-1"></a>u.true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.25</span>, <span class="fl">0.3</span>) <span class="co"># Probability of fishing death</span></span>
+<span id="cb64-9"><a href="Mortality.html#cb64-9" tabindex="-1"></a>v.true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>) <span class="co"># Probability of natural death</span></span>
+<span id="cb64-10"><a href="Mortality.html#cb64-10" tabindex="-1"></a>lam.true <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># Reporting rate</span></span>
+<span id="cb64-11"><a href="Mortality.html#cb64-11" tabindex="-1"></a></span>
+<span id="cb64-12"><a href="Mortality.html#cb64-12" tabindex="-1"></a><span class="co"># Calculated value(s), array creation</span></span>
+<span id="cb64-13"><a href="Mortality.html#cb64-13" tabindex="-1"></a>S.true <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> u.true <span class="sc">-</span> v.true</span>
+<span id="cb64-14"><a href="Mortality.html#cb64-14" tabindex="-1"></a>TagsAtRisk <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(Periods, Periods))</span>
+<span id="cb64-15"><a href="Mortality.html#cb64-15" tabindex="-1"></a>TagFate <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(Periods, Periods<span class="sc">+</span><span class="dv">1</span>))   <span class="co"># Extra column for tags not seen again</span></span>
+<span id="cb64-16"><a href="Mortality.html#cb64-16" tabindex="-1"></a></span>
+<span id="cb64-17"><a href="Mortality.html#cb64-17" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Periods){ <span class="co"># Expected values for tags-at-risk, returned/not-seen-again</span></span>
+<span id="cb64-18"><a href="Mortality.html#cb64-18" tabindex="-1"></a>  TagsAtRisk[i,i] <span class="ot">&lt;-</span> NumTagged[i]</span>
+<span id="cb64-19"><a href="Mortality.html#cb64-19" tabindex="-1"></a>  TagFate[i,i] <span class="ot">&lt;-</span>  TagsAtRisk[i,i] <span class="sc">*</span> lam.true <span class="sc">*</span> u.true[i] <span class="co"># Returns in release period</span></span>
+<span id="cb64-20"><a href="Mortality.html#cb64-20" tabindex="-1"></a>  j <span class="ot">&lt;-</span> i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb64-21"><a href="Mortality.html#cb64-21" tabindex="-1"></a>  <span class="cf">while</span>(j <span class="sc">&lt;=</span> Periods) {</span>
+<span id="cb64-22"><a href="Mortality.html#cb64-22" tabindex="-1"></a>    TagsAtRisk[i,j] <span class="ot">&lt;-</span> TagsAtRisk[i,(j<span class="dv">-1</span>)]<span class="sc">*</span>S.true[j<span class="dv">-1</span>]</span>
+<span id="cb64-23"><a href="Mortality.html#cb64-23" tabindex="-1"></a>    TagFate[i,j] <span class="ot">&lt;-</span> TagsAtRisk[i,j] <span class="sc">*</span> lam.true <span class="sc">*</span> u.true[j]</span>
+<span id="cb64-24"><a href="Mortality.html#cb64-24" tabindex="-1"></a>    j <span class="ot">&lt;-</span> j<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb64-25"><a href="Mortality.html#cb64-25" tabindex="-1"></a>   } <span class="co">#while</span></span>
+<span id="cb64-26"><a href="Mortality.html#cb64-26" tabindex="-1"></a>  TagFate[i, Periods<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> NTags<span class="sc">-</span><span class="fu">sum</span>(TagFate[i,i<span class="sc">:</span>Periods]) <span class="co"># Tags not seen again</span></span>
+<span id="cb64-27"><a href="Mortality.html#cb64-27" tabindex="-1"></a>  } <span class="co">#i</span></span>
+<span id="cb64-28"><a href="Mortality.html#cb64-28" tabindex="-1"></a></span>
+<span id="cb64-29"><a href="Mortality.html#cb64-29" tabindex="-1"></a>RandRet <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(Periods, Periods<span class="sc">+</span><span class="dv">1</span>))  <span class="co"># Extra column for fish not seen again</span></span>
+<span id="cb64-30"><a href="Mortality.html#cb64-30" tabindex="-1"></a><span class="co">#Random trial</span></span>
+<span id="cb64-31"><a href="Mortality.html#cb64-31" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Periods) <span class="co"># Create upper diagonal matrix of random tag returns</span></span>
+<span id="cb64-32"><a href="Mortality.html#cb64-32" tabindex="-1"></a>  {</span>
+<span id="cb64-33"><a href="Mortality.html#cb64-33" tabindex="-1"></a>    RandRet[i,i<span class="sc">:</span>(Periods<span class="sc">+</span><span class="dv">1</span>)] <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">rmultinom</span>(<span class="dv">1</span>, NumTagged[i], TagFate[i,i<span class="sc">:</span>(Periods<span class="sc">+</span><span class="dv">1</span>)]))</span>
+<span id="cb64-34"><a href="Mortality.html#cb64-34" tabindex="-1"></a>  } <span class="co">#i</span></span></code></pre></div>
+<p>The analysis is again similar to Section <a href="Survival.html#BrownieSurvival">6.3</a> except that now we now have a multinomial distribution with three possible fates (survival, harvest, natural death). Following <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> (their Section 9.6), we use three gamma-distributed parameters that are scaled by their sum, thus ensuring that they sum to 1. The parameters of interest (u, v, S) are calculated functions of the “a” parameters, which are used internally but not themselves of interest.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="Mortality.html#cb65-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb65-2"><a href="Mortality.html#cb65-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb65-3"><a href="Mortality.html#cb65-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb65-4"><a href="Mortality.html#cb65-4" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="Mortality.html#cb65-5" tabindex="-1"></a>  <span class="do">######### JAGS code for estimating model parameters</span></span>
+<span id="cb65-6"><a href="Mortality.html#cb65-6" tabindex="-1"></a>  <span class="fu">sink</span>(<span class="st">&quot;TagReturn.txt&quot;</span>)</span>
+<span id="cb65-7"><a href="Mortality.html#cb65-7" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb65-8"><a href="Mortality.html#cb65-8" tabindex="-1"></a><span class="st">  model {</span></span>
+<span id="cb65-9"><a href="Mortality.html#cb65-9" tabindex="-1"></a><span class="st">  # Priors</span></span>
+<span id="cb65-10"><a href="Mortality.html#cb65-10" tabindex="-1"></a><span class="st">  lam.est &lt;- 1 # Reporting rate assumed known (e.g. high-reward tags only)</span></span>
+<span id="cb65-11"><a href="Mortality.html#cb65-11" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
+<span id="cb65-12"><a href="Mortality.html#cb65-12" tabindex="-1"></a><span class="st">     for (j in 1:3) # Rows are return periods, columns are fates</span></span>
+<span id="cb65-13"><a href="Mortality.html#cb65-13" tabindex="-1"></a><span class="st">       {</span></span>
+<span id="cb65-14"><a href="Mortality.html#cb65-14" tabindex="-1"></a><span class="st">         a[i,j] ~ dgamma(1,1)</span></span>
+<span id="cb65-15"><a href="Mortality.html#cb65-15" tabindex="-1"></a><span class="st">       } #j</span></span>
+<span id="cb65-16"><a href="Mortality.html#cb65-16" tabindex="-1"></a><span class="st">     S.est[i] &lt;- a[i,1]/sum(a[i,]) # Probability of survival</span></span>
+<span id="cb65-17"><a href="Mortality.html#cb65-17" tabindex="-1"></a><span class="st">     u.est[i] &lt;- a[i,2]/sum(a[i,]) # Probability of harvest (exploitation rate)</span></span>
+<span id="cb65-18"><a href="Mortality.html#cb65-18" tabindex="-1"></a><span class="st">     v.est[i] &lt;- a[i,3]/sum(a[i,]) # Probability of natural death</span></span>
+<span id="cb65-19"><a href="Mortality.html#cb65-19" tabindex="-1"></a><span class="st">     # v.est[3] could also be obtained as 1-S.est[3]-u.est[3]</span></span>
+<span id="cb65-20"><a href="Mortality.html#cb65-20" tabindex="-1"></a><span class="st">  } #i</span></span>
+<span id="cb65-21"><a href="Mortality.html#cb65-21" tabindex="-1"></a></span>
+<span id="cb65-22"><a href="Mortality.html#cb65-22" tabindex="-1"></a><span class="st"># Cell probabilities</span></span>
+<span id="cb65-23"><a href="Mortality.html#cb65-23" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
+<span id="cb65-24"><a href="Mortality.html#cb65-24" tabindex="-1"></a><span class="st">    p.est[i,i] &lt;- lam.est * u.est[i]</span></span>
+<span id="cb65-25"><a href="Mortality.html#cb65-25" tabindex="-1"></a><span class="st">    for (j in (i+1):Periods) {</span></span>
+<span id="cb65-26"><a href="Mortality.html#cb65-26" tabindex="-1"></a><span class="st">      p.est[i,j] &lt;- prod(S.est[i:(j-1)])*lam.est*u.est[j]</span></span>
+<span id="cb65-27"><a href="Mortality.html#cb65-27" tabindex="-1"></a><span class="st">      } #j</span></span>
+<span id="cb65-28"><a href="Mortality.html#cb65-28" tabindex="-1"></a><span class="st">    p.est[i,Periods+1] &lt;- 1 - sum(p.est[i, i:Periods])   # Prob of not being seen again</span></span>
+<span id="cb65-29"><a href="Mortality.html#cb65-29" tabindex="-1"></a><span class="st">    } #i</span></span>
+<span id="cb65-30"><a href="Mortality.html#cb65-30" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
+<span id="cb65-31"><a href="Mortality.html#cb65-31" tabindex="-1"></a><span class="st">  RandRet[i,i:(Periods+1)] ~ dmulti(p.est[i,i:(Periods+1)], NumTagged[i])</span></span>
+<span id="cb65-32"><a href="Mortality.html#cb65-32" tabindex="-1"></a><span class="st">  }#i</span></span>
+<span id="cb65-33"><a href="Mortality.html#cb65-33" tabindex="-1"></a><span class="st"> }</span></span>
+<span id="cb65-34"><a href="Mortality.html#cb65-34" tabindex="-1"></a><span class="st">  &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb65-35"><a href="Mortality.html#cb65-35" tabindex="-1"></a>  <span class="fu">sink</span>()</span>
+<span id="cb65-36"><a href="Mortality.html#cb65-36" tabindex="-1"></a></span>
+<span id="cb65-37"><a href="Mortality.html#cb65-37" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb65-38"><a href="Mortality.html#cb65-38" tabindex="-1"></a>  jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;RandRet&quot;</span>, <span class="st">&quot;Periods&quot;</span>, <span class="st">&quot;NumTagged&quot;</span>)</span>
+<span id="cb65-39"><a href="Mortality.html#cb65-39" tabindex="-1"></a></span>
+<span id="cb65-40"><a href="Mortality.html#cb65-40" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb65-41"><a href="Mortality.html#cb65-41" tabindex="-1"></a>  a.init <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(Periods, <span class="dv">3</span>))</span>
+<span id="cb65-42"><a href="Mortality.html#cb65-42" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
+<span id="cb65-43"><a href="Mortality.html#cb65-43" tabindex="-1"></a>    a.init[i,] <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">3</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>)</span>
+<span id="cb65-44"><a href="Mortality.html#cb65-44" tabindex="-1"></a>    a.init[i,] <span class="ot">&lt;-</span> a.init[i,]<span class="sc">/</span><span class="fu">sum</span>(a.init[i,]) <span class="co"># Rescale to sum to 1</span></span>
+<span id="cb65-45"><a href="Mortality.html#cb65-45" tabindex="-1"></a>  }</span>
+<span id="cb65-46"><a href="Mortality.html#cb65-46" tabindex="-1"></a>  jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">a=</span>a.init)}</span>
+<span id="cb65-47"><a href="Mortality.html#cb65-47" tabindex="-1"></a></span>
+<span id="cb65-48"><a href="Mortality.html#cb65-48" tabindex="-1"></a>  model.file <span class="ot">&lt;-</span> <span class="st">&#39;TagReturn.txt&#39;</span></span>
+<span id="cb65-49"><a href="Mortality.html#cb65-49" tabindex="-1"></a></span>
+<span id="cb65-50"><a href="Mortality.html#cb65-50" tabindex="-1"></a>  <span class="co"># Parameters monitored</span></span>
+<span id="cb65-51"><a href="Mortality.html#cb65-51" tabindex="-1"></a>  jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="co">#&quot;lam.est&quot;,</span></span>
+<span id="cb65-52"><a href="Mortality.html#cb65-52" tabindex="-1"></a>                   <span class="st">&quot;u.est&quot;</span>, <span class="st">&quot;v.est&quot;</span>)</span>
+<span id="cb65-53"><a href="Mortality.html#cb65-53" tabindex="-1"></a>  <span class="co">#, &quot;S.est&quot;)</span></span>
+<span id="cb65-54"><a href="Mortality.html#cb65-54" tabindex="-1"></a></span>
+<span id="cb65-55"><a href="Mortality.html#cb65-55" tabindex="-1"></a>   <span class="co"># Call JAGS from R</span></span>
+<span id="cb65-56"><a href="Mortality.html#cb65-56" tabindex="-1"></a>  jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb65-57"><a href="Mortality.html#cb65-57" tabindex="-1"></a>                  <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
+<span id="cb65-58"><a href="Mortality.html#cb65-58" tabindex="-1"></a>                  model.file)</span>
+<span id="cb65-59"><a href="Mortality.html#cb65-59" tabindex="-1"></a>  <span class="fu">print</span>(jagsfit)</span>
+<span id="cb65-60"><a href="Mortality.html#cb65-60" tabindex="-1"></a>  <span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>We provide arbitrary starting values for the “a” parameters by rescaling uniform (0,1) random variates. Using a large release on each occasion (1000), our estimates are generally close to the true values except that v.est[3] is imprecise and typically overestimated. It is the most difficult time-dependent parameter to estimate. We get direct information (from returned tags) about the final exploitation rate but there is much uncertainty about whether fish not seen were still at risk or were natural deaths. This is especially true for the final release because most fish are still at large (examine the TagFate and RandRet matrices). Note that this differs from a completed tagging study (Section <a href="Mortality.html#Hearn">7.2</a>), where the study continues until no live fish remain.</p>
+<p>The analysis can be extended to include estimation of the tag-reporting rate. We use the simplest approach of a binomial experiment using planted tags. The fraction of planted tags that are returned is a direct estimate of the reporting rate. The only change required in the simulation code is to replace the assignment lam.true &lt;- 1.0 with the following three lines:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="Mortality.html#cb66-1" tabindex="-1"></a>lam.true <span class="ot">&lt;-</span> <span class="fl">0.9</span>  <span class="co"># Reporting rate</span></span>
+<span id="cb66-2"><a href="Mortality.html#cb66-2" tabindex="-1"></a>PlantedTags <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb66-3"><a href="Mortality.html#cb66-3" tabindex="-1"></a>PlantReturns <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>PlantedTags, <span class="at">prob=</span>lam.true)</span></code></pre></div>
+<p>The assumed reporting rate and number of planted tags are arbitrary and can be varied to see the effect on parameter uncertainty.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="Mortality.html#cb67-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb67-2"><a href="Mortality.html#cb67-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb67-3"><a href="Mortality.html#cb67-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb67-4"><a href="Mortality.html#cb67-4" tabindex="-1"></a></span>
+<span id="cb67-5"><a href="Mortality.html#cb67-5" tabindex="-1"></a>  <span class="do">######### JAGS code for estimating model parameters</span></span>
+<span id="cb67-6"><a href="Mortality.html#cb67-6" tabindex="-1"></a>  <span class="fu">sink</span>(<span class="st">&quot;TagReturn.txt&quot;</span>)</span>
+<span id="cb67-7"><a href="Mortality.html#cb67-7" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb67-8"><a href="Mortality.html#cb67-8" tabindex="-1"></a><span class="st">  model {</span></span>
+<span id="cb67-9"><a href="Mortality.html#cb67-9" tabindex="-1"></a><span class="st">  # Priors</span></span>
+<span id="cb67-10"><a href="Mortality.html#cb67-10" tabindex="-1"></a><span class="st">  lam.est ~ dunif(0,1) # Reporting rate</span></span>
+<span id="cb67-11"><a href="Mortality.html#cb67-11" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
+<span id="cb67-12"><a href="Mortality.html#cb67-12" tabindex="-1"></a><span class="st">     for (j in 1:3) # Rows are return periods, columns are fates</span></span>
+<span id="cb67-13"><a href="Mortality.html#cb67-13" tabindex="-1"></a><span class="st">       {</span></span>
+<span id="cb67-14"><a href="Mortality.html#cb67-14" tabindex="-1"></a><span class="st">         a[i,j] ~ dgamma(1,1)</span></span>
+<span id="cb67-15"><a href="Mortality.html#cb67-15" tabindex="-1"></a><span class="st">       } #j</span></span>
+<span id="cb67-16"><a href="Mortality.html#cb67-16" tabindex="-1"></a><span class="st">     S.est[i] &lt;- a[i,1]/sum(a[i,]) # Probability of survival</span></span>
+<span id="cb67-17"><a href="Mortality.html#cb67-17" tabindex="-1"></a><span class="st">     u.est[i] &lt;- a[i,2]/sum(a[i,]) # Probability of harvest (exploitation rate)</span></span>
+<span id="cb67-18"><a href="Mortality.html#cb67-18" tabindex="-1"></a><span class="st">     v.est[i] &lt;- a[i,3]/sum(a[i,]) # Probability of natural death</span></span>
+<span id="cb67-19"><a href="Mortality.html#cb67-19" tabindex="-1"></a><span class="st">     # v.est[3] could also be obtained as 1-S.est[i]-u.est[i]</span></span>
+<span id="cb67-20"><a href="Mortality.html#cb67-20" tabindex="-1"></a><span class="st">  } #i</span></span>
+<span id="cb67-21"><a href="Mortality.html#cb67-21" tabindex="-1"></a></span>
+<span id="cb67-22"><a href="Mortality.html#cb67-22" tabindex="-1"></a><span class="st"># Cell probabilities</span></span>
+<span id="cb67-23"><a href="Mortality.html#cb67-23" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
+<span id="cb67-24"><a href="Mortality.html#cb67-24" tabindex="-1"></a><span class="st">    p.est[i,i] &lt;- lam.est * u.est[i]</span></span>
+<span id="cb67-25"><a href="Mortality.html#cb67-25" tabindex="-1"></a><span class="st">    for (j in (i+1):Periods) {</span></span>
+<span id="cb67-26"><a href="Mortality.html#cb67-26" tabindex="-1"></a><span class="st">      p.est[i,j] &lt;- prod(S.est[i:(j-1)])*lam.est*u.est[j]</span></span>
+<span id="cb67-27"><a href="Mortality.html#cb67-27" tabindex="-1"></a><span class="st">      } #j</span></span>
+<span id="cb67-28"><a href="Mortality.html#cb67-28" tabindex="-1"></a><span class="st">    p.est[i,Periods+1] &lt;- 1 - sum(p.est[i, i:Periods])   # Prob of not being seen again</span></span>
+<span id="cb67-29"><a href="Mortality.html#cb67-29" tabindex="-1"></a><span class="st">    } #i</span></span>
+<span id="cb67-30"><a href="Mortality.html#cb67-30" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
+<span id="cb67-31"><a href="Mortality.html#cb67-31" tabindex="-1"></a><span class="st">  RandRet[i,i:(Periods+1)] ~ dmulti(p.est[i,i:(Periods+1)], NumTagged[i])</span></span>
+<span id="cb67-32"><a href="Mortality.html#cb67-32" tabindex="-1"></a><span class="st">  }#i</span></span>
+<span id="cb67-33"><a href="Mortality.html#cb67-33" tabindex="-1"></a><span class="st">  PlantReturns ~ dbin(lam.est, PlantedTags) # Additional likelihood component</span></span>
+<span id="cb67-34"><a href="Mortality.html#cb67-34" tabindex="-1"></a><span class="st"> }</span></span>
+<span id="cb67-35"><a href="Mortality.html#cb67-35" tabindex="-1"></a><span class="st">  &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb67-36"><a href="Mortality.html#cb67-36" tabindex="-1"></a>  <span class="fu">sink</span>()</span>
+<span id="cb67-37"><a href="Mortality.html#cb67-37" tabindex="-1"></a></span>
+<span id="cb67-38"><a href="Mortality.html#cb67-38" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb67-39"><a href="Mortality.html#cb67-39" tabindex="-1"></a>  jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;RandRet&quot;</span>, <span class="st">&quot;Periods&quot;</span>, <span class="st">&quot;NumTagged&quot;</span>, <span class="st">&quot;PlantedTags&quot;</span>, <span class="st">&quot;PlantReturns&quot;</span>)</span>
+<span id="cb67-40"><a href="Mortality.html#cb67-40" tabindex="-1"></a></span>
+<span id="cb67-41"><a href="Mortality.html#cb67-41" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb67-42"><a href="Mortality.html#cb67-42" tabindex="-1"></a>  a.init <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(Periods, <span class="dv">3</span>))</span>
+<span id="cb67-43"><a href="Mortality.html#cb67-43" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
+<span id="cb67-44"><a href="Mortality.html#cb67-44" tabindex="-1"></a>    a.init[i,] <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">3</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>)</span>
+<span id="cb67-45"><a href="Mortality.html#cb67-45" tabindex="-1"></a>    a.init[i,] <span class="ot">&lt;-</span> a.init[i,]<span class="sc">/</span><span class="fu">sum</span>(a.init[i,])  <span class="co"># Rescale to sum to 1</span></span>
+<span id="cb67-46"><a href="Mortality.html#cb67-46" tabindex="-1"></a>  }</span>
+<span id="cb67-47"><a href="Mortality.html#cb67-47" tabindex="-1"></a>  jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">a=</span>a.init)}</span>
+<span id="cb67-48"><a href="Mortality.html#cb67-48" tabindex="-1"></a></span>
+<span id="cb67-49"><a href="Mortality.html#cb67-49" tabindex="-1"></a>  model.file <span class="ot">&lt;-</span> <span class="st">&#39;TagReturn.txt&#39;</span></span>
+<span id="cb67-50"><a href="Mortality.html#cb67-50" tabindex="-1"></a></span>
+<span id="cb67-51"><a href="Mortality.html#cb67-51" tabindex="-1"></a>  <span class="co"># Parameters monitored</span></span>
+<span id="cb67-52"><a href="Mortality.html#cb67-52" tabindex="-1"></a>  jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;lam.est&quot;</span>, <span class="st">&quot;u.est&quot;</span>, <span class="st">&quot;v.est&quot;</span>)</span>
+<span id="cb67-53"><a href="Mortality.html#cb67-53" tabindex="-1"></a>  <span class="co">#, &quot;S.est&quot;)</span></span>
+<span id="cb67-54"><a href="Mortality.html#cb67-54" tabindex="-1"></a></span>
+<span id="cb67-55"><a href="Mortality.html#cb67-55" tabindex="-1"></a>   <span class="co"># Call JAGS from R</span></span>
+<span id="cb67-56"><a href="Mortality.html#cb67-56" tabindex="-1"></a>  jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb67-57"><a href="Mortality.html#cb67-57" tabindex="-1"></a>                  <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>, <span class="at">n.burnin=</span><span class="dv">5000</span>,</span>
+<span id="cb67-58"><a href="Mortality.html#cb67-58" tabindex="-1"></a>                  model.file)</span>
+<span id="cb67-59"><a href="Mortality.html#cb67-59" tabindex="-1"></a>  <span class="fu">print</span>(jagsfit)</span>
+<span id="cb67-60"><a href="Mortality.html#cb67-60" tabindex="-1"></a>  <span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>The auxiliary planted tag experiment requires only a few changes in the JAGS code. We provide an uninformative prior distribution for the now estimated parameter lam.est, and pass in the number of planted tags and returns. We let JAGS generate an initial value for lam.est. The additional likelihood component describes the binomial experiment. Convergence may be slower for this version of the code, so the number of MCMC iterations was increased to 10,000.</p>
+<p>Estimates have similar precision to the original example if the reporting rate is high. Precision is reduced at lower reporting rates because of the reduced sample size of returned tags and uncertainty about lambda.</p>
+</div>
+<div id="TelemetryFandM" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Telemetry estimates of F and M<a href="Mortality.html#TelemetryFandM" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Section <a href="Survival.html#TelemetryBased">6.2</a>, we used fixed receiving stations and telemetry tags to estimate the survival rate. Here we extend that approach to partition total mortality into fishing and natural components by giving telemetered fish an external high-reward tag (Design C of <span class="citation">Hightower and Harris (<a href="#ref-hightower.harris2017">2017</a>)</span>). Live fish “detect themselves” and provide information on survival by passing within range of a receiver. Harvest information comes from the reported high-reward tags. Thus we have observations on two of the three possible states, with natural mortality being the only unobserved true state. An important practical advantage of this approach is that field surveys are not needed after tagging is done (other than maintaining the receiver array and downloading detection data).</p>
+<p>We begin with a detour to introduce the JAGS dcat distribution, used to estimate probabilities for observations from different categories.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="Mortality.html#cb68-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb68-2"><a href="Mortality.html#cb68-2" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="Mortality.html#cb68-3" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb68-4"><a href="Mortality.html#cb68-4" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb68-5"><a href="Mortality.html#cb68-5" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb68-6"><a href="Mortality.html#cb68-6" tabindex="-1"></a></span>
+<span id="cb68-7"><a href="Mortality.html#cb68-7" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
+<span id="cb68-8"><a href="Mortality.html#cb68-8" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;dcat_example.txt&quot;</span>)</span>
+<span id="cb68-9"><a href="Mortality.html#cb68-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb68-10"><a href="Mortality.html#cb68-10" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb68-11"><a href="Mortality.html#cb68-11" tabindex="-1"></a></span>
+<span id="cb68-12"><a href="Mortality.html#cb68-12" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb68-13"><a href="Mortality.html#cb68-13" tabindex="-1"></a><span class="st">    for (j in 1:3) {</span></span>
+<span id="cb68-14"><a href="Mortality.html#cb68-14" tabindex="-1"></a><span class="st">         a[j] ~ dgamma(1,1)</span></span>
+<span id="cb68-15"><a href="Mortality.html#cb68-15" tabindex="-1"></a><span class="st">         } #j</span></span>
+<span id="cb68-16"><a href="Mortality.html#cb68-16" tabindex="-1"></a><span class="st">     p[1] &lt;- a[1]/sum(a[])</span></span>
+<span id="cb68-17"><a href="Mortality.html#cb68-17" tabindex="-1"></a><span class="st">     p[2] &lt;- a[2]/sum(a[])</span></span>
+<span id="cb68-18"><a href="Mortality.html#cb68-18" tabindex="-1"></a><span class="st">     p[3] &lt;- a[3]/sum(a[]) # Could also be obtained as 1-p[1]-p[2]</span></span>
+<span id="cb68-19"><a href="Mortality.html#cb68-19" tabindex="-1"></a></span>
+<span id="cb68-20"><a href="Mortality.html#cb68-20" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb68-21"><a href="Mortality.html#cb68-21" tabindex="-1"></a><span class="st">  for (i in 1:N){</span></span>
+<span id="cb68-22"><a href="Mortality.html#cb68-22" tabindex="-1"></a><span class="st">    y[i] ~ dcat(p[])</span></span>
+<span id="cb68-23"><a href="Mortality.html#cb68-23" tabindex="-1"></a><span class="st">  } #i</span></span>
+<span id="cb68-24"><a href="Mortality.html#cb68-24" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb68-25"><a href="Mortality.html#cb68-25" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb68-26"><a href="Mortality.html#cb68-26" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb68-27"><a href="Mortality.html#cb68-27" tabindex="-1"></a></span>
+<span id="cb68-28"><a href="Mortality.html#cb68-28" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb68-29"><a href="Mortality.html#cb68-29" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>) <span class="co"># Each observation drawn from category 1, 2, or 3</span></span>
+<span id="cb68-30"><a href="Mortality.html#cb68-30" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
+<span id="cb68-31"><a href="Mortality.html#cb68-31" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
+<span id="cb68-32"><a href="Mortality.html#cb68-32" tabindex="-1"></a></span>
+<span id="cb68-33"><a href="Mortality.html#cb68-33" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;dcat_example.txt&#39;</span></span>
+<span id="cb68-34"><a href="Mortality.html#cb68-34" tabindex="-1"></a></span>
+<span id="cb68-35"><a href="Mortality.html#cb68-35" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb68-36"><a href="Mortality.html#cb68-36" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p&quot;</span>)</span>
+<span id="cb68-37"><a href="Mortality.html#cb68-37" tabindex="-1"></a></span>
+<span id="cb68-38"><a href="Mortality.html#cb68-38" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb68-39"><a href="Mortality.html#cb68-39" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span><span class="cn">NULL</span>,</span>
+<span id="cb68-40"><a href="Mortality.html#cb68-40" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>,</span>
+<span id="cb68-41"><a href="Mortality.html#cb68-41" tabindex="-1"></a>                model.file)</span>
+<span id="cb68-42"><a href="Mortality.html#cb68-42" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb68-43"><a href="Mortality.html#cb68-43" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>Our dcat example has a y vector with five observations in the range of 1 to 3. The categories can be of any sort; for example, age or species code for individual fish. The model parameters of interest are calculated variables representing the probabilities of the three categories. The probabilities sum to 1, so as in Section <a href="Mortality.html#BrownieFandM">7.3</a>, we calculate them using an “a” vector with an uninformative gamma prior distribution. (A Dirichlet distribution can also be used as an uninformative prior distribution for probabilities that must sum to 1 <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>.) Returning to the purpose of this Section, the p vector could represent probabilities of a live detection, harvest, or not being detected. The MCMC process adjusts the p estimates to achieve the best possible match between model predictions and the observations (y vector). For simplicity, we let JAGS provide the initial values for the a vector. The estimates have wide credible intervals because of the small sample size.</p>
+<p>Returning to the telemetry example, we begin with simulation code, using arbitrary values for the number of occasions and sample size. Varying the patterns for rates of exploitation and natural death is helpful in judging the model’s ability to detect moderate time variation. This is a multistate model <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>, with a matrix (PSI.STATE) describing the various true states and the probabilities for transitioning between states over time. The three rows represent true states alive, harvest, and natural death. A fish that is alive (row 1) can remain alive (probability S.true), be harvested (probability u.true), or become a natural mortality (probability v.true). A harvested fish (row 2) remains in that state with probability 1, as does a natural death (row 3). Note that the third matrix dimension for PSI.STATE is time, as the rates are time-dependent.</p>
+<p>The observation matrix (PSI.OBS) has a similar structure. Rows are true states, columns are observed states, and the third dimension is time. There are three possible observed states: detected alive, harvested, and not detected. A live fish (row 1) can either be detected or not, with probabilities p[t] and 1-p[t]. A harvested fish (row 2) is assumed to be always detected (100% reporting), and a natural death (row 3) is never detected.</p>
+<p>The function for generating the simulated capture-history matrix (simul.ms) is complex, but key features are as follows. All fish are assumed to be tagged (transmitters and external tags) at time 1. Next we loop over occasions and use a multinomial trial to determine the true state transition between time t-1 and t (i.e., a live fish at time t-1 can remain alive, be harvested, or transition to natural death). To better understand the multinomial trial, try a simpler example in the Console. For example, <code>rmultinom(n=1, size=1, prob=c(0.7, 0.25, 0.05))</code> is a single trial (n=1) for one individual (size=1), with three states at the specified probabilities. The function returns a matrix with a 1 in a randomly determined row. The <code>which()</code> function locates the “1” and returns the row index (= fish’s state). This example could represent probabilities that a live fish at time t-1 survives (0.7), is harvested (0.25), or is a natural death (0.05). Returning to the code, a second multinomial trial based on the fish’s true state draws a random observed outcome (e.g., a live fish is either detected or missed).</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="Mortality.html#cb69-1" tabindex="-1"></a><span class="co"># Code modified from Kery and Schaub 2012, Section 9.5</span></span>
+<span id="cb69-2"><a href="Mortality.html#cb69-2" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="Mortality.html#cb69-3" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb69-4"><a href="Mortality.html#cb69-4" tabindex="-1"></a></span>
+<span id="cb69-5"><a href="Mortality.html#cb69-5" tabindex="-1"></a><span class="co"># Generation of simulated data</span></span>
+<span id="cb69-6"><a href="Mortality.html#cb69-6" tabindex="-1"></a><span class="co"># Define probabilities as well as number of occasions, states, observations and released individuals</span></span>
+<span id="cb69-7"><a href="Mortality.html#cb69-7" tabindex="-1"></a>n.occasions <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb69-8"><a href="Mortality.html#cb69-8" tabindex="-1"></a>n.tagged <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Simplify from Kery&#39;s version, only an initial release, and no spatial states</span></span>
+<span id="cb69-9"><a href="Mortality.html#cb69-9" tabindex="-1"></a></span>
+<span id="cb69-10"><a href="Mortality.html#cb69-10" tabindex="-1"></a>u.true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>)</span>
+<span id="cb69-11"><a href="Mortality.html#cb69-11" tabindex="-1"></a>v.true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.15</span>, <span class="fl">0.1</span>)</span>
+<span id="cb69-12"><a href="Mortality.html#cb69-12" tabindex="-1"></a>S.true <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span>u.true<span class="sc">-</span>v.true</span>
+<span id="cb69-13"><a href="Mortality.html#cb69-13" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, <span class="fl">0.8</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>)</span>
+<span id="cb69-14"><a href="Mortality.html#cb69-14" tabindex="-1"></a><span class="co">#  Detection probability fixed at 1 for first period, n.occasions-1 searches (e.g start of period 2, 3, ..)</span></span>
+<span id="cb69-15"><a href="Mortality.html#cb69-15" tabindex="-1"></a></span>
+<span id="cb69-16"><a href="Mortality.html#cb69-16" tabindex="-1"></a>n.states <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb69-17"><a href="Mortality.html#cb69-17" tabindex="-1"></a>n.obs <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb69-18"><a href="Mortality.html#cb69-18" tabindex="-1"></a></span>
+<span id="cb69-19"><a href="Mortality.html#cb69-19" tabindex="-1"></a><span class="co"># Define matrices with survival, transition and detection probabilities</span></span>
+<span id="cb69-20"><a href="Mortality.html#cb69-20" tabindex="-1"></a></span>
+<span id="cb69-21"><a href="Mortality.html#cb69-21" tabindex="-1"></a><span class="co"># 1. State process matrix. Three-dimensional matrix. 1=state, time t, 2=state, time t+1, 3=time</span></span>
+<span id="cb69-22"><a href="Mortality.html#cb69-22" tabindex="-1"></a>PSI.STATE <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(n.states, n.states, n.occasions<span class="dv">-1</span>))</span>
+<span id="cb69-23"><a href="Mortality.html#cb69-23" tabindex="-1"></a>   <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n.occasions<span class="dv">-1</span>)){</span>
+<span id="cb69-24"><a href="Mortality.html#cb69-24" tabindex="-1"></a>      PSI.STATE[,,t] <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb69-25"><a href="Mortality.html#cb69-25" tabindex="-1"></a>      S.true[t], u.true[t], v.true[t],</span>
+<span id="cb69-26"><a href="Mortality.html#cb69-26" tabindex="-1"></a>      <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb69-27"><a href="Mortality.html#cb69-27" tabindex="-1"></a>      <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> n.states, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb69-28"><a href="Mortality.html#cb69-28" tabindex="-1"></a>      } <span class="co">#t</span></span>
+<span id="cb69-29"><a href="Mortality.html#cb69-29" tabindex="-1"></a></span>
+<span id="cb69-30"><a href="Mortality.html#cb69-30" tabindex="-1"></a><span class="co"># 2.Observation process matrix.  1=true state, 2=observed state, 3=time</span></span>
+<span id="cb69-31"><a href="Mortality.html#cb69-31" tabindex="-1"></a>PSI.OBS <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(n.states, n.obs, n.occasions))</span>
+<span id="cb69-32"><a href="Mortality.html#cb69-32" tabindex="-1"></a>   <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n.occasions){</span>
+<span id="cb69-33"><a href="Mortality.html#cb69-33" tabindex="-1"></a>      PSI.OBS[,,t] <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb69-34"><a href="Mortality.html#cb69-34" tabindex="-1"></a>      p[t], <span class="dv">0</span>, <span class="dv">1</span><span class="sc">-</span>p[t],</span>
+<span id="cb69-35"><a href="Mortality.html#cb69-35" tabindex="-1"></a>      <span class="dv">0</span>,  <span class="dv">1</span>, <span class="dv">0</span>,  <span class="co"># Caught w/ high-reward tag, assume 100% reporting</span></span>
+<span id="cb69-36"><a href="Mortality.html#cb69-36" tabindex="-1"></a>      <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> n.states, <span class="at">byrow =</span> <span class="cn">TRUE</span>)  <span class="co"># Natural deaths never detected</span></span>
+<span id="cb69-37"><a href="Mortality.html#cb69-37" tabindex="-1"></a>      } <span class="co">#t</span></span>
+<span id="cb69-38"><a href="Mortality.html#cb69-38" tabindex="-1"></a></span>
+<span id="cb69-39"><a href="Mortality.html#cb69-39" tabindex="-1"></a><span class="co"># Define function to simulate multistate capture-recapture data</span></span>
+<span id="cb69-40"><a href="Mortality.html#cb69-40" tabindex="-1"></a>simul.ms <span class="ot">&lt;-</span> <span class="cf">function</span>(PSI.STATE, PSI.OBS, n.tagged, n.occasions, <span class="at">unobservable =</span> <span class="cn">NA</span>){</span>
+<span id="cb69-41"><a href="Mortality.html#cb69-41" tabindex="-1"></a>   <span class="co"># Unobservable: number of state that is unobservable</span></span>
+<span id="cb69-42"><a href="Mortality.html#cb69-42" tabindex="-1"></a>   CH <span class="ot">&lt;-</span> CH.TRUE <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> n.occasions, <span class="at">nrow =</span> n.tagged)</span>
+<span id="cb69-43"><a href="Mortality.html#cb69-43" tabindex="-1"></a>   CH[,<span class="dv">1</span>] <span class="ot">&lt;-</span> CH.TRUE[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># All releases at t=1</span></span>
+<span id="cb69-44"><a href="Mortality.html#cb69-44" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n.tagged){</span>
+<span id="cb69-45"><a href="Mortality.html#cb69-45" tabindex="-1"></a>     <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n.occasions){</span>
+<span id="cb69-46"><a href="Mortality.html#cb69-46" tabindex="-1"></a>         <span class="co"># Multinomial trials for state transitions</span></span>
+<span id="cb69-47"><a href="Mortality.html#cb69-47" tabindex="-1"></a>         CH.TRUE[i,t] <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rmultinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">1</span>,</span>
+<span id="cb69-48"><a href="Mortality.html#cb69-48" tabindex="-1"></a>                                         <span class="at">prob=</span>PSI.STATE[CH.TRUE[i,t<span class="dv">-1</span>],,t<span class="dv">-1</span>])<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb69-49"><a href="Mortality.html#cb69-49" tabindex="-1"></a>         <span class="co"># which vector element=1; i.e., which state gets the random draw</span></span>
+<span id="cb69-50"><a href="Mortality.html#cb69-50" tabindex="-1"></a>         <span class="co"># at time t given true state at t-1</span></span>
+<span id="cb69-51"><a href="Mortality.html#cb69-51" tabindex="-1"></a>         <span class="co"># True state determines which row of PSI.STATE provides the probabilities</span></span>
+<span id="cb69-52"><a href="Mortality.html#cb69-52" tabindex="-1"></a></span>
+<span id="cb69-53"><a href="Mortality.html#cb69-53" tabindex="-1"></a>         <span class="co"># Multinomial trials for observation process</span></span>
+<span id="cb69-54"><a href="Mortality.html#cb69-54" tabindex="-1"></a>         CH[i,t] <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rmultinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, PSI.OBS[CH.TRUE[i,t],,t])<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb69-55"><a href="Mortality.html#cb69-55" tabindex="-1"></a>         <span class="co"># which observation gets the 1 random draw, given true time t state.</span></span>
+<span id="cb69-56"><a href="Mortality.html#cb69-56" tabindex="-1"></a>         } <span class="co">#t</span></span>
+<span id="cb69-57"><a href="Mortality.html#cb69-57" tabindex="-1"></a>      } <span class="co">#i</span></span>
+<span id="cb69-58"><a href="Mortality.html#cb69-58" tabindex="-1"></a></span>
+<span id="cb69-59"><a href="Mortality.html#cb69-59" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">CH=</span>CH, <span class="at">CH.TRUE=</span>CH.TRUE)) <span class="co"># True (CH.TRUE) and observed (CH)</span></span>
+<span id="cb69-60"><a href="Mortality.html#cb69-60" tabindex="-1"></a>   } <span class="co"># simul.ms</span></span></code></pre></div>
+<p>The JAGS code is also complex but does generally mirror the simulation code.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="Mortality.html#cb70-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb70-2"><a href="Mortality.html#cb70-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb70-3"><a href="Mortality.html#cb70-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb70-4"><a href="Mortality.html#cb70-4" tabindex="-1"></a></span>
+<span id="cb70-5"><a href="Mortality.html#cb70-5" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
+<span id="cb70-6"><a href="Mortality.html#cb70-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;Mort_Tel_HRTag.txt&quot;</span>)</span>
+<span id="cb70-7"><a href="Mortality.html#cb70-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb70-8"><a href="Mortality.html#cb70-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb70-9"><a href="Mortality.html#cb70-9" tabindex="-1"></a></span>
+<span id="cb70-10"><a href="Mortality.html#cb70-10" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb70-11"><a href="Mortality.html#cb70-11" tabindex="-1"></a><span class="st">for (t in 1:(n.occasions-1)) {</span></span>
+<span id="cb70-12"><a href="Mortality.html#cb70-12" tabindex="-1"></a><span class="st">     for (j in 1:3) { # Rows are return periods, columns are fates</span></span>
+<span id="cb70-13"><a href="Mortality.html#cb70-13" tabindex="-1"></a><span class="st">         a[t,j] ~ dgamma(1,1)</span></span>
+<span id="cb70-14"><a href="Mortality.html#cb70-14" tabindex="-1"></a><span class="st">         } #j</span></span>
+<span id="cb70-15"><a href="Mortality.html#cb70-15" tabindex="-1"></a><span class="st">     S.est[t] &lt;- a[t,1]/sum(a[t,]) # Probability of survival</span></span>
+<span id="cb70-16"><a href="Mortality.html#cb70-16" tabindex="-1"></a><span class="st">     u.est[t] &lt;- a[t,2]/sum(a[t,]) # Probability of harvest (exploitation rate)</span></span>
+<span id="cb70-17"><a href="Mortality.html#cb70-17" tabindex="-1"></a><span class="st">     v.est[t] &lt;- a[t,3]/sum(a[t,]) # Probability of natural death</span></span>
+<span id="cb70-18"><a href="Mortality.html#cb70-18" tabindex="-1"></a><span class="st">     # v.est[t] could also be obtained as 1-S.est[t]-u.est[t]</span></span>
+<span id="cb70-19"><a href="Mortality.html#cb70-19" tabindex="-1"></a><span class="st">    } #t</span></span>
+<span id="cb70-20"><a href="Mortality.html#cb70-20" tabindex="-1"></a></span>
+<span id="cb70-21"><a href="Mortality.html#cb70-21" tabindex="-1"></a><span class="st">  p[1] ~ dbern(1)</span></span>
+<span id="cb70-22"><a href="Mortality.html#cb70-22" tabindex="-1"></a><span class="st">  for (t in 2:n.occasions){</span></span>
+<span id="cb70-23"><a href="Mortality.html#cb70-23" tabindex="-1"></a><span class="st">    p[t] ~ dunif(0,1)</span></span>
+<span id="cb70-24"><a href="Mortality.html#cb70-24" tabindex="-1"></a><span class="st">    }#t</span></span>
+<span id="cb70-25"><a href="Mortality.html#cb70-25" tabindex="-1"></a></span>
+<span id="cb70-26"><a href="Mortality.html#cb70-26" tabindex="-1"></a><span class="st"># Define state-transition and observation matrices</span></span>
+<span id="cb70-27"><a href="Mortality.html#cb70-27" tabindex="-1"></a><span class="st"># Probabilities of true state at t+1 given state at time t</span></span>
+<span id="cb70-28"><a href="Mortality.html#cb70-28" tabindex="-1"></a><span class="st">    for (t in 1:(n.occasions-1)){</span></span>
+<span id="cb70-29"><a href="Mortality.html#cb70-29" tabindex="-1"></a><span class="st">    ps[1,t,1] &lt;- S.est[t]</span></span>
+<span id="cb70-30"><a href="Mortality.html#cb70-30" tabindex="-1"></a><span class="st">    ps[1,t,2] &lt;- u.est[t]</span></span>
+<span id="cb70-31"><a href="Mortality.html#cb70-31" tabindex="-1"></a><span class="st">    ps[1,t,3] &lt;- v.est[t]</span></span>
+<span id="cb70-32"><a href="Mortality.html#cb70-32" tabindex="-1"></a><span class="st">    ps[2,t,1] &lt;- 0</span></span>
+<span id="cb70-33"><a href="Mortality.html#cb70-33" tabindex="-1"></a><span class="st">    ps[2,t,2] &lt;- 1</span></span>
+<span id="cb70-34"><a href="Mortality.html#cb70-34" tabindex="-1"></a><span class="st">    ps[2,t,3] &lt;- 0</span></span>
+<span id="cb70-35"><a href="Mortality.html#cb70-35" tabindex="-1"></a><span class="st">    ps[3,t,1] &lt;- 0</span></span>
+<span id="cb70-36"><a href="Mortality.html#cb70-36" tabindex="-1"></a><span class="st">    ps[3,t,2] &lt;- 0</span></span>
+<span id="cb70-37"><a href="Mortality.html#cb70-37" tabindex="-1"></a><span class="st">    ps[3,t,3] &lt;- 1</span></span>
+<span id="cb70-38"><a href="Mortality.html#cb70-38" tabindex="-1"></a><span class="st">    } #t</span></span>
+<span id="cb70-39"><a href="Mortality.html#cb70-39" tabindex="-1"></a></span>
+<span id="cb70-40"><a href="Mortality.html#cb70-40" tabindex="-1"></a><span class="st"># Probabilities of observed states given true state</span></span>
+<span id="cb70-41"><a href="Mortality.html#cb70-41" tabindex="-1"></a><span class="st">    for (t in 2:n.occasions){</span></span>
+<span id="cb70-42"><a href="Mortality.html#cb70-42" tabindex="-1"></a><span class="st">    po[1,t,1] &lt;- p[t]  # Row 1 true state = alive</span></span>
+<span id="cb70-43"><a href="Mortality.html#cb70-43" tabindex="-1"></a><span class="st">    po[1,t,2] &lt;- 0</span></span>
+<span id="cb70-44"><a href="Mortality.html#cb70-44" tabindex="-1"></a><span class="st">    po[1,t,3] &lt;- 1-p[t]</span></span>
+<span id="cb70-45"><a href="Mortality.html#cb70-45" tabindex="-1"></a><span class="st">    po[2,t,1] &lt;- 0     # Row 2 true state = harvested</span></span>
+<span id="cb70-46"><a href="Mortality.html#cb70-46" tabindex="-1"></a><span class="st">    po[2,t,2] &lt;- 1</span></span>
+<span id="cb70-47"><a href="Mortality.html#cb70-47" tabindex="-1"></a><span class="st">    po[2,t,3] &lt;- 0</span></span>
+<span id="cb70-48"><a href="Mortality.html#cb70-48" tabindex="-1"></a><span class="st">    po[3,t,1] &lt;- 0     # Row 3 true state= natural death</span></span>
+<span id="cb70-49"><a href="Mortality.html#cb70-49" tabindex="-1"></a><span class="st">    po[3,t,2] &lt;- 0</span></span>
+<span id="cb70-50"><a href="Mortality.html#cb70-50" tabindex="-1"></a><span class="st">    po[3,t,3] &lt;- 1</span></span>
+<span id="cb70-51"><a href="Mortality.html#cb70-51" tabindex="-1"></a><span class="st">    } #t</span></span>
+<span id="cb70-52"><a href="Mortality.html#cb70-52" tabindex="-1"></a></span>
+<span id="cb70-53"><a href="Mortality.html#cb70-53" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb70-54"><a href="Mortality.html#cb70-54" tabindex="-1"></a><span class="st">    for (i in 1:n.tagged){</span></span>
+<span id="cb70-55"><a href="Mortality.html#cb70-55" tabindex="-1"></a><span class="st">    z[i,1] &lt;- y[i,1] # Latent state known at time of tagging (t=1)</span></span>
+<span id="cb70-56"><a href="Mortality.html#cb70-56" tabindex="-1"></a><span class="st">    for (t in 2:n.occasions){</span></span>
+<span id="cb70-57"><a href="Mortality.html#cb70-57" tabindex="-1"></a><span class="st">    # State process: draw state at time t given state at time t-1</span></span>
+<span id="cb70-58"><a href="Mortality.html#cb70-58" tabindex="-1"></a><span class="st">    z[i,t] ~ dcat(ps[z[i,(t-1)], (t-1),])</span></span>
+<span id="cb70-59"><a href="Mortality.html#cb70-59" tabindex="-1"></a><span class="st">    # Observation process: draw observed state given true state at time t</span></span>
+<span id="cb70-60"><a href="Mortality.html#cb70-60" tabindex="-1"></a><span class="st">    y[i,t] ~ dcat(po[z[i,t], t,])</span></span>
+<span id="cb70-61"><a href="Mortality.html#cb70-61" tabindex="-1"></a><span class="st">    } #t</span></span>
+<span id="cb70-62"><a href="Mortality.html#cb70-62" tabindex="-1"></a><span class="st">    } #i</span></span>
+<span id="cb70-63"><a href="Mortality.html#cb70-63" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb70-64"><a href="Mortality.html#cb70-64" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb70-65"><a href="Mortality.html#cb70-65" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb70-66"><a href="Mortality.html#cb70-66" tabindex="-1"></a></span>
+<span id="cb70-67"><a href="Mortality.html#cb70-67" tabindex="-1"></a><span class="co"># Generate initial values for z. Modified from Kery code for JAGS inits, age-specific example 9.5.3</span></span>
+<span id="cb70-68"><a href="Mortality.html#cb70-68" tabindex="-1"></a>z.init <span class="ot">&lt;-</span> <span class="cf">function</span>(ch) {</span>
+<span id="cb70-69"><a href="Mortality.html#cb70-69" tabindex="-1"></a>  <span class="co"># State 1=Obs 1 (alive) State 2=Obs 2 (fishing death). Start w/ known states from obs capture-history,</span></span>
+<span id="cb70-70"><a href="Mortality.html#cb70-70" tabindex="-1"></a>  <span class="co"># replace &quot;3&quot; with possible state(s)</span></span>
+<span id="cb70-71"><a href="Mortality.html#cb70-71" tabindex="-1"></a>  ch[ch<span class="sc">==</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>  <span class="co"># Not observed so temporarily replace w/ neg value</span></span>
+<span id="cb70-72"><a href="Mortality.html#cb70-72" tabindex="-1"></a>  ch[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span>  <span class="co"># Initial value not needed for release period</span></span>
+<span id="cb70-73"><a href="Mortality.html#cb70-73" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(ch)){</span>
+<span id="cb70-74"><a href="Mortality.html#cb70-74" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">max</span>(ch[i,], <span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">&lt;</span><span class="dv">2</span>){</span>
+<span id="cb70-75"><a href="Mortality.html#cb70-75" tabindex="-1"></a>      ch[i, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(ch)] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Not detected dead so initialize as alive (after release period)</span></span>
+<span id="cb70-76"><a href="Mortality.html#cb70-76" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
+<span id="cb70-77"><a href="Mortality.html#cb70-77" tabindex="-1"></a>      m <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">which</span>(ch[i,]<span class="sc">==</span><span class="dv">2</span>))  <span class="co"># Period when fishing death first detected</span></span>
+<span id="cb70-78"><a href="Mortality.html#cb70-78" tabindex="-1"></a>      <span class="cf">if</span>(m<span class="sc">&gt;</span><span class="dv">2</span>) ch[i, <span class="dv">2</span><span class="sc">:</span>(m<span class="dv">-1</span>)] <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># Initialize as alive up to period prior to harvest</span></span>
+<span id="cb70-79"><a href="Mortality.html#cb70-79" tabindex="-1"></a>      ch[i, m<span class="sc">:</span><span class="fu">ncol</span>(ch)] <span class="ot">&lt;-</span> <span class="dv">2</span>  <span class="co"># Initialize as dead after detected fishing death</span></span>
+<span id="cb70-80"><a href="Mortality.html#cb70-80" tabindex="-1"></a>      } <span class="co"># if/else</span></span>
+<span id="cb70-81"><a href="Mortality.html#cb70-81" tabindex="-1"></a>} <span class="co"># i</span></span>
+<span id="cb70-82"><a href="Mortality.html#cb70-82" tabindex="-1"></a>  <span class="fu">return</span>(ch)</span>
+<span id="cb70-83"><a href="Mortality.html#cb70-83" tabindex="-1"></a>} <span class="co"># z.init</span></span>
+<span id="cb70-84"><a href="Mortality.html#cb70-84" tabindex="-1"></a></span>
+<span id="cb70-85"><a href="Mortality.html#cb70-85" tabindex="-1"></a><span class="co"># Call function to get simulated true (CH.TRUE) and observed (CH) states</span></span>
+<span id="cb70-86"><a href="Mortality.html#cb70-86" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="fu">simul.ms</span>(PSI.STATE, PSI.OBS, n.tagged, n.occasions)</span>
+<span id="cb70-87"><a href="Mortality.html#cb70-87" tabindex="-1"></a>y <span class="ot">&lt;-</span> sim<span class="sc">$</span>CH</span>
+<span id="cb70-88"><a href="Mortality.html#cb70-88" tabindex="-1"></a></span>
+<span id="cb70-89"><a href="Mortality.html#cb70-89" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb70-90"><a href="Mortality.html#cb70-90" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.occasions&quot;</span>, <span class="st">&quot;n.tagged&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
+<span id="cb70-91"><a href="Mortality.html#cb70-91" tabindex="-1"></a></span>
+<span id="cb70-92"><a href="Mortality.html#cb70-92" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb70-93"><a href="Mortality.html#cb70-93" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">z =</span> <span class="fu">z.init</span>(y))}</span>
+<span id="cb70-94"><a href="Mortality.html#cb70-94" tabindex="-1"></a></span>
+<span id="cb70-95"><a href="Mortality.html#cb70-95" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;Mort_Tel_HRTag.txt&#39;</span></span>
+<span id="cb70-96"><a href="Mortality.html#cb70-96" tabindex="-1"></a></span>
+<span id="cb70-97"><a href="Mortality.html#cb70-97" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb70-98"><a href="Mortality.html#cb70-98" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;u.est&quot;</span>, <span class="st">&quot;v.est&quot;</span>, <span class="st">&quot;p&quot;</span>)</span>
+<span id="cb70-99"><a href="Mortality.html#cb70-99" tabindex="-1"></a></span>
+<span id="cb70-100"><a href="Mortality.html#cb70-100" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb70-101"><a href="Mortality.html#cb70-101" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb70-102"><a href="Mortality.html#cb70-102" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb70-103"><a href="Mortality.html#cb70-103" tabindex="-1"></a>                model.file)</span>
+<span id="cb70-104"><a href="Mortality.html#cb70-104" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb70-105"><a href="Mortality.html#cb70-105" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>The parameters for rates of survival, exploitation and natural death use the same approach as in the above dcat example.. The “a” matrix is estimated internally using a vague gamma prior distribution, then the three fractions estimate the probabilities of the three possible true states (survival, harvest, natural death), which sum to 1. The latent true states (z matrix) are estimated in the likelihood section of the code. The dcat (categorical distribution) is used to draw the true state at time t given state at time t-1, as well as the observation at each time given the true state.</p>
+<p>One difficult part of fitting this model is obtaining initial values for the latent true states. JAGS will refuse to update model parameters if initial values are inconsistent with the observations <a href="https://www.vogelwarte.ch/de/projekte/publikationen/bpa/code-for-running-bpa-using-jags">(link)</a>. The function used here <code>z.init()</code> initializes all unknown true states to be “alive” unless a harvest occurs. This works because fish not detected could either be alive or a natural death, so “alive” is a valid initial value. Individuals that are ultimately harvested are known to be alive up to the period prior to harvest. It can be instructive to compare the matrices containing true and observed states with the initial values. For example, initial values can be saved by entering z.test &lt;- z.init(y) in the Console. Entering sim$CH.TRUE[1:5,] and CH[1:5,] in the Console will display true and observed states for the first five individuals for comparison to z.test.</p>
+<p>Results for the chosen simulation settings are moderately reliable. There are many parameters, as the model estimates true latent states as well as the probabilities for survival, harvest and natural death. It seems to consistently detect the increase in harvest rate in period 3. Uncertainty increases toward the end of the study, especially for probabilities of detection and natural death. This makes sense because fish not detected on the final occasion could either be alive or a natural death.</p>
+<p>Perhaps the most obvious simulation settings to vary are the fairly robust sample size of tagged fish (100) and the detection probabilities (0.6 and above). Uncertainty increases markedly as detection probabilities decrease, so these simulations can be very helpful in planning the field study (e.g., number of receiver stations). The number of occasions can also be varied but it requires commensurate changes in the vectors for u, v, and p.</p>
+</div>
+<div id="exercises-4" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Exercises<a href="Mortality.html#exercises-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>For the exploitation rate study design (Section <a href="Mortality.html#ExpRate">7.1</a>), modify the JAGS code to plot the posterior distribution for the exploitation rate. Include a vertical line showing the underlying true exploitation rate.</p></li>
+<li><p>For the completed tagging study design (Section <a href="Mortality.html#Hearn">7.2</a>), modify the code to use a single F parameter (representing an average over periods).</p></li>
+<li><p>For the multi-year tagging study (Section <a href="Mortality.html#BrownieFandM">7.3</a>), run three replicate simulations of the version using planted tags, with tag releases of 1000 (current code), 100, and 30. How does uncertainty (e.g. credible interval width) vary? What sample size would you recommend if planning this study? Also, save credible intervals for v3 for the 1000 fish releases (for exercise 4 below).</p></li>
+<li><p>Compare results for v3 (from exercise 3) with a modified design using five periods. Extend the u and v vectors by using the values from periods 1-2 for the final two periods. How do credible intervals for v3 change when the study is extended?</p></li>
+<li><p>For the telemtry study (Section <a href="Mortality.html#TelemetryFandM">7.4</a>), compare results (particularly uncertainty) for parameter v4 when p5 takes on the following values: 0.2, 0.4, 0.7, 0.9. How might this affect planning for conducting the field work?</p></li>
+</ol>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-hearn.etal2003" class="csl-entry">
+Hearn, William S., John M. Hoenig, Kenneth H. Pollock, and Daniel A. Hepworth. 2003. <span>“Tag <span>Reporting Rate Estimation</span>: 3. <span>Use</span> of <span>Planted Tags</span> in <span>One Component</span> of a <span>Multiple-Component Fishery</span>.”</span> <em>North American Journal of Fisheries Management</em> 23 (1): 66–77. <a href="https://doi.org/10.1577/1548-8675(2003)023&lt;0066:TRREUO&gt;2.0.CO;2">https://doi.org/10.1577/1548-8675(2003)023&lt;0066:TRREUO&gt;2.0.CO;2</a>.
+</div>
+<div id="ref-hearn.etal1987" class="csl-entry">
+Hearn, William S., Ronald L. Sandland, and John Hampton. 1987. <span>“Robust Estimation of the Natural Mortality Rate in a Completed Tagging Experiment with Variable Fishing Intensity.”</span> <em>ICES Journal of Marine Science</em> 43 (2): 107–17. <a href="https://doi.org/10.1093/icesjms/43.2.107">https://doi.org/10.1093/icesjms/43.2.107</a>.
+</div>
+<div id="ref-hightower.harris2017" class="csl-entry">
+Hightower, Joseph E., and Julianne E. Harris. 2017. <span>“Estimating <span>Fish Mortality Rates Using Telemetry</span> and <span>Multistate Models</span>.”</span> <em>Fisheries</em> 42 (4): 210–19. <a href="https://doi.org/10.1080/03632415.2017.1276347">https://doi.org/10.1080/03632415.2017.1276347</a>.
+</div>
+<div id="ref-kéry.schaub_2011" class="csl-entry">
+Kéry, Marc, and Michael Schaub. 2011. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st edition. Boston: Academic Press.
+</div>
+<div id="ref-mccarthy2007" class="csl-entry">
+McCarthy, Michael A. 2007. <em>Bayesian <span>Methods</span> for <span>Ecology</span></em>. 1st edition. Cambridge, UK ; New York: Cambridge University Press.
+</div>
+<div id="ref-pollock.etal_2001" class="csl-entry">
+Pollock, Kenneth H., John M. Hoenig, William S. Hearn, and Brian Calingaert. 2001. <span>“Tag <span>Reporting Rate Estimation</span>: 1. <span>An Evaluation</span> of the <span>High-Reward Tagging Method</span>.”</span> <em>North American Journal of Fisheries Management</em> 21 (3): 521–32. <a href="https://doi.org/10.1577/1548-8675(2001)021&lt;0521:TRREAE&gt;2.0.CO;2">https://doi.org/10.1577/1548-8675(2001)021&lt;0521:TRREAE&gt;2.0.CO;2</a>.
+</div>
+<div id="ref-pollock.pine2007" class="csl-entry">
+Pollock, Kenneth, and William Pine. 2007. <span>“The Design and Analysis of Field Studies to Estimate Catch‐and‐release Mortality.”</span> <em>Fisheries Management and Ecology</em> 14 (April): 123–30. <a href="https://doi.org/10.1111/j.1365-2400.2007.00532.x">https://doi.org/10.1111/j.1365-2400.2007.00532.x</a>.
+</div>
+<div id="ref-ricker1975" class="csl-entry">
+Ricker, William Edwin. 1975. <em>Computation and Interpretation of Biological Statistics of Fish Populations</em>. Bulletin 191. Ottawa: <span>Dept. of Fisheries and Oceans : Minister of Supply and Services Canada</span>.
+</div>
+<div id="ref-vetter1988" class="csl-entry">
+Vetter, Ef. 1988. <span>“Estimation of <span>Natural Mortality</span> in <span>Fish Stocks</span> - a <span>Review</span>.”</span> <em>Fishery Bulletin</em> 86 (1): 25–43. <a href="http://www.webofscience.com/wos/woscc/full-record/WOS:A1988P107100002">http://www.webofscience.com/wos/woscc/full-record/WOS:A1988P107100002</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Survival.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Growth.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/07-MortalityComponents.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
