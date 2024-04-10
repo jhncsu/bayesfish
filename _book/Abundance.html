@@ -32,15 +32,15 @@
   
 <link rel="prev" href="Model-fit.html"/>
 <link rel="next" href="Survival.html"/>
-<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,9 +49,9 @@
 
 
 
-<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -285,69 +285,68 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="Abundance" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Abundance<a href="Abundance.html#Abundance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><img src="https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/40180/full/full/0/default.jpg" alt="Smith 1894." />
-Information about abundance can be invaluable for making policy decisions. For fish populations that support commercial or recreational fishing, population estimates are highly useful for deciding about the appropriate level of harvest. For rare or declining populations, abundance data can guide the restoration process. In this chapter, we will consider a few simple field approaches for estimating population size. These methods can be used in freshwater or marine systems, but they do require that the study area be closed (no migration in or out, no recruitment (additions through reproduction), and no mortality for the duration of the study). Later chapters will consider open models that jointly estimate population abundance and mortality over longer time frames.</p>
+<p>Information about abundance can be invaluable for making policy decisions. For fish populations that support commercial or recreational fishing, population estimates are highly useful for deciding about the appropriate level of harvest. For rare or declining populations, abundance data can guide the restoration process. In this chapter, we will consider a few simple field approaches for estimating population size. These methods can be used in freshwater or marine systems, but they do require that the study area be closed (no migration in or out, no recruitment (additions through reproduction), and no mortality for the duration of the study). Later chapters will consider open models that jointly estimate population abundance and mortality over longer time frames.</p>
 <div id="removal" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> Removal<a href="Abundance.html#removal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Removal models are a good option when a substantial fraction of the study population can be captured in a single sample. One common example is use of backpack electrofishing in streams that can be blocked on both ends to provide a temporarily closed system. Fish captured in each sample (or “pass”) are held out temporarily and the declining catches from the diminishing population provide the data for estimating abundance. Consider a case with a true (study area) population of 100 and a capture probability (fraction of the population captured in each sample) of 0.4. The expected sequence of catches would be 40 (100 * 0.4), 24 ((100-40) * 0.4), 14.4 ((60-24)*0.4), etc. A model fit to these data provides estimates of initial population size and capture probability that best mimic the pattern of catches. The fit would be very good if we used the above expected values, but it is more challenging (and realistic) when the catch sequence includes random variation.</p>
 <p>We illustrate the removal method using a simulation to generate sample data. Here the true values are arbitrary, but roughly similar to estimates obtained by <span class="citation">Bryant (<a href="#ref-bryant2000">2000</a>)</span> for Alaska streams. If planning a field study, your assumed population level should be based on prior work or literature review. The assumed capture probability should also be realistic, but it is a bit different from population size in that it is under the investigator’s control. Thus, a better estimate can be achieved by increasing sampling effort; for example, by using more electrofishing units or setting more traps. The other study design variable controlled by the investigator is the number of samples. Here we use five removal samples, which should provide high quality results.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="Abundance.html#cb40-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb40-2"><a href="Abundance.html#cb40-2" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="Abundance.html#cb40-3" tabindex="-1"></a><span class="co"># Generate simulated removals, assuming constant catchability</span></span>
-<span id="cb40-4"><a href="Abundance.html#cb40-4" tabindex="-1"></a>N.removals <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Number of removals</span></span>
-<span id="cb40-5"><a href="Abundance.html#cb40-5" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb40-6"><a href="Abundance.html#cb40-6" tabindex="-1"></a>CapProb <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb40-7"><a href="Abundance.html#cb40-7" tabindex="-1"></a>N.remaining <span class="ot">&lt;-</span> N.true <span class="co"># Initialize N.remaining, before removals begin</span></span>
-<span id="cb40-8"><a href="Abundance.html#cb40-8" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">numeric</span>() <span class="co"># Creates empty vector for storing catch data</span></span>
-<span id="cb40-9"><a href="Abundance.html#cb40-9" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N.removals){</span>
-<span id="cb40-10"><a href="Abundance.html#cb40-10" tabindex="-1"></a>  Catch[j] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, N.remaining, CapProb)</span>
-<span id="cb40-11"><a href="Abundance.html#cb40-11" tabindex="-1"></a>  N.remaining <span class="ot">&lt;-</span> N.remaining <span class="sc">-</span> Catch[j]</span>
-<span id="cb40-12"><a href="Abundance.html#cb40-12" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Abundance.html#cb1-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb1-2"><a href="Abundance.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="Abundance.html#cb1-3" tabindex="-1"></a><span class="co"># Generate simulated removals, assuming constant catchability</span></span>
+<span id="cb1-4"><a href="Abundance.html#cb1-4" tabindex="-1"></a>N.removals <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Number of removals</span></span>
+<span id="cb1-5"><a href="Abundance.html#cb1-5" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-6"><a href="Abundance.html#cb1-6" tabindex="-1"></a>CapProb <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb1-7"><a href="Abundance.html#cb1-7" tabindex="-1"></a>N.remaining <span class="ot">&lt;-</span> N.true <span class="co"># Initialize N.remaining, before removals begin</span></span>
+<span id="cb1-8"><a href="Abundance.html#cb1-8" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">numeric</span>() <span class="co"># Creates empty vector for storing catch data</span></span>
+<span id="cb1-9"><a href="Abundance.html#cb1-9" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N.removals){</span>
+<span id="cb1-10"><a href="Abundance.html#cb1-10" tabindex="-1"></a>  Catch[j] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, N.remaining, CapProb)</span>
+<span id="cb1-11"><a href="Abundance.html#cb1-11" tabindex="-1"></a>  N.remaining <span class="ot">&lt;-</span> N.remaining <span class="sc">-</span> Catch[j]</span>
+<span id="cb1-12"><a href="Abundance.html#cb1-12" tabindex="-1"></a>  }</span></code></pre></div>
 <p>Running the above lines of code generates the sequence of simulated catches. (Note that these lines of simulation code would be replaced by an assignment statement (e.g., Catch &lt;- c(14, 4, 6, 2, 3)) if we were analyzing data from an actual field study). A ‘for’ loop is used to step through the simulated sampling sequence. For each value of j, we generate a binomially-distributed random catch using the <code>rbinom()</code> function, then remove that number of fish from the remaining population. One example run produced a catch vector of 36, 25, 20, 6 and 6. The high assumed value for capture probability produces very good data; thus, these values are close to what would be expected. Try running the code using other values for capture probability. Is there a lower bound below which you would not expect the method to work well?</p>
 <p>The next step is to fit the removal model using JAGS. The prior distribution for capture probability is straightforward (uniform 0-1) but the choice is a bit more subjective for population size (N.est). We can use the total catch as a lower bound and an arbitrary high value for the upper bound. That should ensure that the prior distribution does not affect the solution, but that could be confirmed by comparing fits using different upper bounds. Knowledge of your study system and the literature would be useful in setting the upper bound for analyzing a real data set.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="Abundance.html#cb41-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb41-2"><a href="Abundance.html#cb41-2" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
-<span id="cb41-3"><a href="Abundance.html#cb41-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
-<span id="cb41-4"><a href="Abundance.html#cb41-4" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="Abundance.html#cb41-5" tabindex="-1"></a><span class="co"># JAGS code for fitting model</span></span>
-<span id="cb41-6"><a href="Abundance.html#cb41-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;RemovalModel.txt&quot;</span>)</span>
-<span id="cb41-7"><a href="Abundance.html#cb41-7" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb41-8"><a href="Abundance.html#cb41-8" tabindex="-1"></a><span class="st">model{</span></span>
-<span id="cb41-9"><a href="Abundance.html#cb41-9" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="Abundance.html#cb41-10" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb41-11"><a href="Abundance.html#cb41-11" tabindex="-1"></a><span class="st"> CapProb.est ~ dunif(0,1)</span></span>
-<span id="cb41-12"><a href="Abundance.html#cb41-12" tabindex="-1"></a><span class="st"> N.est ~ dunif(TotalCatch, 2000)</span></span>
-<span id="cb41-13"><a href="Abundance.html#cb41-13" tabindex="-1"></a></span>
-<span id="cb41-14"><a href="Abundance.html#cb41-14" tabindex="-1"></a><span class="st"> N.remaining[1] &lt;- trunc(N.est)</span></span>
-<span id="cb41-15"><a href="Abundance.html#cb41-15" tabindex="-1"></a><span class="st"> for(j in 1:N.removals){</span></span>
-<span id="cb41-16"><a href="Abundance.html#cb41-16" tabindex="-1"></a><span class="st">      Catch[j]~dbin (CapProb.est, N.remaining[j]) # jth removal</span></span>
-<span id="cb41-17"><a href="Abundance.html#cb41-17" tabindex="-1"></a><span class="st">      N.remaining[j+1] &lt;- N.remaining[j]-Catch[j] # Remaining population after removal</span></span>
-<span id="cb41-18"><a href="Abundance.html#cb41-18" tabindex="-1"></a><span class="st">  } #j</span></span>
-<span id="cb41-19"><a href="Abundance.html#cb41-19" tabindex="-1"></a></span>
-<span id="cb41-20"><a href="Abundance.html#cb41-20" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb41-21"><a href="Abundance.html#cb41-21" tabindex="-1"></a><span class="st">      &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
-<span id="cb41-22"><a href="Abundance.html#cb41-22" tabindex="-1"></a>  <span class="fu">sink</span>()</span>
-<span id="cb41-23"><a href="Abundance.html#cb41-23" tabindex="-1"></a></span>
-<span id="cb41-24"><a href="Abundance.html#cb41-24" tabindex="-1"></a>     <span class="co"># Bundle data</span></span>
-<span id="cb41-25"><a href="Abundance.html#cb41-25" tabindex="-1"></a>  jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Catch&quot;</span>, <span class="st">&quot;N.removals&quot;</span>, <span class="st">&quot;TotalCatch&quot;</span>)</span>
-<span id="cb41-26"><a href="Abundance.html#cb41-26" tabindex="-1"></a></span>
-<span id="cb41-27"><a href="Abundance.html#cb41-27" tabindex="-1"></a>  TotalCatch <span class="ot">&lt;-</span> <span class="fu">sum</span>(Catch[])</span>
-<span id="cb41-28"><a href="Abundance.html#cb41-28" tabindex="-1"></a></span>
-<span id="cb41-29"><a href="Abundance.html#cb41-29" tabindex="-1"></a>  <span class="co"># Initial values</span></span>
-<span id="cb41-30"><a href="Abundance.html#cb41-30" tabindex="-1"></a>  jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">CapProb.est=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>),</span>
-<span id="cb41-31"><a href="Abundance.html#cb41-31" tabindex="-1"></a>                                  <span class="at">N.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span>TotalCatch, <span class="at">max=</span><span class="dv">2000</span>))}</span>
-<span id="cb41-32"><a href="Abundance.html#cb41-32" tabindex="-1"></a></span>
-<span id="cb41-33"><a href="Abundance.html#cb41-33" tabindex="-1"></a>  model.file <span class="ot">&lt;-</span> <span class="st">&#39;RemovalModel.txt&#39;</span></span>
-<span id="cb41-34"><a href="Abundance.html#cb41-34" tabindex="-1"></a></span>
-<span id="cb41-35"><a href="Abundance.html#cb41-35" tabindex="-1"></a>  <span class="co"># Parameters monitored</span></span>
-<span id="cb41-36"><a href="Abundance.html#cb41-36" tabindex="-1"></a>  jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;N.est&quot;</span>, <span class="st">&quot;CapProb.est&quot;</span>)</span>
-<span id="cb41-37"><a href="Abundance.html#cb41-37" tabindex="-1"></a></span>
-<span id="cb41-38"><a href="Abundance.html#cb41-38" tabindex="-1"></a>   <span class="co"># Call JAGS from R</span></span>
-<span id="cb41-39"><a href="Abundance.html#cb41-39" tabindex="-1"></a>  jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb41-40"><a href="Abundance.html#cb41-40" tabindex="-1"></a>                  <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">40000</span>,</span>
-<span id="cb41-41"><a href="Abundance.html#cb41-41" tabindex="-1"></a>                  model.file)</span>
-<span id="cb41-42"><a href="Abundance.html#cb41-42" tabindex="-1"></a>  <span class="fu">print</span>(jagsfit)</span>
-<span id="cb41-43"><a href="Abundance.html#cb41-43" tabindex="-1"></a>  <span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Abundance.html#cb2-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb2-2"><a href="Abundance.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb2-3"><a href="Abundance.html#cb2-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb2-4"><a href="Abundance.html#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="Abundance.html#cb2-5" tabindex="-1"></a><span class="co"># JAGS code for fitting model</span></span>
+<span id="cb2-6"><a href="Abundance.html#cb2-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;RemovalModel.txt&quot;</span>)</span>
+<span id="cb2-7"><a href="Abundance.html#cb2-7" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb2-8"><a href="Abundance.html#cb2-8" tabindex="-1"></a><span class="st">model{</span></span>
+<span id="cb2-9"><a href="Abundance.html#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="Abundance.html#cb2-10" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb2-11"><a href="Abundance.html#cb2-11" tabindex="-1"></a><span class="st"> CapProb.est ~ dunif(0,1)</span></span>
+<span id="cb2-12"><a href="Abundance.html#cb2-12" tabindex="-1"></a><span class="st"> N.est ~ dunif(TotalCatch, 2000)</span></span>
+<span id="cb2-13"><a href="Abundance.html#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="Abundance.html#cb2-14" tabindex="-1"></a><span class="st"> N.remaining[1] &lt;- trunc(N.est)</span></span>
+<span id="cb2-15"><a href="Abundance.html#cb2-15" tabindex="-1"></a><span class="st"> for(j in 1:N.removals){</span></span>
+<span id="cb2-16"><a href="Abundance.html#cb2-16" tabindex="-1"></a><span class="st">      Catch[j]~dbin (CapProb.est, N.remaining[j]) # jth removal</span></span>
+<span id="cb2-17"><a href="Abundance.html#cb2-17" tabindex="-1"></a><span class="st">      N.remaining[j+1] &lt;- N.remaining[j]-Catch[j] # Remaining population after removal</span></span>
+<span id="cb2-18"><a href="Abundance.html#cb2-18" tabindex="-1"></a><span class="st">  } #j</span></span>
+<span id="cb2-19"><a href="Abundance.html#cb2-19" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="Abundance.html#cb2-20" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb2-21"><a href="Abundance.html#cb2-21" tabindex="-1"></a><span class="st">      &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-22"><a href="Abundance.html#cb2-22" tabindex="-1"></a>  <span class="fu">sink</span>()</span>
+<span id="cb2-23"><a href="Abundance.html#cb2-23" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="Abundance.html#cb2-24" tabindex="-1"></a>     <span class="co"># Bundle data</span></span>
+<span id="cb2-25"><a href="Abundance.html#cb2-25" tabindex="-1"></a>  jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Catch&quot;</span>, <span class="st">&quot;N.removals&quot;</span>, <span class="st">&quot;TotalCatch&quot;</span>)</span>
+<span id="cb2-26"><a href="Abundance.html#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="Abundance.html#cb2-27" tabindex="-1"></a>  TotalCatch <span class="ot">&lt;-</span> <span class="fu">sum</span>(Catch[])</span>
+<span id="cb2-28"><a href="Abundance.html#cb2-28" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="Abundance.html#cb2-29" tabindex="-1"></a>  <span class="co"># Initial values</span></span>
+<span id="cb2-30"><a href="Abundance.html#cb2-30" tabindex="-1"></a>  jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">CapProb.est=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>),</span>
+<span id="cb2-31"><a href="Abundance.html#cb2-31" tabindex="-1"></a>                                  <span class="at">N.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span>TotalCatch, <span class="at">max=</span><span class="dv">2000</span>))}</span>
+<span id="cb2-32"><a href="Abundance.html#cb2-32" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="Abundance.html#cb2-33" tabindex="-1"></a>  model.file <span class="ot">&lt;-</span> <span class="st">&#39;RemovalModel.txt&#39;</span></span>
+<span id="cb2-34"><a href="Abundance.html#cb2-34" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="Abundance.html#cb2-35" tabindex="-1"></a>  <span class="co"># Parameters monitored</span></span>
+<span id="cb2-36"><a href="Abundance.html#cb2-36" tabindex="-1"></a>  jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;N.est&quot;</span>, <span class="st">&quot;CapProb.est&quot;</span>)</span>
+<span id="cb2-37"><a href="Abundance.html#cb2-37" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="Abundance.html#cb2-38" tabindex="-1"></a>   <span class="co"># Call JAGS from R</span></span>
+<span id="cb2-39"><a href="Abundance.html#cb2-39" tabindex="-1"></a>  jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb2-40"><a href="Abundance.html#cb2-40" tabindex="-1"></a>                  <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">40000</span>,</span>
+<span id="cb2-41"><a href="Abundance.html#cb2-41" tabindex="-1"></a>                  model.file)</span>
+<span id="cb2-42"><a href="Abundance.html#cb2-42" tabindex="-1"></a>  <span class="fu">print</span>(jagsfit)</span>
+<span id="cb2-43"><a href="Abundance.html#cb2-43" tabindex="-1"></a>  <span class="fu">plot</span>(jagsfit)</span></code></pre></div>
 <p>JAGS requires an integer size variable in <code>dbin()</code> so we use the <code>trunc()</code> function to truncate the starting value. The looping code is the same as in the simulation, except that JAGS does not allow a value to to be repeatedly changed in a loop, so we set up remaining population size as a vector. We provide to JAGS the simulated catch vector, the number of removal samples, and the total catch. Initial values are generated using the same distributions as the priors. We monitor the estimates of population size and capture probability.</p>
 <p>Initial runs using fewer updates occasionally resulted in poor convergence so n.iter was increased to 40000. Removing n.burnin uses the default of discarding half the updates. Running the simulation and analysis code multiple times for these simulation parameters shows that the estimates are consistently good, with narrow credible intervals.</p>
 <p>As a fishery biologist, you could use this combination of simulation and analysis to plan your field study. You could look at different choices for the two design variables (number of removal samples, capture probability) to decide what would produce reliable results. Try runs using the above code, modified to test different numbers of removal samples and assumed capture probabilities. It is important to acknowledge that this is an optimistic case, in that the data exactly follow binomial sampling. In a real field study, the model will be an approximation so any design choices should be viewed as lower bounds. For example, if four removal samples appear to be sufficient, consider that a minimum or perhaps low. Another consideration is that we have made the simplifying assumption that capture probability is constant across samples. <span class="citation">Bryant (<a href="#ref-bryant2000">2000</a>)</span> found that capture probability was generally constant when using traps, but it may decline with disruptive methods such as electrofishing or seining, or if vulnerability varies among individuals <span class="citation">(<a href="#ref-mantyniemi.etal2005">Mäntyniemi, Romakkaniemi, and Arjas 2005</a>)</span>. If capture probability declines as additional samples are taken, a more complex function would be needed for capture probability.</p>
@@ -355,162 +354,162 @@ Information about abundance can be invaluable for making policy decisions. For f
 <div id="mark-recapture" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Mark-recapture<a href="Abundance.html#mark-recapture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We briefly revisit the two-sample mark-recapture experiment from Sections <a href="R-intro.html#R-intro">2</a> and <a href="Model-fit.html#Model-fit">4</a>. In this section, we change a single line of code to produce a random number of recaptured fish rather than the expected value. Now the combined code (simulation plus analysis) can be rerun multiple times to build intuition about the reliability of the experimental results. This is especially useful when the assumed population size or capture probability is low. The true value can be compared to the 95% credible interval (2.5 and 97.5 percentiles, printed to the Console) or 80% credible interval shown in the plots. You can look at either the marked fraction or Nhat, as they covary (low estimate for marked fraction produces high estimate for Nhat). The last four lines of code illustrate that it can be instructive to examine not only the posterior distributions but also the underlying relationship(s) (see bivariate plot). Here it is clear that Nhat is inversely related to the model parameter for marked fraction, but it may be less obvious in situations with more complex models.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="Abundance.html#cb42-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb42-2"><a href="Abundance.html#cb42-2" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="Abundance.html#cb42-3" tabindex="-1"></a><span class="co"># Simulate experiment</span></span>
-<span id="cb42-4"><a href="Abundance.html#cb42-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Population size</span></span>
-<span id="cb42-5"><a href="Abundance.html#cb42-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
-<span id="cb42-6"><a href="Abundance.html#cb42-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and marked in first sample</span></span>
-<span id="cb42-7"><a href="Abundance.html#cb42-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
-<span id="cb42-8"><a href="Abundance.html#cb42-8" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, n2, p.true) <span class="co"># Number of marked fish in second sample</span></span>
-<span id="cb42-9"><a href="Abundance.html#cb42-9" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="Abundance.html#cb42-10" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb42-11"><a href="Abundance.html#cb42-11" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
-<span id="cb42-12"><a href="Abundance.html#cb42-12" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
-<span id="cb42-13"><a href="Abundance.html#cb42-13" tabindex="-1"></a></span>
-<span id="cb42-14"><a href="Abundance.html#cb42-14" tabindex="-1"></a><span class="co"># JAGS code</span></span>
-<span id="cb42-15"><a href="Abundance.html#cb42-15" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;TwoSampleCR.txt&quot;</span>)</span>
-<span id="cb42-16"><a href="Abundance.html#cb42-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb42-17"><a href="Abundance.html#cb42-17" tabindex="-1"></a><span class="st">    model {</span></span>
-<span id="cb42-18"><a href="Abundance.html#cb42-18" tabindex="-1"></a></span>
-<span id="cb42-19"><a href="Abundance.html#cb42-19" tabindex="-1"></a><span class="st">    # Priors</span></span>
-<span id="cb42-20"><a href="Abundance.html#cb42-20" tabindex="-1"></a><span class="st">    MarkedFraction ~ dunif(0, 1)</span></span>
-<span id="cb42-21"><a href="Abundance.html#cb42-21" tabindex="-1"></a></span>
-<span id="cb42-22"><a href="Abundance.html#cb42-22" tabindex="-1"></a><span class="st">    # Calculated value</span></span>
-<span id="cb42-23"><a href="Abundance.html#cb42-23" tabindex="-1"></a><span class="st">    Nhat &lt;- n1 /MarkedFraction</span></span>
-<span id="cb42-24"><a href="Abundance.html#cb42-24" tabindex="-1"></a></span>
-<span id="cb42-25"><a href="Abundance.html#cb42-25" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
-<span id="cb42-26"><a href="Abundance.html#cb42-26" tabindex="-1"></a><span class="st">    # Binomial distribution for observed recaptures</span></span>
-<span id="cb42-27"><a href="Abundance.html#cb42-27" tabindex="-1"></a><span class="st">    m2 ~ dbin(MarkedFraction, n2)</span></span>
-<span id="cb42-28"><a href="Abundance.html#cb42-28" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb42-29"><a href="Abundance.html#cb42-29" tabindex="-1"></a></span>
-<span id="cb42-30"><a href="Abundance.html#cb42-30" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb42-31"><a href="Abundance.html#cb42-31" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb42-32"><a href="Abundance.html#cb42-32" tabindex="-1"></a></span>
-<span id="cb42-33"><a href="Abundance.html#cb42-33" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb42-34"><a href="Abundance.html#cb42-34" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>)</span>
-<span id="cb42-35"><a href="Abundance.html#cb42-35" tabindex="-1"></a></span>
-<span id="cb42-36"><a href="Abundance.html#cb42-36" tabindex="-1"></a><span class="co"># Initial values.</span></span>
-<span id="cb42-37"><a href="Abundance.html#cb42-37" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">MarkedFraction=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
-<span id="cb42-38"><a href="Abundance.html#cb42-38" tabindex="-1"></a></span>
-<span id="cb42-39"><a href="Abundance.html#cb42-39" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;TwoSampleCR.txt&#39;</span></span>
-<span id="cb42-40"><a href="Abundance.html#cb42-40" tabindex="-1"></a></span>
-<span id="cb42-41"><a href="Abundance.html#cb42-41" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb42-42"><a href="Abundance.html#cb42-42" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Nhat&quot;</span>, <span class="st">&quot;MarkedFraction&quot;</span>)</span>
-<span id="cb42-43"><a href="Abundance.html#cb42-43" tabindex="-1"></a></span>
-<span id="cb42-44"><a href="Abundance.html#cb42-44" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb42-45"><a href="Abundance.html#cb42-45" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, <span class="at">inits=</span>jags.inits, jags.params,</span>
-<span id="cb42-46"><a href="Abundance.html#cb42-46" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
-<span id="cb42-47"><a href="Abundance.html#cb42-47" tabindex="-1"></a>                model.file)</span>
-<span id="cb42-48"><a href="Abundance.html#cb42-48" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
-<span id="cb42-49"><a href="Abundance.html#cb42-49" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
-<span id="cb42-50"><a href="Abundance.html#cb42-50" tabindex="-1"></a></span>
-<span id="cb42-51"><a href="Abundance.html#cb42-51" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
-<span id="cb42-52"><a href="Abundance.html#cb42-52" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">1</span>], <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Marked fraction&quot;</span>)</span>
-<span id="cb42-53"><a href="Abundance.html#cb42-53" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">2</span>], <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Population estimate&quot;</span>)</span>
-<span id="cb42-54"><a href="Abundance.html#cb42-54" tabindex="-1"></a><span class="fu">plot</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">1</span>], jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">2</span>],</span>
-<span id="cb42-55"><a href="Abundance.html#cb42-55" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Marked fraction&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Population estimate&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="Abundance.html#cb3-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb3-2"><a href="Abundance.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="Abundance.html#cb3-3" tabindex="-1"></a><span class="co"># Simulate experiment</span></span>
+<span id="cb3-4"><a href="Abundance.html#cb3-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">400</span>  <span class="co"># Population size</span></span>
+<span id="cb3-5"><a href="Abundance.html#cb3-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Capture probability (fraction of population sampled)</span></span>
+<span id="cb3-6"><a href="Abundance.html#cb3-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb3-7"><a href="Abundance.html#cb3-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> N.true <span class="sc">*</span> p.true <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb3-8"><a href="Abundance.html#cb3-8" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, n2, p.true) <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb3-9"><a href="Abundance.html#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="Abundance.html#cb3-10" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb3-11"><a href="Abundance.html#cb3-11" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb3-12"><a href="Abundance.html#cb3-12" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb3-13"><a href="Abundance.html#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="Abundance.html#cb3-14" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb3-15"><a href="Abundance.html#cb3-15" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;TwoSampleCR.txt&quot;</span>)</span>
+<span id="cb3-16"><a href="Abundance.html#cb3-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb3-17"><a href="Abundance.html#cb3-17" tabindex="-1"></a><span class="st">    model {</span></span>
+<span id="cb3-18"><a href="Abundance.html#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="Abundance.html#cb3-19" tabindex="-1"></a><span class="st">    # Priors</span></span>
+<span id="cb3-20"><a href="Abundance.html#cb3-20" tabindex="-1"></a><span class="st">    MarkedFraction ~ dunif(0, 1)</span></span>
+<span id="cb3-21"><a href="Abundance.html#cb3-21" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="Abundance.html#cb3-22" tabindex="-1"></a><span class="st">    # Calculated value</span></span>
+<span id="cb3-23"><a href="Abundance.html#cb3-23" tabindex="-1"></a><span class="st">    Nhat &lt;- n1 /MarkedFraction</span></span>
+<span id="cb3-24"><a href="Abundance.html#cb3-24" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="Abundance.html#cb3-25" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb3-26"><a href="Abundance.html#cb3-26" tabindex="-1"></a><span class="st">    # Binomial distribution for observed recaptures</span></span>
+<span id="cb3-27"><a href="Abundance.html#cb3-27" tabindex="-1"></a><span class="st">    m2 ~ dbin(MarkedFraction, n2)</span></span>
+<span id="cb3-28"><a href="Abundance.html#cb3-28" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb3-29"><a href="Abundance.html#cb3-29" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="Abundance.html#cb3-30" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-31"><a href="Abundance.html#cb3-31" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb3-32"><a href="Abundance.html#cb3-32" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="Abundance.html#cb3-33" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb3-34"><a href="Abundance.html#cb3-34" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>)</span>
+<span id="cb3-35"><a href="Abundance.html#cb3-35" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="Abundance.html#cb3-36" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb3-37"><a href="Abundance.html#cb3-37" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">MarkedFraction=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb3-38"><a href="Abundance.html#cb3-38" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="Abundance.html#cb3-39" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;TwoSampleCR.txt&#39;</span></span>
+<span id="cb3-40"><a href="Abundance.html#cb3-40" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="Abundance.html#cb3-41" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb3-42"><a href="Abundance.html#cb3-42" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Nhat&quot;</span>, <span class="st">&quot;MarkedFraction&quot;</span>)</span>
+<span id="cb3-43"><a href="Abundance.html#cb3-43" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="Abundance.html#cb3-44" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb3-45"><a href="Abundance.html#cb3-45" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, <span class="at">inits=</span>jags.inits, jags.params,</span>
+<span id="cb3-46"><a href="Abundance.html#cb3-46" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb3-47"><a href="Abundance.html#cb3-47" tabindex="-1"></a>                model.file)</span>
+<span id="cb3-48"><a href="Abundance.html#cb3-48" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb3-49"><a href="Abundance.html#cb3-49" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb3-50"><a href="Abundance.html#cb3-50" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="Abundance.html#cb3-51" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb3-52"><a href="Abundance.html#cb3-52" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">1</span>], <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Marked fraction&quot;</span>)</span>
+<span id="cb3-53"><a href="Abundance.html#cb3-53" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">2</span>], <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Population estimate&quot;</span>)</span>
+<span id="cb3-54"><a href="Abundance.html#cb3-54" tabindex="-1"></a><span class="fu">plot</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">1</span>], jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">2</span>],</span>
+<span id="cb3-55"><a href="Abundance.html#cb3-55" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Marked fraction&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Population estimate&quot;</span>)</span></code></pre></div>
 <p>If you were managing the fishery for this lake population, how might you use the estimate of abundance? Try a few runs (simulation and model fitting) to see whether this level of uncertainty would be tolerable for management. In doing so, keep in mind that this assumed capture probability (0.2) is quite high and would be difficult to achieve in most field situations. Is there a rough lower bound for capture probability, below which the cost and effort of doing a study would not be justified?</p>
 </div>
 <div id="binomial-mixture" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Binomial-mixture<a href="Abundance.html#binomial-mixture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A population estimate can sometimes be obtained from count data when replicate survey samples are taken <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>. One fisheries example is the use of side-scan sonar to count adult Atlantic sturgeon, which are large and distinctive enough to be identifiable on side-scan images <span class="citation">(<a href="#ref-flowers.hightower_2013">Flowers and Hightower 2013</a>, <a href="#ref-flowers.hightower2015">2015</a>)</span>. Sites were assumed to be closed (no movement in or out, no mortality) for the brief duration of the survey. Each site had an unknown number of sturgeon, but it was not assumed that every sturgeon was counted (detected). Counts could vary among survey passes due to a variety of factors, including a fish’s orientation, overlap with other fish or structure, or distortion in the image. Thus the counting process was modeled using a binomial distribution, where “size” is the number of sturgeon present at the site and “prob” is the probability of being detected on that survey pass. The probability is comparable to a capture probability but here sampling was unobtrusive. This type of model is referred to as a binomial mixture model (or N-mixture model). It attempts to separate the biological parameter (site abundance) from the observational parameter (detection probability) <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>.</p>
 <p>Consider a site with twenty individuals and a detection probability of 0.5. We can simulate a large sample of replicates to get a smooth distribution of counts, although in an actual field survey, there would typically be only a few replicate passes per site.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="Abundance.html#cb43-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb43-2"><a href="Abundance.html#cb43-2" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="Abundance.html#cb43-3" tabindex="-1"></a><span class="co"># Simulate experiment</span></span>
-<span id="cb43-4"><a href="Abundance.html#cb43-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># Number of individuals at site</span></span>
-<span id="cb43-5"><a href="Abundance.html#cb43-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Detection probability (fraction of individuals detected)</span></span>
-<span id="cb43-6"><a href="Abundance.html#cb43-6" tabindex="-1"></a>Replicates <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb43-7"><a href="Abundance.html#cb43-7" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Replicates, <span class="at">size=</span>N.true, <span class="at">prob=</span>p.true) <span class="co"># Vector of replicate counts</span></span>
-<span id="cb43-8"><a href="Abundance.html#cb43-8" tabindex="-1"></a></span>
-<span id="cb43-9"><a href="Abundance.html#cb43-9" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># Ensure plot window is reset to default setting</span></span>
-<span id="cb43-10"><a href="Abundance.html#cb43-10" tabindex="-1"></a><span class="fu">hist</span>(Counts, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb43-11"><a href="Abundance.html#cb43-11" tabindex="-1"></a><span class="fu">table</span>(Counts)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Abundance.html#cb4-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb4-2"><a href="Abundance.html#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="Abundance.html#cb4-3" tabindex="-1"></a><span class="co"># Simulate experiment</span></span>
+<span id="cb4-4"><a href="Abundance.html#cb4-4" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># Number of individuals at site</span></span>
+<span id="cb4-5"><a href="Abundance.html#cb4-5" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Detection probability (fraction of individuals detected)</span></span>
+<span id="cb4-6"><a href="Abundance.html#cb4-6" tabindex="-1"></a>Replicates <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb4-7"><a href="Abundance.html#cb4-7" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Replicates, <span class="at">size=</span>N.true, <span class="at">prob=</span>p.true) <span class="co"># Vector of replicate counts</span></span>
+<span id="cb4-8"><a href="Abundance.html#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="Abundance.html#cb4-9" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># Ensure plot window is reset to default setting</span></span>
+<span id="cb4-10"><a href="Abundance.html#cb4-10" tabindex="-1"></a><span class="fu">hist</span>(Counts, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-11"><a href="Abundance.html#cb4-11" tabindex="-1"></a><span class="fu">table</span>(Counts)</span></code></pre></div>
 <p>The expected count is 10 (N.true * p.true); the histogram and table show the frequency of different values. One run produced minimum and maximum counts of 3 and 16. Counting 20 would be possible but extremely unlikely. How might you estimate empirically the probability of counting 15 or more? Experiment with different detection probabilities to find a level that produced occasional counts of 20 individuals.</p>
 <p>It is instructive to compare the default distribution (N.true=20 and p.true=0.5) to other combinations that would have the same expected count (e.g., N.true=40 and p.true=0.25). In the following code, we use even more replicates, and add upper and lower limits for the x axis in order to compare the two histograms. The differences in the shape of the distribution are subtle, illustrating that it can be challenging to get a reliable abundance estimate using this approach.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="Abundance.html#cb44-1" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># Number of individuals at site</span></span>
-<span id="cb44-2"><a href="Abundance.html#cb44-2" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Detection probability (fraction of individuals detected)</span></span>
-<span id="cb44-3"><a href="Abundance.html#cb44-3" tabindex="-1"></a>Replicates <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb44-4"><a href="Abundance.html#cb44-4" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Replicates, <span class="at">size=</span>N.true, <span class="at">prob=</span>p.true) <span class="co"># Vector of replicate counts</span></span>
-<span id="cb44-5"><a href="Abundance.html#cb44-5" tabindex="-1"></a><span class="fu">table</span>(Counts)</span>
-<span id="cb44-6"><a href="Abundance.html#cb44-6" tabindex="-1"></a></span>
-<span id="cb44-7"><a href="Abundance.html#cb44-7" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)) <span class="co"># Two rows, one column</span></span>
-<span id="cb44-8"><a href="Abundance.html#cb44-8" tabindex="-1"></a><span class="fu">hist</span>(Counts, <span class="at">main=</span><span class="st">&quot;N.true=20&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25</span>))</span>
-<span id="cb44-9"><a href="Abundance.html#cb44-9" tabindex="-1"></a></span>
-<span id="cb44-10"><a href="Abundance.html#cb44-10" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">40</span>  <span class="co"># Number of individuals at site</span></span>
-<span id="cb44-11"><a href="Abundance.html#cb44-11" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Detection probability (fraction of individuals detected)</span></span>
-<span id="cb44-12"><a href="Abundance.html#cb44-12" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Replicates, <span class="at">size=</span>N.true, <span class="at">prob=</span>p.true) <span class="co"># Vector of replicate counts</span></span>
-<span id="cb44-13"><a href="Abundance.html#cb44-13" tabindex="-1"></a><span class="fu">hist</span>(Counts, <span class="at">main=</span><span class="st">&quot;N.true=40&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25</span>))</span>
-<span id="cb44-14"><a href="Abundance.html#cb44-14" tabindex="-1"></a><span class="fu">table</span>(Counts)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Abundance.html#cb5-1" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">20</span>  <span class="co"># Number of individuals at site</span></span>
+<span id="cb5-2"><a href="Abundance.html#cb5-2" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Detection probability (fraction of individuals detected)</span></span>
+<span id="cb5-3"><a href="Abundance.html#cb5-3" tabindex="-1"></a>Replicates <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb5-4"><a href="Abundance.html#cb5-4" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Replicates, <span class="at">size=</span>N.true, <span class="at">prob=</span>p.true) <span class="co"># Vector of replicate counts</span></span>
+<span id="cb5-5"><a href="Abundance.html#cb5-5" tabindex="-1"></a><span class="fu">table</span>(Counts)</span>
+<span id="cb5-6"><a href="Abundance.html#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="Abundance.html#cb5-7" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)) <span class="co"># Two rows, one column</span></span>
+<span id="cb5-8"><a href="Abundance.html#cb5-8" tabindex="-1"></a><span class="fu">hist</span>(Counts, <span class="at">main=</span><span class="st">&quot;N.true=20&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25</span>))</span>
+<span id="cb5-9"><a href="Abundance.html#cb5-9" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="Abundance.html#cb5-10" tabindex="-1"></a>N.true <span class="ot">&lt;-</span> <span class="dv">40</span>  <span class="co"># Number of individuals at site</span></span>
+<span id="cb5-11"><a href="Abundance.html#cb5-11" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Detection probability (fraction of individuals detected)</span></span>
+<span id="cb5-12"><a href="Abundance.html#cb5-12" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Replicates, <span class="at">size=</span>N.true, <span class="at">prob=</span>p.true) <span class="co"># Vector of replicate counts</span></span>
+<span id="cb5-13"><a href="Abundance.html#cb5-13" tabindex="-1"></a><span class="fu">hist</span>(Counts, <span class="at">main=</span><span class="st">&quot;N.true=40&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25</span>))</span>
+<span id="cb5-14"><a href="Abundance.html#cb5-14" tabindex="-1"></a><span class="fu">table</span>(Counts)</span></code></pre></div>
 <p>Try a more extreme second case (N.true=100 and p.true=0.1) to see if there is a more pronounced difference compared to the default (remember to change the second plot title!). It may be necessary to change the x-axis limits if N.true is increased.</p>
 <p>To simulate a full field study, we need to add code for multiple sites. We assume 30 sites and 3 replicate visits to each site. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> recommended at least 10-20 sites and at least two observations per site. It is assumed that the number of sturgeon per site varies about an underlying mean, so having a large sample of sites will aid in estimating that mean. There are a variety of ways to model the variation among sites. Here we chose the simplest option of using a Poisson distribution, which has only one parameter to estimate:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="Abundance.html#cb45-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb45-2"><a href="Abundance.html#cb45-2" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="Abundance.html#cb45-3" tabindex="-1"></a>Sites <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb45-4"><a href="Abundance.html#cb45-4" tabindex="-1"></a>Replicates <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb45-5"><a href="Abundance.html#cb45-5" tabindex="-1"></a>lam.true <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Mean number per site</span></span>
-<span id="cb45-6"><a href="Abundance.html#cb45-6" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Detection probability</span></span>
-<span id="cb45-7"><a href="Abundance.html#cb45-7" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="Abundance.html#cb45-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow=</span>Sites, <span class="at">ncol=</span>Replicates)</span>
-<span id="cb45-9"><a href="Abundance.html#cb45-9" tabindex="-1"></a>Site.N <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n =</span> Sites, <span class="at">lambda =</span> lam.true) <span class="co"># True abundance at each site</span></span>
-<span id="cb45-10"><a href="Abundance.html#cb45-10" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sites){</span>
-<span id="cb45-11"><a href="Abundance.html#cb45-11" tabindex="-1"></a>  Counts[i,] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> Replicates, <span class="at">size =</span> Site.N[i], <span class="at">prob =</span> p.true)</span>
-<span id="cb45-12"><a href="Abundance.html#cb45-12" tabindex="-1"></a>  } <span class="co">#i</span></span>
-<span id="cb45-13"><a href="Abundance.html#cb45-13" tabindex="-1"></a><span class="fu">head</span>(Site.N)</span>
-<span id="cb45-14"><a href="Abundance.html#cb45-14" tabindex="-1"></a><span class="fu">head</span>(Counts)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="Abundance.html#cb6-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb6-2"><a href="Abundance.html#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="Abundance.html#cb6-3" tabindex="-1"></a>Sites <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb6-4"><a href="Abundance.html#cb6-4" tabindex="-1"></a>Replicates <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb6-5"><a href="Abundance.html#cb6-5" tabindex="-1"></a>lam.true <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Mean number per site</span></span>
+<span id="cb6-6"><a href="Abundance.html#cb6-6" tabindex="-1"></a>p.true <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Detection probability</span></span>
+<span id="cb6-7"><a href="Abundance.html#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="Abundance.html#cb6-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow=</span>Sites, <span class="at">ncol=</span>Replicates)</span>
+<span id="cb6-9"><a href="Abundance.html#cb6-9" tabindex="-1"></a>Site.N <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n =</span> Sites, <span class="at">lambda =</span> lam.true) <span class="co"># True abundance at each site</span></span>
+<span id="cb6-10"><a href="Abundance.html#cb6-10" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sites){</span>
+<span id="cb6-11"><a href="Abundance.html#cb6-11" tabindex="-1"></a>  Counts[i,] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> Replicates, <span class="at">size =</span> Site.N[i], <span class="at">prob =</span> p.true)</span>
+<span id="cb6-12"><a href="Abundance.html#cb6-12" tabindex="-1"></a>  } <span class="co">#i</span></span>
+<span id="cb6-13"><a href="Abundance.html#cb6-13" tabindex="-1"></a><span class="fu">head</span>(Site.N)</span>
+<span id="cb6-14"><a href="Abundance.html#cb6-14" tabindex="-1"></a><span class="fu">head</span>(Counts)</span></code></pre></div>
 <p>The matrix function creates an empty matrix, which will hold the replicate counts for each site. Next, the function rpois generates the Poisson-distributed random number of sturgeon at each site. We then loop over sites to generate the binomially-distribution counts at each site. This illustrates the hierarchical nature of this model in that site abundance is set first, then replicate observations are drawn, given the site abundance. We can use the head function to look at the relationship between true abundance (Site.N) and counts for the first few sites. In one example run, the first site had 25 sturgeon and produced replicate counts of 11, 14, and 13.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="Abundance.html#cb46-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb46-2"><a href="Abundance.html#cb46-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb46-3"><a href="Abundance.html#cb46-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb46-4"><a href="Abundance.html#cb46-4" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="Abundance.html#cb46-5" tabindex="-1"></a><span class="co"># Specify model in BUGS language</span></span>
-<span id="cb46-6"><a href="Abundance.html#cb46-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;N-mix.txt&quot;</span>)</span>
-<span id="cb46-7"><a href="Abundance.html#cb46-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb46-8"><a href="Abundance.html#cb46-8" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb46-9"><a href="Abundance.html#cb46-9" tabindex="-1"></a></span>
-<span id="cb46-10"><a href="Abundance.html#cb46-10" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb46-11"><a href="Abundance.html#cb46-11" tabindex="-1"></a><span class="st">  lam.est ~ dunif(0, 100)  # uninformative prior for mean abundance at each site</span></span>
-<span id="cb46-12"><a href="Abundance.html#cb46-12" tabindex="-1"></a><span class="st">  p.est ~ dunif(0, 1)</span></span>
-<span id="cb46-13"><a href="Abundance.html#cb46-13" tabindex="-1"></a></span>
-<span id="cb46-14"><a href="Abundance.html#cb46-14" tabindex="-1"></a><span class="st"># Likelihood</span></span>
-<span id="cb46-15"><a href="Abundance.html#cb46-15" tabindex="-1"></a><span class="st"># Biological model for true abundance</span></span>
-<span id="cb46-16"><a href="Abundance.html#cb46-16" tabindex="-1"></a><span class="st">for (i in 1:Sites) {</span></span>
-<span id="cb46-17"><a href="Abundance.html#cb46-17" tabindex="-1"></a><span class="st">   N.est[i] ~ dpois(lam.est)</span></span>
-<span id="cb46-18"><a href="Abundance.html#cb46-18" tabindex="-1"></a><span class="st">   # Observation model for replicated counts</span></span>
-<span id="cb46-19"><a href="Abundance.html#cb46-19" tabindex="-1"></a><span class="st">   for (j in 1:Replicates) {</span></span>
-<span id="cb46-20"><a href="Abundance.html#cb46-20" tabindex="-1"></a><span class="st">      Counts[i,j] ~ dbin(p.est, N.est[i])</span></span>
-<span id="cb46-21"><a href="Abundance.html#cb46-21" tabindex="-1"></a><span class="st">      } # j</span></span>
-<span id="cb46-22"><a href="Abundance.html#cb46-22" tabindex="-1"></a><span class="st">   } # i</span></span>
-<span id="cb46-23"><a href="Abundance.html#cb46-23" tabindex="-1"></a><span class="st">totalN &lt;- sum(N.est[])     # Calculated variable: total pop. size across all sites</span></span>
-<span id="cb46-24"><a href="Abundance.html#cb46-24" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb46-25"><a href="Abundance.html#cb46-25" tabindex="-1"></a><span class="st">&quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-26"><a href="Abundance.html#cb46-26" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb46-27"><a href="Abundance.html#cb46-27" tabindex="-1"></a></span>
-<span id="cb46-28"><a href="Abundance.html#cb46-28" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb46-29"><a href="Abundance.html#cb46-29" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Counts&quot;</span>, <span class="st">&quot;Sites&quot;</span>, <span class="st">&quot;Replicates&quot;</span>)</span>
-<span id="cb46-30"><a href="Abundance.html#cb46-30" tabindex="-1"></a></span>
-<span id="cb46-31"><a href="Abundance.html#cb46-31" tabindex="-1"></a><span class="co"># Initial values</span></span>
-<span id="cb46-32"><a href="Abundance.html#cb46-32" tabindex="-1"></a>Nst <span class="ot">&lt;-</span> <span class="fu">apply</span>(Counts, <span class="dv">1</span>, max) <span class="sc">+</span> <span class="dv">1</span>    <span class="co"># Kery and Schaub</span></span>
-<span id="cb46-33"><a href="Abundance.html#cb46-33" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">lam.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>),</span>
-<span id="cb46-34"><a href="Abundance.html#cb46-34" tabindex="-1"></a>                               <span class="at">N.est=</span>Nst, <span class="at">p.est=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
-<span id="cb46-35"><a href="Abundance.html#cb46-35" tabindex="-1"></a></span>
-<span id="cb46-36"><a href="Abundance.html#cb46-36" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;N-mix.txt&#39;</span></span>
-<span id="cb46-37"><a href="Abundance.html#cb46-37" tabindex="-1"></a></span>
-<span id="cb46-38"><a href="Abundance.html#cb46-38" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb46-39"><a href="Abundance.html#cb46-39" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;lam.est&quot;</span>, <span class="st">&quot;p.est&quot;</span>, <span class="st">&quot;totalN&quot;</span>)</span>
-<span id="cb46-40"><a href="Abundance.html#cb46-40" tabindex="-1"></a></span>
-<span id="cb46-41"><a href="Abundance.html#cb46-41" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb46-42"><a href="Abundance.html#cb46-42" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb46-43"><a href="Abundance.html#cb46-43" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">100000</span>,</span>
-<span id="cb46-44"><a href="Abundance.html#cb46-44" tabindex="-1"></a>                model.file)</span>
-<span id="cb46-45"><a href="Abundance.html#cb46-45" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb46-46"><a href="Abundance.html#cb46-46" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># Reset plot panel</span></span>
-<span id="cb46-47"><a href="Abundance.html#cb46-47" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
-<span id="cb46-48"><a href="Abundance.html#cb46-48" tabindex="-1"></a></span>
-<span id="cb46-49"><a href="Abundance.html#cb46-49" tabindex="-1"></a><span class="co"># Estimated posterior distribution for total population size</span></span>
-<span id="cb46-50"><a href="Abundance.html#cb46-50" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>totalN, <span class="at">xlab=</span><span class="st">&quot;Estimated total pop size&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb46-51"><a href="Abundance.html#cb46-51" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">sum</span>(Site.N), <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="Abundance.html#cb7-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb7-2"><a href="Abundance.html#cb7-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb7-3"><a href="Abundance.html#cb7-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb7-4"><a href="Abundance.html#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="Abundance.html#cb7-5" tabindex="-1"></a><span class="co"># Specify model in BUGS language</span></span>
+<span id="cb7-6"><a href="Abundance.html#cb7-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;N-mix.txt&quot;</span>)</span>
+<span id="cb7-7"><a href="Abundance.html#cb7-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb7-8"><a href="Abundance.html#cb7-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb7-9"><a href="Abundance.html#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="Abundance.html#cb7-10" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb7-11"><a href="Abundance.html#cb7-11" tabindex="-1"></a><span class="st">  lam.est ~ dunif(0, 100)  # uninformative prior for mean abundance at each site</span></span>
+<span id="cb7-12"><a href="Abundance.html#cb7-12" tabindex="-1"></a><span class="st">  p.est ~ dunif(0, 1)</span></span>
+<span id="cb7-13"><a href="Abundance.html#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="Abundance.html#cb7-14" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb7-15"><a href="Abundance.html#cb7-15" tabindex="-1"></a><span class="st"># Biological model for true abundance</span></span>
+<span id="cb7-16"><a href="Abundance.html#cb7-16" tabindex="-1"></a><span class="st">for (i in 1:Sites) {</span></span>
+<span id="cb7-17"><a href="Abundance.html#cb7-17" tabindex="-1"></a><span class="st">   N.est[i] ~ dpois(lam.est)</span></span>
+<span id="cb7-18"><a href="Abundance.html#cb7-18" tabindex="-1"></a><span class="st">   # Observation model for replicated counts</span></span>
+<span id="cb7-19"><a href="Abundance.html#cb7-19" tabindex="-1"></a><span class="st">   for (j in 1:Replicates) {</span></span>
+<span id="cb7-20"><a href="Abundance.html#cb7-20" tabindex="-1"></a><span class="st">      Counts[i,j] ~ dbin(p.est, N.est[i])</span></span>
+<span id="cb7-21"><a href="Abundance.html#cb7-21" tabindex="-1"></a><span class="st">      } # j</span></span>
+<span id="cb7-22"><a href="Abundance.html#cb7-22" tabindex="-1"></a><span class="st">   } # i</span></span>
+<span id="cb7-23"><a href="Abundance.html#cb7-23" tabindex="-1"></a><span class="st">totalN &lt;- sum(N.est[])     # Calculated variable: total pop. size across all sites</span></span>
+<span id="cb7-24"><a href="Abundance.html#cb7-24" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb7-25"><a href="Abundance.html#cb7-25" tabindex="-1"></a><span class="st">&quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-26"><a href="Abundance.html#cb7-26" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb7-27"><a href="Abundance.html#cb7-27" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="Abundance.html#cb7-28" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb7-29"><a href="Abundance.html#cb7-29" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Counts&quot;</span>, <span class="st">&quot;Sites&quot;</span>, <span class="st">&quot;Replicates&quot;</span>)</span>
+<span id="cb7-30"><a href="Abundance.html#cb7-30" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="Abundance.html#cb7-31" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb7-32"><a href="Abundance.html#cb7-32" tabindex="-1"></a>Nst <span class="ot">&lt;-</span> <span class="fu">apply</span>(Counts, <span class="dv">1</span>, max) <span class="sc">+</span> <span class="dv">1</span>    <span class="co"># Kery and Schaub</span></span>
+<span id="cb7-33"><a href="Abundance.html#cb7-33" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">lam.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>),</span>
+<span id="cb7-34"><a href="Abundance.html#cb7-34" tabindex="-1"></a>                               <span class="at">N.est=</span>Nst, <span class="at">p.est=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb7-35"><a href="Abundance.html#cb7-35" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="Abundance.html#cb7-36" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;N-mix.txt&#39;</span></span>
+<span id="cb7-37"><a href="Abundance.html#cb7-37" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="Abundance.html#cb7-38" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb7-39"><a href="Abundance.html#cb7-39" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;lam.est&quot;</span>, <span class="st">&quot;p.est&quot;</span>, <span class="st">&quot;totalN&quot;</span>)</span>
+<span id="cb7-40"><a href="Abundance.html#cb7-40" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="Abundance.html#cb7-41" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb7-42"><a href="Abundance.html#cb7-42" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb7-43"><a href="Abundance.html#cb7-43" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">100000</span>,</span>
+<span id="cb7-44"><a href="Abundance.html#cb7-44" tabindex="-1"></a>                model.file)</span>
+<span id="cb7-45"><a href="Abundance.html#cb7-45" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb7-46"><a href="Abundance.html#cb7-46" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># Reset plot panel</span></span>
+<span id="cb7-47"><a href="Abundance.html#cb7-47" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb7-48"><a href="Abundance.html#cb7-48" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="Abundance.html#cb7-49" tabindex="-1"></a><span class="co"># Estimated posterior distribution for total population size</span></span>
+<span id="cb7-50"><a href="Abundance.html#cb7-50" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>totalN, <span class="at">xlab=</span><span class="st">&quot;Estimated total pop size&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb7-51"><a href="Abundance.html#cb7-51" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">sum</span>(Site.N), <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p>The JAGS code includes uninformative prior distributions for mean site abundance and the detection probability. The choice for mean abundance is more subjective but can be based on the observed counts and knowledge or experience about the possible range for true abundance or detection probability. The JAGS code is again structurally similar to the simulation code. The first step is to generate estimates of the true (unknown) abundance at each site. The observations are binomially distributed samples, given the estimated abundance at each site. It is sometimes of interest to look at total abundance over sites, so the site estimates are summed (totalN).</p>
 <p>It can be helpful to provide initial values for site abundance. JAGS will terminate the run if a nonsensical event occurs (e.g., count greater than the current estimate of abundance at a site). <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> provide example code using the <code>apply()</code> function, which is a generic function for applying (hence the name) other functions. In this case, the <code>max()</code> function is applied to the Count matrix by row (argument=1). The returned maximum value for each row is incremented by 1, implying that there is likely to be at least one more sturgeon present than the maximum observed count. The remaining parameters are initialized using settings that match the prior distributions. The final lines of R code show the estimated posterior distribution for total abundance (summed over sites). The abline function is used to add to the plot the true total abundance (vertical red line).</p>
 <p>Estimates are generally reliable for these assumed parameter values and study design settings, although convergence was sometimes slow so a large number of updates was used. Note that the model is hierarchical in structure, in that the overall (Poisson) mean is estimated using all site data, then site-specific estimates are drawn using that overall mean. It is worthwhile to run the combined code (simulation plus analysis) several times to see variation in the estimates and their credible intervals. Median estimates of mean site abundance and detection probability tend to be close to the assumed values although credible intervals are fairly wide. The posterior distribution for total abundance appears to be reliable although it is skewed and has a high upper bound for the credible interval (451-1294 for one example run).</p>
@@ -554,14 +553,14 @@ Mäntyniemi, Samu, Atso Romakkaniemi, and Elja Arjas. 2005. <span>“Bayesian Re
 <a href="Survival.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/clipboard.min.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
-<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -605,20 +604,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
