@@ -1,0 +1,156 @@
+# Integrated Population Models {#PopModels}
+
+![Goode 1887](https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/45918/full/full/0/default.jpg)
+
+The field and analytical methods discussed thus far have addressed population rates one at a time (e.g., estimating abundance or survival). An improved approach would be to design a complementary set of field studies that provides a complete picture of population dynamics. For example, @conn.etal_2008 used harvest and tag recovery data to fit an integrated population model (IPM) for black bear (*Ursus americanus*). Their model provided estimates that were more precise and biologically realistic than point estimates using mark-recapture data alone.  @kéry.schaub_2011 developed an avian IPM using adult population counts, nest surveys, and capture-recapture data on survival.  Here we illustrate a somewat simpler approach, using only a series of short-term (closed population) capture-recapture estimates and telemetry information on survival. Even this simpler approach has a higher cost (time and money) than a basic survey to monitor relative abundance, but could be justified for a subset of cases (e.g., a threatened population or one supporting an important fishery). 
+
+We begin with the simulation model:
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Simulation to create population size and field data
+
+Y <- 10
+
+LowS <- 0.5 # Adult survival, arbitrary lower bound
+HighS <- 0.9 # Arbitrary upper bound
+AnnualS <- array(data=NA, dim=(Y-1))
+AnnualS <- runif(n=(Y-1), min=LowS, max=HighS)
+
+MeanR <- 400 # Mean annual recruits
+N.r <- rpois(n=Y, lambda=MeanR)
+N.a <- array(data=NA, dim=Y)
+N.a[1] <- N.r[1] + rpois(n=1, lambda=MeanR) # Arbitrary year-1 adult population size
+for (y in 2:Y){
+  N.a[y] <- N.r[y] + rbinom(n=1, size=N.a[y-1], prob=AnnualS[y-1])
+  } #y
+
+# Short-term (closed) two-sample population estimate
+CapProb <- 0.1 # Fraction of population sampled
+n1 <- rbinom(n=Y, size=N.a, prob=CapProb) # Number caught and marked in first sample
+n2 <- rbinom(n=Y, size=N.a, prob=CapProb) # Number caught and examined for marks in second sample
+m2 <- rbinom(n=Y, size=n2, prob=n1/N.a) # Number of marked fish in second sample
+#n1*n2/m2 # Point estimates
+
+# Telemetry information on annual survival
+Telemetry <- array(data=NA, dim=Y)
+Telemetry[1] <- 40 # Arbitrary number of telemetry tags to start study
+for (y in 2:Y){
+  Telemetry[y] <- rbinom(n=1, size=Telemetry[y-1], prob=AnnualS[y-1])
+} #y
+
+```
+
+We model absolute population size, and assume that fish age 1 and older share population rates. Survival rate varies annually within user-specified lower and upper bounds. Annual recruitment (surviving age-0 fish from the prior year) is drawn from a Poisson distribution with an arbitrary mean of 400. We require a starting population in year 1 and draw the adult survivors from a Poisson distribution, using the same mean as recruitment. Population size in subsequent years is
+
+  $N.a_y = N.r_y + Binomial(N.a_{y-1}, AnnualS_{y-1})$
+
+i.e., incoming recruitment plus surviving adults.
+
+Model parameters are estimated using simulated data from two field studies that are assumed to be independent and would provide information on abundance and survival. The first data source is a two-sample (closed) capture-recapture estimate, assumed to be done at the start of each year. The arbitrary capture probability is used to generate the two binomally-distributed samples. The number of recaptures is also binomally distributed, using the observed marked fraction (on average equal to the capture probability). The second data source is a telemetry study, with an arbitrary initial number of fish given transmitters. The telemetry study is assumed to provide annual information on the number of surviving telemetered fish. For example, this could be done through fixed-receiver detections of migratory fish that return annually to a spawning area. For simplicity, the initial batch of transmitters is assumed to last for the duration of the overall population study. Other field designs could be tested with minor modifications in code; e.g., adding new transmitters each year.
+
+Parameter estimates are obtained using uninformative prior distributions for recruitment and annual survival. Preliminary trials indicated that there was not sufficient information to estimate annual recruitment so only the overall mean is estimated. Starting population size in year 1 is Poisson distributed, uaing the capture-recapture point estimate as the expected value. Population size in subsequent years is also drawn from a Poisson distribution, using the population projection equation as the expected value. The likelihood for the capture-recapture data uses the approach from Section \@ref(JAGS-model-fit). The telemetry likelihood uses a binomail distribution for the annual observation of remaining live fish with transmitters.
+
+Following the JAGS section is some R code to compare the true values with model estimates. The second plot uses the <code>abline()</code> function to add horizontal lines for the mean and empirical 0.025 and 0.975 bounds. The <code>par(xpd=TRUE)</code> turns off clipping ([link](https://stackoverflow.com/questions/3932038/plot-a-legend-outside-of-the-plotting-area-in-base-graphics)) so that a legend can be added outside the plot boundary (using inset to set the relative coordinates of the legend). For the third plot, the Chapman modification of the capture-recapture estimator @ricker1975 was used to avoid getting a plotting error due to an infinite point estimate in cases with $m_2=0$.
+
+```{r eval=FALSE}
+# Load necessary library
+library(rjags)
+library(R2jags)
+
+# JAGS code ##################################
+sink("IPM.txt")
+cat("
+model {
+
+# Priors
+
+ MeanR.est ~ dunif(0, 10000)
+
+for (y in 1:(Y-1)){
+  AnnualS.est[y] ~ dunif(0,1)  # Uninformative prior, adult survival
+}#y
+
+# Population projection
+ N.a.est[1] ~ dpois((n1[1]+1)*(n2[1]+1)/(m2[1]+1)-1) # Year 1 total, Chapman mod in case m2=0
+ # Point estimate needed to start model because no prior year information
+ for(y in 2:Y) {
+     N.a.est[y] ~ dpois(MeanR.est + (AnnualS.est[y-1]*N.a.est[y-1]))
+     } #y
+
+#Likelihoods
+# Two-sample capture-recapture estimate for total pop size, done at start of year
+  for (y in 2:Y){  # m2[1] used above to get starting pop size
+    m2[y] ~ dbin((n1[y]/N.a.est[y]), n2[y])
+    } #y
+
+# Telemetry information on survival rate
+	 for (y in 1:(Y-1)){
+    Telemetry[y+1] ~ dbin(AnnualS.est[y], Telemetry[y])
+    } #y
+
+}
+    ",fill=TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("Y", "n1", "n2", "m2", "Telemetry")
+
+# Initial values
+jags.inits <- function(){ list(MeanR.est=runif(n=1, min=0, max=10000),
+                               AnnualS.est=runif(n=(Y-1), min=0, max=1))}
+
+model.file <- 'IPM.txt'
+
+# Parameters monitored
+jags.params <- c("AnnualS.est", "N.a.est", "MeanR.est")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 20000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+
+# Code for plots comparing true values and model estimates
+par(mfrow = c(1, 3))
+plot(seq(1:(Y-1)), jagsfit$BUGSoutput$mean$AnnualS.est, ylab="Annual S", xlab="Year",
+     type="b", pch=19, ylim=c(min(AnnualS,jagsfit$BUGSoutput$mean$AnnualS.est),
+                              max(AnnualS,jagsfit$BUGSoutput$mean$AnnualS.est)))
+points(AnnualS, col="blue", type="b", pch=17)
+
+MeanR.est.lower <- quantile(jagsfit$BUGSoutput$sims.list$MeanR.est, probs=c(0.025), na.rm=TRUE)
+MeanR.est.upper <- quantile(jagsfit$BUGSoutput$sims.list$MeanR.est, probs=c(0.975), na.rm=TRUE)
+plot(seq(1:Y), N.r, ylab="Recruits", xlab="Year",
+     type="b", pch=19, col="blue", ylim=c(min(N.r,MeanR.est.lower),
+                              max(N.r,MeanR.est.upper)))
+par(xpd=TRUE) # Turn off clipping to put legend above plot
+# https://stackoverflow.com/questions/3932038/plot-a-legend-outside-of-the-plotting-area-in-base-graphics
+legend("top",
+       legend = c("Est", "Obs"), col = c("black", "blue"),
+       pch = c(19,17), text.col = "black",  horiz = T , inset = c(0, -0.2))
+par(xpd=FALSE)
+abline(h=MeanR.est.lower, lty=3) # Add line for lower bound estimated mean R
+abline(h=jagsfit$BUGSoutput$mean$MeanR.est)
+abline(h=MeanR.est.upper, lty=3) # Add line for upper bound estimated mean R
+
+MR_N.hat <- (n1+1)*(n2+1)/(m2+1) -1 # Chapman modification in case m2=0
+plot(seq(1:Y), jagsfit$BUGSoutput$mean$N.a.est, ylab="Pop size (includes new recruits)",
+     xlab="Year",
+     type="b", pch=19, ylim=c(min(N.a,jagsfit$BUGSoutput$mean$N.a.est,MR_N.hat),
+                              max(N.a,jagsfit$BUGSoutput$mean$N.a.est,MR_N.hat)))
+points(N.a, col="blue", type="b", pch=17) # True adult pop size
+points(MR_N.hat, col='red', type="b") # Capture-recapture point estimates
+
+```
+Results for the default case show that population size and annual survival tend to be reliably estimated. Recruitment is more poorly estimated, which is not surprising given that there is no direct information on recruitment. The model makes indirect inferences about recruitment from the total year-y abundance (new age-1 recruits plus 2+ survivors) and telemetry information on survival. A field design that provided separate point estimates of age-1 and age-2+ abundance would improve the estimates of recruitment.
+
+After doing multiple runs with the default settings, try varying the capture probability for the capture-recapture study and the initial release of fish with transmitters. A higher capture probability improves the estimates of total population size, and more transmitters improve the annual survival estimates.
+
+
+## Exercises
+
+1. Compare true and estimated mean recruitment in ten trials using the default capture probability of 0.1 versus 0.2 and 0.3. How well does the model estimate total population size and annual survival for each sampling intensity?
+
+2. How might the field sampling methods be modified or augmented to improve the model estimates?
