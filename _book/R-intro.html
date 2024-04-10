@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 A Brief Introduction to R and RStudio | A Bayesian Introduction to Fish Population Analysis</title>
+  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 A Brief Introduction to R and RStudio | A Bayesian Introduction to Fish Population Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 A Brief Introduction to R and RStudio | A Bayesian Introduction to Fish Population Analysis" />
+  
+  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+<meta name="author" content="Joseph E. Hightower" />
+
+
+<meta name="date" content="2024-04-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="Distributions.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Joe Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> A Brief Introduction to R and RStudio</a></li>
+<li class="chapter" data-level="3" data-path="Distributions.html"><a href="Distributions.html"><i class="fa fa-check"></i><b>3</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Distributions.html"><a href="Distributions.html#Discrete"><i class="fa fa-check"></i><b>3.1</b> Discrete</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
+<li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
+<li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#poisson"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#negative-binomial"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Distributions.html"><a href="Distributions.html#Uniform"><i class="fa fa-check"></i><b>3.2.1</b> Uniform</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Distributions.html"><a href="Distributions.html#beta"><i class="fa fa-check"></i><b>3.2.2</b> Beta</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Distributions.html"><a href="Distributions.html#normal"><i class="fa fa-check"></i><b>3.2.3</b> Normal</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Distributions.html"><a href="Distributions.html#lognormal"><i class="fa fa-check"></i><b>3.2.4</b> Lognormal</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Distributions.html"><a href="Distributions.html#gamma"><i class="fa fa-check"></i><b>3.2.5</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Distributions.html"><a href="Distributions.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Introduction to Fish Population Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="R-intro" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> A Brief Introduction to R and RStudio<a href="R-intro.html#R-intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>R <span class="citation">(<a href="#ref-R-base">R Core Team 2022</a>)</span> is a free software environment for data manipulation&lt;, statistical analyses, and graphics. It is easily extended through add-on software packages including some for commonly used fisheries models. There are a number of software interfaces for working in R and you should use the interface with which you are most comfortable. For this book, we use the free software <a href="https://posit.co/products/open-source/rstudio/">RStudio</a>, which can be run in either the Windows, Macintosh, or Unix environment. There are many online resources for installing and learning R and RStudio, and even a recent book for fisheries analysis using R <span class="citation">(<a href="#ref-ogle_2018">Ogle 2018</a>)</span>. We assume in this book that R and RStudio have been installed. We get started by examining a few basic R commands but will primarily illustrate the use of R through code examples in the remaining chapters. We will also describe some general methods for getting help and learning more about R.</p>
+<p>As a first example using R, let’s estimate population size through a two-sample mark-recapture study. Consider a pond with N=100 fish. If you take a first sample (n<sub>1</sub>=50) and mark (tag) those fish, then half the fish in the pond are tagged. If you take a second sample (say n<sub>2</sub>=30), how many tagged fish (m<sub>2</sub>) would you expect in the second sample? That’s right, 15! Of course, in practice, we don’t know N but we solve for it. We begin by setting the two proportions equal: <span class="math inline">\(n_1/N=m_2/n_2\)</span>. Solving for N gives us our estimator (N<sub>hat</sub>): <span class="math inline">\(\hat{N} = \frac{n_1*n_2}{m_2}\)</span></p>
+<p>We can carry out the calculations using R code as follows. First, open a new RStudio window (menu commands File : New File : R Script). This Source window will contain your R script, or the sequence of R commands you intend to execute. Copy and paste the following code into the Source window (from the online <a href="https://bookdown.org/Joseph_Hightower/bayesianfish/">version</a> if using a print copy of the book):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="R-intro.html#cb3-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;Q:/My Drive/FishAnalysis&quot;</span>) <span class="co"># Edit to show your working directory</span></span>
+<span id="cb3-2"><a href="R-intro.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="R-intro.html#cb3-3" tabindex="-1"></a><span class="co"># Two-sample population estimate</span></span>
+<span id="cb3-4"><a href="R-intro.html#cb3-4" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">26</span> <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb3-5"><a href="R-intro.html#cb3-5" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">14</span> <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb3-6"><a href="R-intro.html#cb3-6" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="dv">7</span> <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb3-7"><a href="R-intro.html#cb3-7" tabindex="-1"></a>N_hat <span class="ot">&lt;-</span> n1<span class="sc">*</span>n2<span class="sc">/</span>m2 <span class="co"># Store estimate as variable N_hat</span></span>
+<span id="cb3-8"><a href="R-intro.html#cb3-8" tabindex="-1"></a>N_hat <span class="co"># Prints N_hat in Console window</span></span></code></pre></div>
+<p>Any text following a pound sign (#) is a comment, whether on a line by itself or following executable R code. Comments do not affect the program’s execution, but are extremely helpful in documenting your code. Taking the time to enter comments is always worthwhile, whether for your own information or when code is to be shared with others.</p>
+<p>Next, position the cursor on the first line and execute one line at a time by clicking on the Run icon. This allows you to see the effect of each statement. The first line calls the <code>setwd()</code> function to establish the working directory for any files saved. Doing this routinely will ensure that files end up in the proper location. You can find out your working directory path by using the RStudio menu command (Session | Set Working Directory | Choose Directory). That allows you to navigate to the correct location, and the <code>setwd()</code> code will be printed to the Console. You can then save that line of code for future use.</p>
+<p>The next three executable lines assign (&lt;- ) values to variables, which have arbitrary names. Here, I have used conventional fisheries mark-recapture names for the sample sizes and number of recaptures, but more descriptive names could be used (e.g., Mark_Sample) for clarity. Each variable is a new object that will appear in the Environment window once that line of code has been run. The next line of code calculates the estimate, which is stored as N_hat. The final line prints the value of N_hat in the Console window. The population estimate (52) makes sense because you marked 26 and half the fish in the second sample were marked.</p>
+<p>After you have run this code in RStudio, be sure to save the file. This is a good general practice – never create code from scratch when you can modify existing code! It cuts down on typing errors and allows you to build on existing code when doing new but similar things. The code could be from your prior work or from a journal article or book. The ability to share R and JAGS code is very helpful in learning and working efficiently. Saving the file to a working directory specified in the code helps in keeping together all files related to a specific project. Use a descriptive name for the code (R script) so that it can be readily located in the future.</p>
+<p>Much of the work done in R is accomplished by using functions, which are a set of statements that perform a specific task. Typing the name of an R function into the search box in the RStudio Help window is one quick way to get help (e.g., function defaults, arguments, examples). However, the R documentation is sometimes overly detailed and cryptic, so another good option is an online search (e.g., “R function max” or “how to load csv file R”). Another helpful alternative is the <a href="https://cran.r-project.org/doc/contrib/Short-refcard.pdf">R Reference Card</a>, which provides a brief summary of some of the more frequently used R commands. For example, the reference card lists a number of math functions such as <code>log(x, base)</code>, which returns the log of x to the specified base. The statement <code>log(x)</code> returns the default natural-log base. This is typical of R, in that functions have default arguments that need not be specified. (It can also be a bit dangerous if the default action is not what you intended!) Another important aspect of R is that the object returned by the <code>log()</code> function depends on the argument. Consider the following four lines of code:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="R-intro.html#cb4-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">2.72</span></span>
+<span id="cb4-2"><a href="R-intro.html#cb4-2" tabindex="-1"></a><span class="fu">log</span>(x)</span>
+<span id="cb4-3"><a href="R-intro.html#cb4-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>)</span>
+<span id="cb4-4"><a href="R-intro.html#cb4-4" tabindex="-1"></a><span class="fu">log</span>(x)</span></code></pre></div>
+<p>We can test the code in a new R script window. If you have worked through this section in a single session, then objects from the mark-recapture example will be in the Environment window. Start with a clean slate by clicking on the broom icon in the Environment window. Like most things in R, this can also be accomplished through menu commands (Session : Clear Workspace) or R code <code>rm(list=ls())</code>. The first R statement assigns the value 2.72 to x, and the second statement prints the natural log of 2.72 in the Console window. The third line uses the <code>c()</code> (combine) function to create a vector of length two. Because we used the same variable name to store the result, R replaces the original integer value of x with a vector containing two integers. (It is done here as an example, but in the future, we will avoid this bad practice of reusing a variable name for a different purpose!) In the final line of code, the <code>log()</code> function returns a vector by applying the <code>log()</code> function element-by-element. This flexibility (allowing x to be defined first as a scalar then vector, and allowing either type as an argument to the <code>log()</code> function) is a strength of R, but it also increases the risk of coding errors compared to programming languages that are more structured. The keys for success in R programming are to check and test code carefully and to reuse existing code whenever possible. The chapters that follow will provide many more examples of R code, with comments and explanation as needed as new features are introduced. As you encounter R code, you should always run it to make sure that you understand how it works and its purpose.</p>
+
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ogle_2018" class="csl-entry">
+Ogle, by Derek H. 2018. <em>Introductory <span>Fisheries Analyses</span> with <span>R</span></em>. First edition. Chapman &amp; <span>Hall</span>/<span>CRC The R Series</span>. <span>Boca Raton, FL : Chapman and Hall/CRC, [2018].</span> <a href="https://catalog.lib.ncsu.edu/catalog/NCSU4637798">https://catalog.lib.ncsu.edu/catalog/NCSU4637798</a>.
+</div>
+<div id="ref-R-base" class="csl-entry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/02-R-RStudio.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
