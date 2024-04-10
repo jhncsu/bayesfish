@@ -1,7 +1,5 @@
 # Growth {#Growth}
 
-![Collins 1889.](https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/37806/full/full/0/default.jpg)
-
 Growth is a basic aspect of a fish's life history, but it is also an important process for managing fish populations. For example, a minimum size for harvest might be used to increase the proportion of fish surviving to the size (and age) of sexual maturity. Another consideration in developing a harvest strategy is finding a balance between the growth rate (increasing size of each individual in a cohort) and the loss rate due to natural mortality (reducing the number of individuals in a cohort).
 
 There are typically two aspects to growth modeling: age versus length and length versus weight. With those two equations, it is possible to predict the length or weight at any age, and to examine harvest strategies using minimum size or slot regulations. The focus in commercial marine fisheries is typically on weight because income from commercial fishing is a function of weight of the catch. Length gets more emphasis in freshwater fisheries management because anglers are not selling their catches (and trophy designations are generally length-based). 

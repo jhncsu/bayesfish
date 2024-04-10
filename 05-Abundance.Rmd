@@ -1,5 +1,5 @@
 # Abundance {#Abundance}
-![Smith 1894.](https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/40180/full/full/0/default.jpg)
+
 Information about abundance can be invaluable for making policy decisions.  For fish populations that support commercial or recreational fishing, population estimates are highly useful for deciding about the appropriate level of harvest.  For rare or declining populations, abundance data can guide the restoration process. In this chapter, we will consider a few simple field approaches for estimating population size. These methods can be used in freshwater or marine systems, but they do require that the study area be closed (no migration in or out, no recruitment (additions through reproduction), and no mortality for the duration of the study). Later chapters will consider open models that jointly estimate population abundance and mortality over longer time frames.
 
 ## Removal

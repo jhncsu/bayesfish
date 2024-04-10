@@ -1,7 +1,5 @@
 # Mortality Components {#Mortality}
 
-![Cobb 1917.](https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/34525/full/full/0/default.jpg)
-
 ## Exploitation rate {#ExpRate}
 
 A tagging study can provide a real-time estimate of the exploitation rate, or the fraction of the population being harvested. Similar to the tag-return method of estimating survival (Section \@ref(BrownieSurvival)), the only field work required is the initial tagging effort. Here there is a single release of fish with external tags at the start of the study, and the number of returned tags is recorded over a specified interval. The study duration could be an entire year, or a fishing season for a population managed by seasonal harvest. A high exploitation rate might indicate that harvest regulations such as a size limit or creel limit could be worthwhile.  Alternatively a low estimate might indicate that other factors such as natural mortality or recruitment may be more important in regulating population size. With only a single release, we cannot estimate survival (or its complement, mortality) but it is nevertheless an important first step in judging the relative impact of fishing.

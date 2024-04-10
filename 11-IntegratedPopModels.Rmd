@@ -1,7 +1,5 @@
 # Integrated Population Models {#PopModels}
 
-![Goode 1887](https://digitalcollections.lib.washington.edu/digital/iiif/fishimages/45918/full/full/0/default.jpg)
-
 The field and analytical methods discussed thus far have addressed population rates one at a time (e.g., estimating abundance or survival). An improved approach would be to design a complementary set of field studies that provides a complete picture of population dynamics. For example, @conn.etal_2008 used harvest and tag recovery data to fit an integrated population model (IPM) for black bear (*Ursus americanus*). Their model provided estimates that were more precise and biologically realistic than point estimates using mark-recapture data alone.  @kéry.schaub_2011 developed an avian IPM using adult population counts, nest surveys, and capture-recapture data on survival.  Here we illustrate a somewat simpler approach, using only a series of short-term (closed population) capture-recapture estimates and telemetry information on survival. Even this simpler approach has a higher cost (time and money) than a basic survey to monitor relative abundance, but could be justified for a subset of cases (e.g., a threatened population or one supporting an important fishery). 
 
 We begin with the simulation model:
