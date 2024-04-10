@@ -1,0 +1,97 @@
+\begin{thebibliography}{}
+
+\bibitem[Bolker, 2008]{bolker2008}
+Bolker, B.~M. (2008).
+\newblock {\em Ecological {{Models}} and {{Data}} in {{R}}}.
+\newblock Princeton University Press, 1 edition.
+
+\bibitem[Dorazio, 2016]{dorazio_2016}
+Dorazio, R.~M. (2016).
+\newblock Bayesian data analysis in population ecology: Motivations, methods,
+  and benefits.
+\newblock 58(1):31--44.
+
+\bibitem[Ellison, 2004]{ellison_2004}
+Ellison, A.~M. (2004).
+\newblock Bayesian inference in ecology.
+\newblock 7(6):509--520.
+
+\bibitem[Gelman et~al., 2015]{gelman.etal_2015}
+Gelman, A., Lee, D., and Guo, J. (2015).
+\newblock Stan: {{A Probabilistic Programming Language}} for {{Bayesian
+  Inference}} and {{Optimization}}.
+\newblock 40(5):530--543.
+
+\bibitem[Kéry, 2010]{kery_2010}
+Kéry, M. (2010).
+\newblock {\em Introduction to {{WinBUGS}} for {{Ecologists}}: {{Bayesian}}
+  Approach to Regression, {{ANOVA}}, Mixed Models and Related Analyses}.
+\newblock Academic Press, 1st edition edition.
+
+\bibitem[Kéry and Schaub, 2011]{kery.schaub_2011}
+Kéry, M. and Schaub, M. (2011).
+\newblock {\em Bayesian {{Population Analysis}} Using {{WinBUGS}}: {{A
+  Hierarchical Perspective}}}.
+\newblock Academic Press, 1st edition edition.
+
+\bibitem[Law and Kelton, 1982]{law.kelton_1982}
+Law, A.~M. and Kelton, W.~D. (1982).
+\newblock {\em Simulation {{Modeling}} and {{Analysis}}}.
+\newblock McGraw-Hill.
+
+\bibitem[Link and Barker, 2009]{link.barker_2009}
+Link, W.~A. and Barker, R.~J. (2009).
+\newblock {\em Bayesian {{Inference}}: {{With Ecological Applications}}}.
+\newblock Academic Press, 1st edition edition.
+
+\bibitem[Lunn et~al., 2009]{lunn.etal2009}
+Lunn, D., Spiegelhalter, D., Thomas, A., and Best, N. (2009).
+\newblock The {{BUGS}} project: {{Evolution}}, critique and future directions.
+\newblock 28(25):3049--3067.
+
+\bibitem[Lunn et~al., 2000]{lunn.etal2000}
+Lunn, D.~J., Thomas, A., Best, N., and Spiegelhalter, D. (2000).
+\newblock {{WinBUGS}} - {{A Bayesian}} modelling framework: {{Concepts}},
+  structure, and extensibility.
+\newblock 10(4):325--337.
+
+\bibitem[McCarthy, 2007]{mccarthy2007}
+McCarthy, M.~A. (2007).
+\newblock {\em Bayesian {{Methods}} for {{Ecology}}}.
+\newblock Cambridge University Press, 1st edition edition.
+
+\bibitem[Ogle, 2018]{ogle_2018}
+Ogle, b. D.~H. (2018).
+\newblock {\em Introductory {{Fisheries Analyses}} with {{R}}}.
+\newblock Chapman \& {{Hall}}/{{CRC The R Series}}. {Boca Raton, FL : Chapman
+  and Hall/CRC, [2018].}, first edition. edition.
+
+\bibitem[Plummer, 2003]{plummer2003}
+Plummer, M. (2003).
+\newblock {{JAGS}}: {{A}} program for analysis of {{Bayesian}} graphical models
+  using {{Gibbs}} sampling.
+
+\bibitem[Ponisio et~al., 2020]{ponisio.etal_2020}
+Ponisio, L.~C., family=Valpine, given=Perry, p.~u., Michaud, N., and Turek, D.
+  (2020).
+\newblock One size does not fit all: {{Customizing MCMC}} methods for
+  hierarchical models using {{NIMBLE}}.
+\newblock 10(5):2385--2416.
+
+\bibitem[{R Core Team}, 2022]{R-base}
+{R Core Team} (2022).
+\newblock {\em R: A Language and Environment for Statistical Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria.
+
+\bibitem[Xie, 2015]{xie2015}
+Xie, Y. (2015).
+\newblock {\em Dynamic {{Documents}} with {{R}} and Knitr}.
+\newblock {Chapman and Hall/CRC}, 2 edition.
+
+\bibitem[Xie, 2024]{R-bookdown}
+Xie, Y. (2024).
+\newblock {\em bookdown: Authoring Books and Technical Documents with R
+  Markdown}.
+\newblock R package version 0.38.
+
+\end{thebibliography}

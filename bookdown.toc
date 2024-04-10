@@ -1,0 +1,23 @@
+\contentsline {fm}{List of Figures}{v}{chapter*.1}%
+\contentsline {fm}{List of Tables}{vii}{chapter*.2}%
+\contentsline {fm}{Preface}{ix}{chapter*.3}%
+\contentsline {fm}{About the Author}{xi}{chapter*.6}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}A Brief Introduction to R and RStudio}{1}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Probability Distributions}{1}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Discrete}{1}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Bernoulli}{1}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Binomial}{4}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Multinomial}{6}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Poisson}{8}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}Negative binomial}{9}{subsection.3.1.5}%
+\contentsline {section}{\numberline {3.2}Continuous}{10}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Uniform}{10}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Beta}{11}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Normal}{12}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Lognormal}{12}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Gamma}{13}{subsection.3.2.5}%
+\contentsline {section}{\numberline {3.3}Exercises}{14}{section.3.3}%
+\contentsline {chapter}{Appendix}{17}{Item.5}%
+\contentsline {chapter}{\numberline {A}Title Placeholder}{17}{appendix.A}%
+\contentsline {fm}{Bibliography}{19}{appendix*.13}%

@@ -43,6 +43,6 @@ xfun::session_info()
 
 ## Acknowledgments {-}
 
-My first exposure to Bayesian statistical methods was via Matthew Krachey, who took the time as a PhD student to teach a few informal sessions on WinBUGS. I soon came to agree with @kéry_2010 that the BUGS language "frees the modeler in you" and would be a valuable tool for research and especially teaching. I incorporated the BUGS language into my graduate fisheries course and soon into research population models. Colleagues who provided valuable assistance on statistical methods include Ken Pollock, Beth Gardner, and Brian Reich. I also benefited from some of the many excellent reference books on Bayesian methods (e.g., @mccarthy2007, @kéry_2010 @kéry.schaub_2011). 
+My first exposure to Bayesian statistical methods was via Matthew Krachey, who took the time as a PhD student to teach a few informal sessions on WinBUGS. I soon came to agree with @kéry_2010 that the BUGS language "frees the modeler in you" and would be a valuable tool for research and especially teaching. I incorporated the BUGS language into my graduate fisheries course and soon into research population models. Colleagues who provided valuable assistance on statistical methods include Beth Gardner, Ken Pollock, and Brian Reich. I also benefited from some of the many excellent reference books on Bayesian methods (e.g., @mccarthy2007, @kéry_2010 @kéry.schaub_2011). 
 Anonymous reviewers of previous drafts made a number of helpful suggestions that I have attempted to accommodate. Any remaining errors in the book are mine.
 
