@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-04-10" />
+<meta name="date" content="2024-04-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -286,7 +286,7 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">A Bayesian Introduction to Fish Population Analysis</h1>
 <p class="author"><em>Joseph E. Hightower</em></p>
-<p class="date"><em>2024-04-10</em></p>
+<p class="date"><em>2024-04-15</em></p>
 </div>
 <div id="preface" class="section level1 unnumbered hasAnchor">
 <h1>Preface<a href="index.html#preface" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -329,7 +329,7 @@ div.csl-indent {
 </div>
 <div id="acknowledgments" class="section level2 unnumbered hasAnchor">
 <h2>Acknowledgments<a href="index.html#acknowledgments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>My first exposure to Bayesian statistical methods was via Matthew Krachey, who took the time as a PhD student to teach a few informal sessions on WinBUGS. I soon came to agree with <span class="citation">Kéry (<a href="#ref-kéry_2010">2010</a>)</span> that the BUGS language “frees the modeler in you” and would be a valuable tool for research and especially teaching. I incorporated the BUGS language into my graduate fisheries course and soon into research population models. Colleagues who provided valuable assistance on statistical methods include Beth Gardner, Ken Pollock, and Brian Reich. I also benefited from some of the many excellent reference books on Bayesian methods <span class="citation">(e.g., <a href="#ref-mccarthy2007">McCarthy 2007</a>; <a href="#ref-kéry_2010">Kéry 2010</a>; <a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>.</p>
+<p>My first exposure to Bayesian statistical methods was via Matthew Krachey, who took the time as a PhD student to teach a few informal sessions on WinBUGS. I soon came to agree with <span class="citation">Kéry (<a href="#ref-kéry_2010">2010</a>)</span> that the BUGS language “frees the modeler in you” and would be a valuable tool for research and especially teaching. I incorporated the BUGS language into my graduate fisheries course and soon into research population models. Other colleagues who provided valuable assistance on statistical methods include Beth Gardner, Ken Pollock, and Brian Reich. I also benefited from some of the many excellent reference books on Bayesian methods for ecology <span class="citation">(e.g., <a href="#ref-mccarthy2007">McCarthy 2007</a>; <a href="#ref-kéry_2010">Kéry 2010</a>; <a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>.</p>
 <p>Anonymous reviewers of previous drafts made a number of helpful suggestions that I have attempted to accommodate. Any remaining errors in the book are mine.</p>
 
 </div>
@@ -412,6 +412,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-04-10" />
+<meta name="date" content="2024-04-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +32,15 @@
   
 <link rel="prev" href="Trend.html"/>
 <link rel="next" href="PopModels.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,9 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -289,149 +289,149 @@ div.csl-indent {
 <p>What happens between spawning and recruitment is of interest to the fish ecologist and the fishery manager. Typical factors affecting recruitment include environmental conditions, prey availability, and predation. It may seem obvious to assume that spawning stock size affects recruitment, but it is not always easy to detect such a relationship <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span>. The relationship may not be evident if there is little contrast in spawning stock size, high variability in recruitment, too short a time series, or low precision for estimates of spawning stock and recruitment. Characterizing the strength of the relationship can provide valuable guidance to the fishery manager. For example, management will need to be more restrictive in cases where recruitment drops consistently as spawning stock declines. In other cases, a more aggressive harvest policy may be possible because recruitment appears to be relatively stable over a wide range of spawning stock sizes. The risk in any case is of fishing the stock down to a point where recruitment declines sharply. This is termed recruitment overfishing, and it can be very difficult to rebuild a population after that occurs.</p>
 <p>The process of recruitment starts with eggs, but egg production is difficult to estimate directly so it is common to use spawning stock biomass (<span class="math inline">\(B_S\)</span>) as a proxy. One of the most commonly used curves relating spawning stock size and recruitment is the Beverton-Holt equation: <span class="math inline">\(R=1/(\alpha +\beta/B_S)\)</span>. This curve approaches zero as <span class="math inline">\(B_S\)</span> approaches zero and approaches 1/<span class="math inline">\(\alpha\)</span> as <span class="math inline">\(B_S\)</span> approaches infinity. It is often a good descriptor of observed stock-recruitment data in that recruitment is low when spawning stock size is close to zero but appears to be without trend at higher spawning stock sizes.</p>
 <p>The best way to explore the behavior of the Beverton-Holt curve is to try different values for the two parameters:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Recruit.html#cb1-1" tabindex="-1"></a>SpBio <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">10</span>, <span class="at">to=</span><span class="dv">200</span>, <span class="at">by=</span><span class="dv">5</span>)</span>
-<span id="cb1-2"><a href="Recruit.html#cb1-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fl">0.001</span></span>
-<span id="cb1-3"><a href="Recruit.html#cb1-3" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
-<span id="cb1-4"><a href="Recruit.html#cb1-4" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(a<span class="sc">+</span>b<span class="sc">/</span>SpBio)</span>
-<span id="cb1-5"><a href="Recruit.html#cb1-5" tabindex="-1"></a><span class="fu">plot</span>(SpBio, R)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="Recruit.html#cb84-1" tabindex="-1"></a>SpBio <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">10</span>, <span class="at">to=</span><span class="dv">200</span>, <span class="at">by=</span><span class="dv">5</span>)</span>
+<span id="cb84-2"><a href="Recruit.html#cb84-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fl">0.001</span></span>
+<span id="cb84-3"><a href="Recruit.html#cb84-3" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb84-4"><a href="Recruit.html#cb84-4" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(a<span class="sc">+</span>b<span class="sc">/</span>SpBio)</span>
+<span id="cb84-5"><a href="Recruit.html#cb84-5" tabindex="-1"></a><span class="fu">plot</span>(SpBio, R)</span></code></pre></div>
 <p>In this example code, spawning stock biomass is generated with the <code>seq()</code> (sequence) function over a wide but arbitrary range. The Beverton-Holt parameters are also arbitrary but are chosen to allow for gradually increasing recruitment toward an asymptote of 1000. Experiment with different parameter values to find a set that would maintain an asymptote of 1000 but would produce a steeper curve, with about 90% of asymptotic recruitment at a spawning stock level of 100.</p>
 <div id="Recruit-Fit" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Fitting a stock-recruitment curve<a href="Recruit.html#Recruit-Fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We begin by fitting a Beverton-Holt model to simulated stock-recruitment data. Section <a href="Recruit.html#Recruit-DIC">10.2</a> describes an approach for comparing full and reduced models, to explore the conditions under which an underlying relationship can be detected.</p>
 <p>Our simulation uses a full age-structured model to generate the stock-recruitment data. First, we choose the structure of the population matrix (number of ages and years). Next, we choose arbitrary annual fishing mortality rates. By starting the population at a high level and fishing intensively, we ensure that there is sufficient contrast <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span> in spawning stock size to be able to detect the underlying relationship. Age-specific fishing mortality rates are obtained by defining the fishery selectivity pattern. We use a logistic curve and arbitrarily choose parameters so that 50% selectivity occurs at age two. (It is useful to plot the selectivity curve (code commented out) while varying the two selectivity parameters.) Obtaining year- and age- specific fishing mortality rates as a product of a year-specific measure of fishing intensity and an age-specific vulnerability to fishing is sometimes referred to as a “separable” model.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Recruit.html#cb2-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb2-2"><a href="Recruit.html#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="Recruit.html#cb2-3" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># Arbitrary. If changed, redo maturity and meanwt vectors</span></span>
-<span id="cb2-4"><a href="Recruit.html#cb2-4" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="co"># Arbitrary. If changed, redo AnnualF vector</span></span>
-<span id="cb2-5"><a href="Recruit.html#cb2-5" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="Recruit.html#cb2-6" tabindex="-1"></a>AnnualF <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.59</span>, <span class="fl">0.41</span>, <span class="fl">0.74</span>, <span class="fl">0.91</span>, <span class="fl">0.86</span>, <span class="fl">0.74</span>, <span class="fl">1.07</span>, <span class="fl">0.9</span>, <span class="fl">0.87</span>, <span class="fl">1.1</span>, <span class="fl">0.93</span>)</span>
-<span id="cb2-7"><a href="Recruit.html#cb2-7" tabindex="-1"></a><span class="co"># Arbitrary, increasing trend to create contrast in SpBio. Redo if Y changes</span></span>
-<span id="cb2-8"><a href="Recruit.html#cb2-8" tabindex="-1"></a>AnnualM <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
-<span id="cb2-9"><a href="Recruit.html#cb2-9" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="Recruit.html#cb2-10" tabindex="-1"></a><span class="co"># F by age, using separable model</span></span>
-<span id="cb2-11"><a href="Recruit.html#cb2-11" tabindex="-1"></a>Fishery_k <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Slope for logistic function</span></span>
-<span id="cb2-12"><a href="Recruit.html#cb2-12" tabindex="-1"></a>Fishery_a_50 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># Age at 0.5 selectivity</span></span>
-<span id="cb2-13"><a href="Recruit.html#cb2-13" tabindex="-1"></a>SelF <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>A) <span class="co"># Fishery selectivity pattern</span></span>
-<span id="cb2-14"><a href="Recruit.html#cb2-14" tabindex="-1"></a>F_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for F by age and year</span></span>
-<span id="cb2-15"><a href="Recruit.html#cb2-15" tabindex="-1"></a>Z_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for Z by age and year</span></span>
-<span id="cb2-16"><a href="Recruit.html#cb2-16" tabindex="-1"></a>S_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for survival rate by age and year</span></span>
-<span id="cb2-17"><a href="Recruit.html#cb2-17" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
-<span id="cb2-18"><a href="Recruit.html#cb2-18" tabindex="-1"></a>  SelF[a] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>Fishery_k<span class="sc">*</span>(a<span class="sc">-</span>Fishery_a_50)))</span>
-<span id="cb2-19"><a href="Recruit.html#cb2-19" tabindex="-1"></a>  } <span class="co">#a</span></span>
-<span id="cb2-20"><a href="Recruit.html#cb2-20" tabindex="-1"></a><span class="co">#plot(SelF)</span></span>
-<span id="cb2-21"><a href="Recruit.html#cb2-21" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)) {</span>
-<span id="cb2-22"><a href="Recruit.html#cb2-22" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
-<span id="cb2-23"><a href="Recruit.html#cb2-23" tabindex="-1"></a>    F_a[a,y] <span class="ot">&lt;-</span> AnnualF[y] <span class="sc">*</span> SelF[a]</span>
-<span id="cb2-24"><a href="Recruit.html#cb2-24" tabindex="-1"></a>    Z_a[a,y] <span class="ot">&lt;-</span> F_a[a,y]<span class="sc">+</span>AnnualM</span>
-<span id="cb2-25"><a href="Recruit.html#cb2-25" tabindex="-1"></a>    S_a[a,y] <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>Z_a[a,y])</span>
-<span id="cb2-26"><a href="Recruit.html#cb2-26" tabindex="-1"></a>  } <span class="co">#a</span></span>
-<span id="cb2-27"><a href="Recruit.html#cb2-27" tabindex="-1"></a>} <span class="co">#y</span></span>
-<span id="cb2-28"><a href="Recruit.html#cb2-28" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="Recruit.html#cb2-29" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A, Y))</span>
-<span id="cb2-30"><a href="Recruit.html#cb2-30" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="Recruit.html#cb2-31" tabindex="-1"></a>BH_alpha <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1E5</span> <span class="co"># Parameter defining Beverton-Holt asymptotic recruitment</span></span>
-<span id="cb2-32"><a href="Recruit.html#cb2-32" tabindex="-1"></a>BH_beta <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Arbitrary</span></span>
-<span id="cb2-33"><a href="Recruit.html#cb2-33" tabindex="-1"></a>SD_rec <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Low level of lognormal error in recruitment</span></span>
-<span id="cb2-34"><a href="Recruit.html#cb2-34" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="Recruit.html#cb2-35" tabindex="-1"></a><span class="co"># Set up year-1 vector based on asymptotic recruitment and year-1 survival rates</span></span>
-<span id="cb2-36"><a href="Recruit.html#cb2-36" tabindex="-1"></a>Mat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.8</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># Arbitrary maturity schedule. Redo if max age (A) changes</span></span>
-<span id="cb2-37"><a href="Recruit.html#cb2-37" tabindex="-1"></a>Wgt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.20</span>, <span class="fl">0.40</span>, <span class="fl">0.62</span>, <span class="fl">0.80</span>, <span class="fl">1.01</span>, <span class="fl">1.30</span>, <span class="fl">1.56</span>) <span class="co"># Mean wt. Redo if A changes</span></span>
-<span id="cb2-38"><a href="Recruit.html#cb2-38" tabindex="-1"></a>SpBio <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>(Y<span class="dv">-1</span>)) <span class="co"># Spawning biomass vector</span></span>
-<span id="cb2-39"><a href="Recruit.html#cb2-39" tabindex="-1"></a><span class="co"># Year-1 N (arbitrarily) from asymptotic recruitment, year-1 survival.</span></span>
-<span id="cb2-40"><a href="Recruit.html#cb2-40" tabindex="-1"></a>N[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>BH_alpha<span class="sc">*</span><span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="dv">0</span>, SD_rec)</span>
-<span id="cb2-41"><a href="Recruit.html#cb2-41" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>A){</span>
-<span id="cb2-42"><a href="Recruit.html#cb2-42" tabindex="-1"></a>  N[a,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="fu">trunc</span>(N[(a<span class="dv">-1</span>),<span class="dv">1</span>]), S_a[(a<span class="dv">-1</span>),<span class="dv">1</span>])</span>
-<span id="cb2-43"><a href="Recruit.html#cb2-43" tabindex="-1"></a>}<span class="co">#a</span></span>
-<span id="cb2-44"><a href="Recruit.html#cb2-44" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Y){</span>
-<span id="cb2-45"><a href="Recruit.html#cb2-45" tabindex="-1"></a>  SpBio[y<span class="dv">-1</span>] <span class="ot">&lt;-</span> <span class="fu">sum</span>(N[,y<span class="dv">-1</span>]<span class="sc">*</span>Wgt<span class="sc">*</span>Mat) <span class="co"># Spawning stock biomass</span></span>
-<span id="cb2-46"><a href="Recruit.html#cb2-46" tabindex="-1"></a>  N[<span class="dv">1</span>,y] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(BH_alpha<span class="sc">+</span>BH_beta<span class="sc">/</span>SpBio[y<span class="dv">-1</span>])<span class="sc">*</span><span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="dv">0</span>, SD_rec)</span>
-<span id="cb2-47"><a href="Recruit.html#cb2-47" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>A){</span>
-<span id="cb2-48"><a href="Recruit.html#cb2-48" tabindex="-1"></a>    N[a,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="fu">trunc</span>(N[(a<span class="dv">-1</span>), (y<span class="dv">-1</span>)]), S_a[(a<span class="dv">-1</span>),(y<span class="dv">-1</span>)])</span>
-<span id="cb2-49"><a href="Recruit.html#cb2-49" tabindex="-1"></a>    } <span class="co">#a</span></span>
-<span id="cb2-50"><a href="Recruit.html#cb2-50" tabindex="-1"></a>  } <span class="co">#y</span></span>
-<span id="cb2-51"><a href="Recruit.html#cb2-51" tabindex="-1"></a><span class="co">#plot(SpBio,N[1,2:Y], ylab=&quot;Recruits&quot;, xlab=&quot;Spawning stock biomass&quot;)</span></span>
-<span id="cb2-52"><a href="Recruit.html#cb2-52" tabindex="-1"></a></span>
-<span id="cb2-53"><a href="Recruit.html#cb2-53" tabindex="-1"></a><span class="co"># Generate survey data on recruitment and spawning stock</span></span>
-<span id="cb2-54"><a href="Recruit.html#cb2-54" tabindex="-1"></a>Survey_q <span class="ot">&lt;-</span> <span class="fl">1E-3</span> <span class="co"># Arbitrary catchability coefficient for survey</span></span>
-<span id="cb2-55"><a href="Recruit.html#cb2-55" tabindex="-1"></a>SD_survey <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Arbitrary ln-scale SD</span></span>
-<span id="cb2-56"><a href="Recruit.html#cb2-56" tabindex="-1"></a>Exp_ln_B <span class="ot">&lt;-</span> <span class="fu">log</span>(Survey_q<span class="sc">*</span>SpBio)</span>
-<span id="cb2-57"><a href="Recruit.html#cb2-57" tabindex="-1"></a>Survey_B <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="at">meanlog=</span>Exp_ln_B, <span class="at">sdlog=</span>SD_survey)</span>
-<span id="cb2-58"><a href="Recruit.html#cb2-58" tabindex="-1"></a><span class="co">#plot(SpBio, Survey_B[1:Y-1])</span></span>
-<span id="cb2-59"><a href="Recruit.html#cb2-59" tabindex="-1"></a>Exp_ln_R <span class="ot">&lt;-</span> <span class="fu">log</span>(Survey_q<span class="sc">*</span>N[<span class="dv">1</span>,<span class="dv">2</span><span class="sc">:</span>Y])</span>
-<span id="cb2-60"><a href="Recruit.html#cb2-60" tabindex="-1"></a>Survey_R <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="fu">rlnorm</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">meanlog=</span>Exp_ln_R, <span class="at">sdlog=</span>SD_survey))</span>
-<span id="cb2-61"><a href="Recruit.html#cb2-61" tabindex="-1"></a><span class="co">#plot(N[1,], Survey_R)</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="Recruit.html#cb85-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb85-2"><a href="Recruit.html#cb85-2" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="Recruit.html#cb85-3" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># Arbitrary. If changed, redo maturity and meanwt vectors</span></span>
+<span id="cb85-4"><a href="Recruit.html#cb85-4" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="co"># Arbitrary. If changed, redo AnnualF vector</span></span>
+<span id="cb85-5"><a href="Recruit.html#cb85-5" tabindex="-1"></a></span>
+<span id="cb85-6"><a href="Recruit.html#cb85-6" tabindex="-1"></a>AnnualF <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.59</span>, <span class="fl">0.41</span>, <span class="fl">0.74</span>, <span class="fl">0.91</span>, <span class="fl">0.86</span>, <span class="fl">0.74</span>, <span class="fl">1.07</span>, <span class="fl">0.9</span>, <span class="fl">0.87</span>, <span class="fl">1.1</span>, <span class="fl">0.93</span>)</span>
+<span id="cb85-7"><a href="Recruit.html#cb85-7" tabindex="-1"></a><span class="co"># Arbitrary, increasing trend to create contrast in SpBio. Redo if Y changes</span></span>
+<span id="cb85-8"><a href="Recruit.html#cb85-8" tabindex="-1"></a>AnnualM <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb85-9"><a href="Recruit.html#cb85-9" tabindex="-1"></a></span>
+<span id="cb85-10"><a href="Recruit.html#cb85-10" tabindex="-1"></a><span class="co"># F by age, using separable model</span></span>
+<span id="cb85-11"><a href="Recruit.html#cb85-11" tabindex="-1"></a>Fishery_k <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Slope for logistic function</span></span>
+<span id="cb85-12"><a href="Recruit.html#cb85-12" tabindex="-1"></a>Fishery_a_50 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># Age at 0.5 selectivity</span></span>
+<span id="cb85-13"><a href="Recruit.html#cb85-13" tabindex="-1"></a>SelF <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>A) <span class="co"># Fishery selectivity pattern</span></span>
+<span id="cb85-14"><a href="Recruit.html#cb85-14" tabindex="-1"></a>F_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for F by age and year</span></span>
+<span id="cb85-15"><a href="Recruit.html#cb85-15" tabindex="-1"></a>Z_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for Z by age and year</span></span>
+<span id="cb85-16"><a href="Recruit.html#cb85-16" tabindex="-1"></a>S_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for survival rate by age and year</span></span>
+<span id="cb85-17"><a href="Recruit.html#cb85-17" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
+<span id="cb85-18"><a href="Recruit.html#cb85-18" tabindex="-1"></a>  SelF[a] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>Fishery_k<span class="sc">*</span>(a<span class="sc">-</span>Fishery_a_50)))</span>
+<span id="cb85-19"><a href="Recruit.html#cb85-19" tabindex="-1"></a>  } <span class="co">#a</span></span>
+<span id="cb85-20"><a href="Recruit.html#cb85-20" tabindex="-1"></a><span class="co">#plot(SelF)</span></span>
+<span id="cb85-21"><a href="Recruit.html#cb85-21" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)) {</span>
+<span id="cb85-22"><a href="Recruit.html#cb85-22" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
+<span id="cb85-23"><a href="Recruit.html#cb85-23" tabindex="-1"></a>    F_a[a,y] <span class="ot">&lt;-</span> AnnualF[y] <span class="sc">*</span> SelF[a]</span>
+<span id="cb85-24"><a href="Recruit.html#cb85-24" tabindex="-1"></a>    Z_a[a,y] <span class="ot">&lt;-</span> F_a[a,y]<span class="sc">+</span>AnnualM</span>
+<span id="cb85-25"><a href="Recruit.html#cb85-25" tabindex="-1"></a>    S_a[a,y] <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>Z_a[a,y])</span>
+<span id="cb85-26"><a href="Recruit.html#cb85-26" tabindex="-1"></a>  } <span class="co">#a</span></span>
+<span id="cb85-27"><a href="Recruit.html#cb85-27" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb85-28"><a href="Recruit.html#cb85-28" tabindex="-1"></a></span>
+<span id="cb85-29"><a href="Recruit.html#cb85-29" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A, Y))</span>
+<span id="cb85-30"><a href="Recruit.html#cb85-30" tabindex="-1"></a></span>
+<span id="cb85-31"><a href="Recruit.html#cb85-31" tabindex="-1"></a>BH_alpha <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1E5</span> <span class="co"># Parameter defining Beverton-Holt asymptotic recruitment</span></span>
+<span id="cb85-32"><a href="Recruit.html#cb85-32" tabindex="-1"></a>BH_beta <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Arbitrary</span></span>
+<span id="cb85-33"><a href="Recruit.html#cb85-33" tabindex="-1"></a>SD_rec <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Low level of lognormal error in recruitment</span></span>
+<span id="cb85-34"><a href="Recruit.html#cb85-34" tabindex="-1"></a></span>
+<span id="cb85-35"><a href="Recruit.html#cb85-35" tabindex="-1"></a><span class="co"># Set up year-1 vector based on asymptotic recruitment and year-1 survival rates</span></span>
+<span id="cb85-36"><a href="Recruit.html#cb85-36" tabindex="-1"></a>Mat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.8</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># Arbitrary maturity schedule. Redo if max age (A) changes</span></span>
+<span id="cb85-37"><a href="Recruit.html#cb85-37" tabindex="-1"></a>Wgt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.20</span>, <span class="fl">0.40</span>, <span class="fl">0.62</span>, <span class="fl">0.80</span>, <span class="fl">1.01</span>, <span class="fl">1.30</span>, <span class="fl">1.56</span>) <span class="co"># Mean wt. Redo if A changes</span></span>
+<span id="cb85-38"><a href="Recruit.html#cb85-38" tabindex="-1"></a>SpBio <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>(Y<span class="dv">-1</span>)) <span class="co"># Spawning biomass vector</span></span>
+<span id="cb85-39"><a href="Recruit.html#cb85-39" tabindex="-1"></a><span class="co"># Year-1 N (arbitrarily) from asymptotic recruitment, year-1 survival.</span></span>
+<span id="cb85-40"><a href="Recruit.html#cb85-40" tabindex="-1"></a>N[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>BH_alpha<span class="sc">*</span><span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="dv">0</span>, SD_rec)</span>
+<span id="cb85-41"><a href="Recruit.html#cb85-41" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>A){</span>
+<span id="cb85-42"><a href="Recruit.html#cb85-42" tabindex="-1"></a>  N[a,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="fu">trunc</span>(N[(a<span class="dv">-1</span>),<span class="dv">1</span>]), S_a[(a<span class="dv">-1</span>),<span class="dv">1</span>])</span>
+<span id="cb85-43"><a href="Recruit.html#cb85-43" tabindex="-1"></a>}<span class="co">#a</span></span>
+<span id="cb85-44"><a href="Recruit.html#cb85-44" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Y){</span>
+<span id="cb85-45"><a href="Recruit.html#cb85-45" tabindex="-1"></a>  SpBio[y<span class="dv">-1</span>] <span class="ot">&lt;-</span> <span class="fu">sum</span>(N[,y<span class="dv">-1</span>]<span class="sc">*</span>Wgt<span class="sc">*</span>Mat) <span class="co"># Spawning stock biomass</span></span>
+<span id="cb85-46"><a href="Recruit.html#cb85-46" tabindex="-1"></a>  N[<span class="dv">1</span>,y] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(BH_alpha<span class="sc">+</span>BH_beta<span class="sc">/</span>SpBio[y<span class="dv">-1</span>])<span class="sc">*</span><span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="dv">0</span>, SD_rec)</span>
+<span id="cb85-47"><a href="Recruit.html#cb85-47" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>A){</span>
+<span id="cb85-48"><a href="Recruit.html#cb85-48" tabindex="-1"></a>    N[a,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="fu">trunc</span>(N[(a<span class="dv">-1</span>), (y<span class="dv">-1</span>)]), S_a[(a<span class="dv">-1</span>),(y<span class="dv">-1</span>)])</span>
+<span id="cb85-49"><a href="Recruit.html#cb85-49" tabindex="-1"></a>    } <span class="co">#a</span></span>
+<span id="cb85-50"><a href="Recruit.html#cb85-50" tabindex="-1"></a>  } <span class="co">#y</span></span>
+<span id="cb85-51"><a href="Recruit.html#cb85-51" tabindex="-1"></a><span class="co">#plot(SpBio,N[1,2:Y], ylab=&quot;Recruits&quot;, xlab=&quot;Spawning stock biomass&quot;)</span></span>
+<span id="cb85-52"><a href="Recruit.html#cb85-52" tabindex="-1"></a></span>
+<span id="cb85-53"><a href="Recruit.html#cb85-53" tabindex="-1"></a><span class="co"># Generate survey data on recruitment and spawning stock</span></span>
+<span id="cb85-54"><a href="Recruit.html#cb85-54" tabindex="-1"></a>Survey_q <span class="ot">&lt;-</span> <span class="fl">1E-3</span> <span class="co"># Arbitrary catchability coefficient for survey</span></span>
+<span id="cb85-55"><a href="Recruit.html#cb85-55" tabindex="-1"></a>SD_survey <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Arbitrary ln-scale SD</span></span>
+<span id="cb85-56"><a href="Recruit.html#cb85-56" tabindex="-1"></a>Exp_ln_B <span class="ot">&lt;-</span> <span class="fu">log</span>(Survey_q<span class="sc">*</span>SpBio)</span>
+<span id="cb85-57"><a href="Recruit.html#cb85-57" tabindex="-1"></a>Survey_B <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="at">meanlog=</span>Exp_ln_B, <span class="at">sdlog=</span>SD_survey)</span>
+<span id="cb85-58"><a href="Recruit.html#cb85-58" tabindex="-1"></a><span class="co">#plot(SpBio, Survey_B[1:Y-1])</span></span>
+<span id="cb85-59"><a href="Recruit.html#cb85-59" tabindex="-1"></a>Exp_ln_R <span class="ot">&lt;-</span> <span class="fu">log</span>(Survey_q<span class="sc">*</span>N[<span class="dv">1</span>,<span class="dv">2</span><span class="sc">:</span>Y])</span>
+<span id="cb85-60"><a href="Recruit.html#cb85-60" tabindex="-1"></a>Survey_R <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="fu">rlnorm</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">meanlog=</span>Exp_ln_R, <span class="at">sdlog=</span>SD_survey))</span>
+<span id="cb85-61"><a href="Recruit.html#cb85-61" tabindex="-1"></a><span class="co">#plot(N[1,], Survey_R)</span></span></code></pre></div>
 <p>The next section of code generates the population matrix. The Beverton-Holt parameters are arbitrarily chosen and can be varied to explore different shapes for the curve. Next, we generate the population vector for year one, using approximate equilibrium values. Expected recruitment is set equal to the curve’s asymptote, with lognormal error term used to add random variation; for example, due to environmental conditions. The lognormal distribution is well suited to recruitment data because of the potential for occasional extreme values <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span>. The chosen standard deviation (0.25) is on the lower end of variation in recruitment <span class="citation">(<a href="#ref-hightower.grossman_1985">Hightower and Grossman 1985</a>)</span>. The rest of the year-1 vector is obtained from age-1 recruitment using year-1 mortality rates (<span class="math inline">\(N_{a,1}=S_{a-1,1}*N_{a-1,1}\)</span>). A binomial function introduces stochastic variation in survival. Population size at the previous age is truncated because the binomial function requires a whole number for the size of the experiment.</p>
 <p>The population vector for the remaining years can be filled in once the year-1 vector is determined. For example, recruitment in year 2 depends on spawning stock biomass in year 1. The age-specific vectors for maturity schedule and weight-at-age are arbitrary. Numbers of fish age 2 and older are obtained as survivors from the prior year’s vector; i.e., <span class="math inline">\(N_{a,y}=S_{a-1,y-1}*N_{a-1,y-1}\)</span>, with random variation in survival from a binomial distribution. The final step is to obtain survey observations for recruitment and spawning stock biomass. The random survey values are drawn from a lognormal distribution, using an arbitrary catchability coefficient and ln-scale standard deviation for error. The survey values are referred to as indices but could be estimates of the absolute magnitude of recruitment and spawning stock size. There is not a recruitment survey value for year 1 because the simulated recruitment was not based on spawning stock size.</p>
 <p>The JAGS code uses uninformative prior distributions for the two Beverton-Holt parameters and the lognormal error term. Expected recruitment is predicted on ln-scale in order to match the assumed lognormal error. The recruitment index is predicted (R_hat) for use in plotting (see below).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="Recruit.html#cb3-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb3-2"><a href="Recruit.html#cb3-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb3-3"><a href="Recruit.html#cb3-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb3-4"><a href="Recruit.html#cb3-4" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="Recruit.html#cb3-5" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;StockRecruit.txt&quot;</span>)</span>
-<span id="cb3-6"><a href="Recruit.html#cb3-6" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb3-7"><a href="Recruit.html#cb3-7" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb3-8"><a href="Recruit.html#cb3-8" tabindex="-1"></a><span class="st"># Model parameters: Beverton-Holt alpha and beta, SD for fitted curve</span></span>
-<span id="cb3-9"><a href="Recruit.html#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="Recruit.html#cb3-10" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb3-11"><a href="Recruit.html#cb3-11" tabindex="-1"></a><span class="st"> BH_alpha.est ~ dunif(0, 10)</span></span>
-<span id="cb3-12"><a href="Recruit.html#cb3-12" tabindex="-1"></a><span class="st"> BH_beta.est ~ dunif(0, 10)</span></span>
-<span id="cb3-13"><a href="Recruit.html#cb3-13" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
-<span id="cb3-14"><a href="Recruit.html#cb3-14" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
-<span id="cb3-15"><a href="Recruit.html#cb3-15" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="Recruit.html#cb3-16" tabindex="-1"></a><span class="st"># Likelihood</span></span>
-<span id="cb3-17"><a href="Recruit.html#cb3-17" tabindex="-1"></a><span class="st">    for(y in 2:Y) {</span></span>
-<span id="cb3-18"><a href="Recruit.html#cb3-18" tabindex="-1"></a><span class="st">      lnR_hat[y] &lt;- log(1/(BH_alpha.est+BH_beta.est/Survey_B[y-1]))</span></span>
-<span id="cb3-19"><a href="Recruit.html#cb3-19" tabindex="-1"></a><span class="st">      Survey_R[y] ~ dlnorm(lnR_hat[y],tau)</span></span>
-<span id="cb3-20"><a href="Recruit.html#cb3-20" tabindex="-1"></a><span class="st">      R_hat[y] &lt;- exp(lnR_hat[y])</span></span>
-<span id="cb3-21"><a href="Recruit.html#cb3-21" tabindex="-1"></a><span class="st">      } #y</span></span>
-<span id="cb3-22"><a href="Recruit.html#cb3-22" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb3-23"><a href="Recruit.html#cb3-23" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
-<span id="cb3-24"><a href="Recruit.html#cb3-24" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb3-25"><a href="Recruit.html#cb3-25" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="Recruit.html#cb3-26" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb3-27"><a href="Recruit.html#cb3-27" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Survey_R&quot;</span>, <span class="st">&quot;Survey_B&quot;</span>)</span>
-<span id="cb3-28"><a href="Recruit.html#cb3-28" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="Recruit.html#cb3-29" tabindex="-1"></a><span class="co"># Initial values</span></span>
-<span id="cb3-30"><a href="Recruit.html#cb3-30" tabindex="-1"></a>y <span class="ot">&lt;-</span> Survey_R[<span class="dv">2</span><span class="sc">:</span>Y]</span>
-<span id="cb3-31"><a href="Recruit.html#cb3-31" tabindex="-1"></a>x <span class="ot">&lt;-</span> Survey_B[<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)]</span>
-<span id="cb3-32"><a href="Recruit.html#cb3-32" tabindex="-1"></a>nls_init <span class="ot">&lt;-</span> <span class="fu">nls</span>(y <span class="sc">~</span> <span class="dv">1</span><span class="sc">/</span>(BH_a_start<span class="sc">+</span>BH_b_start<span class="sc">/</span>x),</span>
-<span id="cb3-33"><a href="Recruit.html#cb3-33" tabindex="-1"></a>                <span class="at">start =</span> <span class="fu">list</span>(<span class="at">BH_a_start =</span> <span class="fl">0.001</span>, <span class="at">BH_b_start =</span> <span class="fl">0.001</span>),</span>
-<span id="cb3-34"><a href="Recruit.html#cb3-34" tabindex="-1"></a>                <span class="at">algorithm=</span><span class="st">&quot;port&quot;</span>, </span>
-<span id="cb3-35"><a href="Recruit.html#cb3-35" tabindex="-1"></a>                <span class="at">lower=</span><span class="fu">c</span>(<span class="fl">1E-6</span>, <span class="dv">0</span>), <span class="at">upper=</span><span class="fu">c</span>(<span class="dv">1000</span>,<span class="dv">1000</span>))</span>
-<span id="cb3-36"><a href="Recruit.html#cb3-36" tabindex="-1"></a><span class="co">#summary(nls_init)</span></span>
-<span id="cb3-37"><a href="Recruit.html#cb3-37" tabindex="-1"></a>nls_save <span class="ot">&lt;-</span> <span class="fu">coef</span>(nls_init)</span>
-<span id="cb3-38"><a href="Recruit.html#cb3-38" tabindex="-1"></a><span class="co">#y_hat &lt;- 1/(nls_save[1]+nls_save[2]/x)</span></span>
-<span id="cb3-39"><a href="Recruit.html#cb3-39" tabindex="-1"></a><span class="co">#plot(x,y)</span></span>
-<span id="cb3-40"><a href="Recruit.html#cb3-40" tabindex="-1"></a><span class="co">#points(x,y_hat, col=&quot;red&quot;, type=&quot;l&quot;)</span></span>
-<span id="cb3-41"><a href="Recruit.html#cb3-41" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="Recruit.html#cb3-42" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">BH_alpha.est=</span>nls_save[<span class="dv">1</span>],</span>
-<span id="cb3-43"><a href="Recruit.html#cb3-43" tabindex="-1"></a>                               <span class="at">BH_beta.est=</span>nls_save[<span class="dv">2</span>],</span>
-<span id="cb3-44"><a href="Recruit.html#cb3-44" tabindex="-1"></a>                               <span class="at">SD_rec.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="fl">0.75</span>))}</span>
-<span id="cb3-45"><a href="Recruit.html#cb3-45" tabindex="-1"></a></span>
-<span id="cb3-46"><a href="Recruit.html#cb3-46" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;StockRecruit.txt&#39;</span></span>
-<span id="cb3-47"><a href="Recruit.html#cb3-47" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="Recruit.html#cb3-48" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb3-49"><a href="Recruit.html#cb3-49" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BH_alpha.est&quot;</span>, <span class="st">&quot;BH_beta.est&quot;</span>, <span class="st">&quot;SD_rec.est&quot;</span>,</span>
-<span id="cb3-50"><a href="Recruit.html#cb3-50" tabindex="-1"></a>                 <span class="st">&quot;R_hat&quot;</span>)</span>
-<span id="cb3-51"><a href="Recruit.html#cb3-51" tabindex="-1"></a></span>
-<span id="cb3-52"><a href="Recruit.html#cb3-52" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb3-53"><a href="Recruit.html#cb3-53" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb3-54"><a href="Recruit.html#cb3-54" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
-<span id="cb3-55"><a href="Recruit.html#cb3-55" tabindex="-1"></a>                model.file)</span>
-<span id="cb3-56"><a href="Recruit.html#cb3-56" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb3-57"><a href="Recruit.html#cb3-57" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
-<span id="cb3-58"><a href="Recruit.html#cb3-58" tabindex="-1"></a></span>
-<span id="cb3-59"><a href="Recruit.html#cb3-59" tabindex="-1"></a>BH.DIC <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>DIC <span class="co"># Used in next section</span></span>
-<span id="cb3-60"><a href="Recruit.html#cb3-60" tabindex="-1"></a></span>
-<span id="cb3-61"><a href="Recruit.html#cb3-61" tabindex="-1"></a>min.y <span class="ot">&lt;-</span> <span class="fu">min</span>(Survey_R[<span class="dv">2</span><span class="sc">:</span>Y],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>R_hat)</span>
-<span id="cb3-62"><a href="Recruit.html#cb3-62" tabindex="-1"></a>max.y <span class="ot">&lt;-</span> <span class="fu">max</span>(Survey_R[<span class="dv">2</span><span class="sc">:</span>Y],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>R_hat)</span>
-<span id="cb3-63"><a href="Recruit.html#cb3-63" tabindex="-1"></a></span>
-<span id="cb3-64"><a href="Recruit.html#cb3-64" tabindex="-1"></a>df.xy <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Survey_B[<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)], Survey_R[<span class="dv">2</span><span class="sc">:</span>Y],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>R_hat)</span>
-<span id="cb3-65"><a href="Recruit.html#cb3-65" tabindex="-1"></a>df.xy <span class="ot">&lt;-</span> df.xy[<span class="fu">order</span>(df.xy[,<span class="dv">1</span>]),]  <span class="co"># Sort by survey index for plotting</span></span>
-<span id="cb3-66"><a href="Recruit.html#cb3-66" tabindex="-1"></a></span>
-<span id="cb3-67"><a href="Recruit.html#cb3-67" tabindex="-1"></a><span class="fu">plot</span>(df.xy[,<span class="dv">1</span>],df.xy[,<span class="dv">2</span>], <span class="at">ylab=</span><span class="st">&quot;Recruitment index&quot;</span>,</span>
-<span id="cb3-68"><a href="Recruit.html#cb3-68" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Spawning Stock Index&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(min.y, max.y))</span>
-<span id="cb3-69"><a href="Recruit.html#cb3-69" tabindex="-1"></a><span class="fu">points</span>(df.xy[,<span class="dv">1</span>], df.xy[,<span class="dv">3</span>], <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="Recruit.html#cb86-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb86-2"><a href="Recruit.html#cb86-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb86-3"><a href="Recruit.html#cb86-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb86-4"><a href="Recruit.html#cb86-4" tabindex="-1"></a></span>
+<span id="cb86-5"><a href="Recruit.html#cb86-5" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;StockRecruit.txt&quot;</span>)</span>
+<span id="cb86-6"><a href="Recruit.html#cb86-6" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb86-7"><a href="Recruit.html#cb86-7" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb86-8"><a href="Recruit.html#cb86-8" tabindex="-1"></a><span class="st"># Model parameters: Beverton-Holt alpha and beta, SD for fitted curve</span></span>
+<span id="cb86-9"><a href="Recruit.html#cb86-9" tabindex="-1"></a></span>
+<span id="cb86-10"><a href="Recruit.html#cb86-10" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb86-11"><a href="Recruit.html#cb86-11" tabindex="-1"></a><span class="st"> BH_alpha.est ~ dunif(0, 10)</span></span>
+<span id="cb86-12"><a href="Recruit.html#cb86-12" tabindex="-1"></a><span class="st"> BH_beta.est ~ dunif(0, 10)</span></span>
+<span id="cb86-13"><a href="Recruit.html#cb86-13" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
+<span id="cb86-14"><a href="Recruit.html#cb86-14" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
+<span id="cb86-15"><a href="Recruit.html#cb86-15" tabindex="-1"></a></span>
+<span id="cb86-16"><a href="Recruit.html#cb86-16" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb86-17"><a href="Recruit.html#cb86-17" tabindex="-1"></a><span class="st">    for(y in 2:Y) {</span></span>
+<span id="cb86-18"><a href="Recruit.html#cb86-18" tabindex="-1"></a><span class="st">      lnR_hat[y] &lt;- log(1/(BH_alpha.est+BH_beta.est/Survey_B[y-1]))</span></span>
+<span id="cb86-19"><a href="Recruit.html#cb86-19" tabindex="-1"></a><span class="st">      Survey_R[y] ~ dlnorm(lnR_hat[y],tau)</span></span>
+<span id="cb86-20"><a href="Recruit.html#cb86-20" tabindex="-1"></a><span class="st">      R_hat[y] &lt;- exp(lnR_hat[y])</span></span>
+<span id="cb86-21"><a href="Recruit.html#cb86-21" tabindex="-1"></a><span class="st">      } #y</span></span>
+<span id="cb86-22"><a href="Recruit.html#cb86-22" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb86-23"><a href="Recruit.html#cb86-23" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb86-24"><a href="Recruit.html#cb86-24" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb86-25"><a href="Recruit.html#cb86-25" tabindex="-1"></a></span>
+<span id="cb86-26"><a href="Recruit.html#cb86-26" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb86-27"><a href="Recruit.html#cb86-27" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Survey_R&quot;</span>, <span class="st">&quot;Survey_B&quot;</span>)</span>
+<span id="cb86-28"><a href="Recruit.html#cb86-28" tabindex="-1"></a></span>
+<span id="cb86-29"><a href="Recruit.html#cb86-29" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb86-30"><a href="Recruit.html#cb86-30" tabindex="-1"></a>y <span class="ot">&lt;-</span> Survey_R[<span class="dv">2</span><span class="sc">:</span>Y]</span>
+<span id="cb86-31"><a href="Recruit.html#cb86-31" tabindex="-1"></a>x <span class="ot">&lt;-</span> Survey_B[<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)]</span>
+<span id="cb86-32"><a href="Recruit.html#cb86-32" tabindex="-1"></a>nls_init <span class="ot">&lt;-</span> <span class="fu">nls</span>(y <span class="sc">~</span> <span class="dv">1</span><span class="sc">/</span>(BH_a_start<span class="sc">+</span>BH_b_start<span class="sc">/</span>x),</span>
+<span id="cb86-33"><a href="Recruit.html#cb86-33" tabindex="-1"></a>                <span class="at">start =</span> <span class="fu">list</span>(<span class="at">BH_a_start =</span> <span class="fl">0.001</span>, <span class="at">BH_b_start =</span> <span class="fl">0.001</span>),</span>
+<span id="cb86-34"><a href="Recruit.html#cb86-34" tabindex="-1"></a>                <span class="at">algorithm=</span><span class="st">&quot;port&quot;</span>, </span>
+<span id="cb86-35"><a href="Recruit.html#cb86-35" tabindex="-1"></a>                <span class="at">lower=</span><span class="fu">c</span>(<span class="fl">1E-6</span>, <span class="dv">0</span>), <span class="at">upper=</span><span class="fu">c</span>(<span class="dv">1000</span>,<span class="dv">1000</span>))</span>
+<span id="cb86-36"><a href="Recruit.html#cb86-36" tabindex="-1"></a><span class="co">#summary(nls_init)</span></span>
+<span id="cb86-37"><a href="Recruit.html#cb86-37" tabindex="-1"></a>nls_save <span class="ot">&lt;-</span> <span class="fu">coef</span>(nls_init)</span>
+<span id="cb86-38"><a href="Recruit.html#cb86-38" tabindex="-1"></a><span class="co">#y_hat &lt;- 1/(nls_save[1]+nls_save[2]/x)</span></span>
+<span id="cb86-39"><a href="Recruit.html#cb86-39" tabindex="-1"></a><span class="co">#plot(x,y)</span></span>
+<span id="cb86-40"><a href="Recruit.html#cb86-40" tabindex="-1"></a><span class="co">#points(x,y_hat, col=&quot;red&quot;, type=&quot;l&quot;)</span></span>
+<span id="cb86-41"><a href="Recruit.html#cb86-41" tabindex="-1"></a></span>
+<span id="cb86-42"><a href="Recruit.html#cb86-42" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">BH_alpha.est=</span>nls_save[<span class="dv">1</span>],</span>
+<span id="cb86-43"><a href="Recruit.html#cb86-43" tabindex="-1"></a>                               <span class="at">BH_beta.est=</span>nls_save[<span class="dv">2</span>],</span>
+<span id="cb86-44"><a href="Recruit.html#cb86-44" tabindex="-1"></a>                               <span class="at">SD_rec.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="fl">0.75</span>))}</span>
+<span id="cb86-45"><a href="Recruit.html#cb86-45" tabindex="-1"></a></span>
+<span id="cb86-46"><a href="Recruit.html#cb86-46" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;StockRecruit.txt&#39;</span></span>
+<span id="cb86-47"><a href="Recruit.html#cb86-47" tabindex="-1"></a></span>
+<span id="cb86-48"><a href="Recruit.html#cb86-48" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb86-49"><a href="Recruit.html#cb86-49" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BH_alpha.est&quot;</span>, <span class="st">&quot;BH_beta.est&quot;</span>, <span class="st">&quot;SD_rec.est&quot;</span>,</span>
+<span id="cb86-50"><a href="Recruit.html#cb86-50" tabindex="-1"></a>                 <span class="st">&quot;R_hat&quot;</span>)</span>
+<span id="cb86-51"><a href="Recruit.html#cb86-51" tabindex="-1"></a></span>
+<span id="cb86-52"><a href="Recruit.html#cb86-52" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb86-53"><a href="Recruit.html#cb86-53" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb86-54"><a href="Recruit.html#cb86-54" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb86-55"><a href="Recruit.html#cb86-55" tabindex="-1"></a>                model.file)</span>
+<span id="cb86-56"><a href="Recruit.html#cb86-56" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb86-57"><a href="Recruit.html#cb86-57" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb86-58"><a href="Recruit.html#cb86-58" tabindex="-1"></a></span>
+<span id="cb86-59"><a href="Recruit.html#cb86-59" tabindex="-1"></a>BH.DIC <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>DIC <span class="co"># Used in next section</span></span>
+<span id="cb86-60"><a href="Recruit.html#cb86-60" tabindex="-1"></a></span>
+<span id="cb86-61"><a href="Recruit.html#cb86-61" tabindex="-1"></a>min.y <span class="ot">&lt;-</span> <span class="fu">min</span>(Survey_R[<span class="dv">2</span><span class="sc">:</span>Y],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>R_hat)</span>
+<span id="cb86-62"><a href="Recruit.html#cb86-62" tabindex="-1"></a>max.y <span class="ot">&lt;-</span> <span class="fu">max</span>(Survey_R[<span class="dv">2</span><span class="sc">:</span>Y],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>R_hat)</span>
+<span id="cb86-63"><a href="Recruit.html#cb86-63" tabindex="-1"></a></span>
+<span id="cb86-64"><a href="Recruit.html#cb86-64" tabindex="-1"></a>df.xy <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Survey_B[<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)], Survey_R[<span class="dv">2</span><span class="sc">:</span>Y],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>R_hat)</span>
+<span id="cb86-65"><a href="Recruit.html#cb86-65" tabindex="-1"></a>df.xy <span class="ot">&lt;-</span> df.xy[<span class="fu">order</span>(df.xy[,<span class="dv">1</span>]),]  <span class="co"># Sort by survey index for plotting</span></span>
+<span id="cb86-66"><a href="Recruit.html#cb86-66" tabindex="-1"></a></span>
+<span id="cb86-67"><a href="Recruit.html#cb86-67" tabindex="-1"></a><span class="fu">plot</span>(df.xy[,<span class="dv">1</span>],df.xy[,<span class="dv">2</span>], <span class="at">ylab=</span><span class="st">&quot;Recruitment index&quot;</span>,</span>
+<span id="cb86-68"><a href="Recruit.html#cb86-68" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Spawning Stock Index&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(min.y, max.y))</span>
+<span id="cb86-69"><a href="Recruit.html#cb86-69" tabindex="-1"></a><span class="fu">points</span>(df.xy[,<span class="dv">1</span>], df.xy[,<span class="dv">3</span>], <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p>Randomly chosen starting values for the two Beverton-Holt parameters sometimes caused JAGS to crash, so <code>nls()</code>, the R function for nonlinear least-squares, was used to generate good initial values. When unconstrained, <code>nls()</code> occasionally produced a negative estimate of the first parameter (1/asymptotic recruitment), so the “port” algorithm was used to allow bounds to be specified. The <code>nls()</code> code illustrates the compactness of using R functions, compared to a Bayesian analysis, but also the “black box” nature of the analysis.</p>
 <p>The JAGS results tend to be reliable for the default settings. The plotted estimates of the recruitment indices capture the decrease due to declining spawning stock size. Estimates of the Beverton-Holt alpha parameter are typically close to 0.01 (BH_alpha/Survey_q), because we fit the curve to a recruitment index (true recruitment * Survey_q) rather than to absolute levels. Estimates of the Beverton-Holt beta parameter tend to be close to the true value. Estimates of the standard deviation for variation about the curve tend to be higher than the true value of 0.25, because the points vary due not only to true recruitment variation but also variation due to survey sampling.</p>
 <p>As always, it is very helpful to view the points and fitted curve. We use a data frame to sort the spawning stock, recruitment, and predicted recruitment indicies (<a href="https://stackoverflow.com/questions/2307925/most-efficient-way-to-sort-two-vectors-in-lockstep-in-r">link</a>), in order to have a smooth fitted curve (i.e., continuously increasing spawning stock values). Try multiple runs to see how variation in recruitment affects the pattern of points and fitted curve.</p>
@@ -440,48 +440,48 @@ div.csl-indent {
 <h2><span class="header-section-number">10.2</span> Does spawning stock size affect recruitment?<a href="Recruit.html#Recruit-DIC" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Section <a href="Recruit.html#Recruit-Fit">10.1</a> illustrated the process of model fitting but did not answer the question of whether there is a detectable relationship between the spawning stock and recruitment indices. To address that question, we return to the approach shown in Section <a href="Model-fit.html#Model-selection">4.3.6</a>; i.e., comparing DIC scores for candidate models. Here the two candidates are the full Beverton-Holt model and a reduced model with constant recruitment.</p>
 <p>We append JAGS code for the constant recruitment case at the end of the previous code so that both models are applied to the same spawning stock and recruitment data. Convergence is extremely rapid for this simpler case. The difference in DIC scores between the full (Beverton-Holt) and reduced (constant recruitment) models is printed to the Console, but it is also useful to compare pD, deviance, and DIC scores.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Recruit.html#cb4-1" tabindex="-1"></a><span class="co"># Constant recruitment fit</span></span>
-<span id="cb4-2"><a href="Recruit.html#cb4-2" tabindex="-1"></a><span class="co"># JAGS code ##################################</span></span>
-<span id="cb4-3"><a href="Recruit.html#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="Recruit.html#cb4-4" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;StockRecruit.txt&quot;</span>)</span>
-<span id="cb4-5"><a href="Recruit.html#cb4-5" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb4-6"><a href="Recruit.html#cb4-6" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb4-7"><a href="Recruit.html#cb4-7" tabindex="-1"></a><span class="st"># Model parameters: Beverton-Holt alpha, SD for fitted curve</span></span>
-<span id="cb4-8"><a href="Recruit.html#cb4-8" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="Recruit.html#cb4-9" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb4-10"><a href="Recruit.html#cb4-10" tabindex="-1"></a><span class="st"> BH_alpha.est ~ dunif(0, 10)</span></span>
-<span id="cb4-11"><a href="Recruit.html#cb4-11" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
-<span id="cb4-12"><a href="Recruit.html#cb4-12" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
-<span id="cb4-13"><a href="Recruit.html#cb4-13" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="Recruit.html#cb4-14" tabindex="-1"></a><span class="st"># Likelihood</span></span>
-<span id="cb4-15"><a href="Recruit.html#cb4-15" tabindex="-1"></a><span class="st">    for(y in 2:Y) {</span></span>
-<span id="cb4-16"><a href="Recruit.html#cb4-16" tabindex="-1"></a><span class="st">      lnR_hat[y] &lt;- log(1/BH_alpha.est)</span></span>
-<span id="cb4-17"><a href="Recruit.html#cb4-17" tabindex="-1"></a><span class="st">      Survey_R[y] ~ dlnorm(lnR_hat[y],tau)</span></span>
-<span id="cb4-18"><a href="Recruit.html#cb4-18" tabindex="-1"></a><span class="st">      R_hat[y] &lt;- exp(lnR_hat[y])</span></span>
-<span id="cb4-19"><a href="Recruit.html#cb4-19" tabindex="-1"></a><span class="st">      } #y</span></span>
-<span id="cb4-20"><a href="Recruit.html#cb4-20" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb4-21"><a href="Recruit.html#cb4-21" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
-<span id="cb4-22"><a href="Recruit.html#cb4-22" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb4-23"><a href="Recruit.html#cb4-23" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="Recruit.html#cb4-24" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb4-25"><a href="Recruit.html#cb4-25" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Survey_R&quot;</span>)</span>
-<span id="cb4-26"><a href="Recruit.html#cb4-26" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="Recruit.html#cb4-27" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">BH_alpha.est=</span>nls_save[<span class="dv">1</span>],</span>
-<span id="cb4-28"><a href="Recruit.html#cb4-28" tabindex="-1"></a>                               <span class="at">SD_rec.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="fl">0.75</span>))}</span>
-<span id="cb4-29"><a href="Recruit.html#cb4-29" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="Recruit.html#cb4-30" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;StockRecruit.txt&#39;</span></span>
-<span id="cb4-31"><a href="Recruit.html#cb4-31" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="Recruit.html#cb4-32" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb4-33"><a href="Recruit.html#cb4-33" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BH_alpha.est&quot;</span>, <span class="st">&quot;SD_rec.est&quot;</span>, <span class="st">&quot;R_hat&quot;</span>)</span>
-<span id="cb4-34"><a href="Recruit.html#cb4-34" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="Recruit.html#cb4-35" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb4-36"><a href="Recruit.html#cb4-36" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb4-37"><a href="Recruit.html#cb4-37" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
-<span id="cb4-38"><a href="Recruit.html#cb4-38" tabindex="-1"></a>                model.file)</span>
-<span id="cb4-39"><a href="Recruit.html#cb4-39" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb4-40"><a href="Recruit.html#cb4-40" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
-<span id="cb4-41"><a href="Recruit.html#cb4-41" tabindex="-1"></a>ConstR.DIC <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>DIC</span>
-<span id="cb4-42"><a href="Recruit.html#cb4-42" tabindex="-1"></a>ConstR.DIC <span class="sc">-</span> BH.DIC</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="Recruit.html#cb87-1" tabindex="-1"></a><span class="co"># Constant recruitment fit</span></span>
+<span id="cb87-2"><a href="Recruit.html#cb87-2" tabindex="-1"></a><span class="co"># JAGS code ##################################</span></span>
+<span id="cb87-3"><a href="Recruit.html#cb87-3" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="Recruit.html#cb87-4" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;StockRecruit.txt&quot;</span>)</span>
+<span id="cb87-5"><a href="Recruit.html#cb87-5" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb87-6"><a href="Recruit.html#cb87-6" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb87-7"><a href="Recruit.html#cb87-7" tabindex="-1"></a><span class="st"># Model parameters: Beverton-Holt alpha, SD for fitted curve</span></span>
+<span id="cb87-8"><a href="Recruit.html#cb87-8" tabindex="-1"></a></span>
+<span id="cb87-9"><a href="Recruit.html#cb87-9" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb87-10"><a href="Recruit.html#cb87-10" tabindex="-1"></a><span class="st"> BH_alpha.est ~ dunif(0, 10)</span></span>
+<span id="cb87-11"><a href="Recruit.html#cb87-11" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
+<span id="cb87-12"><a href="Recruit.html#cb87-12" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
+<span id="cb87-13"><a href="Recruit.html#cb87-13" tabindex="-1"></a></span>
+<span id="cb87-14"><a href="Recruit.html#cb87-14" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb87-15"><a href="Recruit.html#cb87-15" tabindex="-1"></a><span class="st">    for(y in 2:Y) {</span></span>
+<span id="cb87-16"><a href="Recruit.html#cb87-16" tabindex="-1"></a><span class="st">      lnR_hat[y] &lt;- log(1/BH_alpha.est)</span></span>
+<span id="cb87-17"><a href="Recruit.html#cb87-17" tabindex="-1"></a><span class="st">      Survey_R[y] ~ dlnorm(lnR_hat[y],tau)</span></span>
+<span id="cb87-18"><a href="Recruit.html#cb87-18" tabindex="-1"></a><span class="st">      R_hat[y] &lt;- exp(lnR_hat[y])</span></span>
+<span id="cb87-19"><a href="Recruit.html#cb87-19" tabindex="-1"></a><span class="st">      } #y</span></span>
+<span id="cb87-20"><a href="Recruit.html#cb87-20" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb87-21"><a href="Recruit.html#cb87-21" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb87-22"><a href="Recruit.html#cb87-22" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb87-23"><a href="Recruit.html#cb87-23" tabindex="-1"></a></span>
+<span id="cb87-24"><a href="Recruit.html#cb87-24" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb87-25"><a href="Recruit.html#cb87-25" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Survey_R&quot;</span>)</span>
+<span id="cb87-26"><a href="Recruit.html#cb87-26" tabindex="-1"></a></span>
+<span id="cb87-27"><a href="Recruit.html#cb87-27" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">BH_alpha.est=</span>nls_save[<span class="dv">1</span>],</span>
+<span id="cb87-28"><a href="Recruit.html#cb87-28" tabindex="-1"></a>                               <span class="at">SD_rec.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="fl">0.75</span>))}</span>
+<span id="cb87-29"><a href="Recruit.html#cb87-29" tabindex="-1"></a></span>
+<span id="cb87-30"><a href="Recruit.html#cb87-30" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;StockRecruit.txt&#39;</span></span>
+<span id="cb87-31"><a href="Recruit.html#cb87-31" tabindex="-1"></a></span>
+<span id="cb87-32"><a href="Recruit.html#cb87-32" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb87-33"><a href="Recruit.html#cb87-33" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BH_alpha.est&quot;</span>, <span class="st">&quot;SD_rec.est&quot;</span>, <span class="st">&quot;R_hat&quot;</span>)</span>
+<span id="cb87-34"><a href="Recruit.html#cb87-34" tabindex="-1"></a></span>
+<span id="cb87-35"><a href="Recruit.html#cb87-35" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb87-36"><a href="Recruit.html#cb87-36" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb87-37"><a href="Recruit.html#cb87-37" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb87-38"><a href="Recruit.html#cb87-38" tabindex="-1"></a>                model.file)</span>
+<span id="cb87-39"><a href="Recruit.html#cb87-39" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb87-40"><a href="Recruit.html#cb87-40" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb87-41"><a href="Recruit.html#cb87-41" tabindex="-1"></a>ConstR.DIC <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>DIC</span>
+<span id="cb87-42"><a href="Recruit.html#cb87-42" tabindex="-1"></a>ConstR.DIC <span class="sc">-</span> BH.DIC</span></code></pre></div>
 <p>With the default settings, the DIC score is typically higher (indicating a poorer fit) for the constant recruitment model. Next, try varying some of the simulation settings. The pattern for annual fishing mortality could be altered to produce less of a decline over time in spawning stock (less contrast). Higher levels of recruitment variation are not uncommon [e.g., 0.5-0.75; <span class="citation">Hightower and Grossman (<a href="#ref-hightower.grossman_1985">1985</a>)</span>], and will make the relationship harder to detect. For a lognormal variance of 0.5 or 0.75, the DIC score may actually be lower for the constant recruitment model because of a smaller penalty for model complexity (smaller estimate of pD). Other potential settings to vary include the length of the time series and the precision of the survey data. Be sure to look back at the scatter plot and fitted Beverton-Holt curve, to get a sense of how the constant recruitment model would compare.</p>
 </div>
 <div id="exercises-7" class="section level2 hasAnchor" number="10.3">
@@ -511,14 +511,14 @@ Hilborn, Ray, and Carl J. Walters. 1992. <em>Quantitative <span>Fisheries Stock 
 <a href="PopModels.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
