@@ -1,23 +1,69 @@
-\contentsline {fm}{List of Figures}{v}{chapter*.1}%
-\contentsline {fm}{List of Tables}{vii}{chapter*.2}%
-\contentsline {fm}{Preface}{ix}{chapter*.3}%
-\contentsline {fm}{About the Author}{xi}{chapter*.6}%
+\contentsline {fm}{List of Figures}{vii}{chapter*.1}%
+\contentsline {fm}{List of Tables}{ix}{chapter*.2}%
+\contentsline {fm}{Preface}{xi}{chapter*.3}%
+\contentsline {fm}{About the Author}{xv}{chapter*.6}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}A Brief Introduction to R and RStudio}{1}{chapter.2}%
-\contentsline {chapter}{\numberline {3}Probability Distributions}{1}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Discrete}{1}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Bernoulli}{1}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Binomial}{4}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Multinomial}{6}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Poisson}{8}{subsection.3.1.4}%
-\contentsline {subsection}{\numberline {3.1.5}Negative binomial}{9}{subsection.3.1.5}%
-\contentsline {section}{\numberline {3.2}Continuous}{10}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Uniform}{10}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Beta}{11}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Normal}{12}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Lognormal}{12}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Gamma}{13}{subsection.3.2.5}%
-\contentsline {section}{\numberline {3.3}Exercises}{14}{section.3.3}%
-\contentsline {chapter}{Appendix}{17}{Item.5}%
-\contentsline {chapter}{\numberline {A}Title Placeholder}{17}{appendix.A}%
-\contentsline {fm}{Bibliography}{19}{appendix*.13}%
+\contentsline {chapter}{\numberline {2}A Brief Introduction to R and RStudio}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Probability Distributions}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Discrete}{7}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Bernoulli}{7}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Binomial}{10}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Multinomial}{12}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Poisson}{15}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}Negative binomial}{16}{subsection.3.1.5}%
+\contentsline {section}{\numberline {3.2}Continuous}{18}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Uniform}{18}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Beta}{19}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Normal}{20}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Lognormal}{20}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Gamma}{22}{subsection.3.2.5}%
+\contentsline {section}{\numberline {3.3}Exercises}{23}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Model Fitting}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Using simulation}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Using Bayesian methods}{28}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Debugging code}{34}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Judging convergence}{38}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}What is a likelihood?}{39}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Deviance as a measure of model fit}{41}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Model checking}{42}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Model selection}{46}{subsection.4.3.6}%
+\contentsline {section}{\numberline {4.4}Exercises}{49}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Abundance}{53}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Removal}{53}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Mark-recapture}{56}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Binomial-mixture}{58}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Exercises}{63}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Survival}{65}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Age-composition}{65}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Accounting For Gear Selectivity}{68}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Cohort model}{75}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Telemetry-based}{78}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Tag-based}{82}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Exercises}{87}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Mortality Components}{89}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Exploitation rate}{89}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Completed tagging study}{91}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Multi-year tagging study}{95}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Telemetry estimates of F and M}{100}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Exercises}{107}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Growth}{109}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Growth in length}{109}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Age-length}{110}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Using tagging data}{112}{subsection.8.1.2}%
+\contentsline {section}{\numberline {8.2}Growth in weight}{116}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Exercises}{120}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Abundance trends}{121}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Linear model}{121}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Exponential growth model}{124}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Forecasting}{127}{subsection.9.2.1}%
+\contentsline {section}{\numberline {9.3}Exercises}{130}{section.9.3}%
+\contentsline {chapter}{\numberline {10}Recruitment}{131}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Fitting a stock-recruitment curve}{132}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Does spawning stock size affect recruitment?}{137}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Exercises}{139}{section.10.3}%
+\contentsline {chapter}{\numberline {11}Integrated Population Models}{141}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Exercises}{145}{section.11.1}%
+\contentsline {chapter}{Appendix}{147}{Item.32}%
+\contentsline {chapter}{\numberline {A}Title Placeholder}{147}{appendix.A}%
+\contentsline {fm}{Bibliography}{149}{appendix*.14}%

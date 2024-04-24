@@ -1,5 +1,3 @@
-\mainmatter
-
 # Probability Distributions {#Distributions}
 
 When a biologist conducts a field study, the usual purpose is to collect data that will be useful for management. Examples of data that could be collected include (i) whether a fish with a radio transmitter was detected, (ii) how many tags were reported by anglers over a fishing season, (iii) how many fish of each age were observed in a sample, or (iv) number of fish caught in a single tow of a net. Each of these examples arises from a different statistical distribution. The distribution affects the properties of the data and how those data might be analyzed. For example, observations in the first example are either Yes or No, which could be represented as a 1 or 0. Having only those two possible values certainly affects characteristics of that distribution as well as methods for analysis.
@@ -13,15 +11,17 @@ In this chapter, we will examine some of the more common and important statistic
 The most basic discrete distribution is the Bernoulli\index{Distribution, Bernoulli}. There are only two outcomes, often referred to as success and failure. The classic example of a Bernoulli distribution is a coin toss, where “heads” might be considered success and “tails” failure. This distribution has a single parameter p, representing the probability of success. Its complement (1-p) is the probability of failure. Searching a lake for a fish with a radio transmitter is a fisheries example of a Bernoulli trial, where p represents the probability of detecting the fish’s signal (success). Other biological examples are whether a fish with a transmitter is dead or alive and whether or not a study site is occupied.
 
 Let’s begin with R code for a hands-on example, where a coin was tossed ten times. It is convenient in R to use 0 for tails and 1 for heads:
+
 ```{r}
 y <- c(0,0,1,0,0,1,0,0,0,1)  # Coin toss observations, 0=tails
 N.obs <- length(y) # R function to count number of observations
 ```
+
 As usual, you should paste the code into an RStudio script window. You can select both lines and click the Run icon in order to run both at once. The first line assigns the vector of 0s and 1s to the variable y. The next line uses the `length()` function to count the number of observations in the vector y. We could have used the code N.obs <- 10 but there are two related reasons not to do so. First, hard-coding a constant for sample size means that we would need to remember to change that line if the y vector was later updated with a different number of observations. Second, you should never do anything manually that computer code can do for you. Letting R count the observations means that you will never miscount, and your code will still work correctly if you change the y vector and end up with a different sample size.
 
 Another critical step in data analysis is to plot the data whenever possible, in order to look for patterns. Here, plotting the sequence of 0s and 1s is not that useful. A better summary plot is to examine the total number of 0s and 1s. We can use the `table()` function, which returns a vector with the number of 0s and 1s in the y vector. The `barplot()` function plots the two counts (Figure \@ref(fig:coinToss)):
 
-```{r, echo=FALSE}
+```{r echo=FALSE}
 par(mar = c(4, 4, 1, .1))
 ```
 
@@ -132,7 +132,7 @@ barplot(x)
 
 Here R calculates the sample size (SampleSize), even though we know in this instance that there were 10 rolls. The `barplot()` function generates the plot but without any labels is not very appealing. We can dress it up a bit by adding some options (Figure \@ref(fig:dieRoll)). We first create a vector with values 1-6 to serve as x-axis labels (`seq()` function, from 1 to 6 by 1). Then we use the names.arg option to add the labels, and add x and y axis titles using xlab and ylab respectively.
 
-```{r, echo=FALSE}
+```{r echo=FALSE}
 rm(list=ls()) # Clear Environment
 
 x <-c(2,3,3,0,2,0)  # Generated using die, equal cell probabilities

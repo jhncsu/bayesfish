@@ -1,10 +1,19 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Summary bar plot of coin tosses.\relax }}{2}{figure.caption.7}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Summary bar plot of die rolls.\relax }}{7}{figure.caption.8}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Negative binomial frequency distributions for k=1 (left) and 10 (right).\relax }}{10}{figure.caption.9}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Histogram for 200 random draws from a beta distribution, with alpha=1 and beta=0.5 (left), 1 (center), and 5 (right).\relax }}{11}{figure.caption.10}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Red vertical line denotes expected mean.\relax }}{13}{figure.caption.11}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 (left) and 3 (right).\relax }}{14}{figure.caption.12}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Summary bar plot of coin tosses.}}{9}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Summary bar plot of die rolls.}}{14}{figure.caption.8}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Negative binomial frequency distributions for k=1 (left) and 10 (right).}}{17}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Histogram for 200 random draws from a beta distribution, with alpha=1 and beta=0.5 (left), 1 (center), and 5 (right).}}{19}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Red vertical line denotes expected mean.}}{21}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 (left) and 3 (right).}}{22}{figure.caption.12}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Frequency distributions for number of recaptured fish (left) and estimated population size (right), based on simulation using a binomial distribution for the number of recaptures.}}{27}{figure.caption.13}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
 \addvspace {10\p@ }

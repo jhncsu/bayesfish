@@ -4,7 +4,7 @@
 
 What is a model in a fisheries context? It typically means one or more equations that describe a biological process of interest. There are two good reasons for developing a model. A model that simulates a field study can be used for planning purposes, before field work is conducted. Such a model might be used to determine the number of fish to tag or the level of electrofishing effort, in order for the field work to produce a useful result. A model can also be used to test an analytical approach. For example, we could generate simulated data and see whether our analysis agrees with the known true value(s). The other main use of a model is to analyze data from field work. One example from Chapter \@ref(R-intro) is a two-sample mark-recapture study to estimate population size. Fish in the first sample are tagged, and the fraction of marked fish in the second sample provides the information needed to estimate population size. The model in that case is the equation for population size (N~hat~), along with some assumptions about sampling. The equation is based on the assumption that the marked fraction of the second sample should (on average) be the same as the marked fraction in the underlying population. This method also requires some other assumptions that are more practical in nature, to help ensure that our field methods approximate the underlying model structure. For example, we assume that tagged and untagged fish are well mixed. In practice, this means that tagging effort should be well distributed throughout the study area so that our recapture effort does not encounter pockets with too many or too few tagged fish. We also assume that tags are not shed and that there are no deaths due to tagging. The mark-recapture model assumes that we know how many fish are in the tagged subpopulation. Tag loss or tagging mortality would affect that number and result in a biased estimate.
 
-## Using simulation {#ModelFitting_Sim}
+## Using simulation {#Model-fit-sim}
 
 The equation for a two-sample mark-recapture study provides a point estimate of population size, but we could consider an improved version of the model that would allow us to more fully characterize the study results. For example, we could assume that the number of marked fish in the second sample comes from a binomial distribution. That distributional assumption allows us to generate estimates of uncertainty as well as the point estimate. The key to this sort of extended model is to think about the process generating the field data and determine which statistical distribution is appropriate. Let's start with a simulation then consider an alternative (Bayesian) approach.
 
@@ -29,23 +29,58 @@ Now, let's extend the model by introducing some randomness (stochasticity) in th
 Reps <- 1000
 m2.vec <- rbinom(n=Reps, prob=n1/N.true, size=n2)
 N.hat <- n1 * n2 / m2.vec
-hist(m2.vec, xlab="Number of recaptures", main="")
-hist(N.hat, xlab="Population estimate", main="")
-mean(N.hat)
-quantile(N.hat, probs=c(0.025, 0.5, 0.975), na.rm=TRUE) # Empirical confidence bounds and median
 ```
 
-The <code>rbinom()</code> function produces a vector of recaptures, simulating a mark-recapture study repeated Reps times. Using that vector in the equation for N~hat~ now produces a vector of population estimates. Plotting those estimates shows us that estimates are generally close to the true value but tend to have a long tail to the right (overestimates N~hat~ when a low value is drawn for m~2~). The mean is higher than the true value (due to the tail of extreme values) but the median should be very close to N.true. There are less biased modifications to the basic two-sample estimator but this version is more intuitive and sufficient for our purposes. Also, the point estimate is less important than characterizing the uncertainty. Here we obtain an empirical estimate of the 95% bounds using the <code>quantile()</code> function. We provide a vector of probabilities and the function returns the estimates at those points. The 0.025 and 0.975 points provide the empirical 95% bounds, and the 0.5 point is the median. When interpreting a field study of this sort, the confidence bounds and overall shape of the distribution should be given more emphasis than the point estimate (which reduces concern about any statistical bias of the estimator).
 
-## Bayesian approach {#JAGS-model-fit}
+```{r echo=FALSE}
+rm(list=ls()) # Clear Environment
 
-Next, we compare this simulation result to a formal statistical method. We use the same binomial distribution to describe the process of obtaining recaptures.  Our results will be similar, and hopefully the comparison will provide a clearer picture of how statistical methods work. Our use of simulation in the remainder of the book will be limited to generating "sample" data. Model fitting will be done using formal statistical methods that work well for simple or complex models.
+par(mar = c(4, 4, 1, .1))
+# Two-sample population estimate
+N.true <- 400  # Arbitrary assumed population size
+p.true <- 0.2 # Capture probability (fraction of population sampled)
+n1 <- N.true * p.true # Number caught and marked in first sample
+n2 <- N.true * p.true # Number caught and examined for marks in second sample
+Reps <- 1000
+m2.vec <- rbinom(n=Reps, prob=n1/N.true, size=n2)
+N.hat <- n1 * n2 / m2.vec
+```
 
-The two paradigms for statistical methods are frequentist and Bayesian.  Frequentist methods are dominant in statistics courses. They are so named because the focus is on how frequently a result would be expected to be observed under the null hypothesis. For example, we might compare two groups that differ in mean size by 10 cm, and estimate that a difference of that magnitude occurs rarely (say two percent of the time) under the null hypothesis. That indication of frequency (2%) might lead us to reject the null hypothesis and to conclude that the difference is meaningful and not due to chance. Bayesian statistics differs from frequentist statistics in that it takes into account not only the new data but also what is known before the study is conducted [@mccarthy2007; @doll.jacquemin_2018]. This "prior" information is described using a statistical distribution, such as a uniform or normal. For example, we might know from a pilot study that the tag reporting rate is between 0.2 and 0.6. We could conduct the Bayesian analysis using a uniform prior distribution over that range rather than the default range of 0-1 (which would indicate no prior information). This aspect of Bayesian analysis generates a good bit of controversy, and it is often unclear that valid prior information can be found and characterized objectively. We avoid that controversy in this book by using uninformative prior distributions (e.g., uniform 0-1 for probabilities) to the extent possible. Typically the results we obtain will be very similar to results of a frequentist statistical approach. If there are situations where an informative prior distribution can be justified [e.g., @doll.jacquemin_2018], then it is straightforward to include that in the Bayesian analysis.
+The <code>rbinom()</code> function produces a vector of recaptures, simulating a mark-recapture study repeated Reps times. Using that vector in the equation for N~hat~ now produces a vector of population estimates.  Plotting those results (Figure \@ref(fig:Bootstrap)) shows that estimates are generally close to the true value but tend to have a long tail to the right (overestimates N~hat~ when a low value is drawn for the number of recaptures).
 
-It is reasonable to ask why a Bayesian approach would be recommended, if we are going to avoid informative prior distributions? The answer is a practical one -- to take advantage of the "BUGS" family of software [@lunn.etal2000; @lunn.etal2009]. This open-source software began with BUGS, followed by WinBUGS (for Windows PCs) then OpenBUGS (intended for multiple operating systems). There are several newer sources of Bayesian software that use the same or very similar code. Here we use R packages for JAGS [@plummer2003], a popular and well-supported version. The code should transfer with little or no modification to other BUGS-family software versions. The code in the remainder of the book will generally follow the approach demonstrated by @kéry_2010 and @kéry.schaub_2011, in that R simulation code will be used to generate sample data and JAGS Bayesian code will be used to fit the model.
+```{r Bootstrap, fig.cap='Frequency distributions for number of recaptured fish (left) and estimated population size (right), based on simulation using a binomial distribution for the number of recaptures.',fig.show="hold", out.width="50%"}
 
-The following code provides for a Bayesian model fit to the mark-recapture data:
+hist(m2.vec, xlab="Number of recaptures", main="")
+hist(N.hat, xlab="Population estimate", main="")
+```
+
+```{r eval=FALSE}
+mean(N.hat)
+quantile(N.hat, probs=c(0.025, 0.5, 0.975), na.rm=TRUE)
+# quantile function provides empirical confidence bounds and median
+```
+
+Results printed to the Console show that the mean is higher than the true value (due to the tail of extreme values) but the median is very close to N.true. The estimated median and 95% bounds are obtained using the <code>quantile()</code> function. We provide a vector of probabilities and the function returns the estimates at those points. The 0.025 and 0.975 points provide the empirical 95% bounds, and the 0.5 point is the median. There are less biased modifications to the basic two-sample estimator but this version is more intuitive and sufficient for our purposes. When interpreting a field study of this sort, the confidence bounds and overall shape of the distribution should be given more emphasis than the point estimate (which reduces concern about any statistical bias of the estimator).
+
+## Using Bayesian methods {#JAGS-model-fit}
+
+In Section \@ref(Model-fit-sim), we used a simulation-based or numerical approach to estimate confidence limits for the mark-recapture study design. This is an example of parametric bootstrapping [@efron.tibshirani_1993], where replicate samples (number of recaptured fish in this case) are drawn from a parametric distribution, in this case binomial.  We can compare this simulation approach to a formal statistical method, using a Bayesian framework. We use the same binomial distribution to describe the process of obtaining recaptures.  Our results will be similar, and hopefully the comparison will provide some intuition about how a Bayesian analysis works. Our use of simulation in the remainder of the book will be limited to generating "sample" data. Model fitting will be done using Bayesian methods that work well for simple or complex models.
+
+The two paradigms for statistical methods are frequentist\index{frequentist} and Bayesian\index{Bayesian}.  Frequentist methods are the classical approach for estimating model parameters and making inferences  [@royle.dorazio_2009]. In a frequentist framework, model parameters are assumed to be fixed but unknown values. For example, we could conduct a two-sample mark-recapture study to estimate population size in a lake. If we repeated the mark-recapture study many times, we would expect the 95% confidence limit for each estimate to contain the true population size 95 percent of the time (hence the term frequentist).
+
+A Bayesian analysis is based on the data in hand and does not rely on the idea of hypothetical replicate studies [@mccarthy2007; @royle.dorazio_2009]. The results are exact for any sample size [@kéry.schaub_2011], which is an important advantage for fisheries studies because sample sizes are often small.  Bayesian statistics also differs from frequentist statistics in that it takes into account what is known before the study is conducted [@mccarthy2007]. The requirement to specify prior knowledge can be viewed as either an advantage or disadvantage, depending on the availability of prior data and one's statistical philosophy [@ellison_2004; @mccarthy2007;  @kéry_2010; @kéry.schaub_2011; @dorazio_2016; @doll.jacquemin_2018]. The prior information takes the form of a statistical distribution that defines the range and relative likelihood of possible values (prior to collecting the new data). The prior distribution\index{Distribution, prior} can be informative or uninformative. For example, a uniform 0-1 distribution would be a uninformative prior for a tag-reporting rate, because probabilities are by definition constrained to be between 0 and 1. Results from a pilot study might allow for an informative prior distribution; for example, a uniform distribution between 0.2 and 0.4.
+
+@lunn.etal2012 note that a substantial degree of judgement is involved in selecting relevant data for a prior distribution. A fisheries example could be whether to use growth information from a prior year when population size was higher. Another case could be whether the tag reporting rate was now be lower than when a pilot study was done because of increased angler dissatisfaction with the current management approach. The big advantage of using prior information is that it can improve the precision (and sometimes accuracy) of study results [e.g., @doll.jacquemin_2018].
+
+Bayes' rule provides the formal structure for combining the prior information and new data in order to estimate the posterior distribution\index{Distribution, posterior} [@kéry.schaub_2011]. For our purposes, it is sufficient to know that the posterior distribution is proportional to the product of the likelihood (based on the new data; Section \@ref(Likelihood)) and the prior distribution:
+
+$posterior \propto likelihood \cdot prior$
+
+The details in applying Bayes' rule are handled automatically by the software used in this book. Nevertheless, knowing this relationship helps in understanding how the two components work together. Being required to specify the prior distribution makes a Bayesian analysis very transparent [@kéry.schaub_2011]. Anyone reviewing the results can decide about the appropriateness of the prior distribution(s). This would be particularly important in cases where a prior distribution was based on belief (e.g., expert opinion) rather than prior studies. The ideal situation is for the likelihood term to dominate, which is often referred to as the "data overwhelming the prior." This would mean that the sample size for new data was sufficiently large that the prior had little or no influence on results.
+
+For most analyses in this book, we follow the approach of previous authors in using uninformative (flat or vague) prior distributions [@royle.dorazio_2009; @kéry.schaub_2011]. The simplest example is using a uniform(0,1) distribution for probabilities. In cases where choosing a uninformative prior distribution is more subjective (e.g., average maximum size for a growth curve), the analysis can be repeated using narrower and wider priors to ensure that results are insensitive to the bounds [@kéry.schaub_2011]. Typically the results we obtain will be very similar to results of a frequentist analysis [@mccarthy2007; @kéry_2010; @kéry.schaub_2011]. In situations where an informative prior distribution can be justified, it is straightforward to include that in the Bayesian analysis (see Section x.x (****)).
+
+The following code provides for a Bayesian model fit to the mark-recapture data, using R packages for JAGS [@plummer2003]. The code should transfer with little or no modification to other BUGS-family software versions.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -67,7 +102,7 @@ cat("
     model {
 
   # Prior
-    N.hat ~ dlnorm(0, 1E-6) # Uninformative prior (N.hat>0)
+    N.hat ~ dlnorm(0, 1E-6) # uninformative prior (N.hat>0)
     MarkedFraction <- n1/N.hat
 
   # Likelihood
@@ -99,27 +134,76 @@ plot(jagsfit)
 
 The first section of code sets up the experiment. The "observed" values for n~1~, n~2~ and m~2~ could be replaced by real data from a field study; in that case, N would be unknown.
 
-Before the first time of running JAGS code, you will need to download and install [JAGS](https://sourceforge.net/projects/mcmc-jags/files/). Next, use RStudio to install the packages for running JAGS. There are several options; this book uses **rjags** [@R-rjags] and **R2jags** [@R-R2jags].  Both of these steps are done only once. Then each time that you want to access JAGS from R, you load the two packages using the <code>library()</code> function.
+Before the first time of running JAGS code, you will need to download and install the current version of [JAGS](https://sourceforge.net/projects/mcmc-jags/files/). Next, use RStudio to install the packages for running JAGS. There are several options; this book uses **rjags** [@R-rjags] and **R2jags** [@R-R2jags].  Both of these steps are done only once. Then each time that you want to access JAGS from R, you load the two packages using the <code>library()</code> function.
 
-The <code>cat()</code> function concatenates (merges together) the lines of JAGS code, which are written out as a text file using the <code>sink()</code> function. The name of the external file is arbitrary but just needs to match the model.file code further below. It can be helpful to use an informative name for the text file rather than something generic that might get overwritten or be hard to locate at a later date. The JAGS code can be thought of as consisting of two main parts: prior information and analysis of the new data. These two parts can come in any order but it seems logical to put the prior information first. In this case, our prior distribution is an uninformative lognormal [@mccarthy2007] for the population estimate N.hat. This ensures that the population estimate cannot be negative. The analysis of new data uses the likelihood (see Section \@ref(Likelihood)) and is calculated in the final line of JAGS code. The observed number of recaptures is assumed to be binomally distributed. The parameter N.hat is used to estimate the fraction of the population that is marked, which is the probability for the binomial function <code>dbin()</code>.
+The <code>cat()</code> function concatenates (merges together) the lines of JAGS code, which are written out as a text file using the <code>sink()</code> function. The name of the external file is arbitrary but just needs to match the model.file code further below. It can be helpful to use an informative name for the text file rather than something generic that might get overwritten or be hard to locate at a later date. The JAGS code can be thought of as consisting of two main parts: prior information and analysis of the new data. These two parts can come in any order but it seems logical to put the prior information first. In this case, our model parameter, N.hat, can only take on positive values so we use an uninformative lognormal [@mccarthy2007] as the prior distribution. The analysis of new data uses the likelihood (see Section \@ref(Likelihood)) which is calculated in the final line of JAGS code. The observed number of recaptures is assumed to be binomally distributed. The parameter N.hat is used to estimate the fraction of the population that is marked, which is the probability for the binomial function <code>dbin()</code>.
 
-The next few lines of R code provide settings for the JAGS analysis (data to pass in, initial values for parameters, file name for the JAGS code, parameters to return). JAGS is sometimes tolerant of a wide range of initial values, but in this case, we need to provide a large enough initial value to avoid a run-time JAGS error. Population size must be at least as large (and likely much larger than) the sizes of the two samples, so for simplicity we use a broad uniform prior distribution ranging from <code>max(n1,n2)</code> to an arbitrarily large value (20,000). Parameters (true model parameters and functions of those parameters) for which we want JAGS to monitor and return results are listed in jags.params. The function call to <code>jags()</code> links to the data, initial values, etc., and provides some settings for the estimation process.
+The next few lines of R code provide settings for the JAGS analysis (data to pass in, initial values for parameters, file name for the JAGS code, parameters to return). JAGS is sometimes tolerant of a wide range of initial values, but in this case, we need to provide a large enough initial value to avoid a run-time JAGS error. Population size must be at least as large (and likely much larger than) the sizes of the two samples, so for simplicity we draw initial values from a broad uniform distribution between <code>max(n1,n2)</code> and an arbitrary upper bound (20,000). Parameters (true model parameters and functions of those parameters) for which we want JAGS to monitor and return results are listed in jags.params. The function call to <code>jags()</code> links to the data, initial values, etc., and provides some settings for the estimation process.
 
-BUGS software uses an iterative method of parameter estimation called Markov Chain Monte Carlo or MCMC [@mccarthy2007]. The MCMC method produces a sequence of autocorrelated estimates. Each sequence or chain uses a different stream of pseudo-random numbers, so having multiple independent chains is necessary for judging convergence. Three chains is a good practical choice. Thinning (e.g., n.thin=10 to retain only every tenth MCMC result) is sometimes done to reduce the autocorrelation, but is not generally necessary [@link.eaton2012] and is not done here. The number of MCMC iterations is arbitrary but it is better to err on the side of having too many (and can provide a valuable opportunity to stretch legs or get coffee). R returns a measure of convergence (Rhat) that can be useful in deciding if a larger number of iterations is needed. Rhat values less than 1.05 can indicate acceptable convergence [@lunn.etal2012], with values closer to 1 being preferred. More details about judging convergence are in Section \@ref(Convergence). The final MCMC setting is for the "burn-in" phase, where initial values are discarded so that the retained values are considered to be unaffected by the initial values. The default if n.burnin is not specified is to discard half the total number of updates. The best way to develop experience and intuition about MCMC settings (and Bayesian analysis in general) is to run and re-run code using different settings. For example, are the results different if n.iter is set to 10000?
+BUGS software uses an iterative method of parameter estimation called Markov Chain Monte Carlo\index{Markov Chain Monte Carlo} or MCMC [@mccarthy2007]. The MCMC method produces a sequence of autocorrelated estimates. Each sequence or chain uses a different stream of pseudo-random numbers, so having multiple independent chains is necessary in order to judge convergence. Three chains is a good practical choice. Thinning\index{Thinning} (e.g., n.thin=10 to retain only every tenth MCMC result) is sometimes done to reduce the autocorrelation, but is not generally necessary [@link.eaton2012] and is not done here. The number of MCMC iterations is arbitrary but it is better to err on the side of having too many (and can provide a valuable opportunity to stretch legs or get coffee). R returns a measure of convergence\index{convergence} (Rhat\index{Rhat}) that can be useful in deciding if a larger number of iterations is needed. Rhat values less than 1.05 can indicate acceptable convergence [@lunn.etal2012], with values closer to 1 being preferred. More details about judging convergence are in Section \@ref(Convergence). The final MCMC setting is for the "burn-in" phase, where initial values are discarded so that the retained values are considered to be unaffected by the initial values. The default if n.burnin is not specified is to discard half the total number of updates. The best way to develop experience and intuition about MCMC settings (and Bayesian analysis in general) is to run and re-run code using different settings. For example, are the results different if n.iter is set to 10000?
 
-Results for this case are contained in the jagsfit object, which can be printed to the Console and viewed as plots. Summary statistics are produced for the two monitored parameters and deviance (See Section \@ref(Deviance)), which is a measure of fit. Convergence was very good based on estimated Rhat values less than 1.01. The 95% Bayesian credible interval (comparable to a frequentist confidence interval) from one run was 277 to 670, with a median of 410 and mean of 425. Your results will differ slightly because of the pseudo-randomness of the MCMC process. The credible interval was not too different from the estimate obtained through simulation (three simulation runs produced 278-711, 278-640, and 278-640). (The upper bound estimates of 640 and 711 occur with ten and nine recaptures, respectively.)
+Results for this case are contained in the jagsfit object, which can be printed to the Console and viewed as plots. Summary statistics are produced for the two monitored parameters and deviance\index{deviance} (Section \@ref(Deviance)), which is a measure of fit. Convergence was very good based on estimated Rhat values less than 1.01. The 95% Bayesian credible interval\index{Bayesian credible interval} (comparable to a frequentist confidence interval) from one run was 277 to 670, with a median of 410 and mean of 425. Your results will differ slightly because of the pseudo-randomness of the MCMC process. The credible interval was not too different from the estimate obtained through simulation (three simulation runs produced 278-711, 278-640, and 278-640). (The upper bound estimates of 640 and 711 occur with ten and nine recaptures, respectively.)
 
-More information about Nhat can be obtained by plotting values from the jagsfit object:
+The estimated posterior distribution for Nhat (Figure \@ref(fig:BayesMR)) can be obtained from a histogram plot of values from the jagsfit object:
 
 ```{r eval=FALSE}
 hist(jagsfit$BUGSoutput$sims.list$N.hat, main="", xlab="Population estimates")
 ```
 
+```{r BayesMR, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimated posterior distribution for population size; red line indicates true value.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+par(mar = c(4, 4, 1, .1))
+
+MCR_model <- function() {
+  # Prior
+  N_lower <- max(n1,n2)
+  N.hat ~ dlnorm(0, 1E-6) # Uninformative prior (N.hat>0)
+  MarkedFraction <- n1/N.hat
+  
+  # Likelihood
+  # Binomial distribution for observed recaptures
+  m2 ~ dbin(MarkedFraction, n2)
+}
+
+# Arbitrary 'observed' values for analysis
+N.true <- 400  # Population size
+p.true <- 0.2 # Capture probability (fraction of population sampled)
+n1 <- N.true * p.true # Number caught and marked in first sample
+n2 <- N.true * p.true # Number caught and examined for marks in second sample
+m2 <- n2 * p.true # Number of marked fish in second sample
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n1", "n2", "m2")
+
+# Initial values.
+jags.inits <- function(){ list(N.hat=runif(n=1, min=max(n1,n2), max=20000))}
+
+# Fit the model
+MCR_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 2000, n.burnin = 1000,
+    model.file = MCR_model,
+    parameters.to.save = c("N.hat")
+  )
+
+hist(MCR_jags$BUGSoutput$sims.list$N.hat, main="", xlab="Population estimates")
+abline(v=N.true, col="red")
+
+```
+
 The jagsfit object is a data frame that can be inspected in the Environment window. Note that sims.list arrays contain 3000 elements, which is the combined length of 1000 retained values (2000-n.burnin) from each of three chains. (When entering a jagsfit object in the Source window or Console, typing $ after each level of the object will bring up an RStudio prompt for the next choice.)
 
-The model results include pD, which is an estimate of the number of effective parameters in the model. In simple models, we can often count the number of nominal parameters, but the number of effective parameters may be less; for example, parameters may be correlated or constrained by an informative prior distribution [@mccarthy2007]. JAGS uses numerical methods to estimate pD. For this model, we would expect pD to be close to 1 for the estimate of N.hat; MarkedFraction is a calculated value and not a model parameter.
+The model results include pD\index{pD}, which is an estimate of the number of effective parameters in the model. In simple models, we can often count the number of nominal parameters, but the number of effective parameters may be less; for example, parameters may be correlated or constrained by an informative prior distribution [@mccarthy2007]. JAGS uses numerical methods to estimate pD. For this model, we would expect pD to be close to 1 for the estimate of N.hat; MarkedFraction is a calculated value and not a model parameter.
 
-JAGS also provides an estimate of the Deviance Information Criterion (DIC), which is a relative measure of how well a model fits the data [@mccarthy2007; @lunn.etal2009]. It is the Bayesian analog of the Akaike's Information Criterion (AIC) that is widely used in a frequentist setting to compare alternative models. Like the AIC, the DIC results in a trade-off between model fit (likelihood) and complexity (number of parameters) [@mccarthy2007]. The DIC score is calculated using a measure of fit (deviance at the mean of the posterior distribution) and a measure of model complexity (pD); lower values are better when comparing alternative models. DIC scores should be interpreted with caution because of the difficulty in estimating pD for some models [@lunn.etal2009].
+JAGS also provides an estimate of the Deviance Information Criterion\index{Information Criterion, Deviance} (DIC), which is a relative measure of how well a model fits the data [@mccarthy2007; @lunn.etal2009]. It is the Bayesian analog of the Akaike's Information Criterion\index{Information Criterion, Akaike's} (AIC) that is widely used in a frequentist setting to compare alternative models. Like the AIC, the DIC results in a trade-off between model fit (likelihood) and complexity (number of parameters) [@mccarthy2007]. The DIC score is calculated using a measure of fit (deviance at the mean of the posterior distribution) and a measure of model complexity (pD); lower values are better when comparing alternative models. DIC scores should be interpreted with caution because of the difficulty in estimating pD for some models [@lunn.etal2009].
 
 It is worth noting that this model may also be fit by using MarkedFraction as the model parameter. It is easy to specify the uninformative prior distribution (and initial values) in this case, as MarkedFraction is a proportion between 0 and 1. Now N.hat is a calculated value. One major advantage of Bayesian software is that we automatically get full information about parameters that are calculated functions of model parameters. In this case, the calculated value (N.hat) is of primary interest, rather than the actual model parameter MarkedFraction. Results for Nhat characterize its posterior distribution, which takes into account the prior information (none here) and the new data.
 
@@ -174,7 +258,7 @@ jagsfit <- jags(data=jags.data, inits=jags.inits, jags.params,
 print(jagsfit, digits=3)
 plot(jagsfit)
 ```
-Another advantage of this way of parameterizing the model is that we avoid specifying an arbitrary upper bound for initial values for N.hat. Results of the two approaches appear to be comparable.
+Another advantage of this way of parameterizing the model is that we avoid specifying an arbitrary upper bound for initial values for N.hat. Results of the two approaches are similar.
 
 ### Debugging code {#Debug}
 

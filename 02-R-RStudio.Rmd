@@ -1,5 +1,3 @@
-\mainmatter
-
 # A Brief Introduction to R and RStudio {#R-intro}
 
 R [@R-base] is a free software environment for data manipulation<, statistical analyses, and graphics. It is easily extended through add-on software packages including some for commonly used fisheries models. There are a number of software interfaces for working in R and you should use the interface with which you are most comfortable. For this book, we use the free software [RStudio](https://posit.co/products/open-source/rstudio/), which can be run in either the Windows, Macintosh, or Unix environment. There are many online resources for installing and learning R and RStudio, and even a recent book for fisheries analysis using R [@ogle_2018]. We assume in this book that R and RStudio have been installed. We get started by examining a few basic R commands but will primarily illustrate the use of R through code examples in the remaining chapters. We will also describe some general methods for getting help and learning more about R.

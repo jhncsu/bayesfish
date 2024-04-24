@@ -1,59 +1,158 @@
-This is BibTeX, Version 0.99d (TeX Live 2022)
+This is BibTeX, Version 0.99d (TeX Live 2024)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: bookdown.aux
 The style file: apalike.bst
 Database file #1: book.bib
+Warning--entry type for "brownie.etal1985" isn't style-file defined
+--line 45 of file book.bib
+Warning--entry type for "link.barker_2010" isn't style-file defined
+--line 591 of file book.bib
 Database file #2: packages.bib
-Too many commas in name 2 of "Ponisio, Lauren C. and family=Valpine, given=Perry, prefix=de, useprefix=true and Michaud, Nicholas and Turek, Daniel" for entry ponisio.etal_2020
+Warning--I didn't find a database entry for "R-rjags"
+Warning--I didn't find a database entry for "R-R2jags"
+Warning--I didn't find a database entry for "R-coda"
+Too many commas in name 1 of "family=Valpine, given=Perry, prefix=de, useprefix=true and Turek, Daniel and Paciorek, Christopher J. and Anderson-Bergman, Clifford and Lang, Duncan Temple and Bodik, Rastislav" for entry devalpine.etal_2017
 while executing---line 1023 of file apalike.bst
+Too many commas in name 1 of "family=Valpine, given=Perry, prefix=de, useprefix=true and Turek, Daniel and Paciorek, Christopher J. and Anderson-Bergman, Clifford and Lang, Duncan Temple and Bodik, Rastislav" for entry devalpine.etal_2017
+while executing---line 1023 of file apalike.bst
+Warning--to sort, need author or key in royle.dorazio_2009
+Warning--empty author in royle.dorazio_2009
+Warning--empty year in royle.dorazio_2009
+Warning--empty year in allen_1997
+Warning--empty journal in allen_1997
+Warning--empty year in bolker2008
+Warning--empty year in brooks.gelman1998
+Warning--empty journal in brooks.gelman1998
+Warning--empty year in brownie.etal1985
+Warning--empty year in bryant2000
+Warning--empty journal in bryant2000
+Warning--empty year in burnham.anderson_2004
+Warning--empty year in campana2001
+Warning--empty journal in campana2001
+Warning--empty year in conn.etal_2008
+Warning--empty journal in conn.etal_2008
+Warning--empty year in conn.etal_2018
+Warning--empty journal in conn.etal_2018
+Warning--empty year in doll.jacquemin_2018
+Warning--empty journal in doll.jacquemin_2018
+Warning--empty year in dorazio_2016
 Warning--empty journal in dorazio_2016
+Warning--empty year in efron.tibshirani_1993
+Warning--empty year in ellison_2004
 Warning--empty journal in ellison_2004
-Warning--empty journal in gelman.etal_2015
-Warning--empty journal in lunn.etal2009
-Warning--empty journal in lunn.etal2000
-Warning--empty journal in plummer2003
-Too many commas in name 2 of "Ponisio, Lauren C. and family=Valpine, given=Perry, prefix=de, useprefix=true and Michaud, Nicholas and Turek, Daniel" for entry ponisio.etal_2020
+Too many commas in name 1 of "family=Valpine, given=Perry, prefix=de, useprefix=true and Turek, Daniel and Paciorek, Christopher J. and Anderson-Bergman, Clifford and Lang, Duncan Temple and Bodik, Rastislav" for entry devalpine.etal_2017
 while executing---line 1098 of file apalike.bst
-Warning--empty journal in ponisio.etal_2020
-You've used 17 entries,
+Warning--empty year in devalpine.etal_2017
+Warning--empty journal in devalpine.etal_2017
+Warning--empty year in flowers.hightower2015
+Warning--empty journal in flowers.hightower2015
+Warning--empty year in flowers.hightower_2013
+Warning--empty journal in flowers.hightower_2013
+Warning--empty year in gelman.etal_2013
+Warning--empty year in gelman.etal_2015
+Warning--empty journal in gelman.etal_2015
+Warning--empty year in gelman.rubin1992
+Warning--empty journal in gelman.rubin1992
+Warning--empty year in hayes.brodziack1997
+Warning--empty journal in hayes.brodziack1997
+Warning--empty year in hearn.etal2003
+Warning--empty journal in hearn.etal2003
+Warning--empty year in hearn.etal1987
+Warning--empty journal in hearn.etal1987
+Warning--empty year in hewitt.etal2010
+Warning--empty journal in hewitt.etal2010
+Warning--empty year in hightower.grossman_1985
+Warning--empty journal in hightower.grossman_1985
+Warning--empty year in hightower.harris2017
+Warning--empty journal in hightower.harris2017
+Warning--empty year in hightower.etal2015
+Warning--empty journal in hightower.etal2015
+Warning--empty year in hilborn.walters_1992
+Warning--empty year in hooten.hobbs2015
+Warning--empty journal in hooten.hobbs2015
+Warning--empty year in jiang.etal2007
+Warning--empty journal in jiang.etal2007
+Warning--empty year in kéry_2010
+Warning--empty year in kéry.schaub_2011
+Warning--empty year in law.kelton_1982
+Warning--empty year in link.barker_2010
+Warning--empty year in link.barker_2009
+Warning--empty year in link.eaton2012
+Warning--empty journal in link.eaton2012
+Warning--empty year in lorenzen1996
+Warning--empty journal in lorenzen1996
+Warning--empty year in lunn.etal2012
+Warning--empty year in lunn.etal2009
+Warning--empty journal in lunn.etal2009
+Warning--empty year in lunn.etal2000
+Warning--empty journal in lunn.etal2000
+Warning--empty year in mccarthy2007
+Warning--empty year in millar.meyer2000
+Warning--empty journal in millar.meyer2000
+Warning--empty year in mantyniemi.etal2005
+Warning--empty journal in mantyniemi.etal2005
+Warning--empty year in ogle_2018
+Warning--empty year in plummer2003
+Warning--empty journal in plummer2003
+Warning--empty year in pollock.pine2007
+Warning--empty journal in pollock.pine2007
+Warning--empty year in pollock.etal_2001
+Warning--empty journal in pollock.etal_2001
+Warning--empty year in pregler.etal_2019
+Warning--empty journal in pregler.etal_2019
+Warning--empty year in ricker1975
+Warning--empty year in robson.regier1964
+Warning--empty journal in robson.regier1964
+Warning--empty year in scherrer.etal2021
+Warning--empty journal in scherrer.etal2021
+Warning--empty year in spiegelhalter.etal_2002
+Warning--empty journal in spiegelhalter.etal_2002
+Warning--empty year in vetter1988
+Warning--empty journal in vetter1988
+Warning--empty year in wang.etal1995
+Warning--empty journal in wang.etal1995
+Warning--empty year in xie2015
+Warning--empty year in zhang.etal2009
+Warning--empty journal in zhang.etal2009
+You've used 58 entries,
             1935 wiz_defined-function locations,
-            567 strings with 6126 characters,
-and the built_in function-call counts, 5755 in all, are:
-= -- 556
-> -- 196
-< -- 13
-+ -- 64
-- -- 62
-* -- 462
-:= -- 1027
-add.period$ -- 51
-call.type$ -- 17
-change.case$ -- 113
-chr.to.int$ -- 17
-cite$ -- 24
-duplicate$ -- 235
-empty$ -- 427
-format.name$ -- 85
-if$ -- 1107
-int.to.chr$ -- 1
+            755 strings with 13301 characters,
+and the built_in function-call counts, 22414 in all, are:
+= -- 2182
+> -- 919
+< -- 38
++ -- 329
+- -- 304
+* -- 1879
+:= -- 3850
+add.period$ -- 173
+call.type$ -- 58
+change.case$ -- 435
+chr.to.int$ -- 51
+cite$ -- 156
+duplicate$ -- 814
+empty$ -- 1582
+format.name$ -- 401
+if$ -- 4304
+int.to.chr$ -- 8
 int.to.str$ -- 0
-missing$ -- 23
-newline$ -- 87
-num.names$ -- 51
-pop$ -- 120
+missing$ -- 67
+newline$ -- 289
+num.names$ -- 174
+pop$ -- 550
 preamble$ -- 1
-purify$ -- 116
+purify$ -- 441
 quote$ -- 0
-skip$ -- 174
+skip$ -- 486
 stack$ -- 0
-substring$ -- 362
-swap$ -- 12
-text.length$ -- 0
+substring$ -- 1637
+swap$ -- 27
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 86
-warning$ -- 7
-while$ -- 46
+type$ -- 320
+warning$ -- 97
+while$ -- 191
 width$ -- 0
-write$ -- 213
-(There were 2 error messages)
+write$ -- 649
+(There were 3 error messages)

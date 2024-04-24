@@ -1,97 +1,289 @@
 \begin{thebibliography}{}
 
-\bibitem[Bolker, 2008]{bolker2008}
-Bolker, B.~M. (2008).
+\bibitem[roy, ]{royle.dorazio_2009}
+Front {{Matter}}.
+\newblock In Royle, J.~A. and Dorazio, R.~M., editors, {\em Hierarchical {{Modeling}} and {{Inference}} in {{Ecology}}}, page iii. Academic Press.
+
+\bibitem[Allen, ]{allen_1997}
+Allen, M.~S.
+\newblock Effects of {{Variable Recruitment}} on {{Catch-Curve Analysis}} for {{Crappie Populations}}.
+\newblock 17(1):202--205.
+
+\bibitem[Bolker, ]{bolker2008}
+Bolker, B.~M.
 \newblock {\em Ecological {{Models}} and {{Data}} in {{R}}}.
 \newblock Princeton University Press, 1 edition.
 
-\bibitem[Dorazio, 2016]{dorazio_2016}
-Dorazio, R.~M. (2016).
-\newblock Bayesian data analysis in population ecology: Motivations, methods,
-  and benefits.
+\bibitem[Brooks and Gelman, ]{brooks.gelman1998}
+Brooks, S.~P. and Gelman, A.
+\newblock General {{Methods}} for {{Monitoring Convergence}} of {{Iterative Simulations}}.
+\newblock 7(4):434--455.
+
+\bibitem[Brownie et~al., ]{brownie.etal1985}
+Brownie, C., Anderson, D., Burnham, K., and Robson, D.
+\newblock Statistical inference from band recovery data: A handbook.
+
+\bibitem[Bryant, ]{bryant2000}
+Bryant, M.~D.
+\newblock Estimating {{Fish Populations}} by {{Removal Methods}} with {{Minnow Traps}} in {{Southeast Alaska Streams}}.
+\newblock 20(4):923--930.
+
+\bibitem[Burnham and Anderson, ]{burnham.anderson_2004}
+Burnham, K.~P. and Anderson, D.~R., editors.
+\newblock {\em Model {{Selection}} and {{Multimodel Inference}}}.
+\newblock Springer.
+
+\bibitem[Campana, ]{campana2001}
+Campana, S.~E.
+\newblock Accuracy, precision and quality control in age determination, including a review of the use and abuse of age validation methods.
+\newblock 59(2):197--242.
+
+\bibitem[Conn et~al., a]{conn.etal_2008}
+Conn, P.~B., Diefenbach, D.~R., Laake, J.~L., Ternent, M.~A., and White, G.~C.
+\newblock Bayesian {{Analysis}} of {{Wildlife Age-at-Harvest Data}}.
+\newblock 64(4):1170--1177.
+
+\bibitem[Conn et~al., b]{conn.etal_2018}
+Conn, P.~B., Johnson, D.~S., Williams, P.~J., Melin, S.~R., and Hooten, M.~B.
+\newblock A guide to {{Bayesian}} model checking for ecologists.
+\newblock 88(4):526--542.
+
+\bibitem[Doll and Jacquemin, ]{doll.jacquemin_2018}
+Doll, J.~C. and Jacquemin, S.~J.
+\newblock Introduction to {{Bayesian Modeling}} and {{Inference}} for {{Fisheries Scientists}}.
+\newblock 43(3):152--161.
+
+\bibitem[Dorazio, ]{dorazio_2016}
+Dorazio, R.~M.
+\newblock Bayesian data analysis in population ecology: Motivations, methods, and benefits.
 \newblock 58(1):31--44.
 
-\bibitem[Ellison, 2004]{ellison_2004}
-Ellison, A.~M. (2004).
+\bibitem[Efron and Tibshirani, ]{efron.tibshirani_1993}
+Efron, B. and Tibshirani, R.~J.
+\newblock {\em An {{Introduction}} to the {{Bootstrap}}}.
+\newblock {Chapman and Hall/CRC}, 1st edition edition.
+
+\bibitem[Ellison, ]{ellison_2004}
+Ellison, A.~M.
 \newblock Bayesian inference in ecology.
 \newblock 7(6):509--520.
 
-\bibitem[Gelman et~al., 2015]{gelman.etal_2015}
-Gelman, A., Lee, D., and Guo, J. (2015).
-\newblock Stan: {{A Probabilistic Programming Language}} for {{Bayesian
-  Inference}} and {{Optimization}}.
+\bibitem[family=Valpine et~al., ]{devalpine.etal_2017}
+family=Valpine, given=Perry, p.-u., Turek, D., Paciorek, C.~J., Anderson-Bergman, C., Lang, D.~T., and Bodik, R.
+\newblock Programming {{With Models}}: {{Writing Statistical Algorithms}} for {{General Model Structures With NIMBLE}}.
+\newblock 26(2):403--413.
+
+\bibitem[Flowers and Hightower, a]{flowers.hightower2015}
+Flowers, H.~J. and Hightower, J.~E.
+\newblock Estimating {{Sturgeon Abundance}} in the {{Carolinas Using Side-Scan Sonar}}.
+\newblock 7(1):1--9.
+
+\bibitem[Flowers and Hightower, b]{flowers.hightower_2013}
+Flowers, H.~J. and Hightower, J.~E.
+\newblock A novel approach to surveying sturgeon using side-scan sonar and occupancy modeling.
+\newblock 5(1):211--223.
+
+\bibitem[Gelman et~al., a]{gelman.etal_2013}
+Gelman, A., Carlin, J.~B., Stern, H.~S., Dunson, D.~B., Vehtari, A., and Rubin, D.~B.
+\newblock {\em Bayesian {{Data Analysis}}}.
+\newblock {Chapman and Hall/CRC}, 3rd edition edition.
+
+\bibitem[Gelman et~al., b]{gelman.etal_2015}
+Gelman, A., Lee, D., and Guo, J.
+\newblock Stan: {{A Probabilistic Programming Language}} for {{Bayesian Inference}} and {{Optimization}}.
 \newblock 40(5):530--543.
 
-\bibitem[Kéry, 2010]{kery_2010}
-Kéry, M. (2010).
-\newblock {\em Introduction to {{WinBUGS}} for {{Ecologists}}: {{Bayesian}}
-  Approach to Regression, {{ANOVA}}, Mixed Models and Related Analyses}.
+\bibitem[Gelman and Rubin, ]{gelman.rubin1992}
+Gelman, A. and Rubin, D.~B.
+\newblock Inference from {{Iterative Simulation Using Multiple Sequences}}.
+\newblock 7:457--472.
+
+\bibitem[Hayes and family=Brodziack, ]{hayes.brodziack1997}
+Hayes, D.~B. and family=Brodziack, given=JKT, g.-i.
+\newblock Reply: {{Efficiency}} and bias of estimators and sampling designs for determining lengthweight relationships of fish.
+\newblock 54(3):744--745.
+
+\bibitem[Hearn et~al., a]{hearn.etal2003}
+Hearn, W.~S., Hoenig, J.~M., Pollock, K.~H., and Hepworth, D.~A.
+\newblock Tag {{Reporting Rate Estimation}}: 3. {{Use}} of {{Planted Tags}} in {{One Component}} of a {{Multiple-Component Fishery}}.
+\newblock 23(1):66--77.
+
+\bibitem[Hearn et~al., b]{hearn.etal1987}
+Hearn, W.~S., Sandland, R.~L., and Hampton, J.
+\newblock Robust estimation of the natural mortality rate in a completed tagging experiment with variable fishing intensity.
+\newblock 43(2):107--117.
+
+\bibitem[Hewitt et~al., ]{hewitt.etal2010}
+Hewitt, D.~A., Janney, E.~C., Hayes, B.~S., and Shively, R.~S.
+\newblock Improving inferences from fisheries capture-recapture studies through remote detection of pit tags.
+\newblock 35(5):217--231.
+
+\bibitem[Hightower and Grossman, ]{hightower.grossman_1985}
+Hightower, J.~E. and Grossman, G.~D.
+\newblock Comparison of {{Constant Effort Harvest Policies}} for {{Fish Stocks}} with {{Variable Recruitment}}.
+\newblock 42(5):982--988.
+
+\bibitem[Hightower and Harris, ]{hightower.harris2017}
+Hightower, J.~E. and Harris, J.~E.
+\newblock Estimating {{Fish Mortality Rates Using Telemetry}} and {{Multistate Models}}.
+\newblock 42(4):210--219.
+
+\bibitem[Hightower et~al., ]{hightower.etal2015}
+Hightower, J.~E., Loeffler, M., Post, W.~C., and Peterson, D.~L.
+\newblock Estimated {{Survival}} of {{Subadult}} and {{Adult Atlantic Sturgeon}} in {{Four River Basins}} in the {{Southeastern United States}}.
+\newblock 7(1):514--522.
+
+\bibitem[Hilborn and Walters, ]{hilborn.walters_1992}
+Hilborn, R. and Walters, C.~J.
+\newblock {\em Quantitative {{Fisheries Stock Assessment}}}.
+\newblock Springer US.
+
+\bibitem[Hooten and Hobbs, ]{hooten.hobbs2015}
+Hooten, M.~B. and Hobbs, N.~T.
+\newblock A guide to {{Bayesian}} model selection for ecologists.
+\newblock 85(1):3--28.
+
+\bibitem[Jiang et~al., ]{jiang.etal2007}
+Jiang, H., Pollock, K.~H., Brownie, C., Hoenig, J.~M., Latour, R.~J., Wells, B.~K., and Hightower, J.~E.
+\newblock Tag {{Return Models Allowing}} for {{Harvest}} and {{Catch}} and {{Release}}: {{Evidence}} of {{Environmental}} and {{Management Impacts}} on {{Striped Bass Fishing}} and {{Natural Mortality Rates}}.
+\newblock 27(2):387--396.
+
+\bibitem[Kéry, ]{kéry_2010}
+Kéry, M.
+\newblock {\em Introduction to {{WinBUGS}} for {{Ecologists}}: {{Bayesian}} Approach to Regression, {{ANOVA}}, Mixed Models and Related Analyses}.
 \newblock Academic Press, 1st edition edition.
 
-\bibitem[Kéry and Schaub, 2011]{kery.schaub_2011}
-Kéry, M. and Schaub, M. (2011).
-\newblock {\em Bayesian {{Population Analysis}} Using {{WinBUGS}}: {{A
-  Hierarchical Perspective}}}.
+\bibitem[Kéry and Schaub, ]{kéry.schaub_2011}
+Kéry, M. and Schaub, M.
+\newblock {\em Bayesian {{Population Analysis}} Using {{WinBUGS}}: {{A Hierarchical Perspective}}}.
 \newblock Academic Press, 1st edition edition.
 
-\bibitem[Law and Kelton, 1982]{law.kelton_1982}
-Law, A.~M. and Kelton, W.~D. (1982).
+\bibitem[Law and Kelton, ]{law.kelton_1982}
+Law, A.~M. and Kelton, W.~D.
 \newblock {\em Simulation {{Modeling}} and {{Analysis}}}.
 \newblock McGraw-Hill.
 
-\bibitem[Link and Barker, 2009]{link.barker_2009}
-Link, W.~A. and Barker, R.~J. (2009).
+\bibitem[Link and Barker, a]{link.barker_2010}
+Link, W.~A. and Barker, R.~J.
+\newblock Bayesian inference : With ecological applications - {{NC State University Libraries Catalog}}.
+
+\bibitem[Link and Barker, b]{link.barker_2009}
+Link, W.~A. and Barker, R.~J.
 \newblock {\em Bayesian {{Inference}}: {{With Ecological Applications}}}.
 \newblock Academic Press, 1st edition edition.
 
-\bibitem[Lunn et~al., 2009]{lunn.etal2009}
-Lunn, D., Spiegelhalter, D., Thomas, A., and Best, N. (2009).
+\bibitem[Link and Eaton, ]{link.eaton2012}
+Link, W.~A. and Eaton, M.~J.
+\newblock On thinning of chains in {{MCMC}}.
+\newblock 3(1):112--115.
+
+\bibitem[Lorenzen, ]{lorenzen1996}
+Lorenzen, K.
+\newblock The relationship between body weight and natural mortality in juvenile and adult fish: A comparison of natural ecosystems and aquaculture.
+\newblock 49(4):627--642.
+
+\bibitem[Lunn et~al., a]{lunn.etal2012}
+Lunn, D., Jackson, C., Best, N., Thomas, A., and Spiegelhalter, D.
+\newblock {\em The {{BUGS Book}}: {{A Practical Introduction}} to {{Bayesian Analysis}}}.
+\newblock {Chapman and Hall/CRC}, 1st edition edition.
+
+\bibitem[Lunn et~al., b]{lunn.etal2009}
+Lunn, D., Spiegelhalter, D., Thomas, A., and Best, N.
 \newblock The {{BUGS}} project: {{Evolution}}, critique and future directions.
 \newblock 28(25):3049--3067.
 
-\bibitem[Lunn et~al., 2000]{lunn.etal2000}
-Lunn, D.~J., Thomas, A., Best, N., and Spiegelhalter, D. (2000).
-\newblock {{WinBUGS}} - {{A Bayesian}} modelling framework: {{Concepts}},
-  structure, and extensibility.
+\bibitem[Lunn et~al., c]{lunn.etal2000}
+Lunn, D.~J., Thomas, A., Best, N., and Spiegelhalter, D.
+\newblock {{WinBUGS}} - {{A Bayesian}} modelling framework: {{Concepts}}, structure, and extensibility.
 \newblock 10(4):325--337.
 
-\bibitem[McCarthy, 2007]{mccarthy2007}
-McCarthy, M.~A. (2007).
+\bibitem[McCarthy, ]{mccarthy2007}
+McCarthy, M.~A.
 \newblock {\em Bayesian {{Methods}} for {{Ecology}}}.
 \newblock Cambridge University Press, 1st edition edition.
 
-\bibitem[Ogle, 2018]{ogle_2018}
-Ogle, b. D.~H. (2018).
+\bibitem[Millar and Meyer, ]{millar.meyer2000}
+Millar, R.~B. and Meyer, R.
+\newblock Bayesian state-space modeling of age-structured data: Fitting a model is just the beginning.
+\newblock 57(1):43--50.
+
+\bibitem[Mäntyniemi et~al., ]{mantyniemi.etal2005}
+Mäntyniemi, S., Romakkaniemi, A., and Arjas, E.
+\newblock Bayesian removal estimation of a population size under unequal catchability.
+\newblock 62:291--300.
+
+\bibitem[Ogle, ]{ogle_2018}
+Ogle, b. D.~H.
 \newblock {\em Introductory {{Fisheries Analyses}} with {{R}}}.
-\newblock Chapman \& {{Hall}}/{{CRC The R Series}}. {Boca Raton, FL : Chapman
-  and Hall/CRC, [2018].}, first edition. edition.
+\newblock Chapman \& {{Hall}}/{{CRC The R Series}}. {Boca Raton, FL : Chapman and Hall/CRC, [2018].}, first edition. edition.
 
-\bibitem[Plummer, 2003]{plummer2003}
-Plummer, M. (2003).
-\newblock {{JAGS}}: {{A}} program for analysis of {{Bayesian}} graphical models
-  using {{Gibbs}} sampling.
+\bibitem[Plummer, ]{plummer2003}
+Plummer, M.
+\newblock {{JAGS}}: {{A}} program for analysis of {{Bayesian}} graphical models using {{Gibbs}} sampling.
 
-\bibitem[Ponisio et~al., 2020]{ponisio.etal_2020}
-Ponisio, L.~C., family=Valpine, given=Perry, p.~u., Michaud, N., and Turek, D.
-  (2020).
-\newblock One size does not fit all: {{Customizing MCMC}} methods for
-  hierarchical models using {{NIMBLE}}.
-\newblock 10(5):2385--2416.
+\bibitem[Pollock and Pine, ]{pollock.pine2007}
+Pollock, K. and Pine, W.
+\newblock The design and analysis of field studies to estimate catch‐and‐release mortality.
+\newblock 14:123--130.
+
+\bibitem[Pollock et~al., ]{pollock.etal_2001}
+Pollock, K.~H., Hoenig, J.~M., Hearn, W.~S., and Calingaert, B.
+\newblock Tag {{Reporting Rate Estimation}}: 1. {{An Evaluation}} of the {{High-Reward Tagging Method}}.
+\newblock 21(3):521--532.
+
+\bibitem[Pregler et~al., ]{pregler.etal_2019}
+Pregler, K.~C., Hanks, R.~D., Childress, E.~S., Hitt, N.~P., Hocking, D.~J., Letcher, B.~H., Wagner, T., and Kanno, Y.
+\newblock State-space analysis of power to detect regional brook trout population trends over time.
+\newblock 76(11):2145--2155.
 
 \bibitem[{R Core Team}, 2022]{R-base}
 {R Core Team} (2022).
 \newblock {\em R: A Language and Environment for Statistical Computing}.
 \newblock R Foundation for Statistical Computing, Vienna, Austria.
 
-\bibitem[Xie, 2015]{xie2015}
-Xie, Y. (2015).
+\bibitem[Ricker, ]{ricker1975}
+Ricker, W.~E.
+\newblock {\em Computation and Interpretation of Biological Statistics of Fish Populations}.
+\newblock Number 191 in Bulletin. {Dept. of Fisheries and Oceans : Minister of Supply and Services Canada}.
+
+\bibitem[Robson and Regier, ]{robson.regier1964}
+Robson, D.~S. and Regier, H.~A.
+\newblock Sample {{Size}} in {{Petersen Mark}}–{{Recapture Experiments}}.
+\newblock 93(3):215--226.
+
+\bibitem[Scherrer et~al., ]{scherrer.etal2021}
+Scherrer, S.~R., Kobayashi, D.~R., Weng, K.~C., Okamoto, H.~Y., Oishi, F.~G., and Franklin, E.~C.
+\newblock Estimation of growth parameters integrating tag-recapture, length-frequency, and direct aging data using likelihood and {{Bayesian}} methods for the tropical deepwater snapper {{Pristipomoides}} filamentosus in {{Hawaii}}.
+\newblock 233:105753.
+
+\bibitem[Spiegelhalter et~al., ]{spiegelhalter.etal_2002}
+Spiegelhalter, D.~J., Best, N.~G., Carlin, B.~P., and Van Der~Linde, A.
+\newblock Bayesian measures of model complexity and fit.
+\newblock 64(4):583--639.
+
+\bibitem[Vetter, ]{vetter1988}
+Vetter, E.
+\newblock Estimation of {{Natural Mortality}} in {{Fish Stocks}} - a {{Review}}.
+\newblock 86(1):25--43.
+
+\bibitem[Wang et~al., ]{wang.etal1995}
+Wang, Y.-G., Thomas, M.~R., and Somers, I.~F.
+\newblock A maximum likelihood approach for estimating growth from tag–recapture data.
+\newblock 52(2):252--259.
+
+\bibitem[Xie, ]{xie2015}
+Xie, Y.
 \newblock {\em Dynamic {{Documents}} with {{R}} and Knitr}.
 \newblock {Chapman and Hall/CRC}, 2 edition.
 
 \bibitem[Xie, 2024]{R-bookdown}
 Xie, Y. (2024).
-\newblock {\em bookdown: Authoring Books and Technical Documents with R
-  Markdown}.
+\newblock {\em bookdown: Authoring Books and Technical Documents with R Markdown}.
 \newblock R package version 0.38.
+
+\bibitem[Zhang et~al., ]{zhang.etal2009}
+Zhang, Z., Lessard, J., and Campbell, A.
+\newblock Use of {{Bayesian}} hierarchical models to estimate northern abalone, {{Haliotis}} kamtschatkana, growth parameters from tag-recapture data.
+\newblock 95(2):289--295.
 
 \end{thebibliography}

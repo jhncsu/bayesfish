@@ -3,17 +3,19 @@ title: "A Bayesian Introduction to Fish Population Analysis"
 author: "Joseph E. Hightower"
 date: "`r Sys.Date()`"
 documentclass: krantz
-bibliography: [book.bib, packages.bib]
+bibliography:
+- book.bib
+- packages.bib
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 lot: yes
 lof: yes
 site: bookdown::bookdown_site
-description: "This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends."
-#github-repo: yihui/bookdown-crc
+description: "This book is intended to be a bridge between traditional fisheries analytical
+  methods and Bayesian statistics. It is a hands-on introduction to models for estimating
+  abundance, survival, growth, recruitment, and population trends."
 graphics: yes
-#cover-image: images/cover.jpg
 ---
 
 ```{r setup, include=FALSE}
