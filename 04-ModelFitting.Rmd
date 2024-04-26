@@ -70,7 +70,7 @@ The two paradigms for statistical methods are frequentist\index{frequentist} and
 
 A Bayesian analysis is based on the data in hand and does not rely on the idea of hypothetical replicate studies [@mccarthy2007; @royle.dorazio_2009]. The results are exact for any sample size [@kéry.schaub_2011], which is an important advantage for fisheries studies because sample sizes are often small.  Bayesian statistics also differs from frequentist statistics in that it takes into account what is known before the study is conducted [@mccarthy2007]. The requirement to specify prior knowledge can be viewed as either an advantage or disadvantage, depending on the availability of prior data and one's statistical philosophy [@ellison_2004; @mccarthy2007;  @kéry_2010; @kéry.schaub_2011; @dorazio_2016; @doll.jacquemin_2018]. The prior information takes the form of a statistical distribution that defines the range and relative likelihood of possible values (prior to collecting the new data). The prior distribution\index{Distribution, prior} can be informative or uninformative. For example, a uniform 0-1 distribution would be a uninformative prior for a tag-reporting rate, because probabilities are by definition constrained to be between 0 and 1. Results from a pilot study might allow for an informative prior distribution; for example, a uniform distribution between 0.2 and 0.4.
 
-@lunn.etal2012 note that a substantial degree of judgement is involved in selecting relevant data for a prior distribution. A fisheries example could be whether to use growth information from a prior year when population size was higher. Another case could be whether the tag reporting rate was now be lower than when a pilot study was done because of increased angler dissatisfaction with the current management approach. The big advantage of using prior information is that it can improve the precision (and sometimes accuracy) of study results [e.g., @doll.jacquemin_2018].
+Considerable judgement may be required when selecting relevant data for a prior distribution [@lunn.etal2012]. A fisheries example could be whether to use growth information from a prior year when population size was higher. Another case could be whether to use a tag reporting rate from a prior year, if there was increased angler dissatisfaction with the current management approach. The big advantage of using prior information is that it can improve the precision (and sometimes accuracy) of study results [e.g., @doll.jacquemin_2018].
 
 Bayes' rule provides the formal structure for combining the prior information and new data in order to estimate the posterior distribution\index{Distribution, posterior} [@kéry.schaub_2011]. For our purposes, it is sufficient to know that the posterior distribution is proportional to the product of the likelihood (based on the new data; Section \@ref(Likelihood)) and the prior distribution:
 
@@ -140,9 +140,11 @@ The <code>cat()</code> function concatenates (merges together) the lines of JAGS
 
 The next few lines of R code provide settings for the JAGS analysis (data to pass in, initial values for parameters, file name for the JAGS code, parameters to return). JAGS is sometimes tolerant of a wide range of initial values, but in this case, we need to provide a large enough initial value to avoid a run-time JAGS error. Population size must be at least as large (and likely much larger than) the sizes of the two samples, so for simplicity we draw initial values from a broad uniform distribution between <code>max(n1,n2)</code> and an arbitrary upper bound (20,000). Parameters (true model parameters and functions of those parameters) for which we want JAGS to monitor and return results are listed in jags.params. The function call to <code>jags()</code> links to the data, initial values, etc., and provides some settings for the estimation process.
 
-BUGS software uses an iterative method of parameter estimation called Markov Chain Monte Carlo\index{Markov Chain Monte Carlo} or MCMC [@mccarthy2007]. The MCMC method produces a sequence of autocorrelated estimates. Each sequence or chain uses a different stream of pseudo-random numbers, so having multiple independent chains is necessary in order to judge convergence. Three chains is a good practical choice. Thinning\index{Thinning} (e.g., n.thin=10 to retain only every tenth MCMC result) is sometimes done to reduce the autocorrelation, but is not generally necessary [@link.eaton2012] and is not done here. The number of MCMC iterations is arbitrary but it is better to err on the side of having too many (and can provide a valuable opportunity to stretch legs or get coffee). R returns a measure of convergence\index{convergence} (Rhat\index{Rhat}) that can be useful in deciding if a larger number of iterations is needed. Rhat values less than 1.05 can indicate acceptable convergence [@lunn.etal2012], with values closer to 1 being preferred. More details about judging convergence are in Section \@ref(Convergence). The final MCMC setting is for the "burn-in" phase, where initial values are discarded so that the retained values are considered to be unaffected by the initial values. The default if n.burnin is not specified is to discard half the total number of updates. The best way to develop experience and intuition about MCMC settings (and Bayesian analysis in general) is to run and re-run code using different settings. For example, are the results different if n.iter is set to 10000?
+BUGS software uses an iterative method of parameter estimation called Markov Chain Monte Carlo\index{Markov Chain Monte Carlo} or MCMC [@mccarthy2007]. The MCMC method produces a sequence of autocorrelated estimates. Each sequence or chain uses a different stream of pseudo-random numbers, so having multiple independent chains is necessary in order to judge convergence. Three chains is a good practical choice. Thinning\index{Thinning} (e.g., n.thin=10 to retain only every tenth MCMC result) is sometimes done to reduce the autocorrelation, but is not generally necessary [@link.eaton2012] and is not done here. Thinning can sometimes be justified in order to reduce memory requirements for long runs [@gelman.hill_2006]. The number of MCMC iterations is arbitrary but it is better to err on the side of having too many (and can provide a valuable opportunity to stretch legs or get coffee). R returns a measure of convergence\index{convergence} (Rhat\index{Rhat}) that can be useful in deciding if a larger number of iterations is needed. Rhat values less than 1.05 can indicate acceptable convergence [@lunn.etal2012], with values closer to 1 being preferred. More details about judging convergence are in Section \@ref(Convergence). The final MCMC setting is for the "burn-in" phase, where initial values are discarded so that the retained values are considered to be unaffected by the initial values. The default if n.burnin is not specified is to discard half the total number of updates. The best way to develop experience and intuition about MCMC settings (and Bayesian analysis in general) is to run and re-run code using different settings. For example, are the results different if n.iter is set to 10000?
 
-Results for this case are contained in the jagsfit object, which can be printed to the Console and viewed as plots. Summary statistics are produced for the two monitored parameters and deviance\index{deviance} (Section \@ref(Deviance)), which is a measure of fit. Convergence was very good based on estimated Rhat values less than 1.01. The 95% Bayesian credible interval\index{Bayesian credible interval} (comparable to a frequentist confidence interval) from one run was 277 to 670, with a median of 410 and mean of 425. Your results will differ slightly because of the pseudo-randomness of the MCMC process. The credible interval was not too different from the estimate obtained through simulation (three simulation runs produced 278-711, 278-640, and 278-640). (The upper bound estimates of 640 and 711 occur with ten and nine recaptures, respectively.)
+Results for this case are contained in the jagsfit object, which can be printed to the Console and viewed as plots. Summary statistics are produced for the two monitored parameters and deviance\index{deviance} (Section \@ref(Deviance)), which is a measure of fit. Convergence was very good based on estimated Rhat values less than 1.01. The printed output includes n.eff, which is an estimate of the effective sample size. The effective sample size is an estimate of what the sample size would be if the simulation draws were independent (rather than the usually correlated MCMC values). @gelman.hill_2006 recommend an effective sample size of at least 100. For this simple model, the effective sample size for N.hat was the same as the total number of saved iterations.
+
+The 95% Bayesian credible interval\index{Bayesian credible interval} (comparable to a frequentist confidence interval) from one run was 277 to 670, with a median of 410 and mean of 425. Your results will differ slightly because of the pseudo-randomness of the MCMC process. The credible interval was not too different from the estimate obtained through simulation (three simulation runs produced 278-711, 278-640, and 278-640). (The upper bound estimates of 640 and 711 occur with ten and nine recaptures, respectively.)
 
 The estimated posterior distribution for Nhat (Figure \@ref(fig:BayesMR)) can be obtained from a histogram plot of values from the jagsfit object:
 
@@ -157,7 +159,6 @@ par(mar = c(4, 4, 1, .1))
 
 MCR_model <- function() {
   # Prior
-  N_lower <- max(n1,n2)
   N.hat ~ dlnorm(0, 1E-6) # Uninformative prior (N.hat>0)
   MarkedFraction <- n1/N.hat
   
@@ -205,7 +206,7 @@ The model results include pD\index{pD}, which is an estimate of the number of ef
 
 JAGS also provides an estimate of the Deviance Information Criterion\index{Information Criterion, Deviance} (DIC), which is a relative measure of how well a model fits the data [@mccarthy2007; @lunn.etal2009]. It is the Bayesian analog of the Akaike's Information Criterion\index{Information Criterion, Akaike's} (AIC) that is widely used in a frequentist setting to compare alternative models. Like the AIC, the DIC results in a trade-off between model fit (likelihood) and complexity (number of parameters) [@mccarthy2007]. The DIC score is calculated using a measure of fit (deviance at the mean of the posterior distribution) and a measure of model complexity (pD); lower values are better when comparing alternative models. DIC scores should be interpreted with caution because of the difficulty in estimating pD for some models [@lunn.etal2009].
 
-It is worth noting that this model may also be fit by using MarkedFraction as the model parameter. It is easy to specify the uninformative prior distribution (and initial values) in this case, as MarkedFraction is a proportion between 0 and 1. Now N.hat is a calculated value. One major advantage of Bayesian software is that we automatically get full information about parameters that are calculated functions of model parameters. In this case, the calculated value (N.hat) is of primary interest, rather than the actual model parameter MarkedFraction. Results for Nhat characterize its posterior distribution, which takes into account the prior information (none here) and the new data.
+It is worth noting that this model may also be fitted by using MarkedFraction as the model parameter. It is easy to specify the uninformative prior distribution (and initial values) in this case, as MarkedFraction is a proportion between 0 and 1. Now N.hat is a calculated value. One major advantage of Bayesian software is that we automatically get full information about parameters that are calculated functions of model parameters. In this case, the calculated value (N.hat) is of primary interest, rather than the actual model parameter MarkedFraction. Results for Nhat characterize its posterior distribution, which takes into account the prior information (none here) and the new data.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -258,7 +259,7 @@ jagsfit <- jags(data=jags.data, inits=jags.inits, jags.params,
 print(jagsfit, digits=3)
 plot(jagsfit)
 ```
-Another advantage of this way of parameterizing the model is that we avoid specifying an arbitrary upper bound for initial values for N.hat. Results of the two approaches are similar.
+Another advantage of this way of parameterizing the model is that we avoid specifying an arbitrary upper bound for initial values for N.hat. Estimates from the two approaches differ (likely due to estimation bias) but credible intervals are similar.
 
 ### Debugging code {#Debug}
 
@@ -370,12 +371,12 @@ Begin by running the code as is, then try substituting each of the following (in
   
 The first error message points to line 8. JAGS correctly reports that the variable Exp.rate.est has not been previously defined. This is correct, but the error is actually on line 5, where the intended parameter name (Exp.rate.est) was mistyped. The second error is easy to diagnose because it specifies that the "unif" distribution on line 5 is unknown. The third error indicates that a discrete-valued parameter for function <code>dbin()</code> is missing. This makes sense because the size of the experiment (N.tagged) was omitted.
 
-As with R code, the first step is always to review the code line by line. Fitting a model to simulated data is always useful (even if there are field observations) because the correct answer is known. Another strategy is to start with the simplest possible analysis, then add complexity one piece at a time. For example, @kéry.schaub_2011 discuss Cormack-Jolly-Seber models for estimating survival, beginning with constant parameters then gradually adding more complexity (e.g., models that allow for time and individual variation).
+As with R code, the first step is always to review the code line by line. Fitting a model to simulated data is always useful (even if there are field observations) because the expected results are known. Another strategy is to start with the simplest possible analysis, then add complexity one piece at a time. For example, @kéry.schaub_2011 discuss Cormack-Jolly-Seber models for estimating survival, beginning with constant parameters then gradually adding more complexity (e.g., models that allow for time and individual variation).
 
-Skill in debugging comes with experience. It is hoped that the above strategies will be useful in working through the inevitable coding errors.
+Skill in debugging comes with experience. The above strategies should be useful in resolving coding errors.
 
 ### Judging convergence {#Convergence}
-The MCMC process is iterative so it is important to ensure that the number of updates (iterations) is sufficient to achieve convergence. One practical approach is to fit the model with some arbitrary (but reasonably large) number of updates, then refit the model using larger numbers of updates. Results that are stable suggest that convergence has been achieved. The convergence statistic Rhat [@gelman.rubin1992; @brooks.gelman1998; @lunn.etal2012] is also generally reliable as a measure of convergence. It compares between- and within-chain variance; their ratio should be close to 1 once chains have converged. Especially for models for which convergence appears to be slow, it can also be helpful to view "trace" plots that show how estimates change as updating occurs [@kéry_2010]. Add the following lines of code to the two-sample mark-recapture model used in Section \@ref(JAGS-model-fit):
+The MCMC process is iterative so it is important to ensure that the number of updates (iterations) is sufficient to achieve convergence. One practical approach is to fit the model with some arbitrary (but reasonably large) number of updates, then refit the model using larger numbers of updates. Results that are stable suggest that convergence has been achieved. The convergence statistic Rhat [@gelman.rubin1992; @brooks.gelman1998; @lunn.etal2012] is also generally reliable as a measure of convergence. It compares between- and within-chain variance; their ratio should be close to 1 once chains have converged. @gelman.hill_2006 suggest that Rhat should be less than 1.1 for all parameters. Especially for models for which convergence appears to be slow, it can also be helpful to view "trace" plots that show how estimates change as updating occurs [@kéry_2010]. Add the following lines of code to the two-sample mark-recapture model used in Section \@ref(JAGS-model-fit):
 
 ```{r eval=FALSE}
 par(mfrow=c(3,1)) # Multi-frame plot, 3 rows, 1 col
@@ -387,9 +388,56 @@ jagsfit.mcmc <- as.mcmc(jagsfit) # Creates an MCMC object for plotting
 plot(jagsfit.mcmc) # Trace and density plots
 ```
 
-The first approach follows an example from @kéry_2010. We use the <code>par()</code> graphical function to set up a multi-frame plot (by row), with three rows and one column. This results in a compact set of three plots within a single RStudio plot window. The next three lines use the built-in <code>matplot()</code> function to plot columns of a matrix as overlaid lines. The Environment window can be viewed to see the structure of the sims.array, a matrix of type num[1:1000, 1:3, 1:3]. The first dimension is for the 1000 retained updates, the second is for chains 1-3, and the third is for the variable (MarkedFraction, Nhat, Deviance). Omitting the ranges for updates and chains results in a plot containing all updates, with a different colored line for each chain. We could also specify a subset of the range to see the initial pattern (e.g., ...sims.array[1:100,,1], ...). For this simple model, the estimates converge almost immediately so there is no obvious transitory pattern. Note that there is a lot of wasted space and it may be necessary to increase the size of the Plots window to see the plots adequately.
+The first approach is based on an example from @kéry_2010. We use the <code>par()</code> graphical function to set up a multi-frame plot (by row), with three rows and one column. This results in a compact set of three plots within a single RStudio plot window. The next three lines use the built-in <code>matplot()</code> function to plot columns of a matrix as overlaid lines. The Environment window can be viewed to see the structure of the sims.array, a matrix of type num[1:1000, 1:3, 1:3]. The first dimension is for the 1000 retained updates, the second is for chains 1-3, and the third is for the variable (MarkedFraction, Nhat, Deviance). Omitting the ranges for updates and chains results in a plot containing all updates, with a different colored line for each chain. We could also specify a subset of the range to see the initial pattern (e.g., ...sims.array[1:100,,1], ...). For this simple model, the estimates converge almost immediately so there is no obvious transitory pattern. Note that there is a lot of wasted space and it may be necessary to increase the size of the Plots window to see the plots adequately.
 
-The next two of code provide a more automated way of generating trace and density plots, using methods contained in the **coda** [@R-coda] package (loaded automatically by rjags). The <code>as.mcmc()</code> function converts the original output object (jagsfit) into an MCMC object. The plot function here produces a nicely formatted set of trace and density plots that are very helpful in confirming convergence. If convergence has been achieved, the trace plots should appear to be a "grassy lawn" or "fuzzy caterpillar" without any trend, with overlapping (fully mixed) chains. Density plots show the estimated posterior distributions, and given convergence, should have an essentially identical pattern for the three chains. Convergence occurs very quickly here but we will see in later chapters with more complex models that convergence can sometimes be more difficult to achieve.
+The final two lines provide a more automated way of plotting the sequence of values (trace) and density (Figure \@ref(fig:TracePlots)), using methods contained in the **coda** [@R-coda] package (loaded automatically by rjags). The <code>as.mcmc()</code> function converts the original output object (jagsfit) into an MCMC object. The plot function here produces a nicely formatted set of trace and density plots that are very helpful in confirming convergence. If convergence has been achieved, the trace plots should appear to be a "grassy lawn" or "fuzzy caterpillar" without any trend, with overlapping (fully mixed) chains. Density plots show the estimated posterior distributions, and given convergence, should have an essentially identical pattern for the three chains. Convergence occurs very quickly here but we will see in later chapters with more complex models that convergence can sometimes be more difficult to achieve.
+
+```{r TracePlots, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Trace and density plots for the two-sample mark-recapture model.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+par(mar = c(4, 4, 1, .1))
+
+MCR_model <- function() {
+  # Prior
+  N.hat ~ dlnorm(0, 1E-6) # Uninformative prior (N.hat>0)
+  MarkedFraction <- n1/N.hat
+  
+  # Likelihood
+  # Binomial distribution for observed recaptures
+  m2 ~ dbin(MarkedFraction, n2)
+}
+
+# Arbitrary 'observed' values for analysis
+N.true <- 400  # Population size
+p.true <- 0.2 # Capture probability (fraction of population sampled)
+n1 <- N.true * p.true # Number caught and marked in first sample
+n2 <- N.true * p.true # Number caught and examined for marks in second sample
+m2 <- n2 * p.true # Number of marked fish in second sample
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n1", "n2", "m2")
+
+# Initial values.
+jags.inits <- function(){ list(N.hat=runif(n=1, min=max(n1,n2), max=20000))}
+
+# Fit the model
+MCR_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 2000, n.burnin = 1000,
+    model.file = MCR_model,
+    parameters.to.save = c("MarkedFraction","N.hat")
+  )
+
+jagsfit.mcmc <- as.mcmc(MCR_jags) # Creates an MCMC object for plotting
+plot(jagsfit.mcmc) # Trace and density plots
+```
 
 ### What is a likelihood?  {#Likelihood}
 As mentioned above, Bayesian software uses the likelihood and prior information to estimate the posterior distribution. But what exactly is a likelihood? It is an expression or function that is used to estimate the *likelihood* of obtaining the sample observation(s), given some specific value for each model parameter. As an example, let's return to the second version of the mark-recapture analysis, with the single model parameter MarkedFracton (the fraction of the population that is marked). We use the binomial distribution to model the number of recaptures. The likelihood function for the binomial is the same as the probability distribution: $L(p | n, k) = {n \choose k} p^{k} (1-p)^{n-k}$, except that here, we estimate the likelihood of a certain value for p, given k successes in a trial of size n. We can look at likelihoods using the same parameter values as in the simulation:
@@ -427,7 +475,7 @@ The likelihood calculation at p=0.2 uses the <code>choose()</code> function, to 
 
 The calculated likelihood (0.11) is really only of interest as a relative value, compared to other potential values for p. We use the <code>seq()</code> function to create a vector of potential p values, and obtain a vector of likelihoods from the p vector. Plotting the points shows that the likelihood peaks sharply at 0.2 (not surprisingly since that is the value that generated the 16 recaptures) and decreases to near 0 at about 0.08 and 0.32.
 
-We have assumed thus far that we obtained the expected number of recaptures (80*p), but in reality, the number of recaptures would be a binomially-distributed random variate. A different observed value for m~2~ would shift the likelihood function. The next lines of code calculate the likelihood for a slightly higher number of recaptures. The points function adds the new likelihood values to the plot, using the col="blue" plot option. The new values are shifted to the right because the number of recaptured fish was higher.
+We have assumed thus far that we obtained the expected number of recaptures (80*p), but in reality, the number of recaptures would be a binomially-distributed random variate. A different observed value for m~2~ would shift the likelihood function. The next lines of code calculate the likelihood for a slightly higher number of recaptures. The (<code>points))</code> function adds the new likelihood values to the plot, using the col="blue" plot option. The new values are shifted to the right because the number of recaptured fish was higher.
 
 If multiple independent samples are taken, the combined likelihood is a product. For our two assumed samples of 80 fish, with 16 recaptures in one and 18 in the other, the combined likelihood at each level of p would be the product l.vec * new.l.vec.
 
@@ -461,7 +509,7 @@ Compared to the likelihood, the log-likelihood curve has a different shape but t
 
 ### Model checking {#Model-checking}
 
-It is easy to fit the correct model to simulated data, but that is not the case for real (field) data. Any model fit to field data should be viewed as an approximation of the underlying ecological processes. We cannot prove that the model is correct, but we can examine whether it is a useful approximation. One method for doing this is the posterior predictive check [@kéry_2010; @kéry.schaub_2011; @gelman.etal_2013; @conn.etal_2018]. This method compares a measure of fit for replicated data generated under the fitted model compared to observed data. If the measure of fit (e.g., sum of squares or chi-square) is markedly different (usually higher) for the observed data, that suggests that the observed data contain some features not captured by the fitted model.
+It is easy to fit the correct model to simulated data, but that is not the case for real (field) data. Any model fit to field data should be viewed as an approximation of the underlying ecological processes. We cannot prove that the model is correct, but we can examine whether it is a useful approximation. One method for doing this is the posterior predictive check [@kéry_2010; @kéry.schaub_2011; @gelman.etal_2013; @conn.etal_2018]. This method compares a measure of fit for replicated data generated using the fitted model compared to observed data. If the measure of fit (e.g., sum of squares or chi-square) is markedly different (usually higher) for the observed data, that suggests that the observed data contain some features not captured by the fitted model.
 
 Our first example uses simulated catch data from a Poisson distribution, as might be obtained by standardized electrofishing or trawling. Keep in mind that these are our "observed" catches, to be compared with replicate data obtained by simulation. We arbitrarily set the mean for the Poisson distribution at 7 and the sample size at 30. Before viewing the extended JAGS code that includes the posterior predictive check, let's examine a version that simply fits the model: 
 
@@ -544,9 +592,10 @@ model {
 # Likelihood
     for(i in 1:N) {
       Catch[i] ~ dpois(lambda.est)
-      Catch.new[i] ~ dpois(lambda.est) # Generating replicated new data for PPC
-      chi.obs[i] <- pow(Catch[i]-lambda.est,2)/lambda.est # chi-square discrepancy for obs
-      chi.new[i] <- pow(Catch.new[i]-lambda.est,2)/lambda.est # chi-square for replicate new data
+      Catch.new[i] ~ dpois(lambda.est) # Replicate new data for PPC
+      # Chi-square discrepancy values for observed and replicate data
+      chi.obs[i] <- pow(Catch[i]-lambda.est,2)/lambda.est
+      chi.new[i] <- pow(Catch.new[i]-lambda.est,2)/lambda.est
       } #y
   Total.obs <- sum(chi.obs[])
   Total.new <- sum(chi.new[])
@@ -593,7 +642,64 @@ Freq <- table(Catch)  # Distribution of simulated counts
 barplot(Freq, main="", xlab="Count", ylab="Frequency")
 ```
 
-Now Bayesian p values are consistently extreme (0.00 for five replicate trials). The total chi-square for the replicate data sets (which *are* Poisson distributed) is always less than for the observed data (which are not). The fitted Poisson model lacks the flexibility to mimic the skew of the observed catch distribution. More intermediate Bayesian p values are only obtained if k takes on very large values (e.g., 1000), which results in a Poisson-like catch distribution.
+Now Bayesian p values are consistently extreme (0.00 for five replicate trials). The total chi-square for the replicate data sets (which *are* Poisson distributed) is always less than for the observed data (which are not). The fitted Poisson model lacks the flexibility to mimic the skew of the observed catch distribution. More intermediate Bayesian p values are only obtained if k takes on larger values, which results in a Poisson-like catch distribution (Figure \@ref(fig:PPC)).
+
+```{r PPC, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Bayesian p-value for fitting a Poisson model to simulated data from a negative binomial distribution with varying k but fixed mean=7.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+par(mar = c(4, 4, 1, .1))
+
+PPC_model <- function() {
+# Prior
+ lambda.est ~ dunif(0, 100)
+
+# Likelihood
+    for(i in 1:N) {
+      Catch[i] ~ dpois(lambda.est)
+      Catch.new[i] ~ dpois(lambda.est) # Replicate new data for PPC
+      # Chi-square discrepancy values for observed and replicate data
+      chi.obs[i] <- pow(Catch[i]-lambda.est,2)/lambda.est
+      chi.new[i] <- pow(Catch.new[i]-lambda.est,2)/lambda.est
+      } #y
+  Total.obs <- sum(chi.obs[])
+  Total.new <- sum(chi.new[])
+  Bayesian.p <- step(Total.new - Total.obs)
+}
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# Negative binomial parameters
+N <- 30
+mu <- 7
+k.values=c(1, 5, 10, 20, 30, 40, 50, 60, 70)
+k=rep(k.values, times=10) # Can increase to 100 for final
+Reps <- length(k)
+Bayesian.p <- array(data=NA, dim=Reps)
+for (i in 1:Reps){
+Catch <- rnbinom(n=N, mu=mu, size=k[i]) # Catches drawn from negative binomial
+
+# JAGS code
+jags.data <- list("N", "Catch")
+
+# Initial values
+jags.inits <- function(){ list(lambda.est=runif(n=1, min=0, max=100))}
+
+# Fit the model
+PPC_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 2000, n.burnin = 1000,
+    model.file = PPC_model,
+    parameters.to.save = c("lambda.est", "Bayesian.p")
+  )
+Bayesian.p[i] <- PPC_jags$BUGSoutput$mean$Bayesian.p
+}
+
+plot(k,Bayesian.p, xlab="k", ylab="Bayesian p-value", pch=16)
+
+```
 
 @kéry.schaub_2011 list some concerns about the posterior predictive check. One is that the observed data are used twice: in fitting the model and in producing the Bayesian p value. Another is that the method is qualitative, in that there is not an objective p-value range that indicates an acceptable fit. Despite those concerns, we agree with @kéry.schaub_2011 that the approach is a useful way of detecting cases where a model fits poorly. Simulation is helpful in gaining experience with the approach, because it is straightforward to obtain Bayesian p values for correct and incorrect fitted models.
 

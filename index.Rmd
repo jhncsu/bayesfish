@@ -37,7 +37,7 @@ The general approach for this book follows that used by @kéry_2010 and @kéry.s
 
 ## Software information and conventions {-}
 
-This book has been prepared using the **knitr**\index{knitr} [@xie2015] and **bookdown** [@R-bookdown] packages. Package names (e.g., **bookdown**) will be indicated by bold text; typewriter font will indicate inline code (e.g., `x^y`) or a function name (followed by parentheses, e.g., <code>mean()</code>).  My R session information is shown below:
+This book has been prepared using the **knitr** [@xie2015] and **bookdown** [@R-bookdown] packages. Package names (e.g., **bookdown**) will be indicated by bold text; typewriter font will indicate inline code (e.g., `x^y`) or a function name (followed by parentheses, e.g., <code>mean()</code>).  My R session information is shown below:
 
 ```{r}
 xfun::session_info()
