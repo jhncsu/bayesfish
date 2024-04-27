@@ -65,3 +65,10 @@ PopModels
 exercises-8
 title-placeholder
 fig:PPC
+fig:coinToss
+fig:dieRoll
+fig:NB-vary-k
+fig:Beta
+fig:Lognormal
+fig:Gamma
+NegBinom

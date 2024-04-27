@@ -623,9 +623,9 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-Within the likelihood looping section, we draw new replicate observations from the posterior distribution (Catch.new), and calculate chi-square values for observed and replicate data. The Bayesian p value is obtained using the <code>step()</code> function and the total chi-square values for the observed and replicate data sets. The Bayesian p values tend to be quite variable; ten trials produced values of 0.34, 0.42, 0.18, 0.16, 0.32, 0.30, 0.32, 0.67, 0.69, and 0.18. We would expect the total chi-square for observed and replicate data to be the same on average as the fitted model is known to be correct (i.e., our "observed" catches and the replicate data sets are drawn from Poisson distributions).
+Within the likelihood looping section, we draw new replicate observations from the posterior distribution (Catch.new), and calculate chi-square values for observed and replicate data. The Bayesian p value is obtained using the <code>step()</code> function and the total chi-square values for the observed and replicate data sets. The Bayesian p values tend to be quite variable; ten trials produced values of 0.34, 0.42, 0.18, 0.16, 0.32, 0.30, 0.32, 0.67, 0.69, and 0.18. We would expect the total chi-square for observed and replicate data to be the same on average as the fitted model is known to be correct (i.e., our "observed" catches and the replicate data sets are drawn from Poisson distributions). Keep in mind that, when analyzing a real data set, there will be a single Bayesian p value rather than the replicated values shown above. Simulations mimicing the field study should be very helpful in interpreting that single value.
 
-Next consider a case where the "observed" data are obtained from something other than a Poisson distribution. The negative binomial distribution is a good choice for ecological data because it can allow for a skewed distribution (e.g. mostly low but a few large catches). The two negative binomial parameters are mu (mean catch) and the overdispersion parameter k [@bolker2008]. A small value for k produces more clumping or aggregation, whereas extreme values of k (>10*mu) produce a Poisson-like distribution [@bolker2008]. Our JAGS code for model fitting remains unchanged but we replace the Poisson simulation code with the following:
+Next consider a case where the "observed" data are obtained from something other than a Poisson distribution. The negative binomial distribution (Section \@ref(NegBinom)) is a good choice because it can approximate a Poisson or have a more skewed distribution, depending on the value for the overdispersion parameter k. Here we use the same mean as in the Poisson example and set k=1. The JAGS code for model fitting remains unchanged but we replace the Poisson simulation code with the following:
 
 ```{r eval=FALSE}
 # Fit model to negative binomial data
@@ -642,7 +642,7 @@ Freq <- table(Catch)  # Distribution of simulated counts
 barplot(Freq, main="", xlab="Count", ylab="Frequency")
 ```
 
-Now Bayesian p values are consistently extreme (0.00 for five replicate trials). The total chi-square for the replicate data sets (which *are* Poisson distributed) is always less than for the observed data (which are not). The fitted Poisson model lacks the flexibility to mimic the skew of the observed catch distribution. More intermediate Bayesian p values are only obtained if k takes on larger values, which results in a Poisson-like catch distribution (Figure \@ref(fig:PPC)).
+Now Bayesian p values are consistently extreme (0.00 for five replicate trials). The total chi-square for the replicate data sets (which *are* Poisson distributed) is always less than for the observed data (which are not). The fitted Poisson model lacks the flexibility to mimic the skew of the observed catch distribution. More intermediate Bayesian p values are only obtained if k takes on larger values, such that the negative binomial approximates a Poisson distribution (Figure \@ref(fig:PPC)).
 
 ```{r PPC, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Bayesian p-value for fitting a Poisson model to simulated data from a negative binomial distribution with varying k but fixed mean=7.', out.width="90%"}
 
@@ -701,7 +701,7 @@ plot(k,Bayesian.p, xlab="k", ylab="Bayesian p-value", pch=16)
 
 ```
 
-@kéry.schaub_2011 list some concerns about the posterior predictive check. One is that the observed data are used twice: in fitting the model and in producing the Bayesian p value. Another is that the method is qualitative, in that there is not an objective p-value range that indicates an acceptable fit. Despite those concerns, we agree with @kéry.schaub_2011 that the approach is a useful way of detecting cases where a model fits poorly. Simulation is helpful in gaining experience with the approach, because it is straightforward to obtain Bayesian p values for correct and incorrect fitted models.
+@kéry.schaub_2011 list some concerns about the posterior predictive check. One is that the observed data are used twice: in fitting the model and in producing the Bayesian p value. Another is that the method is qualitative, in that there is not an objective p-value range that indicates an acceptable fit. Despite those concerns, we agree with @kéry.schaub_2011 that the approach is a useful way of detecting cases where a model fits poorly. Simulation is helpful in gaining experience with the approach, because it is straightforward to obtain Bayesian p values for correct and incorrect models.
 
 ### Model selection {#Model-selection}
 

@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-04-26" />
+<meta name="date" content="2024-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +32,15 @@
   
 <link rel="prev" href="R-intro.html"/>
 <link rel="next" href="Model-fit.html"/>
-<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,9 +49,9 @@
 
 
 
-<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -178,7 +178,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
 <li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
 <li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#poisson"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
-<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#negative-binomial"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#NegBinom"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
 <ul>
@@ -293,12 +293,12 @@ div.csl-indent {
 <h3><span class="header-section-number">3.1.1</span> Bernoulli<a href="Distributions.html#bernoulli" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The most basic discrete distribution is the Bernoulli. There are only two outcomes, often referred to as success and failure. The classic example of a Bernoulli distribution is a coin toss, where “heads” might be considered success and “tails” failure. This distribution has a single parameter p, representing the probability of success. Its complement (1-p) is the probability of failure. Searching a lake for a fish with a radio transmitter is a fisheries example of a Bernoulli trial, where p represents the probability of detecting the fish’s signal (success). Other biological examples are whether a fish with a transmitter is dead or alive and whether or not a study site is occupied.</p>
 <p>Let’s begin with R code for a hands-on example, where a coin was tossed ten times. It is convenient in R to use 0 for tails and 1 for heads:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Distributions.html#cb5-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>)  <span class="co"># Coin toss observations, 0=tails</span></span>
-<span id="cb5-2"><a href="Distributions.html#cb5-2" tabindex="-1"></a>N.obs <span class="ot">&lt;-</span> <span class="fu">length</span>(y) <span class="co"># R function to count number of observations</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Distributions.html#cb1-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>)  <span class="co"># Coin toss observations, 0=tails</span></span>
+<span id="cb1-2"><a href="Distributions.html#cb1-2" tabindex="-1"></a>N.obs <span class="ot">&lt;-</span> <span class="fu">length</span>(y) <span class="co"># R function to count number of observations</span></span></code></pre></div>
 <p>As usual, you should paste the code into an RStudio script window. You can select both lines and click the Run icon in order to run both at once. The first line assigns the vector of 0s and 1s to the variable y. The next line uses the <code>length()</code> function to count the number of observations in the vector y. We could have used the code N.obs &lt;- 10 but there are two related reasons not to do so. First, hard-coding a constant for sample size means that we would need to remember to change that line if the y vector was later updated with a different number of observations. Second, you should never do anything manually that computer code can do for you. Letting R count the observations means that you will never miscount, and your code will still work correctly if you change the y vector and end up with a different sample size.</p>
 <p>Another critical step in data analysis is to plot the data whenever possible, in order to look for patterns. Here, plotting the sequence of 0s and 1s is not that useful. A better summary plot is to examine the total number of 0s and 1s. We can use the <code>table()</code> function, which returns a vector with the number of 0s and 1s in the y vector. The <code>barplot()</code> function plots the two counts (Figure <a href="Distributions.html#fig:coinToss">3.1</a>):</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="Distributions.html#cb6-1" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(y)  <span class="co"># Summary table of 0 vs 1</span></span>
-<span id="cb6-2"><a href="Distributions.html#cb6-2" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Distributions.html#cb2-1" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(y)  <span class="co"># Summary table of 0 vs 1</span></span>
+<span id="cb2-2"><a href="Distributions.html#cb2-2" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:coinToss"></span>
 <img src="bookdown_files/figure-html/coinToss-1.png" alt="Summary bar plot of coin tosses." width="90%" />
 <p class="caption">
@@ -308,23 +308,23 @@ FIGURE 3.1: Summary bar plot of coin tosses.
 <p>Running these lines of code in a script window causes this plot to appear automatically under the Plots tab in the lower right RStudio window. We can save the plot image or copy and paste it into a report using menu option Export under the Plots tab. Examining the plot shows the unusual result of seven “tails” and three “heads”. We would expect the counts to be about equal for the two categories, given the assumed probability of success (p) for a fair coin of 0.5.</p>
 <p>Can you think of a physical process (hands-on method) that would produce Bernoulli data using other values for p, such as 0.25 or 0.33? What value for p might you expect for a fisheries examples, such as an annual exploitation rate (probability of being harvested), tag reporting rate (probability of angler returning a tag), or survival rate of adult fish in a lake (probability of surviving from year i to i+1)? These are the kinds of parameters that a field biologist might need to estimate. In the chapters that follow, we will examine some methods for collecting the data and estimating those probabilities.</p>
 <p>We can generate simulated observations from a Bernoulli distribution using the <code>rbinom()</code> function:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="Distributions.html#cb7-1" tabindex="-1"></a>N.obs <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb7-2"><a href="Distributions.html#cb7-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb7-3"><a href="Distributions.html#cb7-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.obs, <span class="at">prob=</span>p, <span class="at">size=</span><span class="dv">1</span>)</span>
-<span id="cb7-4"><a href="Distributions.html#cb7-4" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(y)  <span class="co"># Summary table of 0 vs 1</span></span>
-<span id="cb7-5"><a href="Distributions.html#cb7-5" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="Distributions.html#cb3-1" tabindex="-1"></a>N.obs <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb3-2"><a href="Distributions.html#cb3-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb3-3"><a href="Distributions.html#cb3-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.obs, <span class="at">prob=</span>p, <span class="at">size=</span><span class="dv">1</span>)</span>
+<span id="cb3-4"><a href="Distributions.html#cb3-4" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(y)  <span class="co"># Summary table of 0 vs 1</span></span>
+<span id="cb3-5"><a href="Distributions.html#cb3-5" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
 <p>The <code>rbinom()</code> function generates values from a binomial distribution (described in Section <a href="Distributions.html#BinomialDist">3.1.2</a>). If we set the trial size to 1 (e.g., a single coin toss), we simulate draws from a Bernoulli distribution. The other two arguments in the <code>rbinom()</code> function are how many Bernoulli trials to simulate (n) and the probability of success (prob). How many values of 1 would you expect the vector y to contain in a vector of 30 replicate observations? As above, the final two lines can be used to count 0s and 1s and view a plot for these simulated data.</p>
 <p>One of the most important benefits of using simulation is the ability to examine results from large sample sizes. For example, the following code shows that the <code>rbinom()</code> function produces an outcome very close to the expected proportion of 0s and 1s:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="Distributions.html#cb8-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb8-2"><a href="Distributions.html#cb8-2" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="Distributions.html#cb8-3" tabindex="-1"></a>N.obs <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb8-4"><a href="Distributions.html#cb8-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb8-5"><a href="Distributions.html#cb8-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.obs, <span class="at">prob=</span>p, <span class="at">size=</span><span class="dv">1</span>)</span>
-<span id="cb8-6"><a href="Distributions.html#cb8-6" tabindex="-1"></a>SumOnes <span class="ot">&lt;-</span> <span class="fu">sum</span>(y)</span>
-<span id="cb8-7"><a href="Distributions.html#cb8-7" tabindex="-1"></a>SumOnes</span>
-<span id="cb8-8"><a href="Distributions.html#cb8-8" tabindex="-1"></a>SumOnes<span class="sc">/</span>N.obs <span class="co"># Proportion of trials that are successful</span></span>
-<span id="cb8-9"><a href="Distributions.html#cb8-9" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(y)</span>
-<span id="cb8-10"><a href="Distributions.html#cb8-10" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Distributions.html#cb4-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb4-2"><a href="Distributions.html#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="Distributions.html#cb4-3" tabindex="-1"></a>N.obs <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb4-4"><a href="Distributions.html#cb4-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb4-5"><a href="Distributions.html#cb4-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.obs, <span class="at">prob=</span>p, <span class="at">size=</span><span class="dv">1</span>)</span>
+<span id="cb4-6"><a href="Distributions.html#cb4-6" tabindex="-1"></a>SumOnes <span class="ot">&lt;-</span> <span class="fu">sum</span>(y)</span>
+<span id="cb4-7"><a href="Distributions.html#cb4-7" tabindex="-1"></a>SumOnes</span>
+<span id="cb4-8"><a href="Distributions.html#cb4-8" tabindex="-1"></a>SumOnes<span class="sc">/</span>N.obs <span class="co"># Proportion of trials that are successful</span></span>
+<span id="cb4-9"><a href="Distributions.html#cb4-9" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(y)</span>
+<span id="cb4-10"><a href="Distributions.html#cb4-10" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
 <p>The first line of code just clears the Environment, ensuring that we start from a clean slate. The <code>sum()</code> function provides a total for the y vector, which is equal to the number of successful trials. Dividing by the number of observations is an empirical estimate of p. The plot (Plot window) shows the result for one simulation (with N.obs replicates). How close to the expected count of 1s (400) did you observe? How much does the result vary when you do multiple simulations? (Highlight all the statements and click Run several times to see the variation.)</p>
 </div>
 <div id="BinomialDist" class="section level3 hasAnchor" number="3.1.2">
@@ -332,50 +332,50 @@ FIGURE 3.1: Summary bar plot of coin tosses.
 <p>The binomial distribution is simply the combined total from multiple Bernoulli trials. One physical example would be the number of heads in five tosses of a coin. Each toss is an independent Bernoulli trial, but we record the total number of successes (heads). We could obtain anything between 0 and 5 heads in a single trial. We assume that the probability of success (p) is constant for each Bernoulli trial (e.g., each coin toss).</p>
 <p>One fisheries example of a binomially distributed process would be the number of recaptures in a two-sample mark-recapture study. In that case, the number of fish in the second sample is the size of the trial, and fraction of the population that is marked is the probability p. Another fisheries example would be the number of tag returns in a study to estimate the exploitation rate (rate of harvest). The number of tagged fish is the size of the trial and the exploitation rate is p. A telemetry study to estimate fish survival rate is a third example. The initial number of fish with transmitters is the size of the trial. The survival rate is p and the number of survivors at the start of the next period is binomially distributed.</p>
 <p>Let’s start with a physical example of drawing five playing cards (with replacement) and recording the number of clubs. The probability of success in this case (drawing a club) is 0.25 and there are six possible outcomes (0-5 clubs). The expected number of clubs is 1.25 (trial size * p).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="Distributions.html#cb9-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb9-2"><a href="Distributions.html#cb9-2" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="Distributions.html#cb9-3" tabindex="-1"></a>Clubs <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># Drawing five cards, with replacement</span></span>
-<span id="cb9-4"><a href="Distributions.html#cb9-4" tabindex="-1"></a>N.trials <span class="ot">&lt;-</span> <span class="fu">length</span>(Clubs) <span class="co"># Function for getting number of trials</span></span>
-<span id="cb9-5"><a href="Distributions.html#cb9-5" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
-<span id="cb9-6"><a href="Distributions.html#cb9-6" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span>
-<span id="cb9-7"><a href="Distributions.html#cb9-7" tabindex="-1"></a><span class="fu">barplot</span>(Counts, <span class="at">xlab=</span><span class="st">&quot;Number of clubs&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Distributions.html#cb5-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb5-2"><a href="Distributions.html#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="Distributions.html#cb5-3" tabindex="-1"></a>Clubs <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># Drawing five cards, with replacement</span></span>
+<span id="cb5-4"><a href="Distributions.html#cb5-4" tabindex="-1"></a>N.trials <span class="ot">&lt;-</span> <span class="fu">length</span>(Clubs) <span class="co"># Function for getting number of trials</span></span>
+<span id="cb5-5"><a href="Distributions.html#cb5-5" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
+<span id="cb5-6"><a href="Distributions.html#cb5-6" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span>
+<span id="cb5-7"><a href="Distributions.html#cb5-7" tabindex="-1"></a><span class="fu">barplot</span>(Counts, <span class="at">xlab=</span><span class="st">&quot;Number of clubs&quot;</span>)</span></code></pre></div>
 <p>Again we let R count the number of trials (6 in this case) and use the <code>table()</code> function to summarize the outcomes. Our sample size is small and the plot only shows the three observed outcomes. The plot can be made more understandable (especially by someone else) by adding a plot option (xlab) to label the x axis. Doing more than one plot produces a sequence of plots which you can view by using the blue left and right arrows in the Plot window. Practice modifying the above code by adding a label for the y axis (e.g., “Frequency”). You can find the full list of bar plot options by entering “barplot” in the search box in the RStudio help window (or simply type ?barplot) in the Console).</p>
 <p>We can alleviate our small sample size issue by turning to a simulation version. We again use the <code>rbinom()</code> function from the Bernoulli example, but now size is greater than 1:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="Distributions.html#cb10-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb10-2"><a href="Distributions.html#cb10-2" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="Distributions.html#cb10-3" tabindex="-1"></a>N.trials <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb10-4"><a href="Distributions.html#cb10-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Probability of drawing a club</span></span>
-<span id="cb10-5"><a href="Distributions.html#cb10-5" tabindex="-1"></a>Trial.size <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb10-6"><a href="Distributions.html#cb10-6" tabindex="-1"></a>Clubs <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.trials, <span class="at">prob=</span>p, <span class="at">size=</span>Trial.size)</span>
-<span id="cb10-7"><a href="Distributions.html#cb10-7" tabindex="-1"></a>Clubs</span>
-<span id="cb10-8"><a href="Distributions.html#cb10-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
-<span id="cb10-9"><a href="Distributions.html#cb10-9" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="Distributions.html#cb6-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb6-2"><a href="Distributions.html#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="Distributions.html#cb6-3" tabindex="-1"></a>N.trials <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb6-4"><a href="Distributions.html#cb6-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Probability of drawing a club</span></span>
+<span id="cb6-5"><a href="Distributions.html#cb6-5" tabindex="-1"></a>Trial.size <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb6-6"><a href="Distributions.html#cb6-6" tabindex="-1"></a>Clubs <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.trials, <span class="at">prob=</span>p, <span class="at">size=</span>Trial.size)</span>
+<span id="cb6-7"><a href="Distributions.html#cb6-7" tabindex="-1"></a>Clubs</span>
+<span id="cb6-8"><a href="Distributions.html#cb6-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
+<span id="cb6-9"><a href="Distributions.html#cb6-9" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
 <p>Each of the thirty observations now represents a trial size of 5 (in total, a simulation equivalent to 150 Bernoulli trials). Only part of the Clubs vector is visible in the Environment window but we can put Clubs as a line of code to print the whole vector in the Console. We again summarize the counts and plot the results using the <code>barplot()</code> function. Highlight the code in the Source window and run it multiple times to get some insight into the variability of the simulated system. For example, how often do you observe 0 or 5 Clubs? Which outcome(s) occurs most often (mode) and how frequently does the mode change?</p>
 <p>We would expect to observe very few trials with 5 successes, because the probability is quite low (0.25<sup>5</sup>=0.001). We can calculate it in the Console, by entering the expression 0.25^5. There is a higher probability of 0 successes (0.24), which can be calculated as 0.75^5 or (1-p)<sup>5</sup>, because 1-p is the probability of failure (not getting a club). It is more involved to calculate the probabilities of 1-4 successes because they can be obtained multiple ways (e.g., 1 success can be obtained five ways (10000, 01000, 00100, 00010, 00001). We could calculate those probabilities using the binomial probability distribution: <span class="math inline">\(f(k) = {n \choose k} p^{k} (1-p)^{n-k}\)</span>, where k is the number of successes in a trial of size n. R code for this calculation uses the <code>choose()</code> function; for example, <code>choose(Trial.size,0) * p^0 * (1-p)^5</code> calculates the probability of 0 clubs in five draws. We could get an approximate (“brute force”) estimate of the probabilities by increasing N.trials to a large value (say 10,000) and dividing the Counts vector by N.trials to estimate at the proportion of trials resulting in 0, 1,…5 successes:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="Distributions.html#cb11-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb11-2"><a href="Distributions.html#cb11-2" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="Distributions.html#cb11-3" tabindex="-1"></a>N.trials <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb11-4"><a href="Distributions.html#cb11-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Probability of drawing a club</span></span>
-<span id="cb11-5"><a href="Distributions.html#cb11-5" tabindex="-1"></a>Trial.size <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb11-6"><a href="Distributions.html#cb11-6" tabindex="-1"></a>Clubs <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.trials, <span class="at">prob=</span>p, <span class="at">size=</span>Trial.size)</span>
-<span id="cb11-7"><a href="Distributions.html#cb11-7" tabindex="-1"></a><span class="co">#Clubs</span></span>
-<span id="cb11-8"><a href="Distributions.html#cb11-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
-<span id="cb11-9"><a href="Distributions.html#cb11-9" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span>
-<span id="cb11-10"><a href="Distributions.html#cb11-10" tabindex="-1"></a>Counts<span class="sc">/</span>N.trials <span class="co"># Vector division - probabilities of 0-5 Clubs</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="Distributions.html#cb7-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb7-2"><a href="Distributions.html#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="Distributions.html#cb7-3" tabindex="-1"></a>N.trials <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb7-4"><a href="Distributions.html#cb7-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Probability of drawing a club</span></span>
+<span id="cb7-5"><a href="Distributions.html#cb7-5" tabindex="-1"></a>Trial.size <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb7-6"><a href="Distributions.html#cb7-6" tabindex="-1"></a>Clubs <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>N.trials, <span class="at">prob=</span>p, <span class="at">size=</span>Trial.size)</span>
+<span id="cb7-7"><a href="Distributions.html#cb7-7" tabindex="-1"></a><span class="co">#Clubs</span></span>
+<span id="cb7-8"><a href="Distributions.html#cb7-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
+<span id="cb7-9"><a href="Distributions.html#cb7-9" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span>
+<span id="cb7-10"><a href="Distributions.html#cb7-10" tabindex="-1"></a>Counts<span class="sc">/</span>N.trials <span class="co"># Vector division - probabilities of 0-5 Clubs</span></span></code></pre></div>
 <p>Note that we used a pound sign to turn off (“comment out”) the line for printing the Clubs vector to the Console, and print to the Console the estimated probabilities. The mode of our simulated distribution is in agreement with the expected value (trial size * p), as are the estimated probabilities for 0 and 5 clubs.</p>
 </div>
 <div id="Multinomial" class="section level3 hasAnchor" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> Multinomial<a href="Distributions.html#Multinomial" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The Bernoulli and binomial distributions return a single value: success or failure for the Bernoulli and the number of successes (out of a specified trial size) for the binomial. The multinomial distribution extends that to a vector of results. A classic physical example would be to roll a die several times and record how many rolls were a 1, 2, …, 6. A fisheries example would be to collect a sample of fish and determine how many are age 1, 2,… The focus in that example is on estimating the age distribution, or proportions of fish by age. An age distribution contains valuable information about the rates of mortality and recruitment (year-class strength). Another fisheries example would be to collect a sample of fish (e.g., from electrofishing or a trawl) and determine the number caught by species. Species composition can be an important indicator of the ecological health of a study site (e.g. if there is a high relative abundance of species considered tolerant of poor water quality).</p>
 <p>Let’s begin with a hands-on example. I roll a die ten times, and record as a vector the number of times I get a 1, 2, …, 6:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="Distributions.html#cb12-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb12-2"><a href="Distributions.html#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="Distributions.html#cb12-3" tabindex="-1"></a>x <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>)  <span class="co"># Generated using die, equal cell probabilities</span></span>
-<span id="cb12-4"><a href="Distributions.html#cb12-4" tabindex="-1"></a>SampleSize <span class="ot">&lt;-</span> <span class="fu">sum</span>(x)</span>
-<span id="cb12-5"><a href="Distributions.html#cb12-5" tabindex="-1"></a><span class="fu">barplot</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="Distributions.html#cb8-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb8-2"><a href="Distributions.html#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="Distributions.html#cb8-3" tabindex="-1"></a>x <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>)  <span class="co"># Generated using die, equal cell probabilities</span></span>
+<span id="cb8-4"><a href="Distributions.html#cb8-4" tabindex="-1"></a>SampleSize <span class="ot">&lt;-</span> <span class="fu">sum</span>(x)</span>
+<span id="cb8-5"><a href="Distributions.html#cb8-5" tabindex="-1"></a><span class="fu">barplot</span>(x)</span></code></pre></div>
 <p>Here R calculates the sample size (SampleSize), even though we know in this instance that there were 10 rolls. The <code>barplot()</code> function generates the plot but without any labels is not very appealing. We can dress it up a bit by adding some options (Figure <a href="Distributions.html#fig:dieRoll">3.2</a>). We first create a vector with values 1-6 to serve as x-axis labels (<code>seq()</code> function, from 1 to 6 by 1). Then we use the names.arg option to add the labels, and add x and y axis titles using xlab and ylab respectively.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="Distributions.html#cb13-1" tabindex="-1"></a>x.labels <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">6</span>, <span class="at">by=</span><span class="dv">1</span>)  <span class="co"># x axis labels for plotting</span></span>
-<span id="cb13-2"><a href="Distributions.html#cb13-2" tabindex="-1"></a><span class="fu">barplot</span>(x, <span class="at">names.arg=</span>x.labels, <span class="at">xlab=</span><span class="st">&quot;Die side&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of rolls&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="Distributions.html#cb9-1" tabindex="-1"></a>x.labels <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">6</span>, <span class="at">by=</span><span class="dv">1</span>)  <span class="co"># x axis labels for plotting</span></span>
+<span id="cb9-2"><a href="Distributions.html#cb9-2" tabindex="-1"></a><span class="fu">barplot</span>(x, <span class="at">names.arg=</span>x.labels, <span class="at">xlab=</span><span class="st">&quot;Die side&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of rolls&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:dieRoll"></span>
 <img src="bookdown_files/figure-html/dieRoll-1.png" alt="Summary bar plot of die rolls." width="90%" />
 <p class="caption">
@@ -383,20 +383,20 @@ FIGURE 3.2: Summary bar plot of die rolls.
 </p>
 </div>
 <p>We can simulate a multinomial distribution as follows:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="Distributions.html#cb14-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb14-2"><a href="Distributions.html#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="Distributions.html#cb14-3" tabindex="-1"></a>SampleSize <span class="ot">&lt;-</span> <span class="dv">30</span>  <span class="co"># e.g., sample of 30 fish assigned by age</span></span>
-<span id="cb14-4"><a href="Distributions.html#cb14-4" tabindex="-1"></a>TrueP <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>) <span class="co"># probability of being ages 1-6</span></span>
-<span id="cb14-5"><a href="Distributions.html#cb14-5" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># How many replicate multinomial trials to carry out</span></span>
-<span id="cb14-6"><a href="Distributions.html#cb14-6" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="Distributions.html#cb14-7" tabindex="-1"></a><span class="co"># Simulate a single trial using rmultinom function</span></span>
-<span id="cb14-8"><a href="Distributions.html#cb14-8" tabindex="-1"></a><span class="fu">rmultinom</span>(<span class="at">n=</span>Reps, <span class="at">prob=</span>TrueP, <span class="at">size=</span>SampleSize) <span class="co"># Prints matrix to Console</span></span>
-<span id="cb14-9"><a href="Distributions.html#cb14-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(<span class="at">n=</span>Reps, <span class="at">prob=</span>TrueP, <span class="at">size=</span>SampleSize)</span>
-<span id="cb14-10"><a href="Distributions.html#cb14-10" tabindex="-1"></a><span class="co"># x contains matrix of counts (one column per Rep)</span></span>
-<span id="cb14-11"><a href="Distributions.html#cb14-11" tabindex="-1"></a>x.vec <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(x)) <span class="co"># Transpose matrix then convert to vector</span></span>
-<span id="cb14-12"><a href="Distributions.html#cb14-12" tabindex="-1"></a></span>
-<span id="cb14-13"><a href="Distributions.html#cb14-13" tabindex="-1"></a>age.vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">6</span>, <span class="at">by=</span><span class="dv">1</span>)</span>
-<span id="cb14-14"><a href="Distributions.html#cb14-14" tabindex="-1"></a><span class="fu">barplot</span>(x.vec, <span class="at">names.arg=</span>age.vec, <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of fish&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="Distributions.html#cb10-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb10-2"><a href="Distributions.html#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="Distributions.html#cb10-3" tabindex="-1"></a>SampleSize <span class="ot">&lt;-</span> <span class="dv">30</span>  <span class="co"># e.g., sample of 30 fish assigned by age</span></span>
+<span id="cb10-4"><a href="Distributions.html#cb10-4" tabindex="-1"></a>TrueP <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>) <span class="co"># probability of being ages 1-6</span></span>
+<span id="cb10-5"><a href="Distributions.html#cb10-5" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># How many replicate multinomial trials to carry out</span></span>
+<span id="cb10-6"><a href="Distributions.html#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="Distributions.html#cb10-7" tabindex="-1"></a><span class="co"># Simulate a single trial using rmultinom function</span></span>
+<span id="cb10-8"><a href="Distributions.html#cb10-8" tabindex="-1"></a><span class="fu">rmultinom</span>(<span class="at">n=</span>Reps, <span class="at">prob=</span>TrueP, <span class="at">size=</span>SampleSize) <span class="co"># Prints matrix to Console</span></span>
+<span id="cb10-9"><a href="Distributions.html#cb10-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rmultinom</span>(<span class="at">n=</span>Reps, <span class="at">prob=</span>TrueP, <span class="at">size=</span>SampleSize)</span>
+<span id="cb10-10"><a href="Distributions.html#cb10-10" tabindex="-1"></a><span class="co"># x contains matrix of counts (one column per Rep)</span></span>
+<span id="cb10-11"><a href="Distributions.html#cb10-11" tabindex="-1"></a>x.vec <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(x)) <span class="co"># Transpose matrix then convert to vector</span></span>
+<span id="cb10-12"><a href="Distributions.html#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="Distributions.html#cb10-13" tabindex="-1"></a>age.vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">6</span>, <span class="at">by=</span><span class="dv">1</span>)</span>
+<span id="cb10-14"><a href="Distributions.html#cb10-14" tabindex="-1"></a><span class="fu">barplot</span>(x.vec, <span class="at">names.arg=</span>age.vec, <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of fish&quot;</span>)</span></code></pre></div>
 <p>In this simulation, the age proportions (TrueP) are arbitrarily chosen (but could be based on field data). Run statements one-by-one to see how each line of code works. Note that the <code>rmultinom()</code> function returns a matrix with six rows and one column (n determines how many columns are returned). Rather than a column, we want a row vector, with the number of fish by age in successive columns. We use the <code>t()</code> (transpose) function to transpose the matrix and the <code>as.vector()</code> function to convert the matrix (with one row) into a row vector. We could have done this transformation in two steps but instead have nested the two functions. That results in more compact code but it is always a fine option to do the steps separately for greater clarity.</p>
 <p>Run the code beginning with the <code>x &lt;- rmultinom()</code> line several times to see how much the age distribution varies from one random sample to the next. The underlying age proportions are fixed, but the counts vary quite a bit for this small sample size. This is an example of how simulation is helpful in gaining experience and intuition in judging pure sampling variation versus a real biological result (e.g. good or bad year-class strength).</p>
 </div>
@@ -404,58 +404,58 @@ FIGURE 3.2: Summary bar plot of die rolls.
 <h3><span class="header-section-number">3.1.4</span> Poisson<a href="Distributions.html#poisson" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Like the Bernoulli, binomial, and multinomial distributions, the Poisson and negative binomial distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two) whereas the Poisson and negative binomial distributions do not (in theory, if not in practical terms). The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually <span class="math inline">\(\lambda\)</span>, which represents the mean and variance of the distribution. A fisheries example of a Poisson distribution could be the number of fish per day moving upstream via a fish ladder. A model for this process could be useful for designing new fish ladders to have an appropriate capacity. Another example could be the number of fish caught per trawl tow. In this case, emphasis might be placed on how trawl catches vary from year to year, as an indication of population status.</p>
 <p>Our simulation uses an arbitrary value for <span class="math inline">\(\lambda\)</span>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="Distributions.html#cb15-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb15-2"><a href="Distributions.html#cb15-2" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="Distributions.html#cb15-3" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb15-4"><a href="Distributions.html#cb15-4" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb15-5"><a href="Distributions.html#cb15-5" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>N, <span class="at">lambda=</span>lambda)</span>
-<span id="cb15-6"><a href="Distributions.html#cb15-6" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(Count)  <span class="co"># Distribution of simulated counts</span></span>
-<span id="cb15-7"><a href="Distributions.html#cb15-7" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
-<span id="cb15-8"><a href="Distributions.html#cb15-8" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="Distributions.html#cb15-9" tabindex="-1"></a><span class="fu">mean</span>(Count)</span>
-<span id="cb15-10"><a href="Distributions.html#cb15-10" tabindex="-1"></a><span class="fu">var</span>(Count)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="Distributions.html#cb11-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb11-2"><a href="Distributions.html#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="Distributions.html#cb11-3" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb11-4"><a href="Distributions.html#cb11-4" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb11-5"><a href="Distributions.html#cb11-5" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>N, <span class="at">lambda=</span>lambda)</span>
+<span id="cb11-6"><a href="Distributions.html#cb11-6" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(Count)  <span class="co"># Distribution of simulated counts</span></span>
+<span id="cb11-7"><a href="Distributions.html#cb11-7" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb11-8"><a href="Distributions.html#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="Distributions.html#cb11-9" tabindex="-1"></a><span class="fu">mean</span>(Count)</span>
+<span id="cb11-10"><a href="Distributions.html#cb11-10" tabindex="-1"></a><span class="fu">var</span>(Count)</span></code></pre></div>
 <p>Run the lines of code multiple times to gain experience with the Poisson distribution. How often is the mode of the distribution equal to <span class="math inline">\(\lambda\)</span>? Are the estimated mean and variance (printed to the Console) close to <span class="math inline">\(\lambda\)</span>? Increase the sample size to get a smooth distribution and reliable estimates of the two sample statistics.</p>
 <p>It is also useful to run the code using other values for <span class="math inline">\(\lambda\)</span>. What value for <span class="math inline">\(\lambda\)</span> causes the mode to shift to 0? At what value does the sample distribution look like a bell curve (i.e., symmetrical)? One of the key benefits of simulation is that we can easily try different scenarios to build understanding about the system being modeled.</p>
 <p>The plot can sometimes be misleading because it only includes observed levels. We can modify the code to include levels with a frequency of zero:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="Distributions.html#cb16-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb16-2"><a href="Distributions.html#cb16-2" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="Distributions.html#cb16-3" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb16-4"><a href="Distributions.html#cb16-4" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb16-5"><a href="Distributions.html#cb16-5" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>N, <span class="at">lambda=</span>lambda) <span class="co"># Counts drawn from Poisson distribution</span></span>
-<span id="cb16-6"><a href="Distributions.html#cb16-6" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
-<span id="cb16-7"><a href="Distributions.html#cb16-7" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
-<span id="cb16-8"><a href="Distributions.html#cb16-8" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="Distributions.html#cb16-9" tabindex="-1"></a><span class="fu">mean</span>(Count)</span>
-<span id="cb16-10"><a href="Distributions.html#cb16-10" tabindex="-1"></a><span class="fu">var</span>(Count)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="Distributions.html#cb12-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb12-2"><a href="Distributions.html#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="Distributions.html#cb12-3" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb12-4"><a href="Distributions.html#cb12-4" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb12-5"><a href="Distributions.html#cb12-5" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>N, <span class="at">lambda=</span>lambda) <span class="co"># Counts drawn from Poisson distribution</span></span>
+<span id="cb12-6"><a href="Distributions.html#cb12-6" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
+<span id="cb12-7"><a href="Distributions.html#cb12-7" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb12-8"><a href="Distributions.html#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="Distributions.html#cb12-9" tabindex="-1"></a><span class="fu">mean</span>(Count)</span>
+<span id="cb12-10"><a href="Distributions.html#cb12-10" tabindex="-1"></a><span class="fu">var</span>(Count)</span></code></pre></div>
 <p>Now the <code>table()</code> function operates on counts transformed into factors (categories or levels) by the <code>factor()</code> function. The levels= argument forces <code>factor()</code> to use a range of levels from 0 to <code>max(Count)</code>, in order to include levels with a frequency of zero. Try the following partial code in the Console to see the levels (“0”, “1”, etc) created by the <code>factor()</code> function: <code>myfact &lt;- factor(Count, levels = 0:max(Count))</code>.</p>
 </div>
-<div id="negative-binomial" class="section level3 hasAnchor" number="3.1.5">
-<h3><span class="header-section-number">3.1.5</span> Negative binomial<a href="Distributions.html#negative-binomial" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As noted above, the negative binomial distribution is used in similar situations to the Poisson except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>; <a href="#ref-link.barker_2009">Link and Barker 2009</a>)</span>. The R function for generating negative binomial random variates (<code>rnbinom()</code>) can be parameterized in different ways; we use the “ecological” parameterization recommended by <span class="citation">Bolker (<a href="#ref-bolker2008">2008</a>)</span>. This uses the mean (termed <span class="math inline">\(\mu\)</span>) but not the variance, instead using an overdispersion parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. The distribution approximates a Poisson when k is large. The code includes calculation of the variance as a function of mu and k <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. Alternatively the mean and variance (V) can be specified and used to solve for k: <span class="math inline">\(k = \mu^2/(V-\mu)\)</span>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="Distributions.html#cb17-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb17-2"><a href="Distributions.html#cb17-2" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="Distributions.html#cb17-3" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb17-4"><a href="Distributions.html#cb17-4" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb17-5"><a href="Distributions.html#cb17-5" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb17-6"><a href="Distributions.html#cb17-6" tabindex="-1"></a>variance <span class="ot">&lt;-</span> mu<span class="sc">+</span>(mu<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>k</span>
-<span id="cb17-7"><a href="Distributions.html#cb17-7" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k)</span>
-<span id="cb17-8"><a href="Distributions.html#cb17-8" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
-<span id="cb17-9"><a href="Distributions.html#cb17-9" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
-<span id="cb17-10"><a href="Distributions.html#cb17-10" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="Distributions.html#cb17-11" tabindex="-1"></a><span class="fu">mean</span>(Count)</span>
-<span id="cb17-12"><a href="Distributions.html#cb17-12" tabindex="-1"></a><span class="fu">var</span>(Count)</span></code></pre></div>
+<div id="NegBinom" class="section level3 hasAnchor" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> Negative binomial<a href="Distributions.html#NegBinom" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As noted above, the negative binomial distribution is used in similar situations to the Poisson except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>; <a href="#ref-link.barker_2009">Link and Barker 2009</a>)</span>. The R function for generating negative binomial random variates (<code>rnbinom()</code>) can be parameterized in different ways; we use the “ecological” parameterization recommended by <span class="citation">Bolker (<a href="#ref-bolker2008">2008</a>)</span>. This uses the mean (termed <span class="math inline">\(\mu\)</span>) but not the variance, instead using an overdispersion parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. The distribution approximates a Poisson when k is large (e.g., &gt;10*<span class="math inline">\(\mu\)</span>). The code includes calculation of the variance as a function of mu and k <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. Alternatively the mean and variance (V) can be specified and used to solve for k: <span class="math inline">\(k = \mu^2/(V-\mu)\)</span>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="Distributions.html#cb13-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb13-2"><a href="Distributions.html#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="Distributions.html#cb13-3" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb13-4"><a href="Distributions.html#cb13-4" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb13-5"><a href="Distributions.html#cb13-5" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb13-6"><a href="Distributions.html#cb13-6" tabindex="-1"></a>variance <span class="ot">&lt;-</span> mu<span class="sc">+</span>(mu<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>k</span>
+<span id="cb13-7"><a href="Distributions.html#cb13-7" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k)</span>
+<span id="cb13-8"><a href="Distributions.html#cb13-8" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
+<span id="cb13-9"><a href="Distributions.html#cb13-9" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb13-10"><a href="Distributions.html#cb13-10" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="Distributions.html#cb13-11" tabindex="-1"></a><span class="fu">mean</span>(Count)</span>
+<span id="cb13-12"><a href="Distributions.html#cb13-12" tabindex="-1"></a><span class="fu">var</span>(Count)</span></code></pre></div>
 <p>This distribution has the same mean as in the Poisson example but tends to have a longer tail (occasional large counts). Rerun the code using different values for k; for example, Figure <a href="Distributions.html#fig:NB-vary-k">3.3</a> uses a sample size of 200 to compare results for k=1 and k=10, each with <span class="math inline">\(\mu\)</span>=4.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="Distributions.html#cb18-1" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb18-2"><a href="Distributions.html#cb18-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb18-3"><a href="Distributions.html#cb18-3" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb18-4"><a href="Distributions.html#cb18-4" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k)</span>
-<span id="cb18-5"><a href="Distributions.html#cb18-5" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
-<span id="cb18-6"><a href="Distributions.html#cb18-6" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
-<span id="cb18-7"><a href="Distributions.html#cb18-7" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="Distributions.html#cb18-8" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">10</span> <span class="co"># Reduce degree of overdispersion</span></span>
-<span id="cb18-9"><a href="Distributions.html#cb18-9" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k)</span>
-<span id="cb18-10"><a href="Distributions.html#cb18-10" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
-<span id="cb18-11"><a href="Distributions.html#cb18-11" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="Distributions.html#cb14-1" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb14-2"><a href="Distributions.html#cb14-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb14-3"><a href="Distributions.html#cb14-3" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb14-4"><a href="Distributions.html#cb14-4" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k)</span>
+<span id="cb14-5"><a href="Distributions.html#cb14-5" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
+<span id="cb14-6"><a href="Distributions.html#cb14-6" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span>
+<span id="cb14-7"><a href="Distributions.html#cb14-7" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="Distributions.html#cb14-8" tabindex="-1"></a>k<span class="ot">=</span><span class="dv">10</span> <span class="co"># Reduce degree of overdispersion</span></span>
+<span id="cb14-9"><a href="Distributions.html#cb14-9" tabindex="-1"></a>Count <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k)</span>
+<span id="cb14-10"><a href="Distributions.html#cb14-10" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(Count, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(Count)))</span>
+<span id="cb14-11"><a href="Distributions.html#cb14-11" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:NB-vary-k"></span>
 <img src="bookdown_files/figure-html/NB-vary-k-1.png" alt="Negative binomial frequency distributions for k=1 (left) and 10 (right)." width="50%" /><img src="bookdown_files/figure-html/NB-vary-k-2.png" alt="Negative binomial frequency distributions for k=1 (left) and 10 (right)." width="50%" />
 <p class="caption">
@@ -470,11 +470,11 @@ FIGURE 3.3: Negative binomial frequency distributions for k=1 (left) and 10 (rig
 <h3><span class="header-section-number">3.2.1</span> Uniform<a href="Distributions.html#Uniform" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A uniform distribution (bounds a, b) is flat in shape, indicating that all values between a lower and upper bound are considered equally likely. It is also useful as a “first” model for situations where relatively little is known other than the lower and upper bounds <span class="citation">(<a href="#ref-law.kelton_1982">Law and Kelton 1982</a>)</span>. Probabilities have default bounds of 0 and 1, so a fish population model might use a uniform 0-1 distribution for probabilities such as survival rate. More narrow bounds could be used in cases where prior information was available; for example, a pilot study might indicate that the tag-reporting rate would be expected to vary between 0.4 and 0.6. Another fisheries example would be a uniform distribution between 60 and 70, for simulating individual variation in maximum size for a growth curve.</p>
 <p>We begin with a simulation example, using the default range of 0-1 for the <code>runif()</code> function:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="Distributions.html#cb19-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb19-2"><a href="Distributions.html#cb19-2" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="Distributions.html#cb19-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># Replicate draws from a uniform distribution</span></span>
-<span id="cb19-4"><a href="Distributions.html#cb19-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>Reps)<span class="co"># Default range of 0-1. Can specify using min, max</span></span>
-<span id="cb19-5"><a href="Distributions.html#cb19-5" tabindex="-1"></a><span class="fu">hist</span>(p, <span class="at">breaks=</span><span class="dv">5</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="Distributions.html#cb15-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb15-2"><a href="Distributions.html#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="Distributions.html#cb15-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># Replicate draws from a uniform distribution</span></span>
+<span id="cb15-4"><a href="Distributions.html#cb15-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>Reps)<span class="co"># Default range of 0-1. Can specify using min, max</span></span>
+<span id="cb15-5"><a href="Distributions.html#cb15-5" tabindex="-1"></a><span class="fu">hist</span>(p, <span class="at">breaks=</span><span class="dv">5</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>Try running the code several times and note the variation in pattern from one simulation run to the next. We use the breaks=5 option in the <code>hist()</code> function so that the histogram bin intervals are stable among runs. Specifying a null character string for “main=” prevents the plot from including a main title. Next, increase the sample size and note the increased smoothness of the observed distribution. What would be the expected mean of the distribution? Estimate the mean and compare the observed and expected value among runs.</p>
 <p>As noted above, the <code>runif()</code> function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval; for example, <code>runif(n=Reps, min=0.3, max=0.4)</code>. The <code>runif()</code> function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.</p>
 </div>
@@ -488,43 +488,43 @@ FIGURE 3.4: Histogram for 200 random draws from a beta distribution, with alpha=
 </p>
 </div>
 <p>We simulate draws from a beta distribution using the <code>rbeta()</code> function. Starting with <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> set to 1 would be appropriate for a situation where all probabilities are equally likely:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="Distributions.html#cb20-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb20-2"><a href="Distributions.html#cb20-2" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="Distributions.html#cb20-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># Replicate draws from a beta distribution</span></span>
-<span id="cb20-4"><a href="Distributions.html#cb20-4" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb20-5"><a href="Distributions.html#cb20-5" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb20-6"><a href="Distributions.html#cb20-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="at">n=</span>Reps, <span class="at">shape1=</span>alpha, <span class="at">shape2=</span>beta)</span>
-<span id="cb20-7"><a href="Distributions.html#cb20-7" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Probability&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="Distributions.html#cb16-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb16-2"><a href="Distributions.html#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="Distributions.html#cb16-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># Replicate draws from a beta distribution</span></span>
+<span id="cb16-4"><a href="Distributions.html#cb16-4" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb16-5"><a href="Distributions.html#cb16-5" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb16-6"><a href="Distributions.html#cb16-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="at">n=</span>Reps, <span class="at">shape1=</span>alpha, <span class="at">shape2=</span>beta)</span>
+<span id="cb16-7"><a href="Distributions.html#cb16-7" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Probability&quot;</span>)</span></code></pre></div>
 <p>After running the above code multiple times, try a beta(8, 4) distribution. These parameter values could result from a pilot study with seven successes in ten trials (<span class="math inline">\(\alpha\)</span>=7+1, <span class="math inline">\(\beta\)</span>=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a situation where probabilities would be expected to be close to 0 or close to 1?</p>
 </div>
 <div id="normal" class="section level3 hasAnchor" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Normal<a href="Distributions.html#normal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The normal distribution is the well-known bell curve from traditional statistics courses. The distribution is unbounded (bounds -<span class="math inline">\(\infty\)</span>, <span class="math inline">\(\infty\)</span>). The shape of the distribution is determined by the mean (location) and standard deviation (spread). A fisheries example might be a simulation where size-at-age varied among individuals according to a normal distribution.</p>
 <p>Let’s look at simulation code for length of individual fish, assuming a mean of 30 and standard deviation of 2:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="Distributions.html#cb21-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb21-2"><a href="Distributions.html#cb21-2" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="Distributions.html#cb21-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># Replicate draws from a normal distribution</span></span>
-<span id="cb21-4"><a href="Distributions.html#cb21-4" tabindex="-1"></a>Len <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>Reps, <span class="at">mean=</span><span class="dv">30</span>, <span class="at">sd=</span><span class="dv">2</span>)</span>
-<span id="cb21-5"><a href="Distributions.html#cb21-5" tabindex="-1"></a><span class="fu">hist</span>(Len, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="Distributions.html#cb17-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb17-2"><a href="Distributions.html#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="Distributions.html#cb17-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># Replicate draws from a normal distribution</span></span>
+<span id="cb17-4"><a href="Distributions.html#cb17-4" tabindex="-1"></a>Len <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>Reps, <span class="at">mean=</span><span class="dv">30</span>, <span class="at">sd=</span><span class="dv">2</span>)</span>
+<span id="cb17-5"><a href="Distributions.html#cb17-5" tabindex="-1"></a><span class="fu">hist</span>(Len, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>Run the code a few times to look at the variation in shape and bounds at a relatively small sample size. Next, increase the sample size and determine through trial and error the smallest sample size that provides a relatively smooth bell-curve shape. Estimate the mean and standard deviation (function <code>sd()</code>) and compare the observed and true values.</p>
 </div>
 <div id="lognormal" class="section level3 hasAnchor" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Lognormal<a href="Distributions.html#lognormal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The lognormal distribution (bounds 0, <span class="math inline">\(\infty\)</span>) is useful in ecological settings because it excludes negative values and allows for a long upper tail. A classic fisheries example of a lognormal distribution is annual recruitment for marine fish species (number of young entering the population). Most years result in low recruitment but there are occasional extreme values when environmental conditions are right.</p>
 <p>We begin with simulation code:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="Distributions.html#cb22-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb22-2"><a href="Distributions.html#cb22-2" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="Distributions.html#cb22-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb22-4"><a href="Distributions.html#cb22-4" tabindex="-1"></a>ln.m <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># Ln-scale mean</span></span>
-<span id="cb22-5"><a href="Distributions.html#cb22-5" tabindex="-1"></a>ln.v <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Ln-scale variance</span></span>
-<span id="cb22-6"><a href="Distributions.html#cb22-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Reps, <span class="at">mean=</span>ln.m, <span class="at">sd=</span><span class="fu">sqrt</span>(ln.v))</span>
-<span id="cb22-7"><a href="Distributions.html#cb22-7" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="Distributions.html#cb22-8" tabindex="-1"></a><span class="fu">hist</span>(y, <span class="at">main=</span><span class="st">&quot;Lognormal distribution&quot;</span>)</span>
-<span id="cb22-9"><a href="Distributions.html#cb22-9" tabindex="-1"></a>Exp.mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(ln.m<span class="sc">+</span>(ln.v<span class="sc">/</span><span class="dv">2</span>)) <span class="co"># Calculate arithmetic scale expected mean</span></span>
-<span id="cb22-10"><a href="Distributions.html#cb22-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>Exp.mean, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb22-11"><a href="Distributions.html#cb22-11" tabindex="-1"></a>Exp.var <span class="ot">&lt;-</span> (<span class="fu">exp</span>(<span class="dv">2</span><span class="sc">*</span>ln.m<span class="sc">+</span>ln.v))<span class="sc">*</span>(<span class="fu">exp</span>(ln.v)<span class="sc">-</span><span class="dv">1</span>) <span class="co"># Arithmetic scale expected variance</span></span>
-<span id="cb22-12"><a href="Distributions.html#cb22-12" tabindex="-1"></a><span class="fu">mean</span>(y)</span>
-<span id="cb22-13"><a href="Distributions.html#cb22-13" tabindex="-1"></a><span class="fu">var</span>(y)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="Distributions.html#cb18-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb18-2"><a href="Distributions.html#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="Distributions.html#cb18-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb18-4"><a href="Distributions.html#cb18-4" tabindex="-1"></a>ln.m <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># Ln-scale mean</span></span>
+<span id="cb18-5"><a href="Distributions.html#cb18-5" tabindex="-1"></a>ln.v <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Ln-scale variance</span></span>
+<span id="cb18-6"><a href="Distributions.html#cb18-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Reps, <span class="at">mean=</span>ln.m, <span class="at">sd=</span><span class="fu">sqrt</span>(ln.v))</span>
+<span id="cb18-7"><a href="Distributions.html#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="Distributions.html#cb18-8" tabindex="-1"></a><span class="fu">hist</span>(y, <span class="at">main=</span><span class="st">&quot;Lognormal distribution&quot;</span>)</span>
+<span id="cb18-9"><a href="Distributions.html#cb18-9" tabindex="-1"></a>Exp.mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(ln.m<span class="sc">+</span>(ln.v<span class="sc">/</span><span class="dv">2</span>)) <span class="co"># Calculate arithmetic scale expected mean</span></span>
+<span id="cb18-10"><a href="Distributions.html#cb18-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>Exp.mean, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb18-11"><a href="Distributions.html#cb18-11" tabindex="-1"></a>Exp.var <span class="ot">&lt;-</span> (<span class="fu">exp</span>(<span class="dv">2</span><span class="sc">*</span>ln.m<span class="sc">+</span>ln.v))<span class="sc">*</span>(<span class="fu">exp</span>(ln.v)<span class="sc">-</span><span class="dv">1</span>) <span class="co"># Arithmetic scale expected variance</span></span>
+<span id="cb18-12"><a href="Distributions.html#cb18-12" tabindex="-1"></a><span class="fu">mean</span>(y)</span>
+<span id="cb18-13"><a href="Distributions.html#cb18-13" tabindex="-1"></a><span class="fu">var</span>(y)</span></code></pre></div>
 <p>The <code>rlnorm()</code> function generates random lognormal values, using an arbitrarily chosen mean and standard deviation specified in natural log-scale. Those values can be used to calculate the expected mean and variance in arithmetic scale. The <code>abline()</code> function can be used to add to the histogram a vertical (v=) line for the expected arithmetic-scale mean (Figure <a href="Distributions.html#fig:Lognormal">3.5</a>). The line color is specified as col=“red”; other options including line weight and pattern can be found in the Help window. Compare the estimates of arithmetic-scale mean and variance for your (relatively large) sample of lognormal random variates to the expected values (visible in the Environment window).</p>
 <div class="figure"><span style="display:block;" id="fig:Lognormal"></span>
 <img src="bookdown_files/figure-html/Lognormal-1.png" alt="Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Red vertical line denotes expected mean." width="90%" />
@@ -543,17 +543,17 @@ FIGURE 3.6: Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 
 </p>
 </div>
 <p>We simulate draws from a gamma distribution using the <code>rgamma()</code> function, with arbitrary values for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="Distributions.html#cb23-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb23-2"><a href="Distributions.html#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="Distributions.html#cb23-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># Replicate draws from a gamma distribution</span></span>
-<span id="cb23-4"><a href="Distributions.html#cb23-4" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># Shape parameter, &gt; 0</span></span>
-<span id="cb23-5"><a href="Distributions.html#cb23-5" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># Scale parameter, &gt; 0</span></span>
-<span id="cb23-6"><a href="Distributions.html#cb23-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="at">n=</span>Reps, <span class="at">shape=</span>alpha, <span class="at">scale=</span>beta)</span>
-<span id="cb23-7"><a href="Distributions.html#cb23-7" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb23-8"><a href="Distributions.html#cb23-8" tabindex="-1"></a>Exp.mean <span class="ot">&lt;-</span> alpha<span class="sc">*</span>beta</span>
-<span id="cb23-9"><a href="Distributions.html#cb23-9" tabindex="-1"></a>Exp.var <span class="ot">&lt;-</span> alpha<span class="sc">*</span>beta<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb23-10"><a href="Distributions.html#cb23-10" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
-<span id="cb23-11"><a href="Distributions.html#cb23-11" tabindex="-1"></a><span class="fu">var</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="Distributions.html#cb19-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb19-2"><a href="Distributions.html#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="Distributions.html#cb19-3" tabindex="-1"></a>Reps <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># Replicate draws from a gamma distribution</span></span>
+<span id="cb19-4"><a href="Distributions.html#cb19-4" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># Shape parameter, &gt; 0</span></span>
+<span id="cb19-5"><a href="Distributions.html#cb19-5" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># Scale parameter, &gt; 0</span></span>
+<span id="cb19-6"><a href="Distributions.html#cb19-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="at">n=</span>Reps, <span class="at">shape=</span>alpha, <span class="at">scale=</span>beta)</span>
+<span id="cb19-7"><a href="Distributions.html#cb19-7" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb19-8"><a href="Distributions.html#cb19-8" tabindex="-1"></a>Exp.mean <span class="ot">&lt;-</span> alpha<span class="sc">*</span>beta</span>
+<span id="cb19-9"><a href="Distributions.html#cb19-9" tabindex="-1"></a>Exp.var <span class="ot">&lt;-</span> alpha<span class="sc">*</span>beta<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb19-10"><a href="Distributions.html#cb19-10" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb19-11"><a href="Distributions.html#cb19-11" tabindex="-1"></a><span class="fu">var</span>(x)</span></code></pre></div>
 <p>A sample size of 200 replicates produces a relatively smooth pattern for the distribution. How close are the estimated mean and variance to the expected values for this sample size? Try adjusting the two parameters to vary the shape of the distribution. What values for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> produce a right-skewed distribution (long right tail), or a pattern somewhat like a normal distribution (bell-curve)?</p>
 </div>
 </div>
@@ -590,14 +590,14 @@ Link, William A., and Richard J. Barker. 2009. <em>Bayesian <span>Inference</spa
 <a href="Model-fit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/clipboard.min.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
-<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

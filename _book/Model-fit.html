@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-04-26" />
+<meta name="date" content="2024-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -178,7 +178,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
 <li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
 <li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#poisson"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
-<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#negative-binomial"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#NegBinom"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
 <ul>
@@ -726,8 +726,8 @@ FIGURE 4.3: Trace and density plots for the two-sample mark-recapture model.
 <span id="cb15-52"><a href="Model-fit.html#cb15-52" tabindex="-1"></a>                model.file)</span>
 <span id="cb15-53"><a href="Model-fit.html#cb15-53" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
 <span id="cb15-54"><a href="Model-fit.html#cb15-54" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
-<p>Within the likelihood looping section, we draw new replicate observations from the posterior distribution (Catch.new), and calculate chi-square values for observed and replicate data. The Bayesian p value is obtained using the <code>step()</code> function and the total chi-square values for the observed and replicate data sets. The Bayesian p values tend to be quite variable; ten trials produced values of 0.34, 0.42, 0.18, 0.16, 0.32, 0.30, 0.32, 0.67, 0.69, and 0.18. We would expect the total chi-square for observed and replicate data to be the same on average as the fitted model is known to be correct (i.e., our “observed” catches and the replicate data sets are drawn from Poisson distributions).</p>
-<p>Next consider a case where the “observed” data are obtained from something other than a Poisson distribution. The negative binomial distribution is a good choice for ecological data because it can allow for a skewed distribution (e.g. mostly low but a few large catches). The two negative binomial parameters are mu (mean catch) and the overdispersion parameter k <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. A small value for k produces more clumping or aggregation, whereas extreme values of k (&gt;10*mu) produce a Poisson-like distribution <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. Our JAGS code for model fitting remains unchanged but we replace the Poisson simulation code with the following:</p>
+<p>Within the likelihood looping section, we draw new replicate observations from the posterior distribution (Catch.new), and calculate chi-square values for observed and replicate data. The Bayesian p value is obtained using the <code>step()</code> function and the total chi-square values for the observed and replicate data sets. The Bayesian p values tend to be quite variable; ten trials produced values of 0.34, 0.42, 0.18, 0.16, 0.32, 0.30, 0.32, 0.67, 0.69, and 0.18. We would expect the total chi-square for observed and replicate data to be the same on average as the fitted model is known to be correct (i.e., our “observed” catches and the replicate data sets are drawn from Poisson distributions). Keep in mind that, when analyzing a real data set, there will be a single Bayesian p value rather than the replicated values shown above. Simulations mimicing the field study should be very helpful in interpreting that single value.</p>
+<p>Next consider a case where the “observed” data are obtained from something other than a Poisson distribution. The negative binomial distribution (Section <a href="Distributions.html#NegBinom">3.1.5</a> is a good choice because it can approximate a Poisson or have a more skewed distribution, depending on the value for the overdispersion parameter k. We use the same mean as in the Poisson example and set k=1. The JAGS code for model fitting remains unchanged but we replace the Poisson simulation code with the following:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="Model-fit.html#cb16-1" tabindex="-1"></a><span class="co"># Fit model to negative binomial data</span></span>
 <span id="cb16-2"><a href="Model-fit.html#cb16-2" tabindex="-1"></a><span class="co"># Includes code for posterior predictive check</span></span>
 <span id="cb16-3"><a href="Model-fit.html#cb16-3" tabindex="-1"></a></span>
@@ -740,7 +740,7 @@ FIGURE 4.3: Trace and density plots for the two-sample mark-recapture model.
 <span id="cb16-10"><a href="Model-fit.html#cb16-10" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">rnbinom</span>(<span class="at">n=</span>N, <span class="at">mu=</span>mu, <span class="at">size=</span>k) <span class="co"># Catches drawn from negative binomial</span></span>
 <span id="cb16-11"><a href="Model-fit.html#cb16-11" tabindex="-1"></a>Freq <span class="ot">&lt;-</span> <span class="fu">table</span>(Catch)  <span class="co"># Distribution of simulated counts</span></span>
 <span id="cb16-12"><a href="Model-fit.html#cb16-12" tabindex="-1"></a><span class="fu">barplot</span>(Freq, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Count&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
-<p>Now Bayesian p values are consistently extreme (0.00 for five replicate trials). The total chi-square for the replicate data sets (which <em>are</em> Poisson distributed) is always less than for the observed data (which are not). The fitted Poisson model lacks the flexibility to mimic the skew of the observed catch distribution. More intermediate Bayesian p values are only obtained if k takes on larger values, which results in a Poisson-like catch distribution (Figure <a href="Model-fit.html#fig:PPC">4.4</a>).</p>
+<p>Now Bayesian p values are consistently extreme (0.00 for five replicate trials). The total chi-square for the replicate data sets (which <em>are</em> Poisson distributed) is always less than for the observed data (which are not). The fitted Poisson model lacks the flexibility to mimic the skew of the observed catch distribution. More intermediate Bayesian p values are only obtained if k takes on larger values, such that the negative binomial approximates a Poisson distribution (Figure <a href="Model-fit.html#fig:PPC">4.4</a>).</p>
 <div class="figure"><span style="display:block;" id="fig:PPC"></span>
 <img src="bookdown_files/figure-html/PPC-1.png" alt="Bayesian p-value for fitting a Poisson model to simulated data from a negative binomial distribution with varying k but fixed mean=7." width="90%" />
 <p class="caption">
@@ -907,9 +907,6 @@ FIGURE 4.4: Bayesian p-value for fitting a Poisson model to simulated data from 
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-bolker2008" class="csl-entry">
-Bolker, Benjamin M. 2008. <em>Ecological <span>Models</span> and <span>Data</span> in <span>R</span></em>. 1st ed. Princeton, New Jersey: Princeton University Press.
-</div>
 <div id="ref-brooks.gelman1998" class="csl-entry">
 Brooks, Stephen P., and Andrew Gelman. 1998. <span>“General <span>Methods</span> for <span>Monitoring Convergence</span> of <span>Iterative Simulations</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 7 (4): 434–55. <a href="https://doi.org/10.1080/10618600.1998.10474787">https://doi.org/10.1080/10618600.1998.10474787</a>.
 </div>
