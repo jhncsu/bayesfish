@@ -1,6 +1,6 @@
 # Survival {#Survival}
 
-Information about survival rate is valuable for managing exploited stocks and working to rebuild rare or declining populations. Survival is affected by two broad categories of threats: fishing and natural mortality. Fishing obviously refers to harvest, from commercial or recreational sectors, but could include mortality associated with fish that are caught and released. Catch-and-release fishing primarily occurs in the recreational sector, but can occur in the commercial sector due to regulations or lack of markets (sometimes referred to as discard). Natural mortality is a generic term for mortality sources other than fishing. There is typically a strong negative correlation between natural mortality rate and body size, indicating the predominant role of predation [@lorenzen1996]. Other sources of natural mortality include starvation, disease and senescence. It is important as a first step to estimate overall survival reliably, but management can be improved by partitioning total mortality into fishing and natural component rates. We begin with approaches for estimating overall survival, then in Section \@ref(Mortality) consider tagging and telemetry methods that provide insights about sources of mortality.
+Information about survival\index{Survival rate} rate is valuable for managing exploited stocks and working to rebuild rare or declining populations. Survival is affected by two broad categories of threats: fishing\index{Mortality, fishing} and natural mortality\index{Mortality, natural}. Fishing obviously refers to harvest, from commercial or recreational sectors, but could include mortality associated with fish that are caught and released. Catch-and-release\index{Catch-and-release} fishing primarily occurs in the recreational sector, but can occur in the commercial sector due to regulations or lack of markets (sometimes referred to as discard\index{Discard}). Natural mortality is a generic term for mortality sources other than fishing. There is typically a strong negative correlation between natural mortality rate and body size, indicating the predominant role of predation [@lorenzen1996]. Other sources of natural mortality include starvation, disease and senescence. It is important as a first step to estimate overall survival reliably, but management can be improved by partitioning total mortality into fishing and natural component rates. We begin with approaches for estimating overall survival, then in Chapter \@ref(Mortality) consider tagging and telemetry methods that provide insights about sources of mortality.
 
 ## Age-composition {#AgeComp}
 
@@ -19,18 +19,19 @@ N[1] <- 1000
 for (j in 2:(MaxAge)){
   N[j] <- N[j-1] * S.true
 } #j
-age.vec <- seq(1,MaxAge, by=1)  # Sequence function to provide x axis values for plotting
+age.vec <- seq(1,MaxAge, by=1)  # Sequence function: x axis values for plot
 barplot(N, names.arg=age.vec, xlab="Age", ylab="Number")
 
 SampleSize <- 30
-AgeMatrix <- rmultinom(n=1, size=SampleSize, prob=N) # prob vector is rescaled internally
+AgeMatrix <- rmultinom(n=1, size=SampleSize, prob=N)
+# Note: prob vector rescaled internally
 AgeSample <- as.vector(t(AgeMatrix)) # Transpose matrix then convert to vector
 barplot(AgeSample, names.arg=age.vec, xlab="Age", ylab="Frequency")
 ```
 
-The simulation tracks fish up to age 10 (maximum age tracked, not lifespan) with an arbitrary annual survival rate of 0.7. The looping code for age composition starts with 1000 fish at age 1 and reduces that number at each successive age by the annual survival rate. This creates an equilibrium age vector, based on assumptions of constant recruitment (1000 each year) and survival. For example, the 700 age-2 fish would have been the survivors from the previous year's 1000 age-1 recruits. The initial number is arbitrary; the shape of the distribution and age proportions would be the same if we began with 1 or 1000 fish. The next section of code uses the equilibrium age vector as proportions and draws a sample of size 30 using a multinomial distribution (Section \@ref(Multinomial)). To build some intuition about age sampling, try running the simulation code multiple times with different values for sample size, maximum age, and survival rate. As usual, keep in mind that this is a very optimistic scenario, with constant recruitment and survival and unbiased survey sampling. The only variation reflected in these samples is due to sampling from the multinomial distribution (as is evident if a large age sample is drawn).
+The simulation tracks fish up to age 10 (maximum age tracked, not lifespan) with an arbitrary annual survival rate of 0.7. The looping code for age composition starts with 1000 fish at age 1 and reduces that number at each successive age by the annual survival rate. This creates an equilibrium age vector, based on assumptions of constant recruitment (1000 each year) and survival. For example, the 700 age-2 fish would have been the survivors from the previous year's 1000 age-1 recruits. The initial number is arbitrary; the shape of the distribution and age proportions would be the same if we began with 1 or 1000 fish. The next section of code uses the equilibrium age vector as proportions and draws a sample of size 30 using a multinomial distribution\index{Distribution, multinomial} (Section \@ref(Multinomial)). To build some intuition about age sampling, try running the simulation code multiple times with different values for sample size, maximum age, and survival rate. As usual, keep in mind that this is a very optimistic scenario, with constant recruitment and survival and unbiased survey sampling. The only variation reflected in these samples is due to sampling from the multinomial distribution (as is evident if a large age sample is drawn).
 
-The JAGS code for analysis is straightforward and mirrors the simulation code. Note that the equilibrium age vector used as proportions in the <code>dmulti()</code> function must be rescaled manually to sum to 1. Convergence is fast and the estimate of survival rate is moderately precise, despite the small (but perfectly unbiased) sample. For example, the 95% credible interval for one run was 0.57-0.80.
+The JAGS code for analysis is straightforward and mirrors the simulation code. Note that the equilibrium age vector used as proportions in the <code>dmulti()</code> function must be rescaled manually to sum to 1. Convergence is fast and the estimate of survival rate is moderately precise, despite the small (but perfectly unbiased) sample. For example, the 95% credible interval for one run was 0.57-0.80. The final two lines of R code show the posterior distribution for survival rate, compared to the true value.
 
 ```{r eval=FALSE}
 # Load necessary library
@@ -54,7 +55,8 @@ model{
     p[j] <- N[j]/N.sum
     } #j
     # Likelihood
-    AgeSample[] ~ dmulti(p[], SampleSize)  # Fit multinomial distribution based on constant survival
+    AgeSample[] ~ dmulti(p[], SampleSize)
+    # Fit multinomial distribution based on constant survival
 }
     ",fill=TRUE)
 sink()
@@ -78,7 +80,8 @@ print(jagsfit)
 plot(jagsfit)
 
 # Look at posterior distribution versus true value
-hist(jagsfit$BUGSoutput$sims.list$S.est, xlab="Estimated survival rate", main="")
+hist(jagsfit$BUGSoutput$sims.list$S.est, 
+     xlab="Estimated survival rate", main="")
 abline(v=S.true, col="red")
 ```
 
@@ -92,20 +95,22 @@ for (j in 2:(MaxAge)){
   N.hat[j] <- N.hat[j-1] * jagsfit$BUGSoutput$median$S.est
 } #j
 par(mfrow=c(2,1))
-barplot(AgeSample, names.arg=age.vec, xlab="Age", ylab="Number", main="Observed")
-barplot(N.hat, names.arg=age.vec, xlab="Age", ylab="Number", main="Predicted")
+barplot(AgeSample, names.arg=age.vec, xlab="Age", 
+        ylab="Number", main="Observed")
+barplot(N.hat, names.arg=age.vec, xlab="Age", 
+        ylab="Number", main="Predicted")
 par(mfrow=c(1,1)) # Reset plot window
 ```
 
 The predicted age distribution looks like a smoothed version of the observed, which makes sense given that we are estimating average survival over the sampled range of ages. When a poor estimate of the survival rate occurs, you will likely notice an odd pattern in the simulated age composition sample. Try running the code several times, starting from where the random age sample is drawn. Increasing the sample size will bring the observed pattern closer to the equilibrium age composition.
 
-Thus far, we have used small sample sizes for these simulated studies. They are sufficient here because the simulation only includes variation due to sampling from the multinomial distribution. It is also convenient to work with a small sample size when studying the code and simulation data. Sample sizes are sometimes small in field studies, and it is important to establish that a study design will provide reliable results when using an achievable sample size. But it can also be informative to test the analytical approach with a very large sample size. This provides a best-case scenario for study results, and ensures that estimates approach the true values (are essentially unbiased). For example, three replicate median estimates of the survival rate were 0.71, 0.69, and 0.70 for a sample size of 2000 fish.
+Thus far, we have used small sample sizes for these simulated studies. They are sufficient here because the simulation only includes variation due to sampling from the multinomial distribution\index{Distribution, multinomial}. It is also convenient to work with a small sample size when studying the code and simulation data. Sample sizes are sometimes small in field studies, and it is important to establish that a study design will provide reliable results when using an achievable sample size. But it can also be informative to test the analytical approach with a very large sample size. This provides a best-case scenario for study results, and ensures that estimates approach the true values (are essentially unbiased). For example, three replicate median estimates of the survival rate were 0.71, 0.69, and 0.70 for a sample size of 2000 fish.
 
 ### Accounting For Gear Selectivity {#CC_Selectivity}
 
-The traditional approach for estimating survival from age composition data was known as catch curve analysis. It could be done using linear regression (thus doable by hand in the pre-computer era) by log-transforming the age sample [@ricker1975]. Gear selectivity was addressed subjectively, by viewing a plot of the log-transformed catches. @ricker1975 described the catch curve pattern as having ascending and descending limbs, with the ascending limb assumed to reflect selectivity and survival. The descending limb was assumed to reflect only survival (age range of "fully selected" fish). The recommended approach was to begin the catch curve analysis at the age of peak catch or the next oldest age, in order to limit the analysis to fully selected fish.  For catch curve analysis or the approach given here, declining selectivity for older fish would cause bias in the estimate of survival.
+The traditional approach for estimating survival from age composition data was known as catch curve analysis. It could be done using linear regression (thus doable by hand in the pre-computer era) by log-transforming the age sample [@ricker1975]. Gear selectivity\index{Gear selectivity} was addressed subjectively, by viewing a plot of the log-transformed catches. @ricker1975 described the catch curve pattern as having ascending and descending limbs, with the ascending limb assumed to reflect selectivity and survival. The descending limb was assumed to reflect only survival (age range of "fully selected" fish). The recommended approach was to begin the catch curve analysis at the age of peak catch or the next oldest age, in order to limit the analysis to fully selected fish.  For catch curve analysis or the approach given here, declining selectivity for older fish would cause the survival estimator to be biased.
 
-Given sufficient data, it is possible to use age composition data to estimate jointly the survival rate and gear selectivity. A practical example might be a trawl survey where small (younger) fish are not retained by the net. Fish larger than the net mesh size might be assumed to be fully selected, so a logistic function could be used to model gear selectivity that increases up an asymptote:  $S_{a} = \frac{1}{1+e^{k*(a-a_{0})}}$
+Given sufficient data, it is possible to use age composition data to estimate jointly the survival rate and gear selectivity. A practical example might be a trawl survey where small (younger) fish are not retained by the net. Fish larger than the net mesh size might be assumed to be fully selected, so a logistic function\index{Logistic} could be used to model gear selectivity that increases up an asymptote:  $S_{a} = \frac{1}{1+e^{k*(a-a_{0})}}$
 
 ```{r eval=FALSE}
 # Add in selectivity
@@ -117,7 +122,7 @@ Sel <- array(data=NA, dim=MaxAge)
 for (j in 1:(MaxAge)){
   Sel[j] <- 1/(1+exp(-k*(j-a_50)))
 } #j
-age.vec <- seq(1,MaxAge, by=1)  # Sequence function to provide x axis values for plotting
+age.vec <- seq(1,MaxAge, by=1)  # Sequence function: x axis values for plot
 par(mfrow=c(1,1))
 plot(age.vec, Sel, xlab="Age", ylab="Gear selectivity")
 ```
@@ -142,7 +147,7 @@ Sel <- array(data=NA, dim=MaxAge)
 for (j in 1:(MaxAge)){
   Sel[j] <- 1/(1+exp(-k*(j-a_50)))
 } #j
-age.vec <- seq(1,MaxAge, by=1)  # Sequence function to provide x axis values for plotting
+age.vec <- seq(1,MaxAge, by=1)  # Sequence function: x axis values for plot
 par(mfrow=c(1,1))
 plot(age.vec, Sel, xlab="Age", ylab="Gear selectivity")
 
@@ -153,13 +158,16 @@ for (j in 2:(MaxAge)){
   N[j] <- N[j-1] * S.true
 } #j
 N_Sel <- N * Sel
-age.vec <- seq(1,MaxAge, by=1)  # Sequence function to provide x axis values for plotting
-barplot(N_Sel, names.arg=age.vec, xlab="Age", ylab="Number", main="Expected age distribution")
+age.vec <- seq(1,MaxAge, by=1)  # Sequence function: x axis values for plot
+barplot(N_Sel, names.arg=age.vec, xlab="Age", ylab="Number", 
+        main="Expected age distribution")
 
 SampleSize <- 100
-AgeMatrix <- rmultinom(n=1, size=SampleSize, prob=N_Sel) # prob vector is rescaled internally
+AgeMatrix <- rmultinom(n=1, size=SampleSize, prob=N_Sel)
+  # Note: prob vector rescaled internally
 AgeSample <- as.vector(t(AgeMatrix)) # Transpose matrix then convert to vector
-barplot(AgeSample, names.arg=age.vec, xlab="Age", ylab="Frequency", main="Sample age distribution")
+barplot(AgeSample, names.arg=age.vec, xlab="Age", 
+        ylab="Frequency", main="Sample age distribution")
 ```
 
 The sample age distribution now reflects both gear selectivity and survival. We use a relatively large sample size and test whether it is possible to estimate all three parameters (survival rate and two parameters for selectivity):
@@ -192,7 +200,8 @@ model{
     p[j] <- N.Sel[j]/N.sum
     } #j
     # Likelihood
-    AgeSample[] ~ dmulti(p[], SampleSize)  # Fit multinomial distribution based on constant survival
+    AgeSample[] ~ dmulti(p[], SampleSize)  
+    # Fit multinomial distribution based on constant survival
 }
     ",fill=TRUE)
 sink()
@@ -203,7 +212,8 @@ jags.data <- list("AgeSample", "SampleSize", "MaxAge")
 # Initial values
 jags.inits <- function(){ list(S.est=runif(n=1, min=0, max=1),
                                a50.est=runif(n=1, min=0, max=MaxAge),
-                               k.est=rlnorm(n=1, meanlog=0, sdlog=1))} # Arbitrary low initial values
+                               k.est=rlnorm(n=1, meanlog=0, sdlog=1))}
+                               # Arbitrary low initial values for k.est
 
 model.file <- 'AgeComp.txt'
 
@@ -218,9 +228,9 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-The age at 50% selectivity should be less than the maximum age so a uniform prior distribution is appropriate. The slope of the selectivity curve does not have an obvious upper bound, so following @mccarthy2007, we use an uninformative lognormal prior distribution. Restricting the slope to positive values is consistent with a survey gear that underrepresents smaller fish.  Convergence can be slow when using a lognormal prior distribution so check Rhat values and increase the number of updates (n.iter) if needed.
+The age at 50% selectivity should be less than the maximum age so a uniform prior is appropriate. The slope of the selectivity curve does not have an obvious upper bound, so following @mccarthy2007, we use an uninformative lognormal prior. Restricting the slope to positive values is consistent with a survey gear that underrepresents smaller fish.  Convergence can be slow when using a lognormal prior so check Rhat values and increase the number of updates (n.iter) if needed.
 
-There are several reasons why this analysis works (at least for these assumed parameter values). We have an unbiased sample of size 100 from the expected age distribution (which reflects both survival and selectivity). The most important reason is that survival is constant over the entire age range. Selectivity and survival are confounded for young fish but not for older fish that are fully vulnerable to the survey. Thus the shape of the selectivity function matters, as does the age range included in the analysis. It would not be possible to jointly estimate selectivity and survival if selectivity increased across the surveyed age range. And as before, the analysis is a best-case scenario in that the only variation is due to sampling from the multinomial distribution. Selectivity varies by age but all ages share the same selectivity parameters.
+There are several reasons why this analysis works (at least for these assumed parameter values). We have an unbiased sample of size 100 from the expected age distribution (which reflects both survival and selectivity\index{Gear selectivity}). The most important reason is that survival is constant over the entire age range. Selectivity and survival are confounded for young fish but not for older fish that are fully vulnerable to the survey. Thus the shape of the selectivity function matters, as does the age range included in the analysis. It would not be possible to jointly estimate selectivity and survival if selectivity increased across the surveyed age range. And as before, the analysis is a best-case scenario in that the only variation is due to sampling from the multinomial distribution\index{Distribution, multinomial}. Selectivity varies by age but all ages share the same selectivity parameters.
 
 One way to improve on this analysis would be to include auxiliary data on selectivity. We could accomplish this by conducting a short-term tagging study with (for simplicity) equal numbers tagged by age. Having a tagged subpopulation with a known age structure provides direct information on selectivity, unlike the age composition data where selectivity and mortality are partially confounded. The logistical challenge in adding this auxiliary study is in obtaining sufficient tag returns through survey sampling.
 
@@ -326,14 +336,14 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-There are three changes to the code in this version. First, the vector of random tag returns is generated just below the random survey catch vector. You can examine the tag-return vector in the Environment window to get a sense of what the auxiliary study contributes to the overall analysis. The next code change is adding a second likelihood component to make use of the tag-return data. The third change is to pass these additional data (tag return total and by age) to JAGS.
+There are three changes to the code in this version. First, the vector of random tag returns is generated just below the random survey catch vector. We assume a sample size of 30 returned tags, allocated randomly among ages using a multinomial distribution\index{Distribution, multinomial} and the survey selectivity pattern. You can examine the barplot for the tag returns to get a sense of what the auxiliary study contributes to the overall analysis. The next code change is adding a second likelihood component to make use of the tag-return data. The third change is to pass these additional data (tag return total and by age) to JAGS.
 
-Having direct information on gear selectivity improves estimates of survival and selectivity, especially if the age composition sample size is small. And more importantly, this modification illustrates how auxiliary data can be added in JAGS to refine an analysis. Writing code to fit the specifics of a field study is valuable for planning and analysis, and is a major advantage over using canned software. The remaining chapters will include other examples where multiple data sources can be combined to improve estimates.
+Having direct information on survey gear selectivity can improves estimates of survival and selectivity, especially if the age composition sample size is small. And more importantly, this modification illustrates how auxiliary data can be added in JAGS to refine an analysis. Writing code to fit the specifics of a field study is valuable for planning and analysis, and is a major advantage over using canned software. The remaining chapters will include other examples where multiple data sources can be combined to improve estimates.
 
 
 ### Cohort model {#Cohort}
 
-One limitation of the above analysis (Section \@ref(AgeComp)) or a traditional catch curve is that recruitment is assumed to be constant (or can be averaged over). Catch curve analyses are generally robust to this assumption [@allen_1997], but year-class variation can sometimes be quite extreme. The following approach addresses that concern by modeling each year-class (or cohort) separately. The approach is similar to a virtual population analysis (VPA) or cohort analysis [@ricker1975] in that a catch matrix provides age- and year-specific information that is used to track cohorts across years. A VPA is traditionally done using harvest data, but here, we assume the catch-at-age matrix contains survey data. Survey information allows for modeling relative abundance across time, whereas a traditional VPA is used to estimate absolute abundance.
+One limitation of the above analysis (Section \@ref(AgeComp)) or a traditional catch curve is that recruitment is assumed to be constant (or can be averaged over). Catch curve analyses are generally robust to this assumption [@allen_1997], but year-class variation can sometimes be quite extreme. The following approach addresses that concern by modeling each year-class (or cohort) separately. The approach is similar to a virtual population analysis\index{Virtural population analysis} (VPA) or cohort analysis\index{Cohort analysis} [@ricker1975] in that a catch matrix provides age- and year-specific information that is used to track cohorts across years. A VPA is traditionally done using harvest data, but here, we assume the catch-at-age matrix contains survey data. Survey information allows for modeling relative abundance across time, whereas a traditional VPA is used to estimate absolute abundance.
 
 The following simulation code provides the survey catch-at-age matrix. The number of ages and years is arbitrary, but we are estimating survival rate for each year so there should be enough ages to provide a decent sample size. The annual survival rate is drawn from a uniform distribution between arbitrary lower and upper bounds. Having a fair degree of annual variation in survival makes for a better test of our ability to estimate those values.
 
@@ -354,9 +364,9 @@ MeanR <- 400 # Arbitrary mean initial cohort size (relative)
 N <- array(data=NA, dim=c(A, Y))
 N[1,] <- rpois(Y, MeanR) # Starting size of each cohort at first age
 for (a in 2:A){
-  N[a,1] <- rpois(1,MeanS^(a-1)*MeanR) # Starting sizes for ages 2+, year 1
+  N[a,1] <- rpois(1,MeanS^(a-1)*MeanR) # Starting sizes - ages 2+, year 1
   for (y in 2:Y){
-    N[a,y] <- rbinom(1, N[a-1, y-1], AnnualS[y-1]) # Initial number yr 1, older ages
+    N[a,y] <- rbinom(1, N[a-1, y-1], AnnualS[y-1]) # Fill in older ages
     } #y
   } #a
 
@@ -407,7 +417,7 @@ model {
     for (a in 1:A) {
    for (y in 1:Y) {
       SurveyC[a,y]~dpois(SurveyC.est[a,y])
-     } }
+     }#a }#y
 }
     ",fill=TRUE)
 sink()
@@ -436,7 +446,95 @@ plot(seq(1:(Y-1)), jagsfit$BUGSoutput$mean$S.est, ylab="Survival", xlab="Year",
 points(AnnualS, col="blue", type="b")
 ```
 
-The final three lines of code compare the annual survival estimates and true values. The plot option "type=b" produces a line of connected dots (i.e., *both* points and line segments), and the "pch=19" option selects for a filled dot. An online search for "r plot options pch" will provide the various choices for plotting symbols. The range for the y axis is fixed at 0-1 to ensure that the plot will contain the full range of both the estimates and the true values. The <code>points()</code> function adds to the plot the true values. The model provides reliable estimates of annual (and mean) survival and initial cohort size for the simulated data. Run the simulation and model fitting code multiple times to observe model performance. It would be worthwhile to test the approach using more variability in initial cohort sizes; for example, by using a negative binomial distribution rather than a Poisson.
+The final three lines of code compare the annual survival estimates and true values (Figure \@ref(fig:CohortPlot)). The plot option "type=b" produces a line of connected dots (i.e., *both* points and line segments), and the "pch=19" option selects for a filled dot. An online search for "r plot options pch" will provide the various choices for plotting symbols. The range for the y axis is fixed at 0-1 to ensure that the plot will contain the full range of both the estimates and the true values. The <code>points()</code> function adds to the plot the true values. The model provides reliable estimates of annual (and mean) survival and initial cohort size for the simulated data. Run the simulation and model fitting code multiple times to observe model performance. It would be worthwhile to test the approach using more variability in initial cohort sizes; for example, by using a negative binomial distribution rather than a Poisson.
+
+```{r CohortPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='True (blue) and estimated (black) annual survival rate using a cohort-based analysis of survey catch-at-age data.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+par(mar = c(4, 4, 1, .1))
+
+Cohort <- function() {
+    # Priors
+    for(y in 1:Y) {
+      Recruits[y] ~ dlnorm(0, 1E-6) # Non-negative values
+    SurveyC.est[1,y]<-Recruits[y] }
+
+    for(a in 2:A){
+      Initials[a-1] ~ dlnorm(0, 1E-6) # Non-negative; offset index to run vector from 1 to A-1
+    SurveyC.est[a,1]<-Initials[a-1] }
+
+  meanS <- prod(S.est)^(1/(Y-1))
+  for (y in 1:(Y-1)) {
+    S.est[y] ~ dunif(0,1)
+    } #y
+
+    # Population projection
+    for(a in 2:A) {
+   for(y in 2:Y) {
+     SurveyC.est[a,y] ~ dbin(S.est[y-1], trunc(SurveyC.est[a-1,y-1])) } }
+
+    #Likelihood
+    for (a in 1:A) {
+   for (y in 1:Y) {
+      SurveyC[a,y]~dpois(SurveyC.est[a,y])
+     } }
+}
+
+# Simulation to create survey catch-at-age matrix
+# Assume ages included in matrix are fully selected
+A <- 4 # Arbitrary number of ages in survey catch matrix
+Y <- 10
+LowS <- 0.2 # Arbitrary lower bound
+HighS <- 0.9 # Arbitrary upper bound
+MeanS <- (LowS+HighS)/2
+AnnualS <- array(data=NA, dim=(Y-1))
+AnnualS <- runif((Y-1), min=LowS, max=HighS)
+
+MeanR <- 400 # Arbitrary mean initial cohort size (relative)
+N <- array(data=NA, dim=c(A, Y))
+N[1,] <- rpois(Y, MeanR) # Starting size of each cohort at first age
+for (a in 2:A){
+  N[a,1] <- rpois(1,MeanS^(a-1)*MeanR) # Starting sizes - ages 2+, year 1
+  for (y in 2:Y){
+    N[a,y] <- rbinom(1, N[a-1, y-1], AnnualS[y-1]) # Fill in older ages
+    } #y
+  } #a
+
+SurveyCapProb <- 0.05 # Capture probability
+SurveyC <- array(data=NA, dim=c(A, Y))
+# Generate survey catches (account for survey catchability)
+for (a in 1:A){
+  for (y in 1:Y){
+    SurveyC[a,y] <- rbinom(1, N[a, y], SurveyCapProb)
+  } #y
+} #a
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("Y", "A", "SurveyC")
+
+# Initial values.
+jags.inits <- function(){ list(Recruits=rlnorm(n=Y, meanlog=10, sdlog=1),
+                               Initials=rlnorm(n=(A-1), meanlog=10, sdlog=1))}
+
+# Fit the model
+Cohort_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 10000,
+    model.file = Cohort,
+    parameters.to.save = c("S.est", "meanS")
+  )
+
+plot(seq(1:(Y-1)), Cohort_jags$BUGSoutput$mean$S.est, ylab="Survival", xlab="Year",
+     type="b", pch=19, ylim=c(0,1))
+points(AnnualS, col="blue", type="b")
+```
 
 It is important to keep in mind our predicted survey catches are not estimates of true abundance but simply scaled to the survey catches. @millar.meyer2000 illustrate a Bayesian approach for estimating true abundance from survey *and* harvest catch-at-age matrices.
 

@@ -229,14 +229,10 @@ var(Count)
 
 This distribution has the same mean as in the Poisson example but tends to have a longer tail (occasional large counts). Rerun the code using different values for k; for example, Figure \@ref(fig:NB-vary-k) uses a sample size of 200 to compare results for k=1 and k=10, each with $\mu$=4.
 
-
-```{r, echo=FALSE}
+```{r NB-vary-k, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Negative binomial frequency distributions for k=1 (left) and 10 (right).',fig.show="hold", out.width="50%"}
 rm(list=ls()) # Clear Environment
 
 par(mar = c(4, 4, 1, .1))
-```
-
-```{r, NB-vary-k, fig.cap='Negative binomial frequency distributions for k=1 (left) and 10 (right).',fig.show="hold", out.width="50%"}
 N <- 200
 mu <- 4
 k=1
@@ -272,7 +268,7 @@ As noted above, the `runif()` function allows for a uniform distribution using a
 ### Beta
 The beta distribution\index{Distribution, Beta} has a lower bound of 0 and an upper bound of 1, so it is useful for modeling parameters with those bounds (i.e., probabilities). A fisheries model might use a beta distribution to simulate variation in a survival probability or the probability of a tag being returned. The uniform distribution (Section \@ref(Uniform)) can also be used for probabilities, but only for the case where all values are equally likely. The beta distribution is more flexible and can not only be flat but also u-shaped, bell-shaped, or left- or right-skewed. Figure \@ref(fig:Beta) shows sample distributions for shape parameters $\alpha$=1 and $\beta$=0.5, 1, and 5.
 
-```{r, Beta, fig.cap='Histogram for 200 random draws from a beta distribution, with alpha=1 and beta=0.5  (left), 1 (center), and 5 (right).',fig.show="hold", out.width="33%"}
+```{r, Beta, fig.cap='Histogram for 200 random draws from a beta distribution, with alpha=1 and beta=0.5  (left), 1 (center), and 5 (right).',fig.show="hold", out.width="30%"}
 #| echo: false
 rm(list=ls()) # Clear Environment
 par(mar = c(4, 4, 1, .1))
@@ -303,7 +299,7 @@ x <- rbeta(n=Reps, shape1=alpha, shape2=beta)
 hist(x, main="", xlab="Probability")
 ```
 
-After running the above code multiple times, try a beta(8, 4) distribution. These parameter values could result from a pilot study with seven successes in ten trials ($\alpha$=7+1, $\beta$=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a situation where probabilities would be expected to be close to 0 or close to 1?
+After running the above code multiple times, try a beta(8, 4) distribution. These parameter values could result from a pilot study with seven successes in ten trials ($\alpha$=7+1, $\beta$=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a fisheries situation where probabilities would be expected to be close to 0 or close to 1?
 
 ### Normal
 The normal distribution\index{Distribution, Normal} is the well-known bell curve from traditional statistics courses. The distribution is unbounded (bounds -$\infty$, $\infty$). The shape of the distribution is determined by the mean (location) and standard deviation (spread). A fisheries example might be a simulation where size-at-age varied among individuals according to a normal distribution.
@@ -352,7 +348,7 @@ ln.m <- 0 # Ln-scale mean
 ln.v <- 0.5 # Ln-scale variance
 y <- rlnorm(n=Reps, mean=ln.m, sd=sqrt(ln.v))
 
-hist(y, main="Lognormal distribution")
+hist(y, main="")
 Exp.mean <- exp(ln.m+(ln.v/2)) # Calculate arithmetic scale expected mean
 abline(v=Exp.mean, col="red")
 ```
@@ -368,12 +364,13 @@ par(mar = c(4, 4, 1, .1))
 Reps <- 200 # Replicate draws from a gamma distribution
 alpha <- 3 # Shape parameter, > 0
 beta <- 1 # Scale parameter, > 0
-x <- rgamma(n=Reps, shape=alpha, scale=beta)
-hist(x, main="")
+x.1 <- rgamma(n=Reps, shape=alpha, scale=beta)
 
 beta <- 3 # Increase spread
-x <- rgamma(n=Reps, shape=alpha, scale=beta)
-hist(x, main="")
+x.3 <- rgamma(n=Reps, shape=alpha, scale=beta)
+max.x <- max(x.1, x.3)
+hist(x.1, xlab="x", main="", xlim=c(0,max.x))
+hist(x.3, xlab="x", main="", xlim=c(0,max.x))
 ```
 
 We simulate draws from a gamma distribution using the `rgamma()` function, with arbitrary values for $\alpha$ and $\beta$:

@@ -1,6 +1,3 @@
-fig:Bootstrap
-fig:BayesMR
-fig:TracePlots
 introduction
 R-intro
 Distributions
@@ -9,7 +6,7 @@ bernoulli
 BinomialDist
 Multinomial
 poisson
-negative-binomial
+NegBinom
 Continuous
 Uniform
 beta
@@ -64,11 +61,4 @@ exercises-7
 PopModels
 exercises-8
 title-placeholder
-fig:PPC
-fig:coinToss
-fig:dieRoll
-fig:NB-vary-k
-fig:Beta
-fig:Lognormal
-fig:Gamma
-NegBinom
+fig:CohortPlot

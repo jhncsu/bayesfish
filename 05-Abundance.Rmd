@@ -4,7 +4,7 @@ Information about abundance can be invaluable for making policy decisions.  For 
 
 ## Removal
 
-Removal models are a good option when a substantial fraction of the study population can be captured in a single sample. One common example is use of backpack electrofishing in streams that can be blocked on both ends to provide a temporarily closed system. Fish captured in each sample (or "pass") are held out temporarily and the declining catches from the diminishing population provide the data for estimating abundance. Consider a case with a true (study area) population of 100 and a capture probability (fraction of the population captured in each sample) of 0.4. The expected sequence of catches would be 40 (100 * 0.4), 24 ((100-40) * 0.4), 14.4 ((60-24)*0.4), etc. A model fit to these data provides estimates of initial population size and capture probability that best mimic the pattern of catches. The fit would be very good if we used the above expected values, but it is more challenging (and realistic) when the catch sequence includes random variation.
+Removal models\index{Removal models} are a good option when a substantial fraction of the study population can be captured in a single sample. One common example is use of backpack electrofishing in streams that can be blocked on both ends to provide a temporarily closed system. Fish captured in each sample (or "pass") are held out temporarily and the declining catches from the diminishing population provide the data for estimating abundance. Consider a case with a true (study area) population of 100 and a capture probability\index{Capture probability} (fraction of the population captured in each sample) of 0.4. The expected sequence of catches would be 40 (100 * 0.4), 24 ((100-40) * 0.4), 14.4 ((60-24)*0.4), etc. A model fit to these data provides estimates of initial population size and capture probability that best mimic the pattern of catches. The fit would be very good if we used the above expected values, but it is more challenging (and realistic) when the catch sequence includes random variation.
 
 We illustrate the removal method using a simulation to generate sample data. Here the true values are arbitrary, but roughly similar to estimates obtained by @bryant2000 for Alaska streams. If planning a field study, your assumed population level should be based on prior work or literature review. The assumed capture probability should also be realistic, but it is a bit different from population size in that it is under the investigator's control. Thus, a better estimate can be achieved by increasing sampling effort; for example, by using more electrofishing units or setting more traps. The other study design variable controlled by the investigator is the number of samples. Here we use five removal samples, which should provide high quality results.
 
@@ -20,12 +20,12 @@ Catch <- numeric() # Creates empty vector for storing catch data
 for (j in 1:N.removals){
   Catch[j] <- rbinom(1, N.remaining, CapProb)
   N.remaining <- N.remaining - Catch[j]
-  }
+  } #j
 ```
 
 Running the above lines of code generates the sequence of simulated catches. (Note that these lines of simulation code would be replaced by an assignment statement (e.g., Catch <- c(14, 4, 6, 2, 3)) if we were analyzing data from an actual field study). A 'for' loop is used to step through the simulated sampling sequence. For each value of j, we generate a binomially-distributed random catch using the <code>rbinom()</code> function, then remove that number of fish from the remaining population. One example run produced a catch vector of 36, 25, 20, 6 and 6. The high assumed value for capture probability produces very good data; thus, these values are close to what would be expected. Try running the code using other values for capture probability. Is there a lower bound below which you would not expect the method to work well?
 
-The next step is to fit the removal model using JAGS. The prior distribution for capture probability is straightforward (uniform 0-1) but the choice is a bit more subjective for population size (N.est). We can use the total catch as a lower bound and an arbitrary high value for the upper bound. That should ensure that the prior distribution does not affect the solution, but that could be confirmed by comparing fits using different upper bounds. Knowledge of your study system and the literature would be useful in setting the upper bound for analyzing a real data set.
+The next step is to fit the removal model using JAGS. The prior distribution for capture probability is straightforward (uniform 0-1) but the choice is a bit more subjective for population size (N.est). We know that N.est cannot be less than the total catch so we can use a slightly informative prior (with an arbitrary high value for the upper bound). Results from test runs were similar when using 0 as the lower bound, and when different values were used for the upper bound.
 
 ```{r eval=FALSE}
 
@@ -74,7 +74,7 @@ model{
   plot(jagsfit)
 ```
 
-JAGS requires an integer size variable in <code>dbin()</code> so we use the <code>trunc()</code> function to truncate the starting value. The looping code is the same as in the simulation, except that JAGS does not allow a value to to be repeatedly changed in a loop, so we set up remaining population size as a vector. We provide to JAGS the simulated catch vector, the number of removal samples, and the total catch. Initial values are generated using the same distributions as the priors. We monitor the estimates of population size and capture probability.
+JAGS requires an integer size variable in <code>dbin()</code> so we use the <code>trunc()</code> function to truncate N.remaining[1]. The looping code is the same as in the simulation, except that JAGS does not allow a value to to be repeatedly changed in a loop, so we set up remaining population size as a vector. We provide to JAGS the simulated catch vector, the number of removal samples, and the total catch. Initial values are generated using the same distributions as the priors. We monitor the estimates of population size and capture probability.
 
 Initial runs using fewer updates occasionally resulted in poor convergence so n.iter was increased to 40000. Removing n.burnin uses the default of discarding half the updates. Running the simulation and analysis code multiple times for these simulation parameters shows that the estimates are consistently good, with narrow credible intervals.
 
@@ -82,7 +82,7 @@ As a fishery biologist, you could use this combination of simulation and analysi
 
 ## Mark-recapture
 
-We briefly revisit the two-sample mark-recapture experiment from Sections \@ref(R-intro) and \@ref(Model-fit). In this section, we change a single line of code to produce a random number of recaptured fish rather than the expected value. Now the combined code (simulation plus analysis) can be rerun multiple times to build intuition about the reliability of the experimental results. This is especially useful when the assumed population size or capture probability is low. The true value can be compared to the 95% credible interval (2.5 and 97.5 percentiles, printed to the Console) or 80% credible interval shown in the plots. You can look at either the marked fraction or Nhat, as they covary (low estimate for marked fraction produces high estimate for Nhat). The last four lines of code illustrate that it can be instructive to examine not only the posterior distributions but also the underlying relationship(s) (see bivariate plot). Here it is clear that Nhat is inversely related to the model parameter for marked fraction, but it may be less obvious in situations with more complex models.
+We briefly revisit the two-sample mark-recapture experiment from Sections \@ref(R-intro) and \@ref(Model-fit). In this section, we change a single line of code to produce a random number of recaptured fish rather than the expected value. Now the combined code (simulation plus analysis) can be rerun multiple times to build intuition about the reliability of the experimental results. This is especially useful when the assumed population size or capture probability is low. The true value can be compared to the 95% credible interval\index{Credible interval} (2.5 and 97.5 percentiles, printed to the Console) or 80% credible interval shown in the plots. You can look at either the marked fraction or N.hat, as they covary (low estimate for marked fraction produces high estimate for N.hat).
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -92,7 +92,7 @@ N.true <- 400  # Population size
 p.true <- 0.2 # Capture probability (fraction of population sampled)
 n1 <- N.true * p.true # Number caught and marked in first sample
 n2 <- N.true * p.true # Number caught and examined for marks in second sample
-m2 <- rbinom(1, n2, p.true) # Number of marked fish in second sample
+m2 <- rbinom(n=1, size=n2, prob=p.true) # Marked fish in second sample
 
 # Load necessary library
 library(rjags)   # Package for fitting JAGS models from within R
@@ -107,7 +107,7 @@ cat("
     MarkedFraction ~ dunif(0, 1)
 
     # Calculated value
-    Nhat <- n1 /MarkedFraction
+    N.hat <- n1 /MarkedFraction
 
     # Likelihood
     # Binomial distribution for observed recaptures
@@ -126,7 +126,7 @@ jags.inits <- function(){ list(MarkedFraction=runif(1, min=0, max=1))}
 model.file <- 'TwoSampleCR.txt'
 
 # Parameters monitored
-jags.params <- c("Nhat", "MarkedFraction")
+jags.params <- c("N.hat", "MarkedFraction")
 
 # Call JAGS from R
 jagsfit <- jags(data=jags.data, inits=jags.inits, jags.params,
@@ -142,13 +142,68 @@ plot(jagsfit$BUGSoutput$sims.array[,,1], jagsfit$BUGSoutput$sims.array[,,2],
      xlab="Marked fraction", ylab="Population estimate")
 ```
 
-If you were managing the fishery for this lake population, how might you use the estimate of abundance? Try a few runs (simulation and model fitting) to see whether this level of uncertainty would be tolerable for management. In doing so, keep in mind that this assumed capture probability (0.2) is quite high and would be difficult to achieve in most field situations. Is there a rough lower bound for capture probability, below which the cost and effort of doing a study would not be justified?
+The last four lines of code illustrate that it can be instructive to examine not only the posterior distributions but also the underlying relationship(s); see bivariate plot in Figure \@ref(fig:PopEst-covary). Here it is clear that N.hat is inversely related to the model parameter for marked fraction, but it may be less obvious in situations with more complex models.
+
+```{r PopEst-covary, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimated posterior distributions for marked fraction and population size and bivariate plot from two-sample mark-recapture study.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+par(mar = c(4, 4, 1, .1))
+
+Covary <- function() {
+    # Priors
+    MarkedFraction ~ dunif(0, 1)
+
+    # Calculated value
+    N.hat <- n1 /MarkedFraction
+
+    # Likelihood
+    # Binomial distribution for observed recaptures
+    m2 ~ dbin(MarkedFraction, n2)
+}
+
+# Simulate experiment
+N.true <- 400  # Population size
+p.true <- 0.2 # Capture probability (fraction of population sampled)
+n1 <- N.true * p.true # Number caught and marked in first sample
+n2 <- N.true * p.true # Number caught and examined for marks in second sample
+m2 <- rbinom(n=1, size=n2, prob=p.true) # Marked fish in second sample
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n1", "n2", "m2")
+
+# Initial values.
+jags.inits <- function(){ list(MarkedFraction=runif(1, min=0, max=1))}
+
+# Fit the model
+MCR_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 2000, n.burnin = 1000,
+    model.file = Covary,
+    parameters.to.save = c("MarkedFraction", "N.hat")
+  )
+
+par(mfrow=c(3,1))
+hist(MCR_jags$BUGSoutput$sims.array[,,1], main="", xlab="Marked fraction")
+hist(MCR_jags$BUGSoutput$sims.array[,,2], main="", xlab="Population estimate")
+plot(MCR_jags$BUGSoutput$sims.array[,,1], MCR_jags$BUGSoutput$sims.array[,,2],
+     xlab="Marked fraction", ylab="Population estimate")
+
+```
+
+If you were managing the fishery for this lake population, how might you use the estimate of abundance? Try a few runs (simulation and model fitting) to see whether this level of uncertainty would be tolerable for management. In doing so, keep in mind that this assumed capture probability (0.2) is quite high and would be difficult to achieve in many field situations. Is there a rough lower bound for capture probability, below which the cost and effort of doing a study would not be justified?
 
 ## Binomial-mixture
 
-A population estimate can sometimes be obtained from count data when replicate survey samples are taken [@kéry.schaub_2011]. One fisheries example is the use of side-scan sonar to count adult Atlantic sturgeon, which are large and distinctive enough to be identifiable on side-scan images [@flowers.hightower_2013; @flowers.hightower2015]. Sites were assumed to be closed (no movement in or out, no mortality) for the brief duration of the survey. Each site had an unknown number of sturgeon, but it was not assumed that every sturgeon was counted (detected). Counts could vary among survey passes due to a variety of factors, including a fish's orientation, overlap with other fish or structure, or distortion in the image. Thus the counting process was modeled using a binomial distribution, where "size" is the number of sturgeon present at the site and "prob" is the probability of being detected on that survey pass. The probability is comparable to a capture probability but here sampling was unobtrusive. This type of model is referred to as a binomial mixture model (or N-mixture model). It attempts to separate the biological parameter (site abundance) from the observational parameter (detection probability) [@kéry.schaub_2011].
+A population estimate can sometimes be obtained from count data when replicate survey samples are taken [@kéry.schaub_2011]. One fisheries example is the use of side-scan sonar to count adult Atlantic sturgeon, which are large and distinctive enough to be identifiable on side-scan images [@flowers.hightower_2013; @flowers.hightower2015]. Sites were assumed to be closed (no movement in or out, no mortality) for the brief duration of the survey. Each site had an unknown number of sturgeon, but it was not assumed that every sturgeon was counted (detected). Counts could vary among survey passes due to a variety of factors, including a fish's orientation, overlap with other fish or structure, or distortion in the image. Thus the counting process was modeled using a binomial distribution, where "size" is the number of sturgeon present at the site and "prob" is the probability of being detected on that survey pass. The probability is comparable to a capture probability but here sampling was unobtrusive. This type of model is referred to as a binomial mixture model\index{Model, binomial-mixture} (or N-mixture model). It attempts to separate the biological parameter (site abundance) from the observational parameter (detection probability) [@kéry.schaub_2011].
 
-Consider a site with twenty individuals and a detection probability of 0.5. We can simulate a large sample of replicates to get a smooth distribution of counts, although in an actual field survey, there would typically be only a few replicate passes per site.
+Consider a site with twenty individuals and a detection probability of 0.5. In an actual field survey, there would typically be only a few replicate passes per site. Here we simulate a large sample of replicates to get a smooth distribution of counts:
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -187,7 +242,7 @@ table(Counts)
 
 Try a more extreme second case (N.true=100 and p.true=0.1) to see if there is a more pronounced difference compared to the default (remember to change the second plot title!). It may be necessary to change the x-axis limits if N.true is increased.
  
-To simulate a full field study, we need to add code for multiple sites. We assume 30 sites and 3 replicate visits to each site. @kéry.schaub_2011 recommended at least 10-20 sites and at least two observations per site. It is assumed that the number of sturgeon per site varies about an underlying mean, so having a large sample of sites will aid in estimating that mean. There are a variety of ways to model the variation among sites. Here we chose the simplest option of using a Poisson distribution, which has only one parameter to estimate:
+To simulate a full field study, we need to add code for multiple sites. We assume 30 sites and 3 replicate visits to each site. @kéry.schaub_2011 recommended at least 10-20 sites and at least two observations per site. It is assumed that the number of sturgeon per site varies about an underlying mean, so having a large sample of sites will aid in estimating that mean. There are a variety of ways to model the variation in abundance among sites. Here we chose the simplest option of using a Poisson distribution, which has only one parameter to estimate:
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -206,8 +261,7 @@ head(Site.N)
 head(Counts)
 ```
 
-The matrix function creates an empty matrix, which will hold the replicate counts for each site. Next, the function rpois generates the Poisson-distributed random number of sturgeon at each site. We then loop over sites to generate the binomially-distribution counts at each site. This illustrates the hierarchical nature of this model in that site abundance is set first, then replicate observations are drawn, given the site abundance.  We can use the head function to look at the relationship between true abundance (Site.N) and counts for the first few sites. In one example run, the first site had 25 sturgeon and produced replicate counts of 11, 14, and 13.
-
+The <code>matrix()</code> function creates an empty matrix, which will hold the replicate counts for each site. Next, the <code>rpois()</code> function generates the Poisson-distributed number of sturgeon at each site. We then loop over sites to generate the binomially-distribution replicate counts at each site. This illustrates the hierarchical\index{Model, hierarchical} nature of this model in that site abundance is set first, then replicate observations are drawn, given the site abundance.  We can use the <code>head()</code> function to look at the relationship between true abundance (Site.N) and counts for the first few sites. In one example run, the first site had 25 sturgeon and produced replicate counts of 11, 14, and 13.
 
 ```{r eval=FALSE}
 # Load necessary library
@@ -264,11 +318,74 @@ abline(v=sum(Site.N), col="red")
 
 ```
 
-The JAGS code includes uninformative prior distributions for mean site abundance and the detection probability. The choice for mean abundance is more subjective but can be based on the observed counts and knowledge or experience about the possible range for true abundance or detection probability. The JAGS code is again structurally similar to the simulation code. The first step is to generate estimates of the true (unknown) abundance at each site. The observations are binomially distributed samples, given the estimated abundance at each site. It is sometimes of interest to look at total abundance over sites, so the site estimates are summed (totalN).
+The JAGS code includes an uninformative prior for detection probability. The prior for mean site abundance is more subjective but the upper bound could be based on the literature or knowledge about the system. The JAGS code is again structurally similar to the simulation code. The first step is to generate estimates of the true (unknown) abundance at each site. The observations are binomially distributed samples, given the estimated abundance at each site. It is sometimes of interest to look at total abundance over sites, so the site estimates are summed (totalN).
 
-It can be helpful to provide initial values for site abundance. JAGS will terminate the run if a nonsensical event occurs (e.g., count greater than the current estimate of abundance at a site). @kéry.schaub_2011 provide example code using the <code>apply()</code> function, which is a generic function for applying (hence the name) other functions. In this case, the <code>max()</code> function is applied to the Count matrix by row (argument=1). The returned maximum value for each row is incremented by 1, implying that there is likely to be at least one more sturgeon present than the maximum observed count. The remaining parameters are initialized using settings that match the prior distributions. The final lines of R code show the estimated posterior distribution for total abundance (summed over sites). The abline function is used to add to the plot the true total abundance (vertical red line).
+It is important to provide initial values for site abundance. JAGS will terminate the run if a nonsensical event occurs (e.g., count greater than the current estimate of abundance at a site). @kéry.schaub_2011 provide example code using the <code>apply()</code> function, which is a generic function for applying (hence the name) other functions. In this case, the <code>max()</code> function is applied to the Count matrix by row (argument=1). The returned maximum value for each row is incremented by 1, implying that there is likely to be at least one more sturgeon present than the maximum observed count. The remaining parameters are initialized using settings that match the priors. The final lines of R code show the estimated posterior distribution for total abundance (summed over sites). The abline function is used to add to the plot the true total abundance (vertical red line).
 
-Estimates are generally reliable for these assumed parameter values and study design settings, although convergence was sometimes slow so a large number of updates was used. Note that the model is hierarchical in structure, in that the overall (Poisson) mean is estimated using all site data, then site-specific estimates are drawn using that overall mean. It is worthwhile to run the combined code (simulation plus analysis) several times to see variation in the estimates and their credible intervals. Median estimates of mean site abundance and detection probability tend to be close to the assumed values although credible intervals are fairly wide. The posterior distribution for total abundance appears to be reliable although it is skewed and has a high upper bound for the credible interval (451-1294 for one example run).
+```{r NmixPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimated posterior distribution for total population size (summed over sites) and true total (red vertical line) based on binomial-mixture study.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+par(mar = c(4, 4, 1, .1))
+
+NMix <- function() {
+# Priors
+  lam.est ~ dunif(0, 100)  # uninformative prior for mean abundance at each site
+  p.est ~ dunif(0, 1)
+
+# Likelihood
+# Biological model for true abundance
+for (i in 1:Sites) {
+   N.est[i] ~ dpois(lam.est)
+   # Observation model for replicated counts
+   for (j in 1:Replicates) {
+      Counts[i,j] ~ dbin(p.est, N.est[i])
+      } # j
+   } # i
+totalN <- sum(N.est[])  # Calculated variable: total pop. size across all sites
+}
+
+Sites <- 30
+Replicates <- 3
+lam.true <- 20 # Mean number per site
+p.true <- 0.5 # Detection probability
+
+Counts <- matrix(NA, nrow=Sites, ncol=Replicates)
+Site.N <- rpois(n = Sites, lambda = lam.true) # True abundance at each site
+for (i in 1:Sites){
+  Counts[i,] <- rbinom(n = Replicates, size = Site.N[i], prob = p.true)
+} #i
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("Counts", "Sites", "Replicates")
+
+# Initial values.
+Nst <- apply(Counts, 1, max) + 1    # Kery and Schaub
+jags.inits <- function(){ list(lam.est=runif(n=1, min=0, max=100),
+                               N.est=Nst, p.est=runif(1, min=0, max=1))}
+
+# Fit the model
+NMix_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 100000,
+    model.file = NMix,
+    parameters.to.save = c("lam.est", "p.est", "totalN")
+  )
+
+# Estimated posterior distribution for total population size
+hist(NMix_jags$BUGSoutput$sims.list$totalN, 
+     xlab="Estimated total population size", main="")
+abline(v=sum(Site.N), col="red")
+
+```
+
+Estimates are generally reliable for these assumed parameter values and study design settings, although convergence was sometimes slow so a large number of updates was used. Note that the model is hierarchical\index{Model, hierarchical} in structure, in that the overall (Poisson) mean is estimated using all site data, then site-specific estimates are drawn using that overall mean. It is worthwhile to run the combined code (simulation plus analysis) several times to see variation in the estimates and their credible intervals. Median estimates of mean site abundance and detection probability tend to be close to the assumed values although credible intervals are fairly wide. In sample runs, the mode of the posterior distribution for total abundance (Figure \@ref(fig:NmixPlot) was close to the true value but the distribution was skewed and had a high upper bound for the credible interval.
 
 This model is a good illustration of the potentially problematic nature of pD, the estimated number of effective parameters. One would expect an estimate around 32, to account for detection probability, mean site abundance, and the site-specific abundance estimates using that mean. However, estimates from several runs were around 60. @kéry.schaub_2011 note that hierachical models (such as this one) can be problematic for estimating the number of effective parameters (and therefore for DIC). We can look at pD for the various models in this book, to get some experience about when to trust pD and DIC estimates.
 
@@ -279,6 +396,6 @@ As usual, keep in mind that this is a very optimistic scenario. We are estimatin
 
 1. Create a table of estimated credible intervals for population size, using different numbers of removal samples and a range of values for capture probability. You will need several replicate simulations to get a clear picture of results for each setting. What are the lower limits below which estimates are judged not to be reliable?
 
-2. For a two-sample mark-recapture experiment with a true population size of 1000, produce a table of credible intervals for Nhat for different assumed capture probabilities. What sampling intensity would produce an estimate with uncertainty close to the Robson and Regier target for management (+/- 25%)?
+2. For a two-sample mark-recapture experiment with a true population size of 1000, produce a table of credible intervals for N.hat for different assumed capture probabilities. What sampling intensity would produce an estimate with uncertainty close to the Robson and Regier target for management (+/- 25%)?
 
 3. Modify the binomial-mixture example to compare credible intervals for totalN using fewer sites but more replicates, preserving the same total number of observations (e.g., 10 sites and 9 replicate survey visits). Can you suggest potential advantages and disadvantages of using fewer sites?
