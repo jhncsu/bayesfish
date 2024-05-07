@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-05-03" />
+<meta name="date" content="2024-05-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -682,12 +682,12 @@ div.csl-indent {
 <span id="cb9-58"><a href="Survival.html#cb9-58" tabindex="-1"></a><span class="fu">points</span>(AnnualS, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
 <p>The final three lines of code compare the annual survival estimates and true values (Figure <a href="Survival.html#fig:CohortPlot">6.1</a>). The plot option “type=b” produces a line of connected dots (i.e., <em>both</em> points and line segments), and the “pch=19” option selects for a filled dot. An online search for “r plot options pch” will provide the various choices for plotting symbols. The range for the y axis is fixed at 0-1 to ensure that the plot will contain the full range of both the estimates and the true values. The <code>points()</code> function adds to the plot the true values. The model provides reliable estimates of annual (and mean) survival and initial cohort size for the simulated data. Run the simulation and model fitting code multiple times to observe model performance. It would be worthwhile to test the approach using more variability in initial cohort sizes; for example, by using a negative binomial distribution rather than a Poisson.</p>
 <div class="figure"><span style="display:block;" id="fig:CohortPlot"></span>
-<img src="bookdown_files/figure-html/CohortPlot-1.png" alt="Estimated annual survival rate from survey catch-at-age matrix." width="90%" />
+<img src="bookdown_files/figure-html/CohortPlot-1.png" alt="Example run showing true (blue) and estimated (black) annual survival rate from a cohort-based analysis of survey catch-at-age data." width="90%" />
 <p class="caption">
-FIGURE 6.1: Estimated annual survival rate from survey catch-at-age matrix.
+FIGURE 6.1: Example run showing true (blue) and estimated (black) annual survival rate from a cohort-based analysis of survey catch-at-age data.
 </p>
 </div>
-<p>It is important to keep in mind our predicted survey catches are not estimates of true abundance but simply scaled to the survey catches. <span class="citation">Millar and Meyer (<a href="#ref-millar.meyer2000">2000</a>)</span> illustrate a Bayesian approach for estimating true abundance from survey <em>and</em> harvest catch-at-age matrices.</p>
+<p>It is important to keep in mind that the predicted survey catches are not estimates of true abundance but simply scaled to the survey catches. <span class="citation">Millar and Meyer (<a href="#ref-millar.meyer2000">2000</a>)</span> illustrate a Bayesian approach for estimating true abundance from survey <em>and</em> harvest catch-at-age matrices.</p>
 </div>
 </div>
 <div id="TelemetryBased" class="section level2 hasAnchor" number="6.2">
@@ -698,7 +698,7 @@ FIGURE 6.1: Estimated annual survival rate from survey catch-at-age matrix.
 <p>Our simulation is for the most basic case, with survival and detection probabilities that are constant over time. Extended models that allow for time variation are presented by <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span>. The number of occasions and sample size are arbitrary but they serve as useful replicates here because the underlying parameters are constant over time and individuals. We assume a moderate survival rate (0.5) and a high detection probability (0.8). Detection probabilities of that magnitude are difficult to achieve by survey sampling but are reasonable when using an automated monitoring system <span class="citation">(<a href="#ref-hewitt.etal2010">Hewitt et al. 2010</a>)</span>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="Survival.html#cb10-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
 <span id="cb10-2"><a href="Survival.html#cb10-2" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="Survival.html#cb10-3" tabindex="-1"></a><span class="co"># Modified from Kery and Schaub 2012, Section 7.3</span></span>
+<span id="cb10-3"><a href="Survival.html#cb10-3" tabindex="-1"></a><span class="co"># Modified from Kery and Schaub 2011, Section 7.3</span></span>
 <span id="cb10-4"><a href="Survival.html#cb10-4" tabindex="-1"></a><span class="co"># Define parameter values</span></span>
 <span id="cb10-5"><a href="Survival.html#cb10-5" tabindex="-1"></a>n.occasions <span class="ot">&lt;-</span> <span class="dv">5</span>            <span class="co"># Number of capture occasions</span></span>
 <span id="cb10-6"><a href="Survival.html#cb10-6" tabindex="-1"></a>marked <span class="ot">&lt;-</span> <span class="dv">50</span>                <span class="co"># Number marked (all at time 1)</span></span>
@@ -760,28 +760,29 @@ FIGURE 6.1: Estimated annual survival rate from survey catch-at-age matrix.
 <span id="cb11-34"><a href="Survival.html#cb11-34" tabindex="-1"></a>  state <span class="ot">&lt;-</span> ch</span>
 <span id="cb11-35"><a href="Survival.html#cb11-35" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(ch)[<span class="dv">1</span>]){</span>
 <span id="cb11-36"><a href="Survival.html#cb11-36" tabindex="-1"></a>    n1 <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">which</span>(ch[i,]<span class="sc">==</span><span class="dv">1</span>)) <span class="co"># Column with first detection (col 1 here)</span></span>
-<span id="cb11-37"><a href="Survival.html#cb11-37" tabindex="-1"></a>    n2 <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">which</span>(ch[i,]<span class="sc">==</span><span class="dv">1</span>)) <span class="co"># Last detection (so known to be alive between n1 and n2)</span></span>
-<span id="cb11-38"><a href="Survival.html#cb11-38" tabindex="-1"></a>    state[i,n1<span class="sc">:</span>n2] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb11-39"><a href="Survival.html#cb11-39" tabindex="-1"></a>    state[i,n1] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb11-40"><a href="Survival.html#cb11-40" tabindex="-1"></a>  }</span>
-<span id="cb11-41"><a href="Survival.html#cb11-41" tabindex="-1"></a>  state[state<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb11-42"><a href="Survival.html#cb11-42" tabindex="-1"></a>  <span class="fu">return</span>(state)</span>
-<span id="cb11-43"><a href="Survival.html#cb11-43" tabindex="-1"></a>}</span>
-<span id="cb11-44"><a href="Survival.html#cb11-44" tabindex="-1"></a></span>
-<span id="cb11-45"><a href="Survival.html#cb11-45" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">S.est =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">p.est =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb11-46"><a href="Survival.html#cb11-46" tabindex="-1"></a>                              <span class="at">z =</span> <span class="fu">init.z</span>(CH))}</span>
-<span id="cb11-47"><a href="Survival.html#cb11-47" tabindex="-1"></a></span>
-<span id="cb11-48"><a href="Survival.html#cb11-48" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb11-49"><a href="Survival.html#cb11-49" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;S.est&quot;</span>, <span class="st">&quot;p.est&quot;</span>)</span>
-<span id="cb11-50"><a href="Survival.html#cb11-50" tabindex="-1"></a></span>
-<span id="cb11-51"><a href="Survival.html#cb11-51" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;CJS_StateSpace.txt&#39;</span></span>
-<span id="cb11-52"><a href="Survival.html#cb11-52" tabindex="-1"></a></span>
-<span id="cb11-53"><a href="Survival.html#cb11-53" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb11-54"><a href="Survival.html#cb11-54" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
-<span id="cb11-55"><a href="Survival.html#cb11-55" tabindex="-1"></a>                model.file)</span>
-<span id="cb11-56"><a href="Survival.html#cb11-56" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb11-57"><a href="Survival.html#cb11-57" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
-<p>The JAGS code for fitting the model uses our standard uninformative prior distribution for the two probabilities (survival, detection probability). The likelihood mirrors the simulation code. The matrix z contains the latent state, which is sometimes known but inferred in situations where the pattern is ambiguous. JAGS requires good initial values (or will terminate execution if it encounters an initial value that is inconsistent with the observations, such as detection of a fish that the model considers to be dead). To avoid that, we use the <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> approach where the latent state is set to 1 between the first and last detections of an individual (user-defined function <code>init.z()</code>).</p>
+<span id="cb11-37"><a href="Survival.html#cb11-37" tabindex="-1"></a>    n2 <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">which</span>(ch[i,]<span class="sc">==</span><span class="dv">1</span>)) <span class="co"># Column with last detection</span></span>
+<span id="cb11-38"><a href="Survival.html#cb11-38" tabindex="-1"></a>    <span class="co"># Fish are known to be alive between n1 and n2</span></span>
+<span id="cb11-39"><a href="Survival.html#cb11-39" tabindex="-1"></a>    state[i,n1<span class="sc">:</span>n2] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb11-40"><a href="Survival.html#cb11-40" tabindex="-1"></a>    state[i,n1] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co"># Initial value not needed for release period</span></span>
+<span id="cb11-41"><a href="Survival.html#cb11-41" tabindex="-1"></a>  }</span>
+<span id="cb11-42"><a href="Survival.html#cb11-42" tabindex="-1"></a>  state[state<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-43"><a href="Survival.html#cb11-43" tabindex="-1"></a>  <span class="fu">return</span>(state)</span>
+<span id="cb11-44"><a href="Survival.html#cb11-44" tabindex="-1"></a>}</span>
+<span id="cb11-45"><a href="Survival.html#cb11-45" tabindex="-1"></a></span>
+<span id="cb11-46"><a href="Survival.html#cb11-46" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">S.est =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">p.est =</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb11-47"><a href="Survival.html#cb11-47" tabindex="-1"></a>                              <span class="at">z =</span> <span class="fu">init.z</span>(CH))}</span>
+<span id="cb11-48"><a href="Survival.html#cb11-48" tabindex="-1"></a></span>
+<span id="cb11-49"><a href="Survival.html#cb11-49" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb11-50"><a href="Survival.html#cb11-50" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;S.est&quot;</span>, <span class="st">&quot;p.est&quot;</span>)</span>
+<span id="cb11-51"><a href="Survival.html#cb11-51" tabindex="-1"></a></span>
+<span id="cb11-52"><a href="Survival.html#cb11-52" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;CJS_StateSpace.txt&#39;</span></span>
+<span id="cb11-53"><a href="Survival.html#cb11-53" tabindex="-1"></a></span>
+<span id="cb11-54"><a href="Survival.html#cb11-54" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb11-55"><a href="Survival.html#cb11-55" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
+<span id="cb11-56"><a href="Survival.html#cb11-56" tabindex="-1"></a>                model.file)</span>
+<span id="cb11-57"><a href="Survival.html#cb11-57" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb11-58"><a href="Survival.html#cb11-58" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>The JAGS code for fitting the model uses our standard uninformative priors for the two probabilities (survival, detection probability). The likelihood mirrors the simulation code. The matrix z contains the latent state, which is sometimes known but inferred in situations where the pattern is ambiguous. JAGS requires good initial values (or will terminate execution if it encounters an initial value that is inconsistent with the observations, such as detection of a fish that the model considers to be dead). To avoid that, we use the <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> approach where the latent state is set to 1 between the first and last detections of an individual (user-defined function <code>init.z()</code>).</p>
 <p>Estimates appear to be very reliable for this scenario, where capture histories for 50 fish are used to estimate only two time-independent parameters. Would you obtain usefully precise results with a sample size of 25 or 30 fish? How does reliability change as you reduce the assumed capture probability?</p>
 <p>One important advantage of this telemetry method is that estimates are essentially produced in real-time and on any time scale. For example, the method could be used to estimate average annual survival over the first few years after a regulation change. Even better would be to modify the code to generate annual survival estimates, so that monitoring could be done over a block of years with a management action taken midway.</p>
 </div>
@@ -823,7 +824,7 @@ FIGURE 6.1: Estimated annual survival rate from survey catch-at-age matrix.
 <p>Tags at risk are contained in an upper triangular matrix, with the diagonal element being the number released (NTags) and subsequent elements obtained as the previous number at risk multiplied by the survival rate. We arbitrarily assume Periods=3, a true survival rate (S.true) of 0.8 and a tag-recovery rate of 0.1. You should inspect the matrix by clicking on the name in the Environment window. The above parameters result in a vector of 1000, 800, and 640 tags at risk from a release in period 1. Cells in the matrix of fates are obtained as the number at risk times the tag-recovery rate, plus a final column for fish not seen again. The number released (1000) is arbitrary (and ambitious), but using a large value is helpful for reviewing the calculations that produce the two matrices. The parameter values can be changed to mimic any planned study design.</p>
 <p>This section of code introduces a <code>while</code> loop. This different looping construct is needed because all rows except the last one include periods after the release. We need to be able to skip the additional processing in the last row, which has only the diagonal element. The final column for each row is the not-seen-again calculation. That value is highest for the most recent release, because most of those fish will still be alive. That uncertainty about whether fish are still at risk or have died is reduced by extending the number of periods for tag returns. Our example has the same number of releases and return periods, but the code could be modified to allow for additional periods of tag returns.</p>
 <p>Inspecting the matrix of fates is helpful for understanding how survival is estimated. The expected tag returns within any column form ratios that equal the survival rate. For example, we would expect 80 tags returned in the second period from the first release compared to 100 from the second release, because the first release has been at large for one additional period. Similarly the ratio from successive rows of returns in period 3 also equal the survival rate. Thus we have several cells (and ratios) that provide information about survival, which we assumed to be constant over the three periods.</p>
-<p>The final lines of code in this section introduce the stochasticity associated with a multinomial distribution. The matrix of fates (expected values) provide the cell probabilities (once rescaled, internal to the <code>rmultinom()</code> function). It is instructive to compare the expected values and random realizations to see the level of variability associated with the multinomial distribution. Now the ratios of random values within a column no longer equals (but will vary around) the true survival rate.</p>
+<p>The final lines of code in this section introduce the stochasticity associated with a multinomial distribution. The matrix of fates (expected values) provide the cell probabilities (once rescaled, internal to the <code>rmultinom()</code> function). It is instructive to compare the expected values (TagFate) and random realizations (RandRet) to see the level of variability associated with the multinomial distribution. Now the ratios of random values within a column no longer equal (but will vary around) the true survival rate.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="Survival.html#cb13-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
 <span id="cb13-2"><a href="Survival.html#cb13-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
 <span id="cb13-3"><a href="Survival.html#cb13-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
@@ -845,41 +846,54 @@ FIGURE 6.1: Estimated annual survival rate from survey catch-at-age matrix.
 <span id="cb13-19"><a href="Survival.html#cb13-19" tabindex="-1"></a><span class="st">   for (j in (i+1):Periods) {</span></span>
 <span id="cb13-20"><a href="Survival.html#cb13-20" tabindex="-1"></a><span class="st">      p.est[i,j] &lt;- p.est[i,(j-1)] * S.est</span></span>
 <span id="cb13-21"><a href="Survival.html#cb13-21" tabindex="-1"></a><span class="st">      } #j</span></span>
-<span id="cb13-22"><a href="Survival.html#cb13-22" tabindex="-1"></a><span class="st">    p.est[i,Periods+1] &lt;- 1 - sum(p.est[i, i:Periods])   # Prob of not being seen again</span></span>
-<span id="cb13-23"><a href="Survival.html#cb13-23" tabindex="-1"></a><span class="st">    } #i</span></span>
-<span id="cb13-24"><a href="Survival.html#cb13-24" tabindex="-1"></a></span>
-<span id="cb13-25"><a href="Survival.html#cb13-25" tabindex="-1"></a><span class="st"># Likelihood</span></span>
-<span id="cb13-26"><a href="Survival.html#cb13-26" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
-<span id="cb13-27"><a href="Survival.html#cb13-27" tabindex="-1"></a><span class="st">    RandRet[i,i:(Periods+1)] ~ dmulti(p.est[i,i:(Periods+1)], NTags)</span></span>
-<span id="cb13-28"><a href="Survival.html#cb13-28" tabindex="-1"></a><span class="st">    }#i</span></span>
-<span id="cb13-29"><a href="Survival.html#cb13-29" tabindex="-1"></a><span class="st"> } # model</span></span>
-<span id="cb13-30"><a href="Survival.html#cb13-30" tabindex="-1"></a></span>
-<span id="cb13-31"><a href="Survival.html#cb13-31" tabindex="-1"></a><span class="st">&quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
-<span id="cb13-32"><a href="Survival.html#cb13-32" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb13-33"><a href="Survival.html#cb13-33" tabindex="-1"></a></span>
-<span id="cb13-34"><a href="Survival.html#cb13-34" tabindex="-1"></a>     <span class="co"># Bundle data</span></span>
-<span id="cb13-35"><a href="Survival.html#cb13-35" tabindex="-1"></a>  jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;RandRet&quot;</span>, <span class="st">&quot;Periods&quot;</span>, <span class="st">&quot;NTags&quot;</span>)</span>
-<span id="cb13-36"><a href="Survival.html#cb13-36" tabindex="-1"></a></span>
-<span id="cb13-37"><a href="Survival.html#cb13-37" tabindex="-1"></a>  S.init <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>,<span class="at">min=</span><span class="dv">0</span>,<span class="at">max=</span><span class="dv">1</span>)</span>
-<span id="cb13-38"><a href="Survival.html#cb13-38" tabindex="-1"></a>  r.init <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span>S.init</span>
-<span id="cb13-39"><a href="Survival.html#cb13-39" tabindex="-1"></a></span>
-<span id="cb13-40"><a href="Survival.html#cb13-40" tabindex="-1"></a>  <span class="co"># Initial values</span></span>
-<span id="cb13-41"><a href="Survival.html#cb13-41" tabindex="-1"></a>  jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">S.est =</span> S.init, <span class="at">r.est=</span>r.init)}</span>
-<span id="cb13-42"><a href="Survival.html#cb13-42" tabindex="-1"></a></span>
-<span id="cb13-43"><a href="Survival.html#cb13-43" tabindex="-1"></a>  model.file <span class="ot">&lt;-</span> <span class="st">&#39;TagReturn.txt&#39;</span></span>
-<span id="cb13-44"><a href="Survival.html#cb13-44" tabindex="-1"></a></span>
-<span id="cb13-45"><a href="Survival.html#cb13-45" tabindex="-1"></a>  <span class="co"># Parameters monitored</span></span>
-<span id="cb13-46"><a href="Survival.html#cb13-46" tabindex="-1"></a>  jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;S.est&quot;</span>, <span class="st">&quot;r.est&quot;</span>, <span class="st">&quot;A.est&quot;</span>)</span>
-<span id="cb13-47"><a href="Survival.html#cb13-47" tabindex="-1"></a></span>
-<span id="cb13-48"><a href="Survival.html#cb13-48" tabindex="-1"></a>   <span class="co"># Call JAGS from R</span></span>
-<span id="cb13-49"><a href="Survival.html#cb13-49" tabindex="-1"></a>  jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb13-50"><a href="Survival.html#cb13-50" tabindex="-1"></a>                  <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
-<span id="cb13-51"><a href="Survival.html#cb13-51" tabindex="-1"></a>                  model.file)</span>
-<span id="cb13-52"><a href="Survival.html#cb13-52" tabindex="-1"></a>  <span class="fu">print</span>(jagsfit)</span>
-<span id="cb13-53"><a href="Survival.html#cb13-53" tabindex="-1"></a>  <span class="fu">plot</span>(jagsfit)</span></code></pre></div>
-<p>The analysis begins by establishing the usual uninformative prior distributions for the two rates. We calculate the total mortality rate (A.est) as the complement of the survival rate (1-S.est). One important advantage of a Bayesian analysis is that we automatically obtain measures of uncertainty for functions of model parameters. Here the function is simply 1-S.est, but this advantage applies regardless of the function’s complexity.</p>
+<span id="cb13-22"><a href="Survival.html#cb13-22" tabindex="-1"></a><span class="st">    p.est[i,Periods+1] &lt;- 1 - sum(p.est[i, i:Periods])</span></span>
+<span id="cb13-23"><a href="Survival.html#cb13-23" tabindex="-1"></a><span class="st">    # Last column is prob of not being seen again</span></span>
+<span id="cb13-24"><a href="Survival.html#cb13-24" tabindex="-1"></a><span class="st">    } #i</span></span>
+<span id="cb13-25"><a href="Survival.html#cb13-25" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="Survival.html#cb13-26" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb13-27"><a href="Survival.html#cb13-27" tabindex="-1"></a><span class="st">  for (i in 1:Periods) {</span></span>
+<span id="cb13-28"><a href="Survival.html#cb13-28" tabindex="-1"></a><span class="st">    RandRet[i,i:(Periods+1)] ~ dmulti(p.est[i,i:(Periods+1)], NTags)</span></span>
+<span id="cb13-29"><a href="Survival.html#cb13-29" tabindex="-1"></a><span class="st">    }#i</span></span>
+<span id="cb13-30"><a href="Survival.html#cb13-30" tabindex="-1"></a><span class="st"> } # model</span></span>
+<span id="cb13-31"><a href="Survival.html#cb13-31" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="Survival.html#cb13-32" tabindex="-1"></a><span class="st">&quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb13-33"><a href="Survival.html#cb13-33" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb13-34"><a href="Survival.html#cb13-34" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="Survival.html#cb13-35" tabindex="-1"></a>     <span class="co"># Bundle data</span></span>
+<span id="cb13-36"><a href="Survival.html#cb13-36" tabindex="-1"></a>  jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;RandRet&quot;</span>, <span class="st">&quot;Periods&quot;</span>, <span class="st">&quot;NTags&quot;</span>)</span>
+<span id="cb13-37"><a href="Survival.html#cb13-37" tabindex="-1"></a></span>
+<span id="cb13-38"><a href="Survival.html#cb13-38" tabindex="-1"></a>  S.init <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>,<span class="at">min=</span><span class="dv">0</span>,<span class="at">max=</span><span class="dv">1</span>)</span>
+<span id="cb13-39"><a href="Survival.html#cb13-39" tabindex="-1"></a>  r.init <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span>S.init</span>
+<span id="cb13-40"><a href="Survival.html#cb13-40" tabindex="-1"></a></span>
+<span id="cb13-41"><a href="Survival.html#cb13-41" tabindex="-1"></a>  <span class="co"># Initial values</span></span>
+<span id="cb13-42"><a href="Survival.html#cb13-42" tabindex="-1"></a>  jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">S.est =</span> S.init, <span class="at">r.est=</span>r.init)}</span>
+<span id="cb13-43"><a href="Survival.html#cb13-43" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="Survival.html#cb13-44" tabindex="-1"></a>  model.file <span class="ot">&lt;-</span> <span class="st">&#39;TagReturn.txt&#39;</span></span>
+<span id="cb13-45"><a href="Survival.html#cb13-45" tabindex="-1"></a></span>
+<span id="cb13-46"><a href="Survival.html#cb13-46" tabindex="-1"></a>  <span class="co"># Parameters monitored</span></span>
+<span id="cb13-47"><a href="Survival.html#cb13-47" tabindex="-1"></a>  jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;S.est&quot;</span>, <span class="st">&quot;r.est&quot;</span>, <span class="st">&quot;A.est&quot;</span>)</span>
+<span id="cb13-48"><a href="Survival.html#cb13-48" tabindex="-1"></a></span>
+<span id="cb13-49"><a href="Survival.html#cb13-49" tabindex="-1"></a>   <span class="co"># Call JAGS from R</span></span>
+<span id="cb13-50"><a href="Survival.html#cb13-50" tabindex="-1"></a>  jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb13-51"><a href="Survival.html#cb13-51" tabindex="-1"></a>                  <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
+<span id="cb13-52"><a href="Survival.html#cb13-52" tabindex="-1"></a>                  model.file)</span>
+<span id="cb13-53"><a href="Survival.html#cb13-53" tabindex="-1"></a>  <span class="fu">print</span>(jagsfit)</span>
+<span id="cb13-54"><a href="Survival.html#cb13-54" tabindex="-1"></a>  <span class="fu">plot</span>(jagsfit)</span>
+<span id="cb13-55"><a href="Survival.html#cb13-55" tabindex="-1"></a>  </span>
+<span id="cb13-56"><a href="Survival.html#cb13-56" tabindex="-1"></a>  <span class="co"># Estimated posterior distributions</span></span>
+<span id="cb13-57"><a href="Survival.html#cb13-57" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">2</span>], <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Survival&quot;</span>)</span>
+<span id="cb13-58"><a href="Survival.html#cb13-58" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>S.true, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb13-59"><a href="Survival.html#cb13-59" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.array[,,<span class="dv">4</span>], <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Tag recovery rate&quot;</span>)</span>
+<span id="cb13-60"><a href="Survival.html#cb13-60" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>r.true, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p>The analysis begins with the usual uninformative priors for the two rates. We calculate the total mortality rate (A.est) as the complement of the survival rate (1-S.est). One important advantage of a Bayesian analysis is that we automatically obtain measures of uncertainty for functions of model parameters. Here the function is simply 1-S.est, but this advantage applies regardless of the function’s complexity.</p>
 <p>The likelihood calculations (<code>dmulti()</code>) requires cell probabilities for the multinomial distribution, so we calculate those probabilities directly rather than keeping track of numbers of tags by fate. The probability of a tag from release i being returned in period j is <code>p.est[i,j] &lt;- p.est[i,(j-1)] * S.est</code>. Make sure that you understand this expression for specific values of i and j. Can you think of another way of coding this calculation? Note that <code>for</code> loops work differently in JAGS compared to R, so we are able to use them for row and column processing. In JAGS, the ‘j’ loop is not executed when i=3 because j&gt;Periods. Note that our initial value for the tag-recovery rate is obtained as 1-S.init. The tag recovery rate cannot exceed 1-S.init, and would typically be less due to the other possible outcome, natural death.</p>
-<p>Estimates are good for this case, which is not surprising given the very large releases and only two time-independent parameters to estimate. The estimated number of effective parameters was 1.9 for one run, which is consistent with the two apparent model parameters (S.est, r.est) and A.est which is simply a function of S.est.</p>
+<p>Estimates are typically reliable for this case (Figure <a href="Survival.html#fig:TagRetPlot">6.2</a>), which is not surprising given the very large releases and only two time-independent parameters to estimate. The estimated number of effective parameters was 1.9 for one run, which is consistent with the two apparent model parameters (S.est, r.est) and A.est which is simply a function of S.est.</p>
+<div class="figure"><span style="display:block;" id="fig:TagRetPlot"></span>
+<img src="bookdown_files/figure-html/TagRetPlot-1.png" alt="Example of estimated posterior distributions for survival and tag-recovery rates from 3-year tag-return study with annual releases of 1000 tagged fish. Red vertical lines indicate true values." width="45%" /><img src="bookdown_files/figure-html/TagRetPlot-2.png" alt="Example of estimated posterior distributions for survival and tag-recovery rates from 3-year tag-return study with annual releases of 1000 tagged fish. Red vertical lines indicate true values." width="45%" />
+<p class="caption">
+FIGURE 6.2: Example of estimated posterior distributions for survival and tag-recovery rates from 3-year tag-return study with annual releases of 1000 tagged fish. Red vertical lines indicate true values.
+</p>
+</div>
 <p>If you think about a local system with which you are familiar, how practical would it be to tag 1000 fish at the start of each period (e.g., annually)? If you were responsible for planning the tagging operation, what sampling gear would you recommend? Would there be any potential concern about mortality due to handling? What size field crew would be needed and how much time would the tagging operation require? Could you use simulation to explore different sample sizes before recommending a specific field design?</p>
 </div>
 <div id="exercises-3" class="section level2 hasAnchor" number="6.4">
