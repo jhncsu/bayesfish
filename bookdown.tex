@@ -180,7 +180,7 @@
 
 \title{A Bayesian Introduction to Fish Population Analysis}
 \author{Joseph E. Hightower}
-\date{2024-05-03}
+\date{2024-07-18}
 
 \begin{document}
 \maketitle
@@ -340,8 +340,8 @@ In this chapter, we will examine some of the more common and important statistic
 \hypertarget{Discrete}{%
 \section{Discrete}\label{Discrete}}
 
-\hypertarget{bernoulli}{%
-\subsection{Bernoulli}\label{bernoulli}}
+\hypertarget{Bernoulli}{%
+\subsection{Bernoulli}\label{Bernoulli}}
 
 The most basic discrete distribution is the Bernoulli\index{Distribution, Bernoulli}. There are only two outcomes, often referred to as success and failure. The classic example of a Bernoulli distribution is a coin toss, where ``heads'' might be considered success and ``tails'' failure. This distribution has a single parameter p, representing the probability of success. Its complement (1-p) is the probability of failure. Searching a lake for a fish with a radio transmitter is a fisheries example of a Bernoulli trial, where p represents the probability of detecting the fish's signal (success). Other biological examples are whether a fish with a transmitter is dead or alive and whether or not a study site is occupied.
 
@@ -1838,7 +1838,7 @@ As usual, keep in mind that this is a very optimistic scenario. We are estimatin
 \hypertarget{Survival}{%
 \chapter{Survival}\label{Survival}}
 
-Information about survival\index{Survival rate} rate is valuable for managing exploited stocks and working to rebuild rare or declining populations. Survival is affected by two broad categories of threats: fishing\index{Mortality, fishing} and natural mortality\index{Mortality, natural}. Fishing obviously refers to harvest, from commercial or recreational sectors, but could include mortality associated with fish that are caught and released. Catch-and-release\index{Catch-and-release} fishing primarily occurs in the recreational sector, but can occur in the commercial sector due to regulations or lack of markets (sometimes referred to as discard\index{Discard}). Natural mortality is a generic term for mortality sources other than fishing. There is typically a strong negative correlation between natural mortality rate and body size, indicating the predominant role of predation \citep{lorenzen1996}. Other sources of natural mortality include starvation, disease and senescence. It is important as a first step to estimate overall survival reliably, but management can be improved by partitioning total mortality into fishing and natural component rates. We begin with approaches for estimating overall survival, then in Chapter \ref{Mortality} consider tagging and telemetry methods that provide insights about sources of mortality.
+Information about survival\index{Survival rate} rate is valuable for managing exploited stocks or working to rebuild rare or declining populations. Survival is affected by two broad categories of threats: fishing\index{Mortality, fishing} and natural mortality\index{Mortality, natural}. Fishing obviously refers to harvest, from commercial or recreational sectors, but could include mortality associated with fish that are caught and released. Catch-and-release\index{Catch-and-release} fishing primarily occurs in the recreational sector, but can occur in the commercial sector due to regulations or lack of markets (sometimes referred to as discard\index{Discard}). Natural mortality is a generic term for mortality sources other than fishing. There is typically a strong negative correlation between natural mortality rate and body size, indicating the predominant role of predation \citep{lorenzen1996}. Other sources of natural mortality include starvation, disease and senescence. It is important as a first step to estimate overall survival reliably, but management can be improved by partitioning total mortality into fishing and natural component rates. We begin with approaches for estimating overall survival, then in Chapter \ref{Mortality} consider tagging and telemetry methods that provide insights about sources of mortality.
 
 \hypertarget{AgeComp}{%
 \section{Age-composition}\label{AgeComp}}
@@ -1954,7 +1954,7 @@ Thus far, we have used small sample sizes for these simulated studies. They are 
 \hypertarget{CC_Selectivity}{%
 \subsection{Accounting For Gear Selectivity}\label{CC_Selectivity}}
 
-The traditional approach for estimating survival from age composition data was known as catch curve analysis. It could be done using linear regression (thus doable by hand in the pre-computer era) by log-transforming the age sample \citep{ricker1975}. Gear selectivity\index{Gear selectivity} was addressed subjectively, by viewing a plot of the log-transformed catches. \citet{ricker1975} described the catch curve pattern as having ascending and descending limbs, with the ascending limb assumed to reflect selectivity and survival. The descending limb was assumed to reflect only survival (age range of ``fully selected'' fish). The recommended approach was to begin the catch curve analysis at the age of peak catch or the next oldest age, in order to limit the analysis to fully selected fish. For catch curve analysis or the approach given here, declining selectivity for older fish would cause the survival estimator to be biased.
+The traditional approach for estimating survival from age composition data was known as catch curve\index{Catch curve} analysis. It could be done using linear regression (thus doable by hand in the pre-computer era) by log-transforming the age sample \citep{ricker1975}. Gear selectivity\index{Gear selectivity} was addressed subjectively, by viewing a plot of the log-transformed catches. \citet{ricker1975} described the catch curve pattern as having ascending and descending limbs, with the ascending limb assumed to reflect selectivity and survival. The descending limb was assumed to reflect only survival (age range of ``fully selected'' fish). The recommended approach was to begin the catch curve analysis at the age of peak catch or the next oldest age, in order to limit the analysis to fully selected fish. For catch curve analysis or the approach given here, declining selectivity for older fish would cause the survival estimator to be biased.
 
 Given sufficient data, it is possible to use age composition data to estimate jointly the survival rate and gear selectivity. A practical example might be a trawl survey where small (younger) fish are not retained by the net. Fish larger than the net mesh size might be assumed to be fully selected, so a logistic function\index{Logistic} could be used to model gear selectivity that increases up an asymptote: \(S_{a} = \frac{1}{1+e^{k*(a-a_{0})}}\)
 
@@ -2173,7 +2173,8 @@ The following version of the code includes auxiliary tag-return data:
 \CommentTok{\# Initial values}
 \NormalTok{jags.inits }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{()\{ }\FunctionTok{list}\NormalTok{(}\AttributeTok{S.est=}\FunctionTok{runif}\NormalTok{(}\AttributeTok{n=}\DecValTok{1}\NormalTok{, }\AttributeTok{min=}\DecValTok{0}\NormalTok{, }\AttributeTok{max=}\DecValTok{1}\NormalTok{),}
                                \AttributeTok{a50.est=}\FunctionTok{runif}\NormalTok{(}\AttributeTok{n=}\DecValTok{1}\NormalTok{, }\AttributeTok{min=}\DecValTok{0}\NormalTok{, }\AttributeTok{max=}\NormalTok{MaxAge),}
-                               \AttributeTok{k.est=}\FunctionTok{rlnorm}\NormalTok{(}\AttributeTok{n=}\DecValTok{1}\NormalTok{, }\AttributeTok{meanlog=}\DecValTok{0}\NormalTok{, }\AttributeTok{sdlog=}\DecValTok{1}\NormalTok{))\} }\CommentTok{\# Arbitrary low initial values}
+                               \AttributeTok{k.est=}\FunctionTok{rlnorm}\NormalTok{(}\AttributeTok{n=}\DecValTok{1}\NormalTok{, }\AttributeTok{meanlog=}\DecValTok{0}\NormalTok{, }\AttributeTok{sdlog=}\DecValTok{1}\NormalTok{))\} }
+                            \CommentTok{\# Arbitrary low initial value for k.est}
 
 \NormalTok{model.file }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}AgeComp.txt\textquotesingle{}}
 
@@ -2189,14 +2190,14 @@ The following version of the code includes auxiliary tag-return data:
 \end{Highlighting}
 \end{Shaded}
 
-There are three changes to the code in this version. First, the vector of random tag returns is generated just below the random survey catch vector. You can examine the tag-return vector in the Environment window to get a sense of what the auxiliary study contributes to the overall analysis. The next code change is adding a second likelihood component to make use of the tag-return data. The third change is to pass these additional data (tag return total and by age) to JAGS.
+There are three changes to the code in this version. First, the vector of random tag returns is generated just below the random survey catch vector. We assume a sample size of 30 returned tags, allocated randomly among ages using a multinomial distribution\index{Distribution, multinomial} and the survey selectivity pattern. You can examine the barplot for the tag returns to get a sense of what the auxiliary study contributes to the overall analysis. The next code change is adding a second likelihood component to make use of the tag-return data. The third change is to pass these additional data (tag return total and by age) to JAGS.
 
-Having direct information on gear selectivity improves estimates of survival and selectivity, especially if the age composition sample size is small. And more importantly, this modification illustrates how auxiliary data can be added in JAGS to refine an analysis. Writing code to fit the specifics of a field study is valuable for planning and analysis, and is a major advantage over using canned software. The remaining chapters will include other examples where multiple data sources can be combined to improve estimates.
+Having direct information on survey gear selectivity can improve estimates of survival and selectivity, especially if the age composition sample size is small. And more importantly, this modification illustrates how auxiliary data can be added in JAGS to refine an analysis. Writing code to fit the specifics of a field study is valuable for planning and analysis, and is a major advantage over using canned software. The remaining chapters will include other examples where multiple data sources can be combined to improve estimates.
 
 \hypertarget{Cohort}{%
 \subsection{Cohort model}\label{Cohort}}
 
-One limitation of the above analysis (Section \ref{AgeComp}) or a traditional catch curve is that recruitment is assumed to be constant (or can be averaged over). Catch curve analyses are generally robust to this assumption \citep{allen_1997}, but year-class variation can sometimes be quite extreme. The following approach addresses that concern by modeling each year-class (or cohort) separately. The approach is similar to a virtual population analysis (VPA) or cohort analysis \citep{ricker1975} in that a catch matrix provides age- and year-specific information that is used to track cohorts across years. A VPA is traditionally done using harvest data, but here, we assume the catch-at-age matrix contains survey data. Survey information allows for modeling relative abundance across time, whereas a traditional VPA is used to estimate absolute abundance.
+One limitation of the above analysis (Section \ref{AgeComp}) or a traditional catch curve is that recruitment is assumed to be constant (or can be averaged over). Catch curve analyses are generally robust to this assumption \citep{allen_1997}, but year-class variation can sometimes be quite extreme. The following approach addresses that concern by modeling each year-class (or cohort) separately. The approach is similar to a virtual population analysis\index{Virtural population analysis} (VPA) or cohort analysis\index{Cohort analysis} \citep{ricker1975} in that a catch matrix provides age- and year-specific information that is used to track cohorts across years. A VPA is traditionally done using harvest data, but here, we assume the catch-at-age matrix contains survey data. Survey information allows for modeling relative abundance across time, whereas a traditional VPA is used to estimate absolute abundance.
 
 The following simulation code provides the survey catch-at-age matrix. The number of ages and years is arbitrary, but we are estimating survival rate for each year so there should be enough ages to provide a decent sample size. The annual survival rate is drawn from a uniform distribution between arbitrary lower and upper bounds. Having a fair degree of annual variation in survival makes for a better test of our ability to estimate those values.
 
@@ -2218,9 +2219,9 @@ The following simulation code provides the survey catch-at-age matrix. The numbe
 \NormalTok{N }\OtherTok{\textless{}{-}} \FunctionTok{array}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{dim=}\FunctionTok{c}\NormalTok{(A, Y))}
 \NormalTok{N[}\DecValTok{1}\NormalTok{,] }\OtherTok{\textless{}{-}} \FunctionTok{rpois}\NormalTok{(Y, MeanR) }\CommentTok{\# Starting size of each cohort at first age}
 \ControlFlowTok{for}\NormalTok{ (a }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{A)\{}
-\NormalTok{  N[a,}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{rpois}\NormalTok{(}\DecValTok{1}\NormalTok{,MeanS}\SpecialCharTok{\^{}}\NormalTok{(a}\DecValTok{{-}1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{MeanR) }\CommentTok{\# Starting sizes for ages 2+, year 1}
+\NormalTok{  N[a,}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{rpois}\NormalTok{(}\DecValTok{1}\NormalTok{,MeanS}\SpecialCharTok{\^{}}\NormalTok{(a}\DecValTok{{-}1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{MeanR) }\CommentTok{\# Starting sizes {-} ages 2+, year 1}
   \ControlFlowTok{for}\NormalTok{ (y }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{Y)\{}
-\NormalTok{    N[a,y] }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, N[a}\DecValTok{{-}1}\NormalTok{, y}\DecValTok{{-}1}\NormalTok{], AnnualS[y}\DecValTok{{-}1}\NormalTok{]) }\CommentTok{\# Initial number yr 1, older ages}
+\NormalTok{    N[a,y] }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, N[a}\DecValTok{{-}1}\NormalTok{, y}\DecValTok{{-}1}\NormalTok{], AnnualS[y}\DecValTok{{-}1}\NormalTok{]) }\CommentTok{\# Fill in older ages}
 \NormalTok{    \} }\CommentTok{\#y}
 \NormalTok{  \} }\CommentTok{\#a}
 
@@ -2250,12 +2251,13 @@ The JAGS code for estimating cohort size and annual survival is generally simila
 \FunctionTok{cat}\NormalTok{(}\StringTok{"}
 \StringTok{model \{}
 \StringTok{    \# Priors}
-\StringTok{    for(y in 1:Y) \{}
+\StringTok{    for (y in 1:Y) \{}
 \StringTok{      Recruits[y] \textasciitilde{} dlnorm(0, 1E{-}6) \# Non{-}negative values}
 \StringTok{    SurveyC.est[1,y]\textless{}{-}Recruits[y] \}}
 
-\StringTok{    for(a in 2:A)\{}
-\StringTok{      Initials[a{-}1] \textasciitilde{} dlnorm(0, 1E{-}6) \# Non{-}negative; offset index to run vector from 1 to A{-}1}
+\StringTok{    for (a in 2:A)\{}
+\StringTok{      Initials[a{-}1] \textasciitilde{} dlnorm(0, 1E{-}6) }
+\StringTok{      \# Non{-}negative; offset index to run vector from 1 to A{-}1}
 \StringTok{    SurveyC.est[a,1]\textless{}{-}Initials[a{-}1] \}}
 
 \StringTok{  meanS \textless{}{-} prod(S.est)\^{}(1/(Y{-}1))}
@@ -2264,15 +2266,15 @@ The JAGS code for estimating cohort size and annual survival is generally simila
 \StringTok{    \} \#y}
 
 \StringTok{    \# Population projection}
-\StringTok{    for(a in 2:A) \{}
-\StringTok{   for(y in 2:Y) \{}
+\StringTok{    for (a in 2:A) \{}
+\StringTok{   for (y in 2:Y) \{}
 \StringTok{     SurveyC.est[a,y] \textasciitilde{} dbin(S.est[y{-}1], trunc(SurveyC.est[a{-}1,y{-}1])) \} \}}
 
 \StringTok{    \#Likelihood}
 \StringTok{    for (a in 1:A) \{}
 \StringTok{   for (y in 1:Y) \{}
 \StringTok{      SurveyC[a,y]\textasciitilde{}dpois(SurveyC.est[a,y])}
-\StringTok{     \} \}}
+\StringTok{     \} \} \#a \#y}
 \StringTok{\}}
 \StringTok{    "}\NormalTok{,}\AttributeTok{fill=}\ConstantTok{TRUE}\NormalTok{)}
 \FunctionTok{sink}\NormalTok{()}
@@ -2302,18 +2304,22 @@ The JAGS code for estimating cohort size and annual survival is generally simila
 \end{Highlighting}
 \end{Shaded}
 
-The final three lines of code compare the annual survival estimates and true values. The plot option ``type=b'' produces a line of connected dots (i.e., \emph{both} points and line segments), and the ``pch=19'' option selects for a filled dot. An online search for ``r plot options pch'' will provide the various choices for plotting symbols. The range for the y axis is fixed at 0-1 to ensure that the plot will contain the full range of both the estimates and the true values. The points() function adds to the plot the true values. The model provides reliable estimates of annual (and mean) survival and initial cohort size for the simulated data. Run the simulation and model fitting code multiple times to observe model performance. It would be worthwhile to test the approach using more variability in initial cohort sizes; for example, by using a negative binomial distribution rather than a Poisson.
+The final three lines of code compare the annual survival estimates and true values (Figure \ref{fig:CohortPlot}). The plot option ``type=b'' produces a line of connected dots (i.e., \emph{both} points and line segments), and the ``pch=19'' option selects for a filled dot. An online search for ``r plot options pch'' will provide the various choices for plotting symbols. The range for the y axis is fixed at 0-1 to ensure that the plot will contain the full range of both the estimates and the true values. The points() function adds to the plot the true values. The model provides reliable estimates of annual (and mean) survival and initial cohort size for the simulated data. Run the simulation and model fitting code multiple times to observe model performance. It would be worthwhile to test the approach using more variability in initial cohort sizes; for example, by using a negative binomial distribution rather than a Poisson.
 
-It is important to keep in mind our predicted survey catches are not estimates of true abundance but simply scaled to the survey catches. \citet{millar.meyer2000} illustrate a Bayesian approach for estimating true abundance from survey \emph{and} harvest catch-at-age matrices.
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{bookdown_files/figure-latex/CohortPlot-1} \caption{Example run showing true (blue) and estimated (black) annual survival rate from a cohort-based analysis of survey catch-at-age data.}\label{fig:CohortPlot}
+\end{figure}
+
+It is important to keep in mind that the predicted survey catches are not estimates of true abundance but simply scaled to the survey catches. \citet{millar.meyer2000} illustrate a Bayesian approach for estimating true abundance from survey \emph{and} harvest catch-at-age matrices.
 
 \hypertarget{TelemetryBased}{%
 \section{Telemetry-based}\label{TelemetryBased}}
 
 The focus for this section will be on estimating survival using fixed receiver stations and telemetry tags such as transmitters or PIT tags. Letting fish ``detect themselves'' eliminates the need for costly field surveys that often result in low detection probabilities. For example, \citet{hewitt.etal2010} showed that survival estimates using fixed stations and automated detections were much better than those obtained using only survey recaptures. Similarly, \citet{hightower.etal2015} estimated survival of sonic-tagged Atlantic sturgeon which were detected as they migrated past receivers located in estuaries and rivers. The key in studies of this type is either to have many monitoring sites or to position sites in areas where tagged fish are likely to pass.
 
-These studies produces detections that can be organized as a capture history matrix. Each row of the matrix is a tagged fish, and each column is a time period. The period can be chosen based on whatever time scale is relevant and practical; for example, monthly or quarterly detections would provide insights about seasonal survival. Each matrix cell indicates whether a fish was detected (1) or not (0). A fish not detected could be dead or simply did not move within range of a receiver during that period. Interpreting the capture history for an individual depends on the pattern. There is no ambiguity about an individual with a capture history of 11011. It was alive to the end of the study but was not detected on the third occasion. A sequence such as 11000 is not as straightforward because its fate is uncertain for the final three occasions. A model is essential for making inferences in such cases.
+These studies produces detections that can be organized as a capture history matrix\index{Capture history matrix}. Each row of the matrix is a tagged fish, and each column is a time period. The period can be chosen based on whatever time scale is relevant and practical; for example, monthly or quarterly detections would provide insights about seasonal survival. Each matrix cell indicates whether a fish was detected (1) or not (0). A fish not detected could be dead or simply did not move within range of a receiver during that period. Interpreting the capture history for an individual depends on the pattern. There is no ambiguity about an individual with a capture history of 11011. It was alive to the end of the study but was not detected on the third occasion. A sequence such as 11000 is not as straightforward because its fate is uncertain for the final three occasions. A model is essential for making inferences in such cases.
 
-The capture history data can be analyzed using a Cormack-Jolly-Seber (CJS) model \citep{kéry.schaub_2011}. The model is based only on captures or detections of tagged fish, which are assumed to be representative of the population as a whole. Technically, the model provides an estimate of apparent survival because we are not able to distinguish between mortality and permanent emigration. If the study area is closed to migration, then the estimate can be interpreted as a true survival rate.
+The capture history data can be analyzed using a Cormack-Jolly-Seber (CJS) model\index{Cormack-Jolly-Seber model} \citep{kéry.schaub_2011}. The model is based only on captures or detections of tagged fish, which are assumed to be representative of the population as a whole. Technically, the model provides an estimate of apparent survival because we are not able to distinguish between mortality and permanent emigration. If the study area is closed to migration, then the estimate can be interpreted as a true survival rate.
 
 Our simulation is for the most basic case, with survival and detection probabilities that are constant over time. Extended models that allow for time variation are presented by \citet{kéry.schaub_2011}. The number of occasions and sample size are arbitrary but they serve as useful replicates here because the underlying parameters are constant over time and individuals. We assume a moderate survival rate (0.5) and a high detection probability (0.8). Detection probabilities of that magnitude are difficult to achieve by survey sampling but are reasonable when using an automated monitoring system \citep{hewitt.etal2010}.
 
@@ -2321,7 +2327,7 @@ Our simulation is for the most basic case, with survival and detection probabili
 \begin{Highlighting}[]
 \FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{()) }\CommentTok{\# Clear Environment}
 
-\CommentTok{\# Modified from Kery and Schaub 2012, Section 7.3}
+\CommentTok{\# Modified from Kery and Schaub 2011, Section 7.3}
 \CommentTok{\# Define parameter values}
 \NormalTok{n.occasions }\OtherTok{\textless{}{-}} \DecValTok{5}            \CommentTok{\# Number of capture occasions}
 \NormalTok{marked }\OtherTok{\textless{}{-}} \DecValTok{50}                \CommentTok{\# Number marked (all at time 1)}
@@ -2349,7 +2355,7 @@ Our simulation is for the most basic case, with survival and detection probabili
 \end{Highlighting}
 \end{Shaded}
 
-Our code, modified from \citet{kéry.schaub_2011}, introduces the creation of a user-defined function, which is a way of setting off a discrete block of code that has a specific purpose. We pass to the function the necessary arguments (S.true, p.true, marked, n.occasions) and the function returns the desired result (capture history matrix CH). The latent (true) state and the capture history observation are modeled using Bernoulli trials. The latent state at time t is based on the survival rate between times t-1 and t, but multiplied by the true state at time t-1. That results in live fish having a survival probability of 1 * S.true, whereas the probability for dead fish is 0 * S.true (ensuring that dead fish remain dead). A similar trick is used to generate the observations, given the known true states. Detection probability is 1 * p.true for live fish and 0 * p.true for dead fish. The matrix for latent state is internal to the function, but (for instructional purposes) can be compared to the observed matrix by selecting and running all lines between the second and next-to-last lines of the function. You should see the connection between the true latent state and observations (e.g., a true sequence of 11100 versus an observed sequence of 10100).
+Our code, modified from \citet{kéry.schaub_2011}, introduces the creation of a user-defined function, which is a way of setting off a discrete block of code that has a specific purpose. We pass to the function the necessary arguments (S.true, p.true, marked, n.occasions) and the function returns the desired result (capture history matrix CH). The latent (true) state and the capture history observation are modeled using Bernoulli (Section \ref{Bernoulli}) trials. The latent state at time t is based on the survival rate between times t-1 and t, but multiplied by the true state at time t-1. That results in live fish having a survival probability of 1 * S.true, whereas the probability for dead fish is 0 * S.true (ensuring that dead fish remain dead). A similar trick is used to generate the observations, given the known true states. Detection probability is 1 * p.true for live fish and 0 * p.true for dead fish. The matrix for latent state is internal to the function, but (for instructional purposes) can be compared to the observed matrix by selecting and running all lines between the second and next-to-last lines of the function. You should see the connection between the true latent state and observations (e.g., a true sequence of 11100 versus an observed sequence of 10100).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2389,9 +2395,10 @@ Our code, modified from \citet{kéry.schaub_2011}, introduces the creation of a 
 \NormalTok{  state }\OtherTok{\textless{}{-}}\NormalTok{ ch}
   \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{dim}\NormalTok{(ch)[}\DecValTok{1}\NormalTok{])\{}
 \NormalTok{    n1 }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(}\FunctionTok{which}\NormalTok{(ch[i,]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)) }\CommentTok{\# Column with first detection (col 1 here)}
-\NormalTok{    n2 }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{which}\NormalTok{(ch[i,]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)) }\CommentTok{\# Last detection (so known to be alive between n1 and n2)}
+\NormalTok{    n2 }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{which}\NormalTok{(ch[i,]}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)) }\CommentTok{\# Column with last detection}
+    \CommentTok{\# Fish are known to be alive between n1 and n2}
 \NormalTok{    state[i,n1}\SpecialCharTok{:}\NormalTok{n2] }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{    state[i,n1] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{    state[i,n1] }\OtherTok{\textless{}{-}} \ConstantTok{NA} \CommentTok{\# Initial value not needed for release period}
 \NormalTok{  \}}
 \NormalTok{  state[state}\SpecialCharTok{==}\DecValTok{0}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
   \FunctionTok{return}\NormalTok{(state)}
@@ -2413,7 +2420,7 @@ Our code, modified from \citet{kéry.schaub_2011}, introduces the creation of a 
 \end{Highlighting}
 \end{Shaded}
 
-The JAGS code for fitting the model uses our standard uninformative prior distribution for the two probabilities (survival, detection probability). The likelihood mirrors the simulation code. The matrix z contains the latent state, which is sometimes known but inferred in situations where the pattern is ambiguous. JAGS requires good initial values (or will terminate execution if it encounters an initial value that is inconsistent with the observations, such as detection of a fish that the model considers to be dead). To avoid that, we use the \citet{kéry.schaub_2011} approach where the latent state is set to 1 between the first and last detections of an individual (user-defined function init.z()).
+The JAGS code for fitting the model uses our standard uninformative priors for the two probabilities (survival, detection probability). The likelihood mirrors the simulation code. The matrix z contains the latent state, which is sometimes known but inferred in situations where the pattern is ambiguous. JAGS requires good initial values (or will terminate execution if it encounters an initial value that is inconsistent with the observations, such as detection of a fish that the model considers to be dead). To avoid that, we use the \citet{kéry.schaub_2011} approach of setting the latent state to 1 between the first and last detections of an individual (user-defined function init.z()).
 
 Estimates appear to be very reliable for this scenario, where capture histories for 50 fish are used to estimate only two time-independent parameters. Would you obtain usefully precise results with a sample size of 25 or 30 fish? How does reliability change as you reduce the assumed capture probability?
 
@@ -2426,7 +2433,7 @@ Survival can be estimated by a multi-period study using tag returns. An importan
 
 This study design is similar to band-recovery models used in wildlife studies \citep{brownie.etal1985, kéry.schaub_2011}. Those methods were pioneered for migratory birds, with bands returned from individuals that were harvested. In fisheries tagging studies, tags may be also reported from fish that are caught and released but here we assume that returned tags reflect only harvest. Catch-and-release complicates the analysis because the tag ``dies'' but the fish is not killed. \citet{jiang.etal2007} provide analytical methods for addressing the combination of harvest and catch-and-release.
 
-We begin by setting up matrices for tags-at-risk (tagged fish still alive) and the outcomes from each release. The matrix of outcomes or fates is analyzed row-by-row using a multinomial distribution. For example, a fish tagged in period 1 could be caught in any period up to the end of the study. It could also end up in the final column for fish not seen again, which would account for fish that were still alive or died of natural causes or were harvested but the tag was not reported. We do not assume here any knowledge of the tag-reporting rate. If that information were available (e.g., through use of high-reward tags that provide an assumed reporting rate of 100\%), then it would be possible to partition total mortality into fishing and natural component rates \citep{brownie.etal1985}. Here we keep things simple and estimate only the tag-recovery rate, which is the product of the exploitation rate and tag-reporting rate. In planning a tag-return study, the best results will be obtained by ensuring a tag-reporting rate close to 100\%. Non-reporting results in lost information (a reduced sample size) and poorer precision.
+We begin by setting up matrices for tags-at-risk (tagged fish still alive) and the outcomes from each release. The matrix of outcomes or fates is analyzed row-by-row using a multinomial\index{Distribution, multinomial} distribution (Section \ref{Multinomial}). For example, a fish tagged in period 1 could be caught in any period up to the end of the study. It could also end up in the final column for fish not seen again, which would account for fish that were still alive or died of natural causes or were harvested but the tag was not reported. We do not assume here any knowledge of the tag-reporting rate. If that information were available (e.g., through use of high-reward tags that provide an assumed reporting rate of 100\%), then it would be possible to partition total mortality into fishing and natural component rates \citep{brownie.etal1985}. Here we keep things simple and estimate only the tag-recovery rate, which is the product of the exploitation rate and tag-reporting rate. In planning a tag-return study, the best results will be obtained by ensuring a tag-reporting rate close to 100\%. Non-reporting results in lost information (a reduced sample size) and poorer precision.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2440,9 +2447,11 @@ We begin by setting up matrices for tags-at-risk (tagged fish still alive) and t
 
 \CommentTok{\# Calculated value(s), array creation}
 \NormalTok{TagsAtRisk }\OtherTok{\textless{}{-}} \FunctionTok{array}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{dim=}\FunctionTok{c}\NormalTok{(Periods, Periods))}
-\NormalTok{TagFate }\OtherTok{\textless{}{-}} \FunctionTok{array}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{dim=}\FunctionTok{c}\NormalTok{(Periods, Periods}\SpecialCharTok{+}\DecValTok{1}\NormalTok{))   }\CommentTok{\# Extra column for tags not seen again}
+\NormalTok{TagFate }\OtherTok{\textless{}{-}} \FunctionTok{array}\NormalTok{(}\AttributeTok{data=}\ConstantTok{NA}\NormalTok{, }\AttributeTok{dim=}\FunctionTok{c}\NormalTok{(Periods, Periods}\SpecialCharTok{+}\DecValTok{1}\NormalTok{))   }
+\CommentTok{\# Extra column for tags not seen again}
 
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{Periods)\{ }\CommentTok{\# Expected values for tags{-}at{-}risk, returned/not{-}seen{-}again}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{Periods)\{ }
+\CommentTok{\# Expected values for tags{-}at{-}risk, returned/not{-}seen{-}again}
 \NormalTok{    TagsAtRisk[i,i] }\OtherTok{\textless{}{-}}\NormalTok{ NTags}
 \NormalTok{    TagFate[i,i] }\OtherTok{\textless{}{-}}\NormalTok{  TagsAtRisk[i,i] }\SpecialCharTok{*}\NormalTok{ r.true }\CommentTok{\# Returns in release period}
 \NormalTok{  j }\OtherTok{\textless{}{-}}\NormalTok{ i}\SpecialCharTok{+}\DecValTok{1}
@@ -2451,7 +2460,7 @@ We begin by setting up matrices for tags-at-risk (tagged fish still alive) and t
 \NormalTok{      TagFate[i,j] }\OtherTok{\textless{}{-}}\NormalTok{ TagsAtRisk[i,j] }\SpecialCharTok{*}\NormalTok{ r.true}
 \NormalTok{      j }\OtherTok{\textless{}{-}}\NormalTok{ j}\SpecialCharTok{+}\DecValTok{1}
 \NormalTok{     \} }\CommentTok{\#while}
-\NormalTok{   TagFate[i, Periods}\SpecialCharTok{+}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ NTags}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(TagFate[i,i}\SpecialCharTok{:}\NormalTok{Periods]) }\CommentTok{\# Tags not seen again}
+\NormalTok{   TagFate[i, Periods}\SpecialCharTok{+}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ NTags}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(TagFate[i,i}\SpecialCharTok{:}\NormalTok{Periods]) }\CommentTok{\# Not seen again}
 \NormalTok{  \} }\CommentTok{\#i}
 
 \CommentTok{\#Random trial (tags returned by period or not seen again)}
@@ -2469,7 +2478,7 @@ This section of code introduces a while loop. This different looping construct i
 
 Inspecting the matrix of fates is helpful for understanding how survival is estimated. The expected tag returns within any column form ratios that equal the survival rate. For example, we would expect 80 tags returned in the second period from the first release compared to 100 from the second release, because the first release has been at large for one additional period. Similarly the ratio from successive rows of returns in period 3 also equal the survival rate. Thus we have several cells (and ratios) that provide information about survival, which we assumed to be constant over the three periods.
 
-The final lines of code in this section introduce the stochasticity associated with a multinomial distribution. The matrix of fates (expected values) provide the cell probabilities (once rescaled, internal to the rmultinom() function). It is instructive to compare the expected values and random realizations to see the level of variability associated with the multinomial distribution. Now the ratios of random values within a column no longer equals (but will vary around) the true survival rate.
+The final lines of code in this section introduce the stochasticity associated with a multinomial\index{Distribution, multinomial} distribution. The matrix of fates (expected values) provide the cell probabilities (once rescaled, internal to the rmultinom() function). It is instructive to compare the expected values (TagFate) and random realizations (RandRet) to see the level of variability associated with the multinomial\index{Distribution, multinomial} distribution. Now the ratios of random values within a column no longer equal (but will vary around) the true survival rate.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2494,7 +2503,8 @@ The final lines of code in this section introduce the stochasticity associated w
 \StringTok{   for (j in (i+1):Periods) \{}
 \StringTok{      p.est[i,j] \textless{}{-} p.est[i,(j{-}1)] * S.est}
 \StringTok{      \} \#j}
-\StringTok{    p.est[i,Periods+1] \textless{}{-} 1 {-} sum(p.est[i, i:Periods])   \# Prob of not being seen again}
+\StringTok{    p.est[i,Periods+1] \textless{}{-} 1 {-} sum(p.est[i, i:Periods])}
+\StringTok{    \# Last column is prob of not being seen again}
 \StringTok{    \} \#i}
 
 \StringTok{\# Likelihood}
@@ -2526,14 +2536,24 @@ The final lines of code in this section introduce the stochasticity associated w
 \NormalTok{                  model.file)}
   \FunctionTok{print}\NormalTok{(jagsfit)}
   \FunctionTok{plot}\NormalTok{(jagsfit)}
+  
+  \CommentTok{\# Estimated posterior distributions}
+\FunctionTok{hist}\NormalTok{(jagsfit}\SpecialCharTok{$}\NormalTok{BUGSoutput}\SpecialCharTok{$}\NormalTok{sims.array[,,}\DecValTok{2}\NormalTok{], }\AttributeTok{main=}\StringTok{""}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"Survival"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\NormalTok{S.true, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(jagsfit}\SpecialCharTok{$}\NormalTok{BUGSoutput}\SpecialCharTok{$}\NormalTok{sims.array[,,}\DecValTok{4}\NormalTok{], }\AttributeTok{main=}\StringTok{""}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"Tag recovery rate"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\NormalTok{r.true, }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-The analysis begins by establishing the usual uninformative prior distributions for the two rates. We calculate the total mortality rate (A.est) as the complement of the survival rate (1-S.est). One important advantage of a Bayesian analysis is that we automatically obtain measures of uncertainty for functions of model parameters. Here the function is simply 1-S.est, but this advantage applies regardless of the function's complexity.
+The JAGS analysis begins with the usual uninformative priors for the two rates. We calculate the total mortality rate (A.est) as the complement of the survival rate (1-S.est). One important advantage of a Bayesian analysis is that we automatically obtain measures of uncertainty for functions of model parameters. Here the function is simply 1-S.est, but this advantage applies regardless of the function's complexity.
 
-The likelihood calculations (dmulti()) requires cell probabilities for the multinomial distribution, so we calculate those probabilities directly rather than keeping track of numbers of tags by fate. The probability of a tag from release i being returned in period j is p.est{[}i,j{]} \textless- p.est{[}i,(j-1){]} * S.est. Make sure that you understand this expression for specific values of i and j. Can you think of another way of coding this calculation? Note that for loops work differently in JAGS compared to R, so we are able to use them for row and column processing. In JAGS, the `j' loop is not executed when i=3 because j\textgreater Periods. Note that our initial value for the tag-recovery rate is obtained as 1-S.init. The tag recovery rate cannot exceed 1-S.init, and would typically be less due to the other possible outcome, natural death.
+The likelihood calculations (dmulti()) require cell probabilities for the multinomial\index{Distribution, multinomial} distribution, so we calculate those probabilities directly rather than keeping track of numbers of tags by fate. The probability of a tag from release i being returned in period j is p.est{[}i,j{]} \textless- p.est{[}i,(j-1){]} * S.est. Make sure that you understand this expression for specific values of i and j. Can you think of another way of coding this calculation? Note that for loops work differently in JAGS compared to R, so we are able to use them for row and column processing. In JAGS, the `j' loop is not executed when i=3 because j\textgreater Periods. Note that our initial value for the tag-recovery rate is obtained as 1-S.init. The tag recovery rate cannot exceed 1-S.init, and would typically be less due to the other possible outcome, natural death.
 
-Estimates are good for this case, which is not surprising given the very large releases and only two time-independent parameters to estimate. The estimated number of effective parameters was 1.9 for one run, which is consistent with the two apparent model parameters (S.est, r.est) and A.est which is simply a function of S.est.
+The last four lines of code plot the estimated posterior distributions for survival and tag-recovery rate, along with the true values (Figure \ref{fig:TagRetPlot}). Estimates are typically reliable, which is not surprising given the very large releases and only two time-independent parameters to estimate. The estimated number of effective parameters was 1.9 for one run, which is consistent with the two apparent model parameters (S.est, r.est) and A.est which is not a model parameter but simply a function of S.est.
+
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{bookdown_files/figure-latex/TagRetPlot-1} \includegraphics[width=0.45\linewidth]{bookdown_files/figure-latex/TagRetPlot-2} \caption{Example of estimated posterior distributions for survival and tag-recovery rates from 3-year tag-return study with annual releases of 1000 tagged fish. Red vertical lines indicate true values.}\label{fig:TagRetPlot}
+\end{figure}
 
 If you think about a local system with which you are familiar, how practical would it be to tag 1000 fish at the start of each period (e.g., annually)? If you were responsible for planning the tagging operation, what sampling gear would you recommend? Would there be any potential concern about mortality due to handling? What size field crew would be needed and how much time would the tagging operation require? Could you use simulation to explore different sample sizes before recommending a specific field design?
 

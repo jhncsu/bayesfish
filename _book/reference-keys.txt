@@ -2,7 +2,7 @@ introduction
 R-intro
 Distributions
 Discrete
-bernoulli
+Bernoulli
 BinomialDist
 Multinomial
 poisson
@@ -61,7 +61,9 @@ exercises-7
 PopModels
 exercises-8
 title-placeholder
-fig:CohortPlot
-fig:TagRetPlot-1
-fig:TagRetPlot-2
-fig:TagRetPlot
+BetaDist
+NormalDist
+LognormalDist
+GammaDist
+fig:HearnPlot
+fig:BrowniePlot

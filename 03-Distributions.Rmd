@@ -6,7 +6,7 @@ In this chapter, we will examine some of the more common and important statistic
 
 ## Discrete {#Discrete}
 
-### Bernoulli
+### Bernoulli {#Bernoulli}
 
 The most basic discrete distribution is the Bernoulli\index{Distribution, Bernoulli}. There are only two outcomes, often referred to as success and failure. The classic example of a Bernoulli distribution is a coin toss, where “heads” might be considered success and “tails” failure. This distribution has a single parameter p, representing the probability of success. Its complement (1-p) is the probability of failure. Searching a lake for a fish with a radio transmitter is a fisheries example of a Bernoulli trial, where p represents the probability of detecting the fish’s signal (success). Other biological examples are whether a fish with a transmitter is dead or alive and whether or not a study site is occupied.
 
@@ -265,8 +265,8 @@ Try running the code several times and note the variation in pattern from one si
 
 As noted above, the `runif()` function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval; for example, `runif(n=Reps, min=0.3, max=0.4)`. The `runif()` function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.
 
-### Beta
-The beta distribution\index{Distribution, Beta} has a lower bound of 0 and an upper bound of 1, so it is useful for modeling parameters with those bounds (i.e., probabilities). A fisheries model might use a beta distribution to simulate variation in a survival probability or the probability of a tag being returned. The uniform distribution (Section \@ref(Uniform)) can also be used for probabilities, but only for the case where all values are equally likely. The beta distribution is more flexible and can not only be flat but also u-shaped, bell-shaped, or left- or right-skewed. Figure \@ref(fig:Beta) shows sample distributions for shape parameters $\alpha$=1 and $\beta$=0.5, 1, and 5.
+### Beta  {#BetaDist}
+The beta distribution\index{Distribution, Beta} has a lower bound of 0 and an upper bound of 1, so it is useful for modeling parameters with those bounds (i.e., probabilities). A fisheries model might use a beta distribution to simulate variation in a survival probability or the probability of a tag being returned. The uniform distribution (Section \@ref(Uniform)) csan also be used for probabilities, but only for the case where all values are equally likely. The beta distribution is more flexible and can not only be flat but also u-shaped, bell-shaped, or left- or right-skewed. Figure \@ref(fig:Beta) shows sample distributions for shape parameters $\alpha$=1 and $\beta$=0.5, 1, and 5.
 
 ```{r, Beta, fig.cap='Histogram for 200 random draws from a beta distribution, with alpha=1 and beta=0.5  (left), 1 (center), and 5 (right).',fig.show="hold", out.width="30%"}
 #| echo: false
@@ -301,7 +301,7 @@ hist(x, main="", xlab="Probability")
 
 After running the above code multiple times, try a beta(8, 4) distribution. These parameter values could result from a pilot study with seven successes in ten trials ($\alpha$=7+1, $\beta$=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a fisheries situation where probabilities would be expected to be close to 0 or close to 1?
 
-### Normal
+### Normal  {#NormalDist}
 The normal distribution\index{Distribution, Normal} is the well-known bell curve from traditional statistics courses. The distribution is unbounded (bounds -$\infty$, $\infty$). The shape of the distribution is determined by the mean (location) and standard deviation (spread). A fisheries example might be a simulation where size-at-age varied among individuals according to a normal distribution.
 
 Let's look at simulation code for length of individual fish, assuming a mean of 30 and standard deviation of 2:
@@ -316,7 +316,7 @@ hist(Len, main="")
 
 Run the code a few times to look at the variation in shape and bounds at a relatively small sample size. Next, increase the sample size and determine through trial and error the smallest sample size that provides a relatively smooth bell-curve shape.  Estimate the mean and standard deviation (function `sd()`) and compare the observed and true values.
 
-### Lognormal
+### Lognormal {#LognormalDist}
 The lognormal distribution\index{Distribution, Lognormal} (bounds 0, $\infty$) is useful in ecological settings because it excludes negative values and allows for a long upper tail.  A classic fisheries example of a lognormal distribution is annual recruitment for marine fish species (number of young entering the population). Most years result in low recruitment but there are occasional extreme values when environmental conditions are right.
 
 We begin with simulation code:
@@ -353,7 +353,7 @@ Exp.mean <- exp(ln.m+(ln.v/2)) # Calculate arithmetic scale expected mean
 abline(v=Exp.mean, col="red")
 ```
 
-### Gamma
+### Gamma {#GammaDist}
 The gamma distribution\index{Distribution, Gamma} is similar to the lognormal in that has a lower bound of 0 and an upper bound of $\infty$. Thus it also excludes negative values and allows for a long upper tail. This distribution is often used to simulate waiting times (how long until some number of events has occurred, based on a specified average time between events). We consider it here simply because it can take on a variety of shapes depending on its parameters [@bolker2008]. Figure \@ref(fig:Gamma) shows sample distributions for shape parameter $\alpha$=3 and scale or spread parameter $\beta$=1 and 3.
 
 ```{r, Gamma, fig.cap='Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (left) and 3 (right).',fig.show="hold", out.width="50%"}

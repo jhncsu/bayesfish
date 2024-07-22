@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-05-03" />
+<meta name="date" content="2024-07-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -174,7 +174,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.1" data-path="Distributions.html"><a href="Distributions.html#Discrete"><i class="fa fa-check"></i><b>3.1</b> Discrete</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#Bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
 <li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
 <li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
 <li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#poisson"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
@@ -289,8 +289,8 @@ div.csl-indent {
 <p>In this chapter, we will examine some of the more common and important statistical distributions, and learn how to simulate observations from those distributions. Simulation will be an important skill in the chapters that follow, in that simulated data with known parameters provide a valuable way of evaluating field study designs and methods of analysis. The first few distributions that we consider are discrete (Section <a href="Distributions.html#Discrete">3.1</a>); that is, non-negative whole numbers that are appropriate for counts like the number of fish in a single haul of a net. The second category is continuous distributions (Section <a href="Distributions.html#Continuous">3.2</a>), for real numbers such as a catch <em>rate</em> of 0.52.</p>
 <div id="Discrete" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Discrete<a href="Distributions.html#Discrete" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="bernoulli" class="section level3 hasAnchor" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Bernoulli<a href="Distributions.html#bernoulli" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="Bernoulli" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Bernoulli<a href="Distributions.html#Bernoulli" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The most basic discrete distribution is the Bernoulli. There are only two outcomes, often referred to as success and failure. The classic example of a Bernoulli distribution is a coin toss, where “heads” might be considered success and “tails” failure. This distribution has a single parameter p, representing the probability of success. Its complement (1-p) is the probability of failure. Searching a lake for a fish with a radio transmitter is a fisheries example of a Bernoulli trial, where p represents the probability of detecting the fish’s signal (success). Other biological examples are whether a fish with a transmitter is dead or alive and whether or not a study site is occupied.</p>
 <p>Let’s begin with R code for a hands-on example, where a coin was tossed ten times. It is convenient in R to use 0 for tails and 1 for heads:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Distributions.html#cb5-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>)  <span class="co"># Coin toss observations, 0=tails</span></span>
