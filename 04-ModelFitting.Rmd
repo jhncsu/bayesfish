@@ -200,7 +200,7 @@ abline(v=N.true, col="red")
 
 ```
 
-The jagsfit object is a data frame that can be inspected in the Environment window. Note that sims.list arrays contain 3000 elements, which is the combined length of 1000 retained values (2000-n.burnin) from each of three chains. (When entering a jagsfit object in the Source window or Console, typing $ after each level of the object will bring up an RStudio prompt for the next choice.)
+The jagsfit object can be inspected in the Environment window. Note that sims.list arrays contain 3000 elements, which is the combined length of 1000 retained values (2000-n.burnin) from each of three chains. (When entering a jagsfit object in the Source window or Console, typing $ after each level of the object will bring up an RStudio prompt for the next choice.)
 
 The model results include pD\index{pD}, which is an estimate of the number of effective parameters in the model. In simple models, we can often count the number of nominal parameters, but the number of effective parameters may be less; for example, parameters may be correlated or constrained by an informative prior distribution [@mccarthy2007]. JAGS uses numerical methods to estimate pD. For this model, we would expect pD to be close to 1 for the estimate of N.hat; MarkedFraction is a calculated value and not a model parameter.
 

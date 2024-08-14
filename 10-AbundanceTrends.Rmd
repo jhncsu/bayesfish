@@ -1,0 +1,502 @@
+# Abundance trends {#Trend}
+
+In Chapter \@ref(Abundance), we examined three approaches for estimating absolute abundance.  Those approaches are well suited for small populations that can be readily sampled. For larger populations, it is much more common to estimate relative abundance\index{relative abundance}. The general approach for monitoring relative abundance is to conduct a survey using consistent methods over time, using a gear such as electrofishing, traps, or nets. It is assumed that trends in survey catch reflect trends in abundance. Said another way, we are assuming that catches (on average) are directly proportional to abundance. Trends in abundance from a well-designed survey are valuable whether trying to restore a fish at low abundance or determining whether management of an exploited population is effective.
+
+There are several important aspects to planning a survey for monitoring relative abundance.  Presumably the focus is on annual trends, so one decision would be how many years would be required before a trend could be detected.  The survey catch rate for each year would need to be sufficiently precise to allow for trend detection.  Related to these logistical considerations is the decision of what magnitude of change we seek to detect. More gradual changes require much higher precision than if we only seek to detect large increases or decreases. We begin with the simplest case of whether there is a linear trend in relative abundance. This is a Bayesian version of the simple linear regression analysis of traditional statistics courses. Then we consider a more advanced model intended to capture the underlying population dynamics.
+
+## Linear model {#Linear}
+
+We begin with the simulation code for generating absolute abundance, which is unknown, and relative abundance as estimated by the survey. Variables that describe the data set and survey process include the length of the time series (n.years), mean population growth rate (mean.lambda), and the standard deviation for the annual growth rate (sigma.lambda). We use a 10-year survey data set, which seems relatively short for a trend analysis but would also be a daunting task if starting up a new survey. The starting absolute population size (10,000) is arbitrary and not estimable, but we can examine trends in relative abundance from the annual catches.
+
+Following @kéry.schaub_2011 (their Section 5.2), population change is modeled assuming exponential growth\index{exponential growth}. A value just above 1 (1.02) for the mean population growth rate provides for a modest rate of population increase, on average. The standard deviation introduces stochasticity in the annual changes, as could occur due to variation in fishing effort or environmental factors. The expected survey catch is the product of population size and the capture probability, or fraction of the population caught by our annual "unit" of survey effort. We use a default capture probability\index{capture probability} of 0.025. Observation error for the survey catches allows for normally-distributed random variation about the expected catch.
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Generation of simulated data
+n.years <- 10
+N1 <- 10000  # Initial population size
+mean.lambda <- 1.02 # Mean annual population growth rate
+sigma.lambda <- 0.02 # Process (temporal) variation in the growth rate (SD)
+p.survey <- 0.025 # Default capture probability for survey
+sigma.obs <- 40 # Observation error for survey catch (SD)
+C <- N <- numeric(n.years)
+N[1] <- N1
+lambda <- rnorm(n.years-1, mean.lambda, sigma.lambda) 
+# Lambda is vector of annual population growth rates
+for (y in 1:(n.years-1)){
+  N[y+1] <- N[y] * lambda[y]
+}
+C <- rnorm(n=n.years, mean=p.survey*N, sd=sigma.obs)
+plot(C, ylab="Survey Catch", xlab="Year")
+```
+Run the simulation code several times to gain insight into the level of variation possible in a ten-year pattern. Then vary survey length, mean population growth rate and temporal variation, capture probability, and observation error to understand how each setting contributes to the survey pattern of relative abundance. 
+
+The JAGS code treats the annual survey catches as independent observations, and estimates an intercept ($b_1$) and slope ($b_2$) for the linear regression model relating year to the relative abundance data. A third parameter (sigma.est) accounts for variation in the survey catch around the line, which would be due not only to observation error but also annual variation in population growth. Uninformative prior distributions are used for the three parameters. The initial value for the slope is set at 0, and the initial value for the intercept varies between the minimum and maximum observed annual catch.
+
+```{r eval=FALSE}
+# Load necessary library
+library(rjags)
+library(R2jags)
+
+# JAGS code for estimating model parameters
+sink("PopTrend_Linear.txt")
+cat("
+model {
+
+# Priors
+for (i in 1:2){
+  b[i] ~ dnorm(0, 0.0001)
+}
+sigma.est ~ dunif(0, 100)
+tau <- pow(sigma.est, -2)
+
+  # Likelihood
+  for (y in 1:n.years){
+  ExpC[y] <- b[1] + b[2]*y
+  C[y] ~ dnorm(ExpC[y], tau)
+  } #y
+  p.pos <- step(b[2])
+}
+    ",fill = TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("n.years", "C")
+
+# Initial values.
+jags.inits <- function(){ list(b=c(runif(n=1, min=min(C), max=max(C)), 0),
+                               sigma.est=runif(n=1, min=0, max=100)
+                               )}
+
+model.file <- 'PopTrend_Linear.txt'
+
+# Parameters monitored
+jags.params <- c("b", "sigma.est", "p.pos")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 5000,
+                model.file)
+print(jagsfit)
+#plot(jagsfit)
+
+year.seq <- seq(1:n.years)
+C.hat <- jagsfit$BUGSoutput$mean$b[1]+jagsfit$BUGSoutput$mean$b[2]*year.seq
+points(year.seq, C.hat, type="l", col="red")
+```
+For convenience in viewing the results, we skip plotting the jagsfit object and simply add the regression line to the original plot of survey catches (Figure \@ref(fig:LinTrendPlot)). We can examine the credible interval for $b_2$ to determine whether the survey provides evidence of a trend (credible interval not including 0). A more quantitative approach is to estimate the probability of a positive mean growth rate [@pregler.etal_2019]. We can use the <code>step()</code> function\index{step function} (which is 1 for an argument > 0; 0 otherwise) to calculate the fraction of retained slope estimates that are greater than 0 (mean for calculated variable p.pos).
+
+```{r LinTrendPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example of fitted linear model for survey catch versus year.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+set.seed(22222) # Ensure that book will have a reasonable result
+par(mar = c(4, 4, 1, .1))
+
+LinTrend <- function() {
+# Priors
+for (i in 1:2){
+  b[i] ~ dnorm(0, 0.0001)
+}
+sigma.est ~ dunif(0, 100)
+tau <- pow(sigma.est, -2)
+
+  # Likelihood
+  for (y in 1:n.years){
+  ExpC[y] <- b[1] + b[2]*y
+  C[y] ~ dnorm(ExpC[y], tau)
+  } #y
+  p.pos <- step(b[2])
+}
+
+# Simulation code
+n.years <- 10
+N1 <- 10000  # Initial population size
+mean.lambda <- 1.02 # Mean annual population growth rate
+sigma.lambda <- 0.02 # Process (temporal) variation in the growth rate (SD)
+p.survey <- 0.025 # Default capture probability for survey
+sigma.obs <- 20 # Observation error for survey catch (SD)
+C <- N <- numeric(n.years)
+N[1] <- N1
+lambda <- rnorm(n.years-1, mean.lambda, sigma.lambda) 
+# Lambda is vector of annual growth rates
+for (y in 1:(n.years-1)){
+  N[y+1] <- N[y] * lambda[y]
+}
+C <- rnorm(n=n.years, mean=p.survey*N, sd=sigma.obs)
+plot(C, ylab="Survey Catch", xlab="Year")
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n.years", "C")
+
+# Initial values.
+jags.inits <- function(){ list(b=c(runif(n=1, min=min(C), max=max(C)), 0),
+                               sigma.est=runif(n=1, min=0, max=100))}
+
+# Fit the model
+LinTrend_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 5000,
+    model.file = LinTrend,
+    parameters.to.save = c("b", "sigma.est", "p.pos")
+  )
+
+year.seq <- seq(1:n.years)
+C.hat <- LinTrend_jags$BUGSoutput$mean$b[1]+LinTrend_jags$BUGSoutput$mean$b[2]*year.seq
+points(year.seq, C.hat, type="l", col="red")
+```
+
+Try running the simulation and analysis code multiple times and see whether your visual interpretation of the pattern (or lack thereof) matches with the regression results. Then vary the simulation settings to see the level of support for a positive trend. For example, the probability of a positive mean growth rate was 0.80, 0.96, 0.84, 0.50, and 1.00 for five trials using the default settings, compared to 0.99, 0.57, 0.94, 0.98, and 0.97 if observation error was reduced by half.
+
+## Exponential growth model {#ExpGr}
+
+An exponential growth\index{exponential growth} model was used in Section \@ref(Linear) to simulate population change, but our analysis ignored the dependence between the annual survey catches. An improved approach would be to fit a model that attempts to reveal the underlying population dynamics. The simulation code is unchanged, but the JAGS code now specifies exponential growth. Our predicted survey catches have the same growth parameters as the underlying population, because of the assumed direct proportionality between catch and absolute abundance. Following @kéry.schaub_2011 (their Section 5.4), we fit the exponential growth model on the log scale. JH NOTE: ** confirm and provide rationale for ln-scale fit.
+
+Fitting an underlying population model makes it possible to distinguish between the two sources of variation in survey catch: variation in population growth rate and survey sampling. The former is referred to as process error\index{process error} [@kéry.schaub_2011], as it is variation in the biological process (population growth). The latter is observation error\index{observation error}, or random variation in the survey catch (our proxy for annual abundance).
+
+The JAGS code now has parameters for initial relative abundance (predicted ln-scale catch in year 1), the mean and standard deviation for the annual sequence of population growth rates, and the standard deviation for observation error. The parameters for population growth rate are hyperparameters\index{hyperparameters}, describing a normal distribution for the annual growth rates. Population growth in ln-scale uses the model $lnN_{t+1}=lnN_t+r$, so 1+r provides a value comparable to mean.lambda in the simulation code. Uninformative prior distributions are used for all parameters.
+
+```{r eval=FALSE}
+# Load necessary library
+library(rjags)
+library(R2jags)
+
+# JAGS code for estimating model parameters
+sink("PopTrend_ExpGr.txt")
+cat("
+model {
+# Priors
+logC.est[1] ~ dunif(1, 100)     # Initial relative abundance
+mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate
+sigma.proc.est ~ dunif(0, 1)  # Process error (annual variation in r)
+tau.proc.est <- pow(sigma.proc.est, -2)
+sigma.obs.est ~ dunif(0, 100)     # Observation error
+tau.obs.est <- pow(sigma.obs.est, -2)
+
+# Likelihood
+for (y in 1:(n.years-1)){
+   r[y] ~ dnorm(mean.r.est, tau.proc.est)
+   logC.est[y+1] <- logC.est[y] + r[y]
+   } #y
+for (y in 1:n.years) {
+  C.est[y] <- exp(logC.est[y])
+  C[y] ~ dnorm(C.est[y], tau.obs.est)
+   } #y
+     p.pos <- step(mean.r.est)
+}
+    ",fill = TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("n.years", "C")
+
+# Initial values.
+jags.inits <- function(){list(sigma.proc.est = runif(n=1, min=0, max=1), 
+                              mean.r.est = rnorm(n=1, mean=0, sd=1),
+                              sigma.obs.est = runif(n=1, min=0, max=100),
+                              logC.est = c(runif(n=1, min=5, max=10),
+                              rep(NA,(n.years-1))))}
+
+model.file <- 'PopTrend_ExpGr.txt'
+
+# Parameters monitored
+jags.params <- c("mean.r.est", "sigma.proc.est", "sigma.obs.est", "C.est",
+                 "p.pos")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 20000,
+                model.file)
+print(jagsfit)
+#plot(jagsfit)
+
+year.seq <- seq(1:n.years)
+points(year.seq, jagsfit$BUGSoutput$mean$C.est, type="l", col="red")
+```
+This is a much more complex model than the linear regression, and we increase the number of iterations to achieve convergence (which should be confirmed by checking Rhat values). The predicted catches are now not a straight line because we are estimating annual values for population growth rate (Figure \@ref(fig:ExpTrendPlot)). The smoothed pattern for predicted catches is the model's attempt to describe the biological process (exponential growth with year-to-year variation in growth rate). Variation in observed catches about the fitted line reflects estimated observation error. Try several runs using a small value for observation error to see that the model can closely mimic the population trajectory when observation error is low. It can also be instructive to try an extreme value for the length of the time series. The annual estimates of population growth rate are drawn from a shared normal distribution, so a longer time series helps in sorting out process versus observation error (e.g., try n.years=40, sigma.lambda=0.05, and sigma.obs=10).
+
+```{r ExpTrendPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example of fitted exponential growth model for survey catch versus year.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+set.seed(22222) # Ensure that book will have a reasonable result
+par(mar = c(4, 4, 1, .1))
+
+ExpTrend <- function() {
+# Priors
+logC.est[1] ~ dunif(1, 100)     # Initial relative abundance
+mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate
+sigma.proc.est ~ dunif(0, 1)  # Process error (annual variation in r)
+tau.proc.est <- pow(sigma.proc.est, -2)
+sigma.obs.est ~ dunif(0, 100)     # Observation error
+tau.obs.est <- pow(sigma.obs.est, -2)
+
+# Likelihood
+for (y in 1:(n.years-1)){
+   r[y] ~ dnorm(mean.r.est, tau.proc.est)
+   logC.est[y+1] <- logC.est[y] + r[y]
+   } #y
+for (y in 1:n.years) {
+  C.est[y] <- exp(logC.est[y])
+  C[y] ~ dnorm(C.est[y], tau.obs.est)
+   } #y
+     p.pos <- step(mean.r.est)
+}
+
+# Simulation code
+n.years <- 10
+N1 <- 10000  # Initial population size
+mean.lambda <- 1.02 # Mean annual population growth rate
+sigma.lambda <- 0.02 # Process (temporal) variation in the growth rate (SD)
+p.survey <- 0.025 # Default capture probability for survey
+sigma.obs <- 20 # Observation error for survey catch (SD)
+C <- N <- numeric(n.years)
+N[1] <- N1
+lambda <- rnorm(n.years-1, mean.lambda, sigma.lambda) 
+# Lambda is vector of annual growth rates
+for (y in 1:(n.years-1)){
+  N[y+1] <- N[y] * lambda[y]
+}
+C <- rnorm(n=n.years, mean=p.survey*N, sd=sigma.obs)
+plot(C, ylab="Survey Catch", xlab="Year")
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n.years", "C")
+
+# Initial values.
+jags.inits <- function(){list(sigma.proc.est = runif(n=1, min=0, max=1), 
+                              mean.r.est = rnorm(n=1, mean=0, sd=1),
+                              sigma.obs.est = runif(n=1, min=0, max=100),
+                              logC.est = c(runif(n=1, min=5, max=10), rep(NA,
+                              (n.years-1))))}
+
+# Fit the model
+ExpTrend_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 20000,
+    model.file = ExpTrend,
+    parameters.to.save = c("mean.r.est", "sigma.proc.est", "sigma.obs.est", "C.est",
+                 "p.pos")
+  )
+
+year.seq <- seq(1:n.years)
+points(year.seq, ExpTrend_jags$BUGSoutput$mean$C.est, type="l", col="red")
+```
+
+We use the <code>step()</code> function\index{step function} (calculated parameter p.pos) to estimate the probability that the mean population growth rate is positive.  We obtained probabilities of 0.73, 0.73, 0.40, 0.44, and 0.61 for five trials using the default settings, compared to 0.74, 0.69, 0.92, 0.99, and 0.91 for a simulation mean growth rate of 1.05. These results show the challenge in detecting a population trend, which will depend on the magnitude and annual variation in the mean annual change, the length of the time series, and the precision of the survey.
+
+### Forecasting  {#Forecast}
+
+In Section \@ref(ExpGr), we fitted an exponential growth\index{exponential growth} model to describe underlying population dynamics. One advantage of that approach is that we can use that underlying model to project future population levels. We add a new simulation setting (p.years) for the number of future years to predict abundance, and generate n.years+p.years values for population size (N). The catch vector has n.years of observed survey catches, augmented by p.years of NA values. The code for plotting catch is moved below the JAGS section, because now we need to choose a range for the y-axis that will accommodate the observed and predicted catches plus the (generally wider) credible intervals. 
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Generation of simulated data
+p.years <- 5 # Predicted future population levels
+n.years <- 10 # Years of survey data
+N1 <- 10000  # Initial population size
+mean.lambda <- 1.02 # Mean annual population growth rate
+sigma.lambda <- 0.02 # Process (temporal) variation in the growth rate (SD)
+p.survey <- 0.025 # Default capture probability for survey
+sigma.obs <- 40 # Observation error for survey catch (SD)
+C <- N <- numeric(n.years+p.years)
+N[1] <- N1
+lambda <- rnorm((n.years+p.years-1), mean.lambda, sigma.lambda) # Draw vector of annual growth rates
+for (y in 1:(n.years+p.years-1)){
+  N[y+1] <- N[y] * lambda[y]
+}
+C <- rnorm(n=n.years, mean=p.survey*N, sd=sigma.obs)
+C <- c(C, rep(NA, p.years))  # Observed survey catches augmented by NA values
+```
+
+The likelihood in the JAGS code is modified slightly to accommodate the p.years of additional (missing) catches. We also add a <code>step()</code> function\index{step function} to estimate p.increase, the probability that predicted catch in the final year is higher than in year one. This is an arbitrary choice, but provides some insight into whether a detectable increase is expected over the modeled time horizon. Data passed to JAGS now includes p.years, and we modify the length of the vector of initial values for predicted catch.
+
+```{r eval=FALSE}
+# Load necessary library
+library(rjags)
+library(R2jags)
+
+# JAGS code for estimating model parameters
+sink("PopTrend_ExpGr.txt")
+cat("
+model {
+# Priors
+logC.est[1] ~ dunif(1, 100)     # Initial relative abundance
+mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate
+sigma.proc.est ~ dunif(0, 1)  # Annual variation in r
+tau.proc.est <- pow(sigma.proc.est, -2)
+sigma.obs.est ~ dunif(0, 100)     # Observation error
+tau.obs.est <- pow(sigma.obs.est, -2)
+
+# Likelihood
+for (y in 1:(n.years+p.years-1)){
+   r[y] ~ dnorm(mean.r.est, tau.proc.est)
+   logC.est[y+1] <- logC.est[y] + r[y]
+   } #y
+for (y in 1:(n.years+p.years)) {
+  C.est[y] <- exp(logC.est[y])
+  C[y] ~ dnorm(C.est[y], tau.obs.est)
+   } #y
+p.pos <- step(mean.r.est)
+p.increase <- step(C.est[n.years+p.years]-C.est[1])
+  # Prob of increase from first to last
+}
+    ",fill = TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("n.years", "p.years", "C")
+
+# Initial values.
+jags.inits <- function(){list(sigma.proc.est = runif(n=1, min=0, max=1), 
+                              mean.r.est = rnorm(n=1, mean=0, sd=1),
+                              sigma.obs.est = runif(n=1, min=0, max=100),
+                              logC.est = c(runif(n=1, min=5, max=10),
+                                           rep(NA, (n.years+p.years-1))))}
+
+model.file <- 'PopTrend_ExpGr.txt'
+
+# Parameters monitored
+jags.params <- c("mean.r.est", "sigma.proc.est", "sigma.obs.est", "C.est",
+                 "p.pos", "p.increase")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 40000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+```
+Convergence was slower for this model compared to Section \@ref(ExpGr), so the number of iterations was increased to 40,000. Plotting the jagsfit object shows that uncertainty about predicted catch increases sharply over the forecast years. The future forecasts use annual population growth rates that are drawn randomly from the normal distribution. This makes clear how little can be said about population size or trends, even a couple of years into the future.
+
+We can now plot the observed catches, augmented by the predicted catch vector and lines representing lower and upper 95% credible intervals\index{credible interval} [@kéry.schaub_2011]. The <code>quantile()</code> function\index{quantile function} provides the 0.025 and 0.975 quantiles from the vector of retained MCMC updates (draws from the posterior distribution). The <code>ylim</code> plot option allows us to scale the y-axis to accommodate all four series.
+
+```{r eval=FALSE}
+par(mfcol=c(1,1)) # Return to default of 1 panel
+year.seq <- seq(1:length(C))
+lower <- upper <- length(C)
+for (y in 1:length(C)){
+  lower[y] <- quantile(jagsfit$BUGSoutput$sims.list$C.est[,y], 0.025)
+  upper[y] <- quantile(jagsfit$BUGSoutput$sims.list$C.est[,y], 0.975)
+} #y
+min.y <- min(C[1:n.years],jagsfit$BUGSoutput$mean$C.est, lower)
+max.y <- max(C[1:n.years],jagsfit$BUGSoutput$mean$C.est, upper)
+plot(year.seq, C, ylab="Survey Catch", xlab="Year",
+     ylim = c(min.y, max.y))
+
+points(year.seq, jagsfit$BUGSoutput$mean$C.est, type="l", col="red")
+points(year.seq, lower, type="l", lty="dashed")
+points(year.seq, upper, type="l", lty="dashed")
+```
+The observed catches should generally fall within the 95% credible intervals\index{credible interval} (Figure \@ref(fig:ForecastTrendPlot)). As in Section \@ref(ExpGr), the red line for predicted catch has a smoother trajectory than the individual catches. How many years into the future would you be confident in predicting the population trend?
+
+```{r ForecastTrendPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example of fitted exponential growth model for survey catch versus year with forecasts for five additional years. Dashed lines represent lower and upper 95% credible intervals.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment
+set.seed(22222) # Ensure that book will have a reasonable result
+par(mar = c(4, 4, 1, .1))
+
+ForecastTrend <- function() {
+# Priors
+logC.est[1] ~ dunif(1, 100)     # Initial relative abundance
+mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate
+sigma.proc.est ~ dunif(0, 1)  # Annual variation in r
+tau.proc.est <- pow(sigma.proc.est, -2)
+sigma.obs.est ~ dunif(0, 100)     # Observation error
+tau.obs.est <- pow(sigma.obs.est, -2)
+
+# Likelihood
+for (y in 1:(n.years+p.years-1)){
+   r[y] ~ dnorm(mean.r.est, tau.proc.est)
+   logC.est[y+1] <- logC.est[y] + r[y]
+   } #y
+for (y in 1:(n.years+p.years)) {
+  C.est[y] <- exp(logC.est[y])
+  C[y] ~ dnorm(C.est[y], tau.obs.est)
+   } #y
+p.pos <- step(mean.r.est)
+p.increase <- step(C.est[n.years+p.years]-C.est[1])
+  # Prob of increase from first to last
+}
+
+# Generation of simulated data
+p.years <- 5 # Predicted future population levels
+n.years <- 10 # Years of survey data
+N1 <- 10000  # Initial population size
+mean.lambda <- 1.02 # Mean annual population growth rate
+sigma.lambda <- 0.02 # Process (temporal) variation in the growth rate (SD)
+p.survey <- 0.025 # Default capture probability for survey
+sigma.obs <- 40 # Observation error for survey catch (SD)
+C <- N <- numeric(n.years+p.years)
+N[1] <- N1
+lambda <- rnorm((n.years+p.years-1), mean.lambda, sigma.lambda) # Draw vector of annual growth rates
+for (y in 1:(n.years+p.years-1)){
+  N[y+1] <- N[y] * lambda[y]
+}
+C <- rnorm(n=n.years, mean=p.survey*N, sd=sigma.obs)
+C <- c(C, rep(NA, p.years))  # Observed survey catches augmented by NA values
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n.years", "p.years", "C")
+
+# Initial values.
+jags.inits <- function(){list(sigma.proc.est = runif(n=1, min=0, max=1), 
+                              mean.r.est = rnorm(n=1, mean=0, sd=1),
+                              sigma.obs.est = runif(n=1, min=0, max=100),
+                              logC.est = c(runif(n=1, min=5, max=10),
+                              rep(NA, (n.years+p.years-1))))}
+
+# Fit the model
+ForecastTrend_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 20000,
+    model.file = ForecastTrend,
+    parameters.to.save = c("mean.r.est", "sigma.proc.est", "sigma.obs.est", "C.est",
+                 "p.pos", "p.increase")
+  )
+
+#par(mfcol=c(1,1)) # Return to default of 1 panel
+year.seq <- seq(1:length(C))
+lower <- upper <- length(C)
+for (y in 1:length(C)){
+  lower[y] <- quantile(ForecastTrend_jags$BUGSoutput$sims.list$C.est[,y], 0.025)
+  upper[y] <- quantile(ForecastTrend_jags$BUGSoutput$sims.list$C.est[,y], 0.975)
+} #y
+min.y <- min(C[1:n.years],ForecastTrend_jags$BUGSoutput$mean$C.est, lower)
+max.y <- max(C[1:n.years],ForecastTrend_jags$BUGSoutput$mean$C.est, upper)
+plot(year.seq, C, ylab="Survey Catch", xlab="Year",
+     ylim = c(min.y, max.y))
+
+points(year.seq, ForecastTrend_jags$BUGSoutput$mean$C.est, type="l", col="red")
+points(year.seq, lower, type="l", lty="dashed")
+points(year.seq, upper, type="l", lty="dashed")
+```
+
+## Exercises
+
+1. For the linear model (Section \@ref(Linear)), compare the probability of a positive mean growth rate (p.pos) for sigma.lambda=0.02 (default) and 0.01, using ten simulation trials at each level.
+
+2. For the exponential growth model (Section \@ref(ExpGr)), use simulation to determine the approximate level for observation error where p.pos would typically (e.g., 8 of 10) exceed 90%.
+
+3. For the exponential growth model that includes forecasting (Section \@ref(Forecast)), compare a sequence of estimates for p.increase (probability that predicted catch in final year exceeds year one) for mean population growth rates of 1.02 and 1.05. 

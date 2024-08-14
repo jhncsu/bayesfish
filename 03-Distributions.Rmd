@@ -168,7 +168,7 @@ In this simulation, the age proportions (TrueP) are arbitrarily chosen (but coul
 
 Run the code beginning with the `x <- rmultinom()` line several times to see how much the age distribution varies from one random sample to the next. The underlying age proportions are fixed, but the counts vary quite a bit for this small sample size.  This is an example of how simulation is helpful in gaining experience and intuition in judging pure sampling variation versus a real biological result (e.g. good or bad year-class strength).
 
-### Poisson
+### Poisson  {#PoissonDist}
 
 Like the Bernoulli, binomial, and multinomial distributions, the Poisson\index{Distribution, Poisson} and negative binomial distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two) whereas the Poisson and negative binomial distributions do not (in theory, if not in practical terms). The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually $\lambda$, which represents the mean and variance of the distribution. A fisheries example of a Poisson distribution could be the number of fish per day moving upstream via a fish ladder. A model for this process could be useful for designing new fish ladders to have an appropriate capacity. Another example could be the number of fish caught per trawl tow. In this case, emphasis might be placed on how trawl catches vary from year to year, as an indication of population status. 
 
