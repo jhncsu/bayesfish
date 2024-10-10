@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-08-14" />
+<meta name="date" content="2024-10-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,16 +31,16 @@
   
   
 <link rel="prev" href="Recruit.html"/>
-<link rel="next" href="PopModels.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link rel="next" href="integrated-population-models.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,9 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -256,9 +256,9 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="Trend.html"><a href="Trend.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
+<li class="chapter" data-level="11" data-path="integrated-population-models.html"><a href="integrated-population-models.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="PopModels.html"><a href="PopModels.html#exercises-8"><i class="fa fa-check"></i><b>11.1</b> Exercises</a></li>
+<li class="chapter" data-level="11.1" data-path="integrated-population-models.html"><a href="integrated-population-models.html#exercises-8"><i class="fa fa-check"></i><b>11.1</b> Exercises</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
@@ -291,75 +291,75 @@ div.csl-indent {
 <h2><span class="header-section-number">10.1</span> Linear model<a href="Trend.html#Linear" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We begin with the simulation code for generating absolute abundance, which is unknown, and relative abundance as estimated by the survey. Variables that describe the data set and survey process include the length of the time series (n.years), mean population growth rate (mean.lambda), and the standard deviation for the annual growth rate (sigma.lambda). We use a 10-year survey data set, which seems relatively short for a trend analysis but would also be a daunting task if starting up a new survey. The starting absolute population size (10,000) is arbitrary and not estimable, but we can examine trends in relative abundance from the annual catches.</p>
 <p>Following <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> (their Section 5.2), population change is modeled assuming exponential growth. A value just above 1 (1.02) for the mean population growth rate provides for a modest rate of population increase, on average. The standard deviation introduces stochasticity in the annual changes, as could occur due to variation in fishing effort or environmental factors. The expected survey catch is the product of population size and the capture probability, or fraction of the population caught by our annual “unit” of survey effort. We use a default capture probability of 0.025. Observation error for the survey catches allows for normally-distributed random variation about the expected catch.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Trend.html#cb1-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb1-2"><a href="Trend.html#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="Trend.html#cb1-3" tabindex="-1"></a><span class="co"># Generation of simulated data</span></span>
-<span id="cb1-4"><a href="Trend.html#cb1-4" tabindex="-1"></a>n.years <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb1-5"><a href="Trend.html#cb1-5" tabindex="-1"></a>N1 <span class="ot">&lt;-</span> <span class="dv">10000</span>  <span class="co"># Initial population size</span></span>
-<span id="cb1-6"><a href="Trend.html#cb1-6" tabindex="-1"></a>mean.lambda <span class="ot">&lt;-</span> <span class="fl">1.02</span> <span class="co"># Mean annual population growth rate</span></span>
-<span id="cb1-7"><a href="Trend.html#cb1-7" tabindex="-1"></a>sigma.lambda <span class="ot">&lt;-</span> <span class="fl">0.02</span> <span class="co"># Process (temporal) variation in the growth rate (SD)</span></span>
-<span id="cb1-8"><a href="Trend.html#cb1-8" tabindex="-1"></a>p.survey <span class="ot">&lt;-</span> <span class="fl">0.025</span> <span class="co"># Default capture probability for survey</span></span>
-<span id="cb1-9"><a href="Trend.html#cb1-9" tabindex="-1"></a>sigma.obs <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># Observation error for survey catch (SD)</span></span>
-<span id="cb1-10"><a href="Trend.html#cb1-10" tabindex="-1"></a>C <span class="ot">&lt;-</span> N <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n.years)</span>
-<span id="cb1-11"><a href="Trend.html#cb1-11" tabindex="-1"></a>N[<span class="dv">1</span>] <span class="ot">&lt;-</span> N1</span>
-<span id="cb1-12"><a href="Trend.html#cb1-12" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n.years<span class="dv">-1</span>, mean.lambda, sigma.lambda) </span>
-<span id="cb1-13"><a href="Trend.html#cb1-13" tabindex="-1"></a><span class="co"># Lambda is vector of annual population growth rates</span></span>
-<span id="cb1-14"><a href="Trend.html#cb1-14" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n.years<span class="dv">-1</span>)){</span>
-<span id="cb1-15"><a href="Trend.html#cb1-15" tabindex="-1"></a>  N[y<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> N[y] <span class="sc">*</span> lambda[y]</span>
-<span id="cb1-16"><a href="Trend.html#cb1-16" tabindex="-1"></a>}</span>
-<span id="cb1-17"><a href="Trend.html#cb1-17" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n.years, <span class="at">mean=</span>p.survey<span class="sc">*</span>N, <span class="at">sd=</span>sigma.obs)</span>
-<span id="cb1-18"><a href="Trend.html#cb1-18" tabindex="-1"></a><span class="fu">plot</span>(C, <span class="at">ylab=</span><span class="st">&quot;Survey Catch&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="Trend.html#cb83-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb83-2"><a href="Trend.html#cb83-2" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="Trend.html#cb83-3" tabindex="-1"></a><span class="co"># Generation of simulated data</span></span>
+<span id="cb83-4"><a href="Trend.html#cb83-4" tabindex="-1"></a>n.years <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb83-5"><a href="Trend.html#cb83-5" tabindex="-1"></a>N1 <span class="ot">&lt;-</span> <span class="dv">10000</span>  <span class="co"># Initial population size</span></span>
+<span id="cb83-6"><a href="Trend.html#cb83-6" tabindex="-1"></a>mean.lambda <span class="ot">&lt;-</span> <span class="fl">1.02</span> <span class="co"># Mean annual population growth rate</span></span>
+<span id="cb83-7"><a href="Trend.html#cb83-7" tabindex="-1"></a>sigma.lambda <span class="ot">&lt;-</span> <span class="fl">0.02</span> <span class="co"># Process (temporal) variation in the growth rate (SD)</span></span>
+<span id="cb83-8"><a href="Trend.html#cb83-8" tabindex="-1"></a>p.survey <span class="ot">&lt;-</span> <span class="fl">0.025</span> <span class="co"># Default capture probability for survey</span></span>
+<span id="cb83-9"><a href="Trend.html#cb83-9" tabindex="-1"></a>sigma.obs <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># Observation error for survey catch (SD)</span></span>
+<span id="cb83-10"><a href="Trend.html#cb83-10" tabindex="-1"></a>C <span class="ot">&lt;-</span> N <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n.years)</span>
+<span id="cb83-11"><a href="Trend.html#cb83-11" tabindex="-1"></a>N[<span class="dv">1</span>] <span class="ot">&lt;-</span> N1</span>
+<span id="cb83-12"><a href="Trend.html#cb83-12" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n.years<span class="dv">-1</span>, mean.lambda, sigma.lambda) </span>
+<span id="cb83-13"><a href="Trend.html#cb83-13" tabindex="-1"></a><span class="co"># Lambda is vector of annual population growth rates</span></span>
+<span id="cb83-14"><a href="Trend.html#cb83-14" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n.years<span class="dv">-1</span>)){</span>
+<span id="cb83-15"><a href="Trend.html#cb83-15" tabindex="-1"></a>  N[y<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> N[y] <span class="sc">*</span> lambda[y]</span>
+<span id="cb83-16"><a href="Trend.html#cb83-16" tabindex="-1"></a>}</span>
+<span id="cb83-17"><a href="Trend.html#cb83-17" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n.years, <span class="at">mean=</span>p.survey<span class="sc">*</span>N, <span class="at">sd=</span>sigma.obs)</span>
+<span id="cb83-18"><a href="Trend.html#cb83-18" tabindex="-1"></a><span class="fu">plot</span>(C, <span class="at">ylab=</span><span class="st">&quot;Survey Catch&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>)</span></code></pre></div>
 <p>Run the simulation code several times to gain insight into the level of variation possible in a ten-year pattern. Then vary survey length, mean population growth rate and temporal variation, capture probability, and observation error to understand how each setting contributes to the survey pattern of relative abundance.</p>
 <p>The JAGS code treats the annual survey catches as independent observations, and estimates an intercept (<span class="math inline">\(b_1\)</span>) and slope (<span class="math inline">\(b_2\)</span>) for the linear regression model relating year to the relative abundance data. A third parameter (sigma.est) accounts for variation in the survey catch around the line, which would be due not only to observation error but also annual variation in population growth. Uninformative prior distributions are used for the three parameters. The initial value for the slope is set at 0, and the initial value for the intercept varies between the minimum and maximum observed annual catch.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Trend.html#cb2-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb2-2"><a href="Trend.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb2-3"><a href="Trend.html#cb2-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb2-4"><a href="Trend.html#cb2-4" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="Trend.html#cb2-5" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
-<span id="cb2-6"><a href="Trend.html#cb2-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PopTrend_Linear.txt&quot;</span>)</span>
-<span id="cb2-7"><a href="Trend.html#cb2-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb2-8"><a href="Trend.html#cb2-8" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb2-9"><a href="Trend.html#cb2-9" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="Trend.html#cb2-10" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb2-11"><a href="Trend.html#cb2-11" tabindex="-1"></a><span class="st">for (i in 1:2){</span></span>
-<span id="cb2-12"><a href="Trend.html#cb2-12" tabindex="-1"></a><span class="st">  b[i] ~ dnorm(0, 0.0001)</span></span>
-<span id="cb2-13"><a href="Trend.html#cb2-13" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb2-14"><a href="Trend.html#cb2-14" tabindex="-1"></a><span class="st">sigma.est ~ dunif(0, 100)</span></span>
-<span id="cb2-15"><a href="Trend.html#cb2-15" tabindex="-1"></a><span class="st">tau &lt;- pow(sigma.est, -2)</span></span>
-<span id="cb2-16"><a href="Trend.html#cb2-16" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="Trend.html#cb2-17" tabindex="-1"></a><span class="st">  # Likelihood</span></span>
-<span id="cb2-18"><a href="Trend.html#cb2-18" tabindex="-1"></a><span class="st">  for (y in 1:n.years){</span></span>
-<span id="cb2-19"><a href="Trend.html#cb2-19" tabindex="-1"></a><span class="st">  ExpC[y] &lt;- b[1] + b[2]*y</span></span>
-<span id="cb2-20"><a href="Trend.html#cb2-20" tabindex="-1"></a><span class="st">  C[y] ~ dnorm(ExpC[y], tau)</span></span>
-<span id="cb2-21"><a href="Trend.html#cb2-21" tabindex="-1"></a><span class="st">  } #y</span></span>
-<span id="cb2-22"><a href="Trend.html#cb2-22" tabindex="-1"></a><span class="st">  p.pos &lt;- step(b[2])</span></span>
-<span id="cb2-23"><a href="Trend.html#cb2-23" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb2-24"><a href="Trend.html#cb2-24" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-25"><a href="Trend.html#cb2-25" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb2-26"><a href="Trend.html#cb2-26" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="Trend.html#cb2-27" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb2-28"><a href="Trend.html#cb2-28" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.years&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
-<span id="cb2-29"><a href="Trend.html#cb2-29" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="Trend.html#cb2-30" tabindex="-1"></a><span class="co"># Initial values.</span></span>
-<span id="cb2-31"><a href="Trend.html#cb2-31" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">b=</span><span class="fu">c</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="fu">min</span>(C), <span class="at">max=</span><span class="fu">max</span>(C)), <span class="dv">0</span>),</span>
-<span id="cb2-32"><a href="Trend.html#cb2-32" tabindex="-1"></a>                               <span class="at">sigma.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>)</span>
-<span id="cb2-33"><a href="Trend.html#cb2-33" tabindex="-1"></a>                               )}</span>
-<span id="cb2-34"><a href="Trend.html#cb2-34" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="Trend.html#cb2-35" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PopTrend_Linear.txt&#39;</span></span>
-<span id="cb2-36"><a href="Trend.html#cb2-36" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="Trend.html#cb2-37" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb2-38"><a href="Trend.html#cb2-38" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;sigma.est&quot;</span>, <span class="st">&quot;p.pos&quot;</span>)</span>
-<span id="cb2-39"><a href="Trend.html#cb2-39" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="Trend.html#cb2-40" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb2-41"><a href="Trend.html#cb2-41" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb2-42"><a href="Trend.html#cb2-42" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
-<span id="cb2-43"><a href="Trend.html#cb2-43" tabindex="-1"></a>                model.file)</span>
-<span id="cb2-44"><a href="Trend.html#cb2-44" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb2-45"><a href="Trend.html#cb2-45" tabindex="-1"></a><span class="co">#plot(jagsfit)</span></span>
-<span id="cb2-46"><a href="Trend.html#cb2-46" tabindex="-1"></a></span>
-<span id="cb2-47"><a href="Trend.html#cb2-47" tabindex="-1"></a>year.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n.years)</span>
-<span id="cb2-48"><a href="Trend.html#cb2-48" tabindex="-1"></a>C.hat <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>b[<span class="dv">1</span>]<span class="sc">+</span>jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>b[<span class="dv">2</span>]<span class="sc">*</span>year.seq</span>
-<span id="cb2-49"><a href="Trend.html#cb2-49" tabindex="-1"></a><span class="fu">points</span>(year.seq, C.hat, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="Trend.html#cb84-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb84-2"><a href="Trend.html#cb84-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb84-3"><a href="Trend.html#cb84-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb84-4"><a href="Trend.html#cb84-4" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="Trend.html#cb84-5" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
+<span id="cb84-6"><a href="Trend.html#cb84-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PopTrend_Linear.txt&quot;</span>)</span>
+<span id="cb84-7"><a href="Trend.html#cb84-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb84-8"><a href="Trend.html#cb84-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb84-9"><a href="Trend.html#cb84-9" tabindex="-1"></a></span>
+<span id="cb84-10"><a href="Trend.html#cb84-10" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb84-11"><a href="Trend.html#cb84-11" tabindex="-1"></a><span class="st">for (i in 1:2){</span></span>
+<span id="cb84-12"><a href="Trend.html#cb84-12" tabindex="-1"></a><span class="st">  b[i] ~ dnorm(0, 0.0001)</span></span>
+<span id="cb84-13"><a href="Trend.html#cb84-13" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb84-14"><a href="Trend.html#cb84-14" tabindex="-1"></a><span class="st">sigma.est ~ dunif(0, 100)</span></span>
+<span id="cb84-15"><a href="Trend.html#cb84-15" tabindex="-1"></a><span class="st">tau &lt;- pow(sigma.est, -2)</span></span>
+<span id="cb84-16"><a href="Trend.html#cb84-16" tabindex="-1"></a></span>
+<span id="cb84-17"><a href="Trend.html#cb84-17" tabindex="-1"></a><span class="st">  # Likelihood</span></span>
+<span id="cb84-18"><a href="Trend.html#cb84-18" tabindex="-1"></a><span class="st">  for (y in 1:n.years){</span></span>
+<span id="cb84-19"><a href="Trend.html#cb84-19" tabindex="-1"></a><span class="st">  ExpC[y] &lt;- b[1] + b[2]*y</span></span>
+<span id="cb84-20"><a href="Trend.html#cb84-20" tabindex="-1"></a><span class="st">  C[y] ~ dnorm(ExpC[y], tau)</span></span>
+<span id="cb84-21"><a href="Trend.html#cb84-21" tabindex="-1"></a><span class="st">  } #y</span></span>
+<span id="cb84-22"><a href="Trend.html#cb84-22" tabindex="-1"></a><span class="st">  p.pos &lt;- step(b[2])</span></span>
+<span id="cb84-23"><a href="Trend.html#cb84-23" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb84-24"><a href="Trend.html#cb84-24" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb84-25"><a href="Trend.html#cb84-25" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb84-26"><a href="Trend.html#cb84-26" tabindex="-1"></a></span>
+<span id="cb84-27"><a href="Trend.html#cb84-27" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb84-28"><a href="Trend.html#cb84-28" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.years&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb84-29"><a href="Trend.html#cb84-29" tabindex="-1"></a></span>
+<span id="cb84-30"><a href="Trend.html#cb84-30" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb84-31"><a href="Trend.html#cb84-31" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">b=</span><span class="fu">c</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="fu">min</span>(C), <span class="at">max=</span><span class="fu">max</span>(C)), <span class="dv">0</span>),</span>
+<span id="cb84-32"><a href="Trend.html#cb84-32" tabindex="-1"></a>                               <span class="at">sigma.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>)</span>
+<span id="cb84-33"><a href="Trend.html#cb84-33" tabindex="-1"></a>                               )}</span>
+<span id="cb84-34"><a href="Trend.html#cb84-34" tabindex="-1"></a></span>
+<span id="cb84-35"><a href="Trend.html#cb84-35" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PopTrend_Linear.txt&#39;</span></span>
+<span id="cb84-36"><a href="Trend.html#cb84-36" tabindex="-1"></a></span>
+<span id="cb84-37"><a href="Trend.html#cb84-37" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb84-38"><a href="Trend.html#cb84-38" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;sigma.est&quot;</span>, <span class="st">&quot;p.pos&quot;</span>)</span>
+<span id="cb84-39"><a href="Trend.html#cb84-39" tabindex="-1"></a></span>
+<span id="cb84-40"><a href="Trend.html#cb84-40" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb84-41"><a href="Trend.html#cb84-41" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb84-42"><a href="Trend.html#cb84-42" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb84-43"><a href="Trend.html#cb84-43" tabindex="-1"></a>                model.file)</span>
+<span id="cb84-44"><a href="Trend.html#cb84-44" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb84-45"><a href="Trend.html#cb84-45" tabindex="-1"></a><span class="co">#plot(jagsfit)</span></span>
+<span id="cb84-46"><a href="Trend.html#cb84-46" tabindex="-1"></a></span>
+<span id="cb84-47"><a href="Trend.html#cb84-47" tabindex="-1"></a>year.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n.years)</span>
+<span id="cb84-48"><a href="Trend.html#cb84-48" tabindex="-1"></a>C.hat <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>b[<span class="dv">1</span>]<span class="sc">+</span>jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>b[<span class="dv">2</span>]<span class="sc">*</span>year.seq</span>
+<span id="cb84-49"><a href="Trend.html#cb84-49" tabindex="-1"></a><span class="fu">points</span>(year.seq, C.hat, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p>For convenience in viewing the results, we skip plotting the jagsfit object and simply add the regression line to the original plot of survey catches (Figure <a href="Trend.html#fig:LinTrendPlot">10.1</a>). We can examine the credible interval for <span class="math inline">\(b_2\)</span> to determine whether the survey provides evidence of a trend (credible interval not including 0). A more quantitative approach is to estimate the probability of a positive mean growth rate <span class="citation">(<a href="#ref-pregler.etal_2019">Pregler et al. 2019</a>)</span>. We can use the <code>step()</code> function (which is 1 for an argument &gt; 0; 0 otherwise) to calculate the fraction of retained slope estimates that are greater than 0 (mean for calculated variable p.pos).</p>
 <div class="figure"><span style="display:block;" id="fig:LinTrendPlot"></span>
 <img src="bookdown_files/figure-html/LinTrendPlot-1.png" alt="Example of fitted linear model for survey catch versus year." width="90%" />
@@ -374,61 +374,61 @@ FIGURE 10.1: Example of fitted linear model for survey catch versus year.
 <p>An exponential growth model was used in Section <a href="Trend.html#Linear">10.1</a> to simulate population change, but our analysis ignored the dependence between the annual survey catches. An improved approach would be to fit a model that attempts to reveal the underlying population dynamics. The simulation code is unchanged, but the JAGS code now specifies exponential growth. Our predicted survey catches have the same growth parameters as the underlying population, because of the assumed direct proportionality between catch and absolute abundance. Following <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> (their Section 5.4), we fit the exponential growth model on the log scale. JH NOTE: ** confirm and provide rationale for ln-scale fit.</p>
 <p>Fitting an underlying population model makes it possible to distinguish between the two sources of variation in survey catch: variation in population growth rate and survey sampling. The former is referred to as process error <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>, as it is variation in the biological process (population growth). The latter is observation error, or random variation in the survey catch (our proxy for annual abundance).</p>
 <p>The JAGS code now has parameters for initial relative abundance (predicted ln-scale catch in year 1), the mean and standard deviation for the annual sequence of population growth rates, and the standard deviation for observation error. The parameters for population growth rate are hyperparameters, describing a normal distribution for the annual growth rates. Population growth in ln-scale uses the model <span class="math inline">\(lnN_{t+1}=lnN_t+r\)</span>, so 1+r provides a value comparable to mean.lambda in the simulation code. Uninformative prior distributions are used for all parameters.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="Trend.html#cb3-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb3-2"><a href="Trend.html#cb3-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb3-3"><a href="Trend.html#cb3-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb3-4"><a href="Trend.html#cb3-4" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="Trend.html#cb3-5" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
-<span id="cb3-6"><a href="Trend.html#cb3-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PopTrend_ExpGr.txt&quot;</span>)</span>
-<span id="cb3-7"><a href="Trend.html#cb3-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb3-8"><a href="Trend.html#cb3-8" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb3-9"><a href="Trend.html#cb3-9" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb3-10"><a href="Trend.html#cb3-10" tabindex="-1"></a><span class="st">logC.est[1] ~ dunif(1, 100)     # Initial relative abundance</span></span>
-<span id="cb3-11"><a href="Trend.html#cb3-11" tabindex="-1"></a><span class="st">mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate</span></span>
-<span id="cb3-12"><a href="Trend.html#cb3-12" tabindex="-1"></a><span class="st">sigma.proc.est ~ dunif(0, 1)  # Process error (annual variation in r)</span></span>
-<span id="cb3-13"><a href="Trend.html#cb3-13" tabindex="-1"></a><span class="st">tau.proc.est &lt;- pow(sigma.proc.est, -2)</span></span>
-<span id="cb3-14"><a href="Trend.html#cb3-14" tabindex="-1"></a><span class="st">sigma.obs.est ~ dunif(0, 100)     # Observation error</span></span>
-<span id="cb3-15"><a href="Trend.html#cb3-15" tabindex="-1"></a><span class="st">tau.obs.est &lt;- pow(sigma.obs.est, -2)</span></span>
-<span id="cb3-16"><a href="Trend.html#cb3-16" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="Trend.html#cb3-17" tabindex="-1"></a><span class="st"># Likelihood</span></span>
-<span id="cb3-18"><a href="Trend.html#cb3-18" tabindex="-1"></a><span class="st">for (y in 1:(n.years-1)){</span></span>
-<span id="cb3-19"><a href="Trend.html#cb3-19" tabindex="-1"></a><span class="st">   r[y] ~ dnorm(mean.r.est, tau.proc.est)</span></span>
-<span id="cb3-20"><a href="Trend.html#cb3-20" tabindex="-1"></a><span class="st">   logC.est[y+1] &lt;- logC.est[y] + r[y]</span></span>
-<span id="cb3-21"><a href="Trend.html#cb3-21" tabindex="-1"></a><span class="st">   } #y</span></span>
-<span id="cb3-22"><a href="Trend.html#cb3-22" tabindex="-1"></a><span class="st">for (y in 1:n.years) {</span></span>
-<span id="cb3-23"><a href="Trend.html#cb3-23" tabindex="-1"></a><span class="st">  C.est[y] &lt;- exp(logC.est[y])</span></span>
-<span id="cb3-24"><a href="Trend.html#cb3-24" tabindex="-1"></a><span class="st">  C[y] ~ dnorm(C.est[y], tau.obs.est)</span></span>
-<span id="cb3-25"><a href="Trend.html#cb3-25" tabindex="-1"></a><span class="st">   } #y</span></span>
-<span id="cb3-26"><a href="Trend.html#cb3-26" tabindex="-1"></a><span class="st">     p.pos &lt;- step(mean.r.est)</span></span>
-<span id="cb3-27"><a href="Trend.html#cb3-27" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb3-28"><a href="Trend.html#cb3-28" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-29"><a href="Trend.html#cb3-29" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb3-30"><a href="Trend.html#cb3-30" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="Trend.html#cb3-31" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb3-32"><a href="Trend.html#cb3-32" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.years&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
-<span id="cb3-33"><a href="Trend.html#cb3-33" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="Trend.html#cb3-34" tabindex="-1"></a><span class="co"># Initial values.</span></span>
-<span id="cb3-35"><a href="Trend.html#cb3-35" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">sigma.proc.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>), </span>
-<span id="cb3-36"><a href="Trend.html#cb3-36" tabindex="-1"></a>                              <span class="at">mean.r.est =</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
-<span id="cb3-37"><a href="Trend.html#cb3-37" tabindex="-1"></a>                              <span class="at">sigma.obs.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>),</span>
-<span id="cb3-38"><a href="Trend.html#cb3-38" tabindex="-1"></a>                              <span class="at">logC.est =</span> <span class="fu">c</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">5</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
-<span id="cb3-39"><a href="Trend.html#cb3-39" tabindex="-1"></a>                              <span class="fu">rep</span>(<span class="cn">NA</span>,(n.years<span class="dv">-1</span>))))}</span>
-<span id="cb3-40"><a href="Trend.html#cb3-40" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="Trend.html#cb3-41" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PopTrend_ExpGr.txt&#39;</span></span>
-<span id="cb3-42"><a href="Trend.html#cb3-42" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="Trend.html#cb3-43" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb3-44"><a href="Trend.html#cb3-44" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mean.r.est&quot;</span>, <span class="st">&quot;sigma.proc.est&quot;</span>, <span class="st">&quot;sigma.obs.est&quot;</span>, <span class="st">&quot;C.est&quot;</span>,</span>
-<span id="cb3-45"><a href="Trend.html#cb3-45" tabindex="-1"></a>                 <span class="st">&quot;p.pos&quot;</span>)</span>
-<span id="cb3-46"><a href="Trend.html#cb3-46" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="Trend.html#cb3-47" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb3-48"><a href="Trend.html#cb3-48" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb3-49"><a href="Trend.html#cb3-49" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">20000</span>,</span>
-<span id="cb3-50"><a href="Trend.html#cb3-50" tabindex="-1"></a>                model.file)</span>
-<span id="cb3-51"><a href="Trend.html#cb3-51" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb3-52"><a href="Trend.html#cb3-52" tabindex="-1"></a><span class="co">#plot(jagsfit)</span></span>
-<span id="cb3-53"><a href="Trend.html#cb3-53" tabindex="-1"></a></span>
-<span id="cb3-54"><a href="Trend.html#cb3-54" tabindex="-1"></a>year.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n.years)</span>
-<span id="cb3-55"><a href="Trend.html#cb3-55" tabindex="-1"></a><span class="fu">points</span>(year.seq, jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="Trend.html#cb85-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb85-2"><a href="Trend.html#cb85-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb85-3"><a href="Trend.html#cb85-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb85-4"><a href="Trend.html#cb85-4" tabindex="-1"></a></span>
+<span id="cb85-5"><a href="Trend.html#cb85-5" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
+<span id="cb85-6"><a href="Trend.html#cb85-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PopTrend_ExpGr.txt&quot;</span>)</span>
+<span id="cb85-7"><a href="Trend.html#cb85-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb85-8"><a href="Trend.html#cb85-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb85-9"><a href="Trend.html#cb85-9" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb85-10"><a href="Trend.html#cb85-10" tabindex="-1"></a><span class="st">logC.est[1] ~ dunif(1, 100)     # Initial relative abundance</span></span>
+<span id="cb85-11"><a href="Trend.html#cb85-11" tabindex="-1"></a><span class="st">mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate</span></span>
+<span id="cb85-12"><a href="Trend.html#cb85-12" tabindex="-1"></a><span class="st">sigma.proc.est ~ dunif(0, 1)  # Process error (annual variation in r)</span></span>
+<span id="cb85-13"><a href="Trend.html#cb85-13" tabindex="-1"></a><span class="st">tau.proc.est &lt;- pow(sigma.proc.est, -2)</span></span>
+<span id="cb85-14"><a href="Trend.html#cb85-14" tabindex="-1"></a><span class="st">sigma.obs.est ~ dunif(0, 100)     # Observation error</span></span>
+<span id="cb85-15"><a href="Trend.html#cb85-15" tabindex="-1"></a><span class="st">tau.obs.est &lt;- pow(sigma.obs.est, -2)</span></span>
+<span id="cb85-16"><a href="Trend.html#cb85-16" tabindex="-1"></a></span>
+<span id="cb85-17"><a href="Trend.html#cb85-17" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb85-18"><a href="Trend.html#cb85-18" tabindex="-1"></a><span class="st">for (y in 1:(n.years-1)){</span></span>
+<span id="cb85-19"><a href="Trend.html#cb85-19" tabindex="-1"></a><span class="st">   r[y] ~ dnorm(mean.r.est, tau.proc.est)</span></span>
+<span id="cb85-20"><a href="Trend.html#cb85-20" tabindex="-1"></a><span class="st">   logC.est[y+1] &lt;- logC.est[y] + r[y]</span></span>
+<span id="cb85-21"><a href="Trend.html#cb85-21" tabindex="-1"></a><span class="st">   } #y</span></span>
+<span id="cb85-22"><a href="Trend.html#cb85-22" tabindex="-1"></a><span class="st">for (y in 1:n.years) {</span></span>
+<span id="cb85-23"><a href="Trend.html#cb85-23" tabindex="-1"></a><span class="st">  C.est[y] &lt;- exp(logC.est[y])</span></span>
+<span id="cb85-24"><a href="Trend.html#cb85-24" tabindex="-1"></a><span class="st">  C[y] ~ dnorm(C.est[y], tau.obs.est)</span></span>
+<span id="cb85-25"><a href="Trend.html#cb85-25" tabindex="-1"></a><span class="st">   } #y</span></span>
+<span id="cb85-26"><a href="Trend.html#cb85-26" tabindex="-1"></a><span class="st">     p.pos &lt;- step(mean.r.est)</span></span>
+<span id="cb85-27"><a href="Trend.html#cb85-27" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb85-28"><a href="Trend.html#cb85-28" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb85-29"><a href="Trend.html#cb85-29" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb85-30"><a href="Trend.html#cb85-30" tabindex="-1"></a></span>
+<span id="cb85-31"><a href="Trend.html#cb85-31" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb85-32"><a href="Trend.html#cb85-32" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.years&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb85-33"><a href="Trend.html#cb85-33" tabindex="-1"></a></span>
+<span id="cb85-34"><a href="Trend.html#cb85-34" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb85-35"><a href="Trend.html#cb85-35" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">sigma.proc.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>), </span>
+<span id="cb85-36"><a href="Trend.html#cb85-36" tabindex="-1"></a>                              <span class="at">mean.r.est =</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb85-37"><a href="Trend.html#cb85-37" tabindex="-1"></a>                              <span class="at">sigma.obs.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>),</span>
+<span id="cb85-38"><a href="Trend.html#cb85-38" tabindex="-1"></a>                              <span class="at">logC.est =</span> <span class="fu">c</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">5</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
+<span id="cb85-39"><a href="Trend.html#cb85-39" tabindex="-1"></a>                              <span class="fu">rep</span>(<span class="cn">NA</span>,(n.years<span class="dv">-1</span>))))}</span>
+<span id="cb85-40"><a href="Trend.html#cb85-40" tabindex="-1"></a></span>
+<span id="cb85-41"><a href="Trend.html#cb85-41" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PopTrend_ExpGr.txt&#39;</span></span>
+<span id="cb85-42"><a href="Trend.html#cb85-42" tabindex="-1"></a></span>
+<span id="cb85-43"><a href="Trend.html#cb85-43" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb85-44"><a href="Trend.html#cb85-44" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mean.r.est&quot;</span>, <span class="st">&quot;sigma.proc.est&quot;</span>, <span class="st">&quot;sigma.obs.est&quot;</span>, <span class="st">&quot;C.est&quot;</span>,</span>
+<span id="cb85-45"><a href="Trend.html#cb85-45" tabindex="-1"></a>                 <span class="st">&quot;p.pos&quot;</span>)</span>
+<span id="cb85-46"><a href="Trend.html#cb85-46" tabindex="-1"></a></span>
+<span id="cb85-47"><a href="Trend.html#cb85-47" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb85-48"><a href="Trend.html#cb85-48" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb85-49"><a href="Trend.html#cb85-49" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">20000</span>,</span>
+<span id="cb85-50"><a href="Trend.html#cb85-50" tabindex="-1"></a>                model.file)</span>
+<span id="cb85-51"><a href="Trend.html#cb85-51" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb85-52"><a href="Trend.html#cb85-52" tabindex="-1"></a><span class="co">#plot(jagsfit)</span></span>
+<span id="cb85-53"><a href="Trend.html#cb85-53" tabindex="-1"></a></span>
+<span id="cb85-54"><a href="Trend.html#cb85-54" tabindex="-1"></a>year.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n.years)</span>
+<span id="cb85-55"><a href="Trend.html#cb85-55" tabindex="-1"></a><span class="fu">points</span>(year.seq, jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p>This is a much more complex model than the linear regression, and we increase the number of iterations to achieve convergence (which should be confirmed by checking Rhat values). The predicted catches are now not a straight line because we are estimating annual values for population growth rate (Figure <a href="Trend.html#fig:ExpTrendPlot">10.2</a>). The smoothed pattern for predicted catches is the model’s attempt to describe the biological process (exponential growth with year-to-year variation in growth rate). Variation in observed catches about the fitted line reflects estimated observation error. Try several runs using a small value for observation error to see that the model can closely mimic the population trajectory when observation error is low. It can also be instructive to try an extreme value for the length of the time series. The annual estimates of population growth rate are drawn from a shared normal distribution, so a longer time series helps in sorting out process versus observation error (e.g., try n.years=40, sigma.lambda=0.05, and sigma.obs=10).</p>
 <div class="figure"><span style="display:block;" id="fig:ExpTrendPlot"></span>
 <img src="bookdown_files/figure-html/ExpTrendPlot-1.png" alt="Example of fitted exponential growth model for survey catch versus year." width="90%" />
@@ -440,96 +440,97 @@ FIGURE 10.2: Example of fitted exponential growth model for survey catch versus 
 <div id="Forecast" class="section level3 hasAnchor" number="10.2.1">
 <h3><span class="header-section-number">10.2.1</span> Forecasting<a href="Trend.html#Forecast" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In Section <a href="Trend.html#ExpGr">10.2</a>, we fitted an exponential growth model to describe underlying population dynamics. One advantage of that approach is that we can use that underlying model to project future population levels. We add a new simulation setting (p.years) for the number of future years to predict abundance, and generate n.years+p.years values for population size (N). The catch vector has n.years of observed survey catches, augmented by p.years of NA values. The code for plotting catch is moved below the JAGS section, because now we need to choose a range for the y-axis that will accommodate the observed and predicted catches plus the (generally wider) credible intervals.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Trend.html#cb4-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb4-2"><a href="Trend.html#cb4-2" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="Trend.html#cb4-3" tabindex="-1"></a><span class="co"># Generation of simulated data</span></span>
-<span id="cb4-4"><a href="Trend.html#cb4-4" tabindex="-1"></a>p.years <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Predicted future population levels</span></span>
-<span id="cb4-5"><a href="Trend.html#cb4-5" tabindex="-1"></a>n.years <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># Years of survey data</span></span>
-<span id="cb4-6"><a href="Trend.html#cb4-6" tabindex="-1"></a>N1 <span class="ot">&lt;-</span> <span class="dv">10000</span>  <span class="co"># Initial population size</span></span>
-<span id="cb4-7"><a href="Trend.html#cb4-7" tabindex="-1"></a>mean.lambda <span class="ot">&lt;-</span> <span class="fl">1.02</span> <span class="co"># Mean annual population growth rate</span></span>
-<span id="cb4-8"><a href="Trend.html#cb4-8" tabindex="-1"></a>sigma.lambda <span class="ot">&lt;-</span> <span class="fl">0.02</span> <span class="co"># Process (temporal) variation in the growth rate (SD)</span></span>
-<span id="cb4-9"><a href="Trend.html#cb4-9" tabindex="-1"></a>p.survey <span class="ot">&lt;-</span> <span class="fl">0.025</span> <span class="co"># Default capture probability for survey</span></span>
-<span id="cb4-10"><a href="Trend.html#cb4-10" tabindex="-1"></a>sigma.obs <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># Observation error for survey catch (SD)</span></span>
-<span id="cb4-11"><a href="Trend.html#cb4-11" tabindex="-1"></a>C <span class="ot">&lt;-</span> N <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n.years<span class="sc">+</span>p.years)</span>
-<span id="cb4-12"><a href="Trend.html#cb4-12" tabindex="-1"></a>N[<span class="dv">1</span>] <span class="ot">&lt;-</span> N1</span>
-<span id="cb4-13"><a href="Trend.html#cb4-13" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">rnorm</span>((n.years<span class="sc">+</span>p.years<span class="dv">-1</span>), mean.lambda, sigma.lambda) <span class="co"># Draw vector of annual growth rates</span></span>
-<span id="cb4-14"><a href="Trend.html#cb4-14" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n.years<span class="sc">+</span>p.years<span class="dv">-1</span>)){</span>
-<span id="cb4-15"><a href="Trend.html#cb4-15" tabindex="-1"></a>  N[y<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> N[y] <span class="sc">*</span> lambda[y]</span>
-<span id="cb4-16"><a href="Trend.html#cb4-16" tabindex="-1"></a>}</span>
-<span id="cb4-17"><a href="Trend.html#cb4-17" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n.years, <span class="at">mean=</span>p.survey<span class="sc">*</span>N, <span class="at">sd=</span>sigma.obs)</span>
-<span id="cb4-18"><a href="Trend.html#cb4-18" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">c</span>(C, <span class="fu">rep</span>(<span class="cn">NA</span>, p.years))  <span class="co"># Observed survey catches augmented by NA values</span></span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="Trend.html#cb86-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb86-2"><a href="Trend.html#cb86-2" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="Trend.html#cb86-3" tabindex="-1"></a><span class="co"># Generation of simulated data</span></span>
+<span id="cb86-4"><a href="Trend.html#cb86-4" tabindex="-1"></a>p.years <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Predicted future population levels</span></span>
+<span id="cb86-5"><a href="Trend.html#cb86-5" tabindex="-1"></a>n.years <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># Years of survey data</span></span>
+<span id="cb86-6"><a href="Trend.html#cb86-6" tabindex="-1"></a>N1 <span class="ot">&lt;-</span> <span class="dv">10000</span>  <span class="co"># Initial population size</span></span>
+<span id="cb86-7"><a href="Trend.html#cb86-7" tabindex="-1"></a>mean.lambda <span class="ot">&lt;-</span> <span class="fl">1.02</span> <span class="co"># Mean annual population growth rate</span></span>
+<span id="cb86-8"><a href="Trend.html#cb86-8" tabindex="-1"></a>sigma.lambda <span class="ot">&lt;-</span> <span class="fl">0.02</span> <span class="co"># Process (temporal) variation in the growth rate (SD)</span></span>
+<span id="cb86-9"><a href="Trend.html#cb86-9" tabindex="-1"></a>p.survey <span class="ot">&lt;-</span> <span class="fl">0.025</span> <span class="co"># Default capture probability for survey</span></span>
+<span id="cb86-10"><a href="Trend.html#cb86-10" tabindex="-1"></a>sigma.obs <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># Observation error for survey catch (SD)</span></span>
+<span id="cb86-11"><a href="Trend.html#cb86-11" tabindex="-1"></a>C <span class="ot">&lt;-</span> N <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n.years<span class="sc">+</span>p.years)</span>
+<span id="cb86-12"><a href="Trend.html#cb86-12" tabindex="-1"></a>N[<span class="dv">1</span>] <span class="ot">&lt;-</span> N1</span>
+<span id="cb86-13"><a href="Trend.html#cb86-13" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">rnorm</span>((n.years<span class="sc">+</span>p.years<span class="dv">-1</span>), mean.lambda, sigma.lambda) </span>
+<span id="cb86-14"><a href="Trend.html#cb86-14" tabindex="-1"></a>  <span class="co"># Draw vector of annual growth rates</span></span>
+<span id="cb86-15"><a href="Trend.html#cb86-15" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n.years<span class="sc">+</span>p.years<span class="dv">-1</span>)){</span>
+<span id="cb86-16"><a href="Trend.html#cb86-16" tabindex="-1"></a>  N[y<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> N[y] <span class="sc">*</span> lambda[y]</span>
+<span id="cb86-17"><a href="Trend.html#cb86-17" tabindex="-1"></a>}</span>
+<span id="cb86-18"><a href="Trend.html#cb86-18" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span>n.years, <span class="at">mean=</span>p.survey<span class="sc">*</span>N, <span class="at">sd=</span>sigma.obs)</span>
+<span id="cb86-19"><a href="Trend.html#cb86-19" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">c</span>(C, <span class="fu">rep</span>(<span class="cn">NA</span>, p.years))  <span class="co"># Observed survey catches augmented by NA values</span></span></code></pre></div>
 <p>The likelihood in the JAGS code is modified slightly to accommodate the p.years of additional (missing) catches. We also add a <code>step()</code> function to estimate p.increase, the probability that predicted catch in the final year is higher than in year one. This is an arbitrary choice, but provides some insight into whether a detectable increase is expected over the modeled time horizon. Data passed to JAGS now includes p.years, and we modify the length of the vector of initial values for predicted catch.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Trend.html#cb5-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb5-2"><a href="Trend.html#cb5-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb5-3"><a href="Trend.html#cb5-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb5-4"><a href="Trend.html#cb5-4" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="Trend.html#cb5-5" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
-<span id="cb5-6"><a href="Trend.html#cb5-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PopTrend_ExpGr.txt&quot;</span>)</span>
-<span id="cb5-7"><a href="Trend.html#cb5-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb5-8"><a href="Trend.html#cb5-8" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb5-9"><a href="Trend.html#cb5-9" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb5-10"><a href="Trend.html#cb5-10" tabindex="-1"></a><span class="st">logC.est[1] ~ dunif(1, 100)     # Initial relative abundance</span></span>
-<span id="cb5-11"><a href="Trend.html#cb5-11" tabindex="-1"></a><span class="st">mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate</span></span>
-<span id="cb5-12"><a href="Trend.html#cb5-12" tabindex="-1"></a><span class="st">sigma.proc.est ~ dunif(0, 1)  # Annual variation in r</span></span>
-<span id="cb5-13"><a href="Trend.html#cb5-13" tabindex="-1"></a><span class="st">tau.proc.est &lt;- pow(sigma.proc.est, -2)</span></span>
-<span id="cb5-14"><a href="Trend.html#cb5-14" tabindex="-1"></a><span class="st">sigma.obs.est ~ dunif(0, 100)     # Observation error</span></span>
-<span id="cb5-15"><a href="Trend.html#cb5-15" tabindex="-1"></a><span class="st">tau.obs.est &lt;- pow(sigma.obs.est, -2)</span></span>
-<span id="cb5-16"><a href="Trend.html#cb5-16" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="Trend.html#cb5-17" tabindex="-1"></a><span class="st"># Likelihood</span></span>
-<span id="cb5-18"><a href="Trend.html#cb5-18" tabindex="-1"></a><span class="st">for (y in 1:(n.years+p.years-1)){</span></span>
-<span id="cb5-19"><a href="Trend.html#cb5-19" tabindex="-1"></a><span class="st">   r[y] ~ dnorm(mean.r.est, tau.proc.est)</span></span>
-<span id="cb5-20"><a href="Trend.html#cb5-20" tabindex="-1"></a><span class="st">   logC.est[y+1] &lt;- logC.est[y] + r[y]</span></span>
-<span id="cb5-21"><a href="Trend.html#cb5-21" tabindex="-1"></a><span class="st">   } #y</span></span>
-<span id="cb5-22"><a href="Trend.html#cb5-22" tabindex="-1"></a><span class="st">for (y in 1:(n.years+p.years)) {</span></span>
-<span id="cb5-23"><a href="Trend.html#cb5-23" tabindex="-1"></a><span class="st">  C.est[y] &lt;- exp(logC.est[y])</span></span>
-<span id="cb5-24"><a href="Trend.html#cb5-24" tabindex="-1"></a><span class="st">  C[y] ~ dnorm(C.est[y], tau.obs.est)</span></span>
-<span id="cb5-25"><a href="Trend.html#cb5-25" tabindex="-1"></a><span class="st">   } #y</span></span>
-<span id="cb5-26"><a href="Trend.html#cb5-26" tabindex="-1"></a><span class="st">p.pos &lt;- step(mean.r.est)</span></span>
-<span id="cb5-27"><a href="Trend.html#cb5-27" tabindex="-1"></a><span class="st">p.increase &lt;- step(C.est[n.years+p.years]-C.est[1])</span></span>
-<span id="cb5-28"><a href="Trend.html#cb5-28" tabindex="-1"></a><span class="st">  # Prob of increase from first to last</span></span>
-<span id="cb5-29"><a href="Trend.html#cb5-29" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb5-30"><a href="Trend.html#cb5-30" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-31"><a href="Trend.html#cb5-31" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb5-32"><a href="Trend.html#cb5-32" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="Trend.html#cb5-33" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb5-34"><a href="Trend.html#cb5-34" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.years&quot;</span>, <span class="st">&quot;p.years&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
-<span id="cb5-35"><a href="Trend.html#cb5-35" tabindex="-1"></a></span>
-<span id="cb5-36"><a href="Trend.html#cb5-36" tabindex="-1"></a><span class="co"># Initial values.</span></span>
-<span id="cb5-37"><a href="Trend.html#cb5-37" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">sigma.proc.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>), </span>
-<span id="cb5-38"><a href="Trend.html#cb5-38" tabindex="-1"></a>                              <span class="at">mean.r.est =</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
-<span id="cb5-39"><a href="Trend.html#cb5-39" tabindex="-1"></a>                              <span class="at">sigma.obs.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>),</span>
-<span id="cb5-40"><a href="Trend.html#cb5-40" tabindex="-1"></a>                              <span class="at">logC.est =</span> <span class="fu">c</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">5</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
-<span id="cb5-41"><a href="Trend.html#cb5-41" tabindex="-1"></a>                                           <span class="fu">rep</span>(<span class="cn">NA</span>, (n.years<span class="sc">+</span>p.years<span class="dv">-1</span>))))}</span>
-<span id="cb5-42"><a href="Trend.html#cb5-42" tabindex="-1"></a></span>
-<span id="cb5-43"><a href="Trend.html#cb5-43" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PopTrend_ExpGr.txt&#39;</span></span>
-<span id="cb5-44"><a href="Trend.html#cb5-44" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="Trend.html#cb5-45" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb5-46"><a href="Trend.html#cb5-46" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mean.r.est&quot;</span>, <span class="st">&quot;sigma.proc.est&quot;</span>, <span class="st">&quot;sigma.obs.est&quot;</span>, <span class="st">&quot;C.est&quot;</span>,</span>
-<span id="cb5-47"><a href="Trend.html#cb5-47" tabindex="-1"></a>                 <span class="st">&quot;p.pos&quot;</span>, <span class="st">&quot;p.increase&quot;</span>)</span>
-<span id="cb5-48"><a href="Trend.html#cb5-48" tabindex="-1"></a></span>
-<span id="cb5-49"><a href="Trend.html#cb5-49" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb5-50"><a href="Trend.html#cb5-50" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb5-51"><a href="Trend.html#cb5-51" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">40000</span>,</span>
-<span id="cb5-52"><a href="Trend.html#cb5-52" tabindex="-1"></a>                model.file)</span>
-<span id="cb5-53"><a href="Trend.html#cb5-53" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb5-54"><a href="Trend.html#cb5-54" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="Trend.html#cb87-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb87-2"><a href="Trend.html#cb87-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb87-3"><a href="Trend.html#cb87-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb87-4"><a href="Trend.html#cb87-4" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="Trend.html#cb87-5" tabindex="-1"></a><span class="co"># JAGS code for estimating model parameters</span></span>
+<span id="cb87-6"><a href="Trend.html#cb87-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;PopTrend_ExpGr.txt&quot;</span>)</span>
+<span id="cb87-7"><a href="Trend.html#cb87-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb87-8"><a href="Trend.html#cb87-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb87-9"><a href="Trend.html#cb87-9" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb87-10"><a href="Trend.html#cb87-10" tabindex="-1"></a><span class="st">logC.est[1] ~ dunif(1, 100)     # Initial relative abundance</span></span>
+<span id="cb87-11"><a href="Trend.html#cb87-11" tabindex="-1"></a><span class="st">mean.r.est ~ dnorm(0, 0.001)    # Mean growth rate</span></span>
+<span id="cb87-12"><a href="Trend.html#cb87-12" tabindex="-1"></a><span class="st">sigma.proc.est ~ dunif(0, 1)  # Annual variation in r</span></span>
+<span id="cb87-13"><a href="Trend.html#cb87-13" tabindex="-1"></a><span class="st">tau.proc.est &lt;- pow(sigma.proc.est, -2)</span></span>
+<span id="cb87-14"><a href="Trend.html#cb87-14" tabindex="-1"></a><span class="st">sigma.obs.est ~ dunif(0, 100)     # Observation error</span></span>
+<span id="cb87-15"><a href="Trend.html#cb87-15" tabindex="-1"></a><span class="st">tau.obs.est &lt;- pow(sigma.obs.est, -2)</span></span>
+<span id="cb87-16"><a href="Trend.html#cb87-16" tabindex="-1"></a></span>
+<span id="cb87-17"><a href="Trend.html#cb87-17" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb87-18"><a href="Trend.html#cb87-18" tabindex="-1"></a><span class="st">for (y in 1:(n.years+p.years-1)){</span></span>
+<span id="cb87-19"><a href="Trend.html#cb87-19" tabindex="-1"></a><span class="st">   r[y] ~ dnorm(mean.r.est, tau.proc.est)</span></span>
+<span id="cb87-20"><a href="Trend.html#cb87-20" tabindex="-1"></a><span class="st">   logC.est[y+1] &lt;- logC.est[y] + r[y]</span></span>
+<span id="cb87-21"><a href="Trend.html#cb87-21" tabindex="-1"></a><span class="st">   } #y</span></span>
+<span id="cb87-22"><a href="Trend.html#cb87-22" tabindex="-1"></a><span class="st">for (y in 1:(n.years+p.years)) {</span></span>
+<span id="cb87-23"><a href="Trend.html#cb87-23" tabindex="-1"></a><span class="st">  C.est[y] &lt;- exp(logC.est[y])</span></span>
+<span id="cb87-24"><a href="Trend.html#cb87-24" tabindex="-1"></a><span class="st">  C[y] ~ dnorm(C.est[y], tau.obs.est)</span></span>
+<span id="cb87-25"><a href="Trend.html#cb87-25" tabindex="-1"></a><span class="st">   } #y</span></span>
+<span id="cb87-26"><a href="Trend.html#cb87-26" tabindex="-1"></a><span class="st">p.pos &lt;- step(mean.r.est)</span></span>
+<span id="cb87-27"><a href="Trend.html#cb87-27" tabindex="-1"></a><span class="st">p.increase &lt;- step(C.est[n.years+p.years]-C.est[1])</span></span>
+<span id="cb87-28"><a href="Trend.html#cb87-28" tabindex="-1"></a><span class="st">  # Prob of increase from first to last</span></span>
+<span id="cb87-29"><a href="Trend.html#cb87-29" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb87-30"><a href="Trend.html#cb87-30" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb87-31"><a href="Trend.html#cb87-31" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb87-32"><a href="Trend.html#cb87-32" tabindex="-1"></a></span>
+<span id="cb87-33"><a href="Trend.html#cb87-33" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb87-34"><a href="Trend.html#cb87-34" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n.years&quot;</span>, <span class="st">&quot;p.years&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb87-35"><a href="Trend.html#cb87-35" tabindex="-1"></a></span>
+<span id="cb87-36"><a href="Trend.html#cb87-36" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb87-37"><a href="Trend.html#cb87-37" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">sigma.proc.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>), </span>
+<span id="cb87-38"><a href="Trend.html#cb87-38" tabindex="-1"></a>                              <span class="at">mean.r.est =</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb87-39"><a href="Trend.html#cb87-39" tabindex="-1"></a>                              <span class="at">sigma.obs.est =</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>),</span>
+<span id="cb87-40"><a href="Trend.html#cb87-40" tabindex="-1"></a>                              <span class="at">logC.est =</span> <span class="fu">c</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">5</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
+<span id="cb87-41"><a href="Trend.html#cb87-41" tabindex="-1"></a>                                           <span class="fu">rep</span>(<span class="cn">NA</span>, (n.years<span class="sc">+</span>p.years<span class="dv">-1</span>))))}</span>
+<span id="cb87-42"><a href="Trend.html#cb87-42" tabindex="-1"></a></span>
+<span id="cb87-43"><a href="Trend.html#cb87-43" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;PopTrend_ExpGr.txt&#39;</span></span>
+<span id="cb87-44"><a href="Trend.html#cb87-44" tabindex="-1"></a></span>
+<span id="cb87-45"><a href="Trend.html#cb87-45" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb87-46"><a href="Trend.html#cb87-46" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mean.r.est&quot;</span>, <span class="st">&quot;sigma.proc.est&quot;</span>, <span class="st">&quot;sigma.obs.est&quot;</span>, <span class="st">&quot;C.est&quot;</span>,</span>
+<span id="cb87-47"><a href="Trend.html#cb87-47" tabindex="-1"></a>                 <span class="st">&quot;p.pos&quot;</span>, <span class="st">&quot;p.increase&quot;</span>)</span>
+<span id="cb87-48"><a href="Trend.html#cb87-48" tabindex="-1"></a></span>
+<span id="cb87-49"><a href="Trend.html#cb87-49" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb87-50"><a href="Trend.html#cb87-50" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb87-51"><a href="Trend.html#cb87-51" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">40000</span>,</span>
+<span id="cb87-52"><a href="Trend.html#cb87-52" tabindex="-1"></a>                model.file)</span>
+<span id="cb87-53"><a href="Trend.html#cb87-53" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb87-54"><a href="Trend.html#cb87-54" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
 <p>Convergence was slower for this model compared to Section <a href="Trend.html#ExpGr">10.2</a>, so the number of iterations was increased to 40,000. Plotting the jagsfit object shows that uncertainty about predicted catch increases sharply over the forecast years. The future forecasts use annual population growth rates that are drawn randomly from the normal distribution. This makes clear how little can be said about population size or trends, even a couple of years into the future.</p>
 <p>We can now plot the observed catches, augmented by the predicted catch vector and lines representing lower and upper 95% credible intervals <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>. The <code>quantile()</code> function provides the 0.025 and 0.975 quantiles from the vector of retained MCMC updates (draws from the posterior distribution). The <code>ylim</code> plot option allows us to scale the y-axis to accommodate all four series.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="Trend.html#cb6-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># Return to default of 1 panel</span></span>
-<span id="cb6-2"><a href="Trend.html#cb6-2" tabindex="-1"></a>year.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C))</span>
-<span id="cb6-3"><a href="Trend.html#cb6-3" tabindex="-1"></a>lower <span class="ot">&lt;-</span> upper <span class="ot">&lt;-</span> <span class="fu">length</span>(C)</span>
-<span id="cb6-4"><a href="Trend.html#cb6-4" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)){</span>
-<span id="cb6-5"><a href="Trend.html#cb6-5" tabindex="-1"></a>  lower[y] <span class="ot">&lt;-</span> <span class="fu">quantile</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>C.est[,y], <span class="fl">0.025</span>)</span>
-<span id="cb6-6"><a href="Trend.html#cb6-6" tabindex="-1"></a>  upper[y] <span class="ot">&lt;-</span> <span class="fu">quantile</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>C.est[,y], <span class="fl">0.975</span>)</span>
-<span id="cb6-7"><a href="Trend.html#cb6-7" tabindex="-1"></a>} <span class="co">#y</span></span>
-<span id="cb6-8"><a href="Trend.html#cb6-8" tabindex="-1"></a>min.y <span class="ot">&lt;-</span> <span class="fu">min</span>(C[<span class="dv">1</span><span class="sc">:</span>n.years],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, lower)</span>
-<span id="cb6-9"><a href="Trend.html#cb6-9" tabindex="-1"></a>max.y <span class="ot">&lt;-</span> <span class="fu">max</span>(C[<span class="dv">1</span><span class="sc">:</span>n.years],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, upper)</span>
-<span id="cb6-10"><a href="Trend.html#cb6-10" tabindex="-1"></a><span class="fu">plot</span>(year.seq, C, <span class="at">ylab=</span><span class="st">&quot;Survey Catch&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb6-11"><a href="Trend.html#cb6-11" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(min.y, max.y))</span>
-<span id="cb6-12"><a href="Trend.html#cb6-12" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="Trend.html#cb6-13" tabindex="-1"></a><span class="fu">points</span>(year.seq, jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb6-14"><a href="Trend.html#cb6-14" tabindex="-1"></a><span class="fu">points</span>(year.seq, lower, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span>
-<span id="cb6-15"><a href="Trend.html#cb6-15" tabindex="-1"></a><span class="fu">points</span>(year.seq, upper, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="Trend.html#cb88-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co"># Return to default of 1 panel</span></span>
+<span id="cb88-2"><a href="Trend.html#cb88-2" tabindex="-1"></a>year.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C))</span>
+<span id="cb88-3"><a href="Trend.html#cb88-3" tabindex="-1"></a>lower <span class="ot">&lt;-</span> upper <span class="ot">&lt;-</span> <span class="fu">length</span>(C)</span>
+<span id="cb88-4"><a href="Trend.html#cb88-4" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)){</span>
+<span id="cb88-5"><a href="Trend.html#cb88-5" tabindex="-1"></a>  lower[y] <span class="ot">&lt;-</span> <span class="fu">quantile</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>C.est[,y], <span class="fl">0.025</span>)</span>
+<span id="cb88-6"><a href="Trend.html#cb88-6" tabindex="-1"></a>  upper[y] <span class="ot">&lt;-</span> <span class="fu">quantile</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>C.est[,y], <span class="fl">0.975</span>)</span>
+<span id="cb88-7"><a href="Trend.html#cb88-7" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb88-8"><a href="Trend.html#cb88-8" tabindex="-1"></a>min.y <span class="ot">&lt;-</span> <span class="fu">min</span>(C[<span class="dv">1</span><span class="sc">:</span>n.years],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, lower)</span>
+<span id="cb88-9"><a href="Trend.html#cb88-9" tabindex="-1"></a>max.y <span class="ot">&lt;-</span> <span class="fu">max</span>(C[<span class="dv">1</span><span class="sc">:</span>n.years],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, upper)</span>
+<span id="cb88-10"><a href="Trend.html#cb88-10" tabindex="-1"></a><span class="fu">plot</span>(year.seq, C, <span class="at">ylab=</span><span class="st">&quot;Survey Catch&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb88-11"><a href="Trend.html#cb88-11" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(min.y, max.y))</span>
+<span id="cb88-12"><a href="Trend.html#cb88-12" tabindex="-1"></a></span>
+<span id="cb88-13"><a href="Trend.html#cb88-13" tabindex="-1"></a><span class="fu">points</span>(year.seq, jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>C.est, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb88-14"><a href="Trend.html#cb88-14" tabindex="-1"></a><span class="fu">points</span>(year.seq, lower, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb88-15"><a href="Trend.html#cb88-15" tabindex="-1"></a><span class="fu">points</span>(year.seq, upper, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">lty=</span><span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
 <p>The observed catches should generally fall within the 95% credible intervals (Figure <a href="Trend.html#fig:ForecastTrendPlot">10.3</a>). As in Section <a href="Trend.html#ExpGr">10.2</a>, the red line for predicted catch has a smoother trajectory than the individual catches. How many years into the future would you be confident in predicting the population trend?</p>
 <div class="figure"><span style="display:block;" id="fig:ForecastTrendPlot"></span>
 <img src="bookdown_files/figure-html/ForecastTrendPlot-1.png" alt="Example of fitted exponential growth model for survey catch versus year with forecasts for five additional years. Dashed lines represent lower and upper 95% credible intervals." width="90%" />
@@ -564,17 +565,17 @@ Pregler, Kasey C., R. Daniel Hanks, Evan S. Childress, Nathaniel P. Hitt, Daniel
         </div>
       </div>
 <a href="Recruit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="PopModels.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="integrated-population-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

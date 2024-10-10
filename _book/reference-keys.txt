@@ -17,6 +17,9 @@ fig:BrowniePlot
 fig:LnWtPlot
 fig:SRRPlot
 fig:LinTrendPlot
+fig:ExpTrendPlot
+fig:ForecastTrendPlot
+fig:TwoAgePlot
 introduction
 R-intro
 Distributions
@@ -77,8 +80,6 @@ Linear
 ExpGr
 Forecast
 exercises-7
-PopModels
+integrated-population-models
 exercises-8
 title-placeholder
-fig:ExpTrendPlot
-fig:ForecastTrendPlot

@@ -315,7 +315,8 @@ p.survey <- 0.025 # Default capture probability for survey
 sigma.obs <- 40 # Observation error for survey catch (SD)
 C <- N <- numeric(n.years+p.years)
 N[1] <- N1
-lambda <- rnorm((n.years+p.years-1), mean.lambda, sigma.lambda) # Draw vector of annual growth rates
+lambda <- rnorm((n.years+p.years-1), mean.lambda, sigma.lambda) 
+  # Draw vector of annual growth rates
 for (y in 1:(n.years+p.years-1)){
   N[y+1] <- N[y] * lambda[y]
 }

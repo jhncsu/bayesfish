@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Integrated Population Models | A Bayesian Introduction to Fish Population Analysis</title>
+  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 Integrated Population Models | A Bayesian Introduction to Fish Population Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 Integrated Population Models | A Bayesian Introduction to Fish Population Analysis" />
+  
+  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  
+
+<meta name="author" content="Joseph E. Hightower" />
+
+
+<meta name="date" content="2024-10-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Trend.html"/>
+<link rel="next" href="title-placeholder.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Joe Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> A Brief Introduction to R and RStudio</a></li>
+<li class="chapter" data-level="3" data-path="Distributions.html"><a href="Distributions.html"><i class="fa fa-check"></i><b>3</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Distributions.html"><a href="Distributions.html#Discrete"><i class="fa fa-check"></i><b>3.1</b> Discrete</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#Bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
+<li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
+<li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#PoissonDist"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#NegBinom"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Distributions.html"><a href="Distributions.html#Uniform"><i class="fa fa-check"></i><b>3.2.1</b> Uniform</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Distributions.html"><a href="Distributions.html#BetaDist"><i class="fa fa-check"></i><b>3.2.2</b> Beta</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Distributions.html"><a href="Distributions.html#NormalDist"><i class="fa fa-check"></i><b>3.2.3</b> Normal</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Distributions.html"><a href="Distributions.html#LognormalDist"><i class="fa fa-check"></i><b>3.2.4</b> Lognormal</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Distributions.html"><a href="Distributions.html#GammaDist"><i class="fa fa-check"></i><b>3.2.5</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Distributions.html"><a href="Distributions.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Model-fit.html"><a href="Model-fit.html"><i class="fa fa-check"></i><b>4</b> Model Fitting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-fit.html"><a href="Model-fit.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="Model-fit.html"><a href="Model-fit.html#Model-fit-sim"><i class="fa fa-check"></i><b>4.2</b> Using simulation</a></li>
+<li class="chapter" data-level="4.3" data-path="Model-fit.html"><a href="Model-fit.html#JAGS-model-fit"><i class="fa fa-check"></i><b>4.3</b> Using Bayesian methods</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.1</b> Debugging code</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.2</b> Judging convergence</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.3</b> What is a likelihood?</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.4</b> Deviance as a measure of model fit</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.5</b> Model checking</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.6</b> Model selection</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-fit.html"><a href="Model-fit.html#exercises-1"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Abundance.html"><a href="Abundance.html"><i class="fa fa-check"></i><b>5</b> Abundance</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
+<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#mark-recapture"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
+<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#binomial-mixture"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
+<li class="chapter" data-level="5.4" data-path="Abundance.html"><a href="Abundance.html#exercises-2"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Survival.html"><a href="Survival.html"><i class="fa fa-check"></i><b>6</b> Survival</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Survival.html"><a href="Survival.html#AgeComp"><i class="fa fa-check"></i><b>6.1</b> Age-composition</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="Survival.html"><a href="Survival.html#CC_Selectivity"><i class="fa fa-check"></i><b>6.1.1</b> Accounting For Gear Selectivity</a></li>
+<li class="chapter" data-level="6.1.2" data-path="Survival.html"><a href="Survival.html#Cohort"><i class="fa fa-check"></i><b>6.1.2</b> Cohort model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="Survival.html"><a href="Survival.html#TelemetryBased"><i class="fa fa-check"></i><b>6.2</b> Telemetry-based</a></li>
+<li class="chapter" data-level="6.3" data-path="Survival.html"><a href="Survival.html#BrownieSurvival"><i class="fa fa-check"></i><b>6.3</b> Tag-based</a></li>
+<li class="chapter" data-level="6.4" data-path="Survival.html"><a href="Survival.html#exercises-3"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a></li>
+<li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
+<li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
+<li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry estimates of F and M</a></li>
+<li class="chapter" data-level="7.5" data-path="Mortality.html"><a href="Mortality.html#exercises-4"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Growth.html"><a href="Growth.html"><i class="fa fa-check"></i><b>8</b> Growth</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Growth.html"><a href="Growth.html#vonBert"><i class="fa fa-check"></i><b>8.1</b> Growth in length</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Growth.html"><a href="Growth.html#Otolith"><i class="fa fa-check"></i><b>8.1.1</b> Age-length</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Growth.html"><a href="Growth.html#GrowthInc"><i class="fa fa-check"></i><b>8.1.2</b> Using tagging data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Growth.html"><a href="Growth.html#LnWgt"><i class="fa fa-check"></i><b>8.2</b> Growth in weight</a></li>
+<li class="chapter" data-level="8.3" data-path="Growth.html"><a href="Growth.html#exercises-5"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Recruit.html"><a href="Recruit.html"><i class="fa fa-check"></i><b>9</b> Recruitment</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Recruit.html"><a href="Recruit.html#Recruit-Fit"><i class="fa fa-check"></i><b>9.1</b> Fitting a stock-recruitment curve</a></li>
+<li class="chapter" data-level="9.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>9.2</b> Does spawning stock size affect recruitment?</a></li>
+<li class="chapter" data-level="9.3" data-path="Recruit.html"><a href="Recruit.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Trend.html"><a href="Trend.html"><i class="fa fa-check"></i><b>10</b> Abundance trends</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Trend.html"><a href="Trend.html#Linear"><i class="fa fa-check"></i><b>10.1</b> Linear model</a></li>
+<li class="chapter" data-level="10.2" data-path="Trend.html"><a href="Trend.html#ExpGr"><i class="fa fa-check"></i><b>10.2</b> Exponential growth model</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="Trend.html"><a href="Trend.html#Forecast"><i class="fa fa-check"></i><b>10.2.1</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="Trend.html"><a href="Trend.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="integrated-population-models.html"><a href="integrated-population-models.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="integrated-population-models.html"><a href="integrated-population-models.html#exercises-8"><i class="fa fa-check"></i><b>11.1</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Introduction to Fish Population Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="integrated-population-models" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Integrated Population Models<a href="integrated-population-models.html#integrated-population-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The field and analytical methods discussed thus far have addressed population rates one at a time (e.g., estimating abundance or survival). An improved approach would be to design a complementary set of field studies that provides a complete picture of population dynamics. For example, <span class="citation">Conn et al. (<a href="#ref-conn.etal_2008">2008</a>)</span> used harvest and tag recovery data to fit an integrated population model (IPM) for black bear (<em>Ursus americanus</em>). Their model provided estimates that were more precise and biologically realistic than point estimates using capture-recapture data alone. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> developed an avian IPM using adult population counts, nest surveys, and capture-recapture data on survival. Here we illustrate a somewhat simpler approach, fitting a two-age model using capture-recapture and telemetry data.</p>
+<p>The analysis uses a series of capture-recapture estimates of population size and telemetry information on survival. The cost of this approach in time and money is higher than a basic relative-abundance survey, but it provides insights about population dynamics (recruitment and survival) that would not be possible with relative abundance data alone. The cost could be justified for a subset of cases; for example, a population at low abundance or one supporting an important fishery. We begin with the simulation model:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="integrated-population-models.html#cb89-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb89-2"><a href="integrated-population-models.html#cb89-2" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="integrated-population-models.html#cb89-3" tabindex="-1"></a><span class="co"># Simulation to create population size and field data</span></span>
+<span id="cb89-4"><a href="integrated-population-models.html#cb89-4" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb89-5"><a href="integrated-population-models.html#cb89-5" tabindex="-1"></a></span>
+<span id="cb89-6"><a href="integrated-population-models.html#cb89-6" tabindex="-1"></a>LowS <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Adult survival, arbitrary lower bound</span></span>
+<span id="cb89-7"><a href="integrated-population-models.html#cb89-7" tabindex="-1"></a>HighS <span class="ot">&lt;-</span> <span class="fl">0.9</span> <span class="co"># Arbitrary upper bound</span></span>
+<span id="cb89-8"><a href="integrated-population-models.html#cb89-8" tabindex="-1"></a>AnnualS <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">min=</span>LowS, <span class="at">max=</span>HighS)</span>
+<span id="cb89-9"><a href="integrated-population-models.html#cb89-9" tabindex="-1"></a></span>
+<span id="cb89-10"><a href="integrated-population-models.html#cb89-10" tabindex="-1"></a>MeanR <span class="ot">&lt;-</span> <span class="dv">400</span> <span class="co"># Mean annual recruits</span></span>
+<span id="cb89-11"><a href="integrated-population-models.html#cb89-11" tabindex="-1"></a>N.r <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n=</span>Y, <span class="at">lambda=</span>MeanR)</span>
+<span id="cb89-12"><a href="integrated-population-models.html#cb89-12" tabindex="-1"></a>N.a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Y)</span>
+<span id="cb89-13"><a href="integrated-population-models.html#cb89-13" tabindex="-1"></a>N.a[<span class="dv">1</span>] <span class="ot">&lt;-</span> N.r[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rpois</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">lambda=</span>MeanR) <span class="co"># Arbitrary year-1 population size</span></span>
+<span id="cb89-14"><a href="integrated-population-models.html#cb89-14" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Y){</span>
+<span id="cb89-15"><a href="integrated-population-models.html#cb89-15" tabindex="-1"></a>  N.a[y] <span class="ot">&lt;-</span> N.r[y] <span class="sc">+</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>N.a[y<span class="dv">-1</span>], <span class="at">prob=</span>AnnualS[y<span class="dv">-1</span>])</span>
+<span id="cb89-16"><a href="integrated-population-models.html#cb89-16" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb89-17"><a href="integrated-population-models.html#cb89-17" tabindex="-1"></a></span>
+<span id="cb89-18"><a href="integrated-population-models.html#cb89-18" tabindex="-1"></a><span class="co"># Short-term (closed) two-sample population estimate</span></span>
+<span id="cb89-19"><a href="integrated-population-models.html#cb89-19" tabindex="-1"></a>CapProb <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Fraction of population sampled</span></span>
+<span id="cb89-20"><a href="integrated-population-models.html#cb89-20" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>N.a, <span class="at">prob=</span>CapProb) <span class="co"># Caught and marked in first sample</span></span>
+<span id="cb89-21"><a href="integrated-population-models.html#cb89-21" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>N.a, <span class="at">prob=</span>CapProb) </span>
+<span id="cb89-22"><a href="integrated-population-models.html#cb89-22" tabindex="-1"></a><span class="co"># Caught and examined for marks in second sample</span></span>
+<span id="cb89-23"><a href="integrated-population-models.html#cb89-23" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>n2, <span class="at">prob=</span>n1<span class="sc">/</span>N.a) <span class="co"># Marked fish in second sample</span></span>
+<span id="cb89-24"><a href="integrated-population-models.html#cb89-24" tabindex="-1"></a></span>
+<span id="cb89-25"><a href="integrated-population-models.html#cb89-25" tabindex="-1"></a><span class="co"># Telemetry information on annual survival</span></span>
+<span id="cb89-26"><a href="integrated-population-models.html#cb89-26" tabindex="-1"></a>TelRelease <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Number of telemetry tags to release annually</span></span>
+<span id="cb89-27"><a href="integrated-population-models.html#cb89-27" tabindex="-1"></a>TelTags <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>((Y<span class="dv">-1</span>),Y))</span>
+<span id="cb89-28"><a href="integrated-population-models.html#cb89-28" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)){</span>
+<span id="cb89-29"><a href="integrated-population-models.html#cb89-29" tabindex="-1"></a>  TelTags[y,y] <span class="ot">&lt;-</span> TelRelease</span>
+<span id="cb89-30"><a href="integrated-population-models.html#cb89-30" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> ((y<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>Y)){</span>
+<span id="cb89-31"><a href="integrated-population-models.html#cb89-31" tabindex="-1"></a>    TelTags[y,t] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>TelTags[y,(t<span class="dv">-1</span>)], <span class="at">prob=</span>AnnualS[t<span class="dv">-1</span>])</span>
+<span id="cb89-32"><a href="integrated-population-models.html#cb89-32" tabindex="-1"></a>  }} <span class="co"># y,t</span></span></code></pre></div>
+<p>We model absolute population size, and assume that fish age 1 and older have the same survival rate, which varies annually within user-specified lower and upper bounds. Annual recruitment (surviving age-0 fish from the prior year) is drawn from a Poisson distribution (Section <a href="Distributions.html#PoissonDist">3.1.4</a>) with an arbitrary mean of 400. We require a starting population in year 1 and draw the adult survivors from a Poisson distribution, using the same mean as recruitment. Population size in subsequent years is</p>
+<p><span class="math inline">\(N.a_y = N.r_y + Binomial(N.a_{y-1}, AnnualS_{y-1})\)</span></p>
+<p>i.e., incoming recruitment plus surviving adults.</p>
+<p>Model parameters are estimated using simulated data from two field studies that are assumed to be independent and would provide information on abundance and survival. The first data source is a two-sample (closed) capture-recapture estimate, assumed to be done at the start of each year. The arbitrary capture probability is used to generate the two binomally-distributed samples. The number of recaptures is also binomally distributed, using the observed marked fraction (on average equal to the capture probability). The second data source is a telemetry study that provides annual information on the number of surviving telemetered fish. For example, fixed receivers might be used to detect migratory fish that return annually to a spawning area. We arbitrarily assume that 20 telemetered fish are released each year. For simplicity, transmitters are assumed to last for the duration of the study. Examine the TelTags matrix to see how the annual releases maintain a good sample size.</p>
+<p>Parameter estimates are obtained using uninformative prior distributions for recruitment and annual survival. Preliminary trials indicated that there was not sufficient information to estimate annual recruitment so only the overall mean is estimated. Occasionally a JAGS run-time error (invalid parent node) resulted when using a broad uniform distribution to initialize Rmean.est. Starting from a high value (mean of the capture-recapture estimates of total population size) seems to prevent the run-time error. Population size in year 1 is Poisson distributed, using the capture-recapture point estimate as the expected value. Population size in subsequent years is also drawn from a Poisson distribution, using the population projection equation as the expected value. Both likelihoods use a binomial distribution (Section <a href="Distributions.html#BinomialDist">3.1.2</a>). The probability for the capture-recapture data is the estimated fraction of the population that is marked. The probability for the telemetry data is the estimated annual survival rate.</p>
+<p>Following the JAGS section is some R code to compare the true values with model estimates. The second plot shows the posterior distribution for estimated mean recruitment, with the true value shown as a red vertical line using the <code>abline()</code> function. The <code>par(xpd=TRUE)</code> turns off clipping so that a legend can be added outside the plot boundary (using inset to set the relative coordinates of the legend). For the third plot, the Chapman modification of the capture-recapture estimator <span class="citation">(<a href="#ref-ricker1975">Ricker 1975</a>)</span> was used to avoid getting a plotting error due to an infinite point estimate in cases with <span class="math inline">\(m_2=0\)</span>. The capture-recapture point estimates (red line) tend to be more variable than the population estimates obtained from the integrated model (black line).</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="integrated-population-models.html#cb90-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb90-2"><a href="integrated-population-models.html#cb90-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb90-3"><a href="integrated-population-models.html#cb90-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb90-4"><a href="integrated-population-models.html#cb90-4" tabindex="-1"></a></span>
+<span id="cb90-5"><a href="integrated-population-models.html#cb90-5" tabindex="-1"></a><span class="co"># JAGS code ##################################</span></span>
+<span id="cb90-6"><a href="integrated-population-models.html#cb90-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;IPM.txt&quot;</span>)</span>
+<span id="cb90-7"><a href="integrated-population-models.html#cb90-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb90-8"><a href="integrated-population-models.html#cb90-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb90-9"><a href="integrated-population-models.html#cb90-9" tabindex="-1"></a></span>
+<span id="cb90-10"><a href="integrated-population-models.html#cb90-10" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb90-11"><a href="integrated-population-models.html#cb90-11" tabindex="-1"></a></span>
+<span id="cb90-12"><a href="integrated-population-models.html#cb90-12" tabindex="-1"></a><span class="st"> MeanR.est ~ dlnorm(0, 1E-6) # uninformative prior (&gt;0)</span></span>
+<span id="cb90-13"><a href="integrated-population-models.html#cb90-13" tabindex="-1"></a></span>
+<span id="cb90-14"><a href="integrated-population-models.html#cb90-14" tabindex="-1"></a><span class="st">for (y in 1:(Y-1)){</span></span>
+<span id="cb90-15"><a href="integrated-population-models.html#cb90-15" tabindex="-1"></a><span class="st">  AnnualS.est[y] ~ dunif(0,1)  # Uninformative prior, adult survival</span></span>
+<span id="cb90-16"><a href="integrated-population-models.html#cb90-16" tabindex="-1"></a><span class="st">}#y</span></span>
+<span id="cb90-17"><a href="integrated-population-models.html#cb90-17" tabindex="-1"></a></span>
+<span id="cb90-18"><a href="integrated-population-models.html#cb90-18" tabindex="-1"></a><span class="st"># Population projection</span></span>
+<span id="cb90-19"><a href="integrated-population-models.html#cb90-19" tabindex="-1"></a><span class="st"> N.a.est[1] ~ dpois((n1[1]+1)*(n2[1]+1)/(m2[1]+1)-1) </span></span>
+<span id="cb90-20"><a href="integrated-population-models.html#cb90-20" tabindex="-1"></a><span class="st">  # Year-1 total, Chapman mod in case m2=0</span></span>
+<span id="cb90-21"><a href="integrated-population-models.html#cb90-21" tabindex="-1"></a><span class="st">  # Year-1 estimate needed to start model because no prior year information</span></span>
+<span id="cb90-22"><a href="integrated-population-models.html#cb90-22" tabindex="-1"></a><span class="st"> for(y in 2:Y) {</span></span>
+<span id="cb90-23"><a href="integrated-population-models.html#cb90-23" tabindex="-1"></a><span class="st">     N.a.est[y] ~ dpois(MeanR.est + (AnnualS.est[y-1]*N.a.est[y-1]))</span></span>
+<span id="cb90-24"><a href="integrated-population-models.html#cb90-24" tabindex="-1"></a><span class="st">     } #y</span></span>
+<span id="cb90-25"><a href="integrated-population-models.html#cb90-25" tabindex="-1"></a></span>
+<span id="cb90-26"><a href="integrated-population-models.html#cb90-26" tabindex="-1"></a><span class="st">#Likelihoods</span></span>
+<span id="cb90-27"><a href="integrated-population-models.html#cb90-27" tabindex="-1"></a><span class="st"># Two-sample capture-recapture estimate for total pop size at start of year</span></span>
+<span id="cb90-28"><a href="integrated-population-models.html#cb90-28" tabindex="-1"></a><span class="st">  for (y in 2:Y){  # m2[1] used above to get starting pop size</span></span>
+<span id="cb90-29"><a href="integrated-population-models.html#cb90-29" tabindex="-1"></a><span class="st">    m2[y] ~ dbin((n1[y]/N.a.est[y]), n2[y])</span></span>
+<span id="cb90-30"><a href="integrated-population-models.html#cb90-30" tabindex="-1"></a><span class="st">    } #y</span></span>
+<span id="cb90-31"><a href="integrated-population-models.html#cb90-31" tabindex="-1"></a></span>
+<span id="cb90-32"><a href="integrated-population-models.html#cb90-32" tabindex="-1"></a><span class="st"># Telemetry information on survival rate</span></span>
+<span id="cb90-33"><a href="integrated-population-models.html#cb90-33" tabindex="-1"></a><span class="st">for (y in 1:(Y-1)){</span></span>
+<span id="cb90-34"><a href="integrated-population-models.html#cb90-34" tabindex="-1"></a><span class="st">  for (t in ((y+1):Y)){</span></span>
+<span id="cb90-35"><a href="integrated-population-models.html#cb90-35" tabindex="-1"></a><span class="st">    TelTags[y,t] ~ dbin(AnnualS.est[t-1],TelTags[y,(t-1)])</span></span>
+<span id="cb90-36"><a href="integrated-population-models.html#cb90-36" tabindex="-1"></a><span class="st">  }} # y, t</span></span>
+<span id="cb90-37"><a href="integrated-population-models.html#cb90-37" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb90-38"><a href="integrated-population-models.html#cb90-38" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb90-39"><a href="integrated-population-models.html#cb90-39" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb90-40"><a href="integrated-population-models.html#cb90-40" tabindex="-1"></a></span>
+<span id="cb90-41"><a href="integrated-population-models.html#cb90-41" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb90-42"><a href="integrated-population-models.html#cb90-42" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>, <span class="st">&quot;TelTags&quot;</span>)</span>
+<span id="cb90-43"><a href="integrated-population-models.html#cb90-43" tabindex="-1"></a></span>
+<span id="cb90-44"><a href="integrated-population-models.html#cb90-44" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb90-45"><a href="integrated-population-models.html#cb90-45" tabindex="-1"></a>Rec.init <span class="ot">&lt;-</span> <span class="fu">mean</span>((n1<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(n2<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(m2<span class="sc">+</span><span class="dv">1</span>)<span class="sc">-</span><span class="dv">1</span>) <span class="co"># Chapman modification </span></span>
+<span id="cb90-46"><a href="integrated-population-models.html#cb90-46" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">MeanR.est=</span><span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span>Rec.init, <span class="at">sd=</span><span class="dv">100</span>),</span>
+<span id="cb90-47"><a href="integrated-population-models.html#cb90-47" tabindex="-1"></a>                               <span class="at">AnnualS.est=</span><span class="fu">runif</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb90-48"><a href="integrated-population-models.html#cb90-48" tabindex="-1"></a></span>
+<span id="cb90-49"><a href="integrated-population-models.html#cb90-49" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;IPM.txt&#39;</span></span>
+<span id="cb90-50"><a href="integrated-population-models.html#cb90-50" tabindex="-1"></a></span>
+<span id="cb90-51"><a href="integrated-population-models.html#cb90-51" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb90-52"><a href="integrated-population-models.html#cb90-52" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AnnualS.est&quot;</span>, <span class="st">&quot;N.a.est&quot;</span>, <span class="st">&quot;MeanR.est&quot;</span>)</span>
+<span id="cb90-53"><a href="integrated-population-models.html#cb90-53" tabindex="-1"></a></span>
+<span id="cb90-54"><a href="integrated-population-models.html#cb90-54" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb90-55"><a href="integrated-population-models.html#cb90-55" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb90-56"><a href="integrated-population-models.html#cb90-56" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">20000</span>,</span>
+<span id="cb90-57"><a href="integrated-population-models.html#cb90-57" tabindex="-1"></a>                model.file)</span>
+<span id="cb90-58"><a href="integrated-population-models.html#cb90-58" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb90-59"><a href="integrated-population-models.html#cb90-59" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb90-60"><a href="integrated-population-models.html#cb90-60" tabindex="-1"></a></span>
+<span id="cb90-61"><a href="integrated-population-models.html#cb90-61" tabindex="-1"></a><span class="co"># Code for plots comparing true values and model estimates</span></span>
+<span id="cb90-62"><a href="integrated-population-models.html#cb90-62" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb90-63"><a href="integrated-population-models.html#cb90-63" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)), </span>
+<span id="cb90-64"><a href="integrated-population-models.html#cb90-64" tabindex="-1"></a>     jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est, <span class="at">ylab=</span><span class="st">&quot;Annual S&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb90-65"><a href="integrated-population-models.html#cb90-65" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(AnnualS,</span>
+<span id="cb90-66"><a href="integrated-population-models.html#cb90-66" tabindex="-1"></a>                                  jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est),</span>
+<span id="cb90-67"><a href="integrated-population-models.html#cb90-67" tabindex="-1"></a>                              <span class="fu">max</span>(AnnualS,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est)))</span>
+<span id="cb90-68"><a href="integrated-population-models.html#cb90-68" tabindex="-1"></a><span class="fu">points</span>(AnnualS, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>)</span>
+<span id="cb90-69"><a href="integrated-population-models.html#cb90-69" tabindex="-1"></a></span>
+<span id="cb90-70"><a href="integrated-population-models.html#cb90-70" tabindex="-1"></a><span class="fu">hist</span>(jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>sims.list<span class="sc">$</span>MeanR.est, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Mean recruitment&quot;</span>)</span>
+<span id="cb90-71"><a href="integrated-population-models.html#cb90-71" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>MeanR, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb90-72"><a href="integrated-population-models.html#cb90-72" tabindex="-1"></a><span class="fu">par</span>(<span class="at">xpd=</span><span class="cn">TRUE</span>) <span class="co"># Turn off clipping to put legend above plot</span></span>
+<span id="cb90-73"><a href="integrated-population-models.html#cb90-73" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>,</span>
+<span id="cb90-74"><a href="integrated-population-models.html#cb90-74" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Est&quot;</span>, <span class="st">&quot;True&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb90-75"><a href="integrated-population-models.html#cb90-75" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">19</span>,<span class="dv">17</span>), <span class="at">text.col =</span> <span class="st">&quot;black&quot;</span>,  <span class="at">horiz =</span> T , <span class="at">inset =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.2</span>))</span>
+<span id="cb90-76"><a href="integrated-population-models.html#cb90-76" tabindex="-1"></a><span class="fu">par</span>(<span class="at">xpd=</span><span class="cn">FALSE</span>)</span>
+<span id="cb90-77"><a href="integrated-population-models.html#cb90-77" tabindex="-1"></a></span>
+<span id="cb90-78"><a href="integrated-population-models.html#cb90-78" tabindex="-1"></a>MR_N.hat <span class="ot">&lt;-</span> (n1<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(n2<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(m2<span class="sc">+</span><span class="dv">1</span>) <span class="sc">-</span><span class="dv">1</span> <span class="co"># Chapman modification in case m2=0</span></span>
+<span id="cb90-79"><a href="integrated-population-models.html#cb90-79" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>Y), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est, </span>
+<span id="cb90-80"><a href="integrated-population-models.html#cb90-80" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Pop size (includes new recruits)&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb90-81"><a href="integrated-population-models.html#cb90-81" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, </span>
+<span id="cb90-82"><a href="integrated-population-models.html#cb90-82" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(N.a,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est,MR_N.hat),</span>
+<span id="cb90-83"><a href="integrated-population-models.html#cb90-83" tabindex="-1"></a>            <span class="fu">max</span>(N.a,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est,MR_N.hat)))</span>
+<span id="cb90-84"><a href="integrated-population-models.html#cb90-84" tabindex="-1"></a><span class="fu">points</span>(N.a, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>) <span class="co"># True adult pop size</span></span>
+<span id="cb90-85"><a href="integrated-population-models.html#cb90-85" tabindex="-1"></a><span class="fu">points</span>(MR_N.hat, <span class="at">col=</span><span class="st">&#39;red&#39;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>) <span class="co"># Capture-recapture point estimates</span></span></code></pre></div>
+<p>Results for the default case show that total population size and annual survival tend to be reliably estimated (Figure <a href="integrated-population-models.html#fig:TwoAgePlot">11.1</a>). Note that there is no direct information on recruitment, so the model makes indirect inferences from the total year-y abundance (new age-1 recruits plus 2+ survivors) and telemetry information on survival.</p>
+<div class="figure"><span style="display:block;" id="fig:TwoAgePlot"></span>
+<img src="bookdown_files/figure-html/TwoAgePlot-1.png" alt="Estimates of annual survival (left), mean recruitment (center), and total population size (right) from a two-age integrated population model fitted to capture-recapture and telemetry data. True values are shown in blue; capture-recapture point estimates (right) are in red." width="90%" />
+<p class="caption">
+FIGURE 11.1: Estimates of annual survival (left), mean recruitment (center), and total population size (right) from a two-age integrated population model fitted to capture-recapture and telemetry data. True values are shown in blue; capture-recapture point estimates (right) are in red.
+</p>
+</div>
+<p>After doing multiple runs with the default settings, try varying the capture probability for the capture-recapture study and the annual release of fish with transmitters. As expected, a higher capture probability improves the estimates of total population size, and more transmitters improve the annual survival estimates.</p>
+<div id="exercises-8" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Exercises<a href="integrated-population-models.html#exercises-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Compare true and estimated mean recruitment in ten trials using the default capture probability of 0.1 versus 0.2 and 0.3. How well does the model estimate total population size and annual survival for each sampling intensity?</p></li>
+<li><p>How might the field sampling methods be modified or augmented to improve the model estimates?</p></li>
+</ol>
+
+</div>
+</div>
+
+
+
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-conn.etal_2008" class="csl-entry">
+Conn, Paul B., Duane R. Diefenbach, Jeffrey L. Laake, Mark A. Ternent, and Gary C. White. 2008. <span>“Bayesian <span>Analysis</span> of <span class="nocase">Wildlife Age-at-Harvest Data</span>.”</span> <em>Biometrics</em> 64 (4): 1170–77. <a href="https://doi.org/10.1111/j.1541-0420.2008.00987.x">https://doi.org/10.1111/j.1541-0420.2008.00987.x</a>.
+</div>
+<div id="ref-kéry.schaub_2011" class="csl-entry">
+Kéry, Marc, and Michael Schaub. 2011. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st edition. Boston: Academic Press.
+</div>
+<div id="ref-ricker1975" class="csl-entry">
+Ricker, William Edwin. 1975. <em>Computation and Interpretation of Biological Statistics of Fish Populations</em>. Bulletin 191. Ottawa: <span>Dept. of Fisheries and Oceans : Minister of Supply and Services Canada</span>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Trend.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="title-placeholder.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/11-IntegratedPopModels.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
