@@ -166,6 +166,7 @@ For the default settings, estimates of M tend to be reliable (Figure \@ref(fig:H
 ```{r HearnPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example of estimated posterior distribution and true natural mortality rate (vertical red line) using the completed tagging study (Hearn et al. 1987) approach.', out.width="90%"}
 
 rm(list=ls()) # Clear Environment
+set.seed(12345) # Ensure that book will have a reasonable result
 par(mar = c(4, 4, 1, .1))
 
 Hearn <- function() {

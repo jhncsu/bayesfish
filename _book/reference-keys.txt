@@ -20,6 +20,7 @@ fig:LinTrendPlot
 fig:ExpTrendPlot
 fig:ForecastTrendPlot
 fig:TwoAgePlot
+fig:CAGEANPlot
 introduction
 R-intro
 Distributions
@@ -80,6 +81,9 @@ Linear
 ExpGr
 Forecast
 exercises-7
-integrated-population-models
+PopModels
+TwoAge
+CAGEAN
 exercises-8
 title-placeholder
+more-on-prior-distributions

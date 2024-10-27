@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-10-10" />
+<meta name="date" content="2024-10-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -256,9 +256,11 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="Trend.html"><a href="Trend.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="integrated-population-models.html"><a href="integrated-population-models.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
+<li class="chapter" data-level="11" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="integrated-population-models.html"><a href="integrated-population-models.html#exercises-8"><i class="fa fa-check"></i><b>11.1</b> Exercises</a></li>
+<li class="chapter" data-level="11.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>11.1</b> Two-age model</a></li>
+<li class="chapter" data-level="11.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>11.2</b> Full age-structured model</a></li>
+<li class="chapter" data-level="11.3" data-path="PopModels.html"><a href="PopModels.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
@@ -457,7 +459,7 @@ FIGURE 3.3: Negative binomial frequency distributions for k=1 (left) and 10 (rig
 <h2><span class="header-section-number">3.2</span> Continuous<a href="Distributions.html#Continuous" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="Uniform" class="section level3 hasAnchor" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Uniform<a href="Distributions.html#Uniform" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A uniform distribution (bounds a, b) is flat in shape, indicating that all values between a lower and upper bound are considered equally likely. It is also useful as a “first” model for situations where relatively little is known other than the lower and upper bounds <span class="citation">(<a href="#ref-law.kelton_1982">Law and Kelton 1982</a>)</span>. Probabilities have default bounds of 0 and 1, so a fish population model might use a uniform 0-1 distribution for probabilities such as survival rate. More narrow bounds could be used in cases where prior information was available; for example, a pilot study might indicate that the tag-reporting rate would be expected to vary between 0.4 and 0.6. Another fisheries example would be a uniform distribution between 60 and 70, for simulating individual variation in maximum size for a growth curve.</p>
+<p>A uniform distribution is flat in shape, indicating that all values between a lower and upper bound are considered equally likely. It is also useful as a “first” model for situations where relatively little is known other than the lower and upper bounds <span class="citation">(<a href="#ref-law.kelton_1982">Law and Kelton 1982</a>)</span>. Probabilities have default bounds of 0 and 1, so a fish population model might use a uniform 0-1 distribution for probabilities such as survival rate. More narrow bounds could be used in cases where additional information was available; for example, a pilot study might indicate that the tag-reporting rate would be expected to vary between 0.4 and 0.6. Another fisheries example would be a uniform distribution between 60 and 70, for simulating individual variation in maximum size for a growth curve.</p>
 <p>We begin with a simulation example, using the default range of 0-1 for the <code>runif()</code> function:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="Distributions.html#cb18-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
 <span id="cb18-2"><a href="Distributions.html#cb18-2" tabindex="-1"></a></span>
