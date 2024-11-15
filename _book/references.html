@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-11-13" />
+<meta name="date" content="2024-11-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,12 +196,13 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="Model-fit.html"><a href="Model-fit.html#Model-fit-sim"><i class="fa fa-check"></i><b>4.2</b> Using simulation</a></li>
 <li class="chapter" data-level="4.3" data-path="Model-fit.html"><a href="Model-fit.html#JAGS-model-fit"><i class="fa fa-check"></i><b>4.3</b> Using Bayesian methods</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.1</b> Debugging code</a></li>
-<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.2</b> Judging convergence</a></li>
-<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.3</b> What is a likelihood?</a></li>
-<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.4</b> Deviance as a measure of model fit</a></li>
-<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.5</b> Model checking</a></li>
-<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.6</b> Model selection</a></li>
+<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#FirstExampleBayesian"><i class="fa fa-check"></i><b>4.3.1</b> Example: mark-recapture</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.2</b> Debugging code</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.3</b> Judging convergence</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.4</b> What is a likelihood?</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.5</b> Deviance as a measure of model fit</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.6</b> Model checking</a></li>
+<li class="chapter" data-level="4.3.7" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.7</b> Model selection</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="Model-fit.html"><a href="Model-fit.html#exercises-1"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
 </ul></li>
@@ -296,7 +297,7 @@ Bolker, Benjamin M. 2008. <em>Ecological <span>Models</span> and <span>Data</spa
 Brooks, Stephen P., and Andrew Gelman. 1998. <span>“General <span>Methods</span> for <span>Monitoring Convergence</span> of <span>Iterative Simulations</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 7 (4): 434–55. <a href="https://doi.org/10.1080/10618600.1998.10474787">https://doi.org/10.1080/10618600.1998.10474787</a>.
 </div>
 <div class="csl-entry">
-Brownie, Cavell, D. R. Anderson, K. P. Burnham, and D. S. Robson. 1985. <span>“Statistical Inference from Band Recovery Data: A Handbook.”</span> Federal Government Series 156. Resource <span>Publication</span>. Washington, D.C.: <span>U.S. Fish and Wildlife</span>. <a href="http://pubs.er.usgs.gov/publication/rp156">http://pubs.er.usgs.gov/publication/rp156</a>.
+Brownie, Cavell, D. R. Anderson, K. P. Burnham, and D. S. Robson. 1985. <span>“Statistical Inference from Band Recovery Data: A Handbook.”</span> Federal {{Government Series}} 156. <em>Statistical Inference from Band Recovery Data: A Handbook</em>. Resource <span>Publication</span>. Washington, D.C.: <span>U.S. Fish and Wildlife</span>.
 </div>
 <div class="csl-entry">
 Bryant, Mason D. 2000. <span>“Estimating <span>Fish Populations</span> by <span>Removal Methods</span> with <span>Minnow Traps</span> in <span>Southeast Alaska Streams</span>.”</span> <em>North American Journal of Fisheries Management</em> 20 (4): 923–30. <a href="https://doi.org/10.1577/1548-8675(2000)020&lt;0923:EFPBRM&gt;2.0.CO;2">https://doi.org/10.1577/1548-8675(2000)020&lt;0923:EFPBRM&gt;2.0.CO;2</a>.
@@ -312,6 +313,9 @@ Conn, Paul B., Duane R. Diefenbach, Jeffrey L. Laake, Mark A. Ternent, and Gary 
 </div>
 <div class="csl-entry">
 Conn, Paul B., Devin S. Johnson, Perry J. Williams, Sharon R. Melin, and Mevin B. Hooten. 2018. <span>“A Guide to <span>Bayesian</span> Model Checking for Ecologists.”</span> <em>Ecological Monographs</em> 88 (4): 526–42. <a href="https://doi.org/10.1002/ecm.1314">https://doi.org/10.1002/ecm.1314</a>.
+</div>
+<div class="csl-entry">
+de Valpine, Perry, Daniel Turek, Christopher J. Paciorek, Clifford Anderson-Bergman, Duncan Temple Lang, and Rastislav Bodik. 2017. <span>“Programming <span>With Models</span>: <span>Writing Statistical Algorithms</span> for <span>General Model Structures With NIMBLE</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (2): 403–13. <a href="https://doi.org/10.1080/10618600.2016.1172487">https://doi.org/10.1080/10618600.2016.1172487</a>.
 </div>
 <div class="csl-entry">
 Deriso, R. B., T. J. Quinn II, and P. R. Neal. 1985. <span>“Catch-<span>Age Analysis</span> with <span>Auxiliary Information</span>.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 42 (4): 815–24. <a href="https://doi.org/10.1139/f85-104">https://doi.org/10.1139/f85-104</a>.
@@ -332,7 +336,7 @@ Ellison, Aaron M. 2004. <span>“Bayesian Inference in Ecology.”</span> <em>Ec
 Fielder, David G., and James R. Bence. 2014. <span>“Integration of <span>Auxiliary Information</span> in <span class="nocase">Statistical Catch-at-Age</span> (<span>SCA</span>) <span>Analysis</span> of the <span>Saginaw Bay Stock</span> of <span>Walleye</span> in <span>Lake Huron</span>.”</span> <em>NORTH AMERICAN JOURNAL OF FISHERIES MANAGEMENT</em> 34 (5): 970–87. <a href="https://doi.org/10.1080/02755947.2014.938141">https://doi.org/10.1080/02755947.2014.938141</a>.
 </div>
 <div class="csl-entry">
-Flowers, H. Jared, and Joseph E. Hightower. 2013. <span>“A Novel Approach to Surveying Sturgeon Using Side-Scan Sonar and Occupancy Modeling.”</span> Journal Article. <em>Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science</em> 5 (1): 211–23. <a href="https://doi.org/10.1080/19425120.2013.816396">https://doi.org/10.1080/19425120.2013.816396</a>.
+Flowers, H. Jared, and Joseph E. Hightower. 2013. <span>“A Novel Approach to Surveying Sturgeon Using Side-Scan Sonar and Occupancy Modeling.”</span> Journal {{Article}}. <em>Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science</em> 5 (1): 211–23. <a href="https://doi.org/10.1080/19425120.2013.816396">https://doi.org/10.1080/19425120.2013.816396</a>.
 </div>
 <div class="csl-entry">
 ———. 2015. <span>“Estimating <span>Sturgeon Abundance</span> in the <span>Carolinas Using Side-Scan Sonar</span>.”</span> <em>Marine and Coastal Fisheries</em> 7 (1): 1–9. <a href="https://doi.org/10.1080/19425120.2014.982334">https://doi.org/10.1080/19425120.2014.982334</a>.
@@ -344,7 +348,7 @@ Fournier, David A., Hans J. Skaug, Johnoel Ancheta, James Ianelli, Arni Magnusso
 Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. <em>Bayesian <span>Data Analysis</span></em>. 3rd edition. Boca Raton London New York: <span>Chapman and Hall/CRC</span>.
 </div>
 <div class="csl-entry">
-Gelman, Andrew, and Jennifer Hill. 2006. <span>“Data <span>Analysis Using Regression</span> and <span>Multilevel</span>/<span>Hierarchical Models</span>.”</span> Higher Education from Cambridge University Press; Cambridge University Press. December 17, 2006. <a href="https://doi.org/10.1017/CBO9780511790942">https://doi.org/10.1017/CBO9780511790942</a>.
+Gelman, Andrew, and Jennifer Hill. 2006. <span>“Data <span>Analysis Using Regression</span> and <span>Multilevel</span>/<span>Hierarchical Models</span>.”</span> <em>Higher Education from Cambridge University Press</em>. https://www.cambridge.org/highereducation/books/data-analysis-using-regression-and-multilevel-hierarchical-models/32A29531C7FD730C3A68951A17C9D983; Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511790942">https://doi.org/10.1017/CBO9780511790942</a>.
 </div>
 <div class="csl-entry">
 Gelman, Andrew, Daniel Lee, and Jiqiang Guo. 2015. <span>“Stan: <span>A Probabilistic Programming Language</span> for <span>Bayesian Inference</span> and <span>Optimization</span>.”</span> <em>Journal of Educational and Behavioral Statistics</em> 40 (5): 530–43. <a href="https://www.jstor.org/stable/43966398">https://www.jstor.org/stable/43966398</a>.
@@ -362,7 +366,7 @@ Hearn, William S., John M. Hoenig, Kenneth H. Pollock, and Daniel A. Hepworth. 2
 Hearn, William S., Ronald L. Sandland, and John Hampton. 1987. <span>“Robust Estimation of the Natural Mortality Rate in a Completed Tagging Experiment with Variable Fishing Intensity.”</span> <em>ICES Journal of Marine Science</em> 43 (2): 107–17. <a href="https://doi.org/10.1093/icesjms/43.2.107">https://doi.org/10.1093/icesjms/43.2.107</a>.
 </div>
 <div class="csl-entry">
-Hewitt, David A., Eric C. Janney, Brian S. Hayes, and Rip S. Shively. 2010. <span>“Improving Inferences from Fisheries Capture-Recapture Studies through Remote Detection of PIT Tags.”</span> <em>Fisheries</em> 35 (5): 217–31. <a href="https://doi.org/10.1577/1548-8446-35.5.217">https://doi.org/10.1577/1548-8446-35.5.217</a>.
+Hewitt, David A., Eric C. Janney, Brian S. Hayes, and Rip S. Shively. 2010. <span>“<span>Improving Inferences from Fisheries Capture-Recapture Studies through Remote Detection of PIT Tags</span>.”</span> <em>Fisheries</em> 35 (5): 217–31. <a href="https://doi.org/10.1577/1548-8446-35.5.217">https://doi.org/10.1577/1548-8446-35.5.217</a>.
 </div>
 <div class="csl-entry">
 Hightower, Joseph E., and Gary D. Grossman. 1985. <span>“Comparison of <span>Constant Effort Harvest Policies</span> for <span>Fish Stocks</span> with <span>Variable Recruitment</span>.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 42 (5): 982–88. <a href="https://doi.org/10.1139/f85-123">https://doi.org/10.1139/f85-123</a>.
@@ -389,7 +393,7 @@ Kéry, Marc. 2010. <em>Introduction to <span>WinBUGS</span> for <span>Ecologists
 Kéry, Marc, and Michael Schaub. 2011. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st edition. Boston: Academic Press.
 </div>
 <div class="csl-entry">
-Law, Averill M., and W. David Kelton. 1982. <em>Simulation <span>Modeling</span> and <span>Analysis</span></em>. McGraw-Hill. <a href="https://books.google.com?id=xOBQAAAAMAAJ">https://books.google.com?id=xOBQAAAAMAAJ</a>.
+Law, Averill M., and W. David Kelton. 1982. <em>Simulation <span>Modeling</span> and <span>Analysis</span></em>. McGraw-Hill.
 </div>
 <div class="csl-entry">
 Lemoine, Nathan P. 2019. <span>“Moving Beyond Noninformative Priors: Why and How to Choose Weakly Informative Priors in <span>Bayesian</span> Analyses.”</span> <em>Oikos</em> 128 (7): 912–28. <a href="https://doi.org/10.1111/oik.05985">https://doi.org/10.1111/oik.05985</a>.
@@ -425,7 +429,7 @@ Maunder, Mark N., and Andre E. Punt. 2013. <span>“A Review of Integrated Analy
 McCarthy, Michael A. 2007. <em>Bayesian <span>Methods</span> for <span>Ecology</span></em>. 1st edition. Cambridge, UK ; New York: Cambridge University Press.
 </div>
 <div class="csl-entry">
-McCARTHY, Michael A., and Pip Masters. 2005. <span>“Profiting from Prior Information in <span>Bayesian</span> Analyses of Ecological Data.”</span> <em>Journal of Applied Ecology</em> 42 (6): 1012–19. <a href="https://doi.org/10.1111/j.1365-2664.2005.01101.x">https://doi.org/10.1111/j.1365-2664.2005.01101.x</a>.
+McCarthy, Michael A., and Pip Masters. 2005. <span>“Profiting from Prior Information in <span>Bayesian</span> Analyses of Ecological Data.”</span> <em>Journal of Applied Ecology</em> 42 (6): 1012–19. <a href="https://doi.org/10.1111/j.1365-2664.2005.01101.x">https://doi.org/10.1111/j.1365-2664.2005.01101.x</a>.
 </div>
 <div class="csl-entry">
 Methot, Richard D., Jr., and Chantell R. Wetzell. 2013. <span>“Stock Synthesis: <span>A</span> Biological and Statistical Framework for Fish Stock Assessment and Fishery Management.”</span> <em>Fisheries Research</em> 142: 86–99. https://doi.org/<a href="https://doi-org.prox.lib.ncsu.edu/10.1016/j.fishres.2012.10.012">https://doi-org.prox.lib.ncsu.edu/10.1016/j.fishres.2012.10.012</a>.
@@ -434,7 +438,7 @@ Methot, Richard D., Jr., and Chantell R. Wetzell. 2013. <span>“Stock Synthesis
 Millar, Russell B, and Renate Meyer. 2000. <span>“Bayesian State-Space Modeling of Age-Structured Data: Fitting a Model Is Just the Beginning.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 57 (1): 43–50. <a href="https://doi.org/10.1139/f99-169">https://doi.org/10.1139/f99-169</a>.
 </div>
 <div class="csl-entry">
-Ogle, by Derek H. 2018. <em>Introductory <span>Fisheries Analyses</span> with <span>R</span></em>. First edition. Chapman &amp; <span>Hall</span>/<span>CRC The R Series</span>. <span>Boca Raton, FL : Chapman and Hall/CRC, [2018].</span> <a href="https://catalog.lib.ncsu.edu/catalog/NCSU4637798">https://catalog.lib.ncsu.edu/catalog/NCSU4637798</a>.
+Ogle, by Derek H. 2018. <em>Introductory <span>Fisheries Analyses</span> with <span>R</span></em>. First edition. Chapman &amp; <span>Hall</span>/<span>CRC The R Series</span>. <span>Boca Raton, FL : Chapman and Hall/CRC, [2018].</span>
 </div>
 <div class="csl-entry">
 Plummer, M. 2003. <span>“<span>JAGS</span>: <span>A</span> Program for Analysis of <span>Bayesian</span> Graphical Models Using <span>Gibbs</span> Sampling.”</span> <em>Proceedings of the 3rd International Workshop on Distributed Statistical Computing</em>. <a href="https://doi.org/10.1023/A:1008929526011">https://doi.org/10.1023/A:1008929526011</a>.
@@ -446,7 +450,7 @@ Plummer, Martyn. 2023. <em>Rjags: Bayesian Graphical Models Using MCMC</em>. <a 
 Pollock, Kenneth H., John M. Hoenig, William S. Hearn, and Brian Calingaert. 2001. <span>“Tag <span>Reporting Rate Estimation</span>: 1. <span>An Evaluation</span> of the <span>High-Reward Tagging Method</span>.”</span> <em>North American Journal of Fisheries Management</em> 21 (3): 521–32. <a href="https://doi.org/10.1577/1548-8675(2001)021&lt;0521:TRREAE&gt;2.0.CO;2">https://doi.org/10.1577/1548-8675(2001)021&lt;0521:TRREAE&gt;2.0.CO;2</a>.
 </div>
 <div class="csl-entry">
-Pollock, Kenneth, and William Pine. 2007. <span>“The Design and Analysis of Field Studies to Estimate Catch‐and‐release Mortality.”</span> <em>Fisheries Management and Ecology</em> 14 (April): 123–30. <a href="https://doi.org/10.1111/j.1365-2400.2007.00532.x">https://doi.org/10.1111/j.1365-2400.2007.00532.x</a>.
+Pollock, Kenneth, and William Pine. 2007. <span>“The Design and Analysis of Field Studies to Estimate Catch-and-Release Mortality.”</span> <em>Fisheries Management and Ecology</em> 14 (April): 123–30. <a href="https://doi.org/10.1111/j.1365-2400.2007.00532.x">https://doi.org/10.1111/j.1365-2400.2007.00532.x</a>.
 </div>
 <div class="csl-entry">
 Quinn, Terrance J., and Richard B. Deriso. 1999. <em>Quantitative <span>Fish Dynamics</span></em>. Biological <span>Resource Management</span>. Oxford, New York: Oxford University Press.
@@ -479,16 +483,13 @@ Spiegelhalter, David J., Nicola G. Best, Bradley P. Carlin, and Angelika Van Der
 Then, Amy Y, John M Hoenig, Norman G Hall, David A Hewitt, and Handling editor: Ernesto Jardim. 2015. <span>“Evaluating the Predictive Performance of Empirical Estimators of Natural Mortality Rate Using Information on over 200 Fish Species.”</span> <em>ICES Journal of Marine Science</em> 72 (1): 82–92. <a href="https://doi.org/10.1093/icesjms/fsu136">https://doi.org/10.1093/icesjms/fsu136</a>.
 </div>
 <div class="csl-entry">
-Valpine, Perry de, Daniel Turek, Christopher J. Paciorek, Clifford Anderson-Bergman, Duncan Temple Lang, and Rastislav Bodik. 2017. <span>“Programming <span>With Models</span>: <span>Writing Statistical Algorithms</span> for <span>General Model Structures With NIMBLE</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (2): 403–13. <a href="https://doi.org/10.1080/10618600.2016.1172487">https://doi.org/10.1080/10618600.2016.1172487</a>.
-</div>
-<div class="csl-entry">
-Vetter, Ef. 1988. <span>“Estimation of <span>Natural Mortality</span> in <span>Fish Stocks</span> - a <span>Review</span>.”</span> <em>Fishery Bulletin</em> 86 (1): 25–43. <a href="http://www.webofscience.com/wos/woscc/full-record/WOS:A1988P107100002">http://www.webofscience.com/wos/woscc/full-record/WOS:A1988P107100002</a>.
+Vetter, Ef. 1988. <span>“Estimation of <span>Natural Mortality</span> in <span>Fish Stocks</span> - a <span>Review</span>.”</span> <em>Fishery Bulletin</em> 86 (1): 25–43.
 </div>
 <div class="csl-entry">
 Wang, You-Gan, Mervyn R. Thomas, and Ian F. Somers. 1995. <span>“A Maximum Likelihood Approach for Estimating Growth from Tag–Recapture Data.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 52 (2): 252–59. <a href="https://doi.org/10.1139/f95-025">https://doi.org/10.1139/f95-025</a>.
 </div>
 <div class="csl-entry">
-Xie, Yihui. 2015. <em>Dynamic <span>Documents</span> with <span>R</span> and Knitr</em>. 2nd ed. Boca Raton, Florida: <span>Chapman and Hall/CRC</span>. <a href="http://yihui.name/knitr/">http://yihui.name/knitr/</a>.
+Xie, Yihui. 2015. <em>Dynamic <span>Documents</span> with <span>R</span> and Knitr</em>. 2nd ed. Boca Raton, Florida: <span>Chapman and Hall/CRC</span>.
 </div>
 <div class="csl-entry">
 ———. 2024. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.

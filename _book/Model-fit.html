@@ -448,7 +448,7 @@ FIGURE 4.2: Estimated posterior distribution for population size; red line indic
 <span id="cb7-47"><a href="Model-fit.html#cb7-47" tabindex="-1"></a>                model.file)</span>
 <span id="cb7-48"><a href="Model-fit.html#cb7-48" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
 <span id="cb7-49"><a href="Model-fit.html#cb7-49" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
-<p>Estimates from the two approaches differ (likely due to the different forms for the priors) but credible intervals are similar.</p>
+<p>In trial runs, estimates using the uniform prior for MarkedFraction appeared to have lower bias. The degree of bias for both priors was less when higher values were used for p.true. In planning a mark-recapture study for a pond or small lake, how might you decide on a realistic goal for p.true?</p>
 </div>
 <div id="Debug" class="section level3 hasAnchor" number="4.3.2">
 <h3><span class="header-section-number">4.3.2</span> Debugging code<a href="Model-fit.html#Debug" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -938,7 +938,7 @@ Ellison, Aaron M. 2004. <span>“Bayesian Inference in Ecology.”</span> <em>Ec
 Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. <em>Bayesian <span>Data Analysis</span></em>. 3rd edition. Boca Raton London New York: <span>Chapman and Hall/CRC</span>.
 </div>
 <div id="ref-gelman.hill_2006" class="csl-entry">
-Gelman, Andrew, and Jennifer Hill. 2006. <span>“Data <span>Analysis Using Regression</span> and <span>Multilevel</span>/<span>Hierarchical Models</span>.”</span> Higher Education from Cambridge University Press; Cambridge University Press. December 17, 2006. <a href="https://doi.org/10.1017/CBO9780511790942">https://doi.org/10.1017/CBO9780511790942</a>.
+Gelman, Andrew, and Jennifer Hill. 2006. <span>“Data <span>Analysis Using Regression</span> and <span>Multilevel</span>/<span>Hierarchical Models</span>.”</span> <em>Higher Education from Cambridge University Press</em>. https://www.cambridge.org/highereducation/books/data-analysis-using-regression-and-multilevel-hierarchical-models/32A29531C7FD730C3A68951A17C9D983; Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511790942">https://doi.org/10.1017/CBO9780511790942</a>.
 </div>
 <div id="ref-gelman.rubin1992" class="csl-entry">
 Gelman, Andrew, and Donald B. Rubin. 1992. <span>“Inference from <span>Iterative Simulation Using Multiple Sequences</span>.”</span> <em>Statistical Science</em> 7 (January): 457–72. <a href="https://doi.org/10.1214/ss/1177011136">https://doi.org/10.1214/ss/1177011136</a>.
