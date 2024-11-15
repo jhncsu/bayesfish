@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-10-26" />
+<meta name="date" content="2024-11-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +32,15 @@
   
 <link rel="prev" href="introduction.html"/>
 <link rel="next" href="Distributions.html"/>
-<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,9 +49,9 @@
 
 
 
-<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -196,12 +196,13 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="Model-fit.html"><a href="Model-fit.html#Model-fit-sim"><i class="fa fa-check"></i><b>4.2</b> Using simulation</a></li>
 <li class="chapter" data-level="4.3" data-path="Model-fit.html"><a href="Model-fit.html#JAGS-model-fit"><i class="fa fa-check"></i><b>4.3</b> Using Bayesian methods</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.1</b> Debugging code</a></li>
-<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.2</b> Judging convergence</a></li>
-<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.3</b> What is a likelihood?</a></li>
-<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.4</b> Deviance as a measure of model fit</a></li>
-<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.5</b> Model checking</a></li>
-<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.6</b> Model selection</a></li>
+<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#FirstExampleBayesian"><i class="fa fa-check"></i><b>4.3.1</b> Example: mark-recapture</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.2</b> Debugging code</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.3</b> Judging convergence</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.4</b> What is a likelihood?</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.5</b> Deviance as a measure of model fit</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.6</b> Model checking</a></li>
+<li class="chapter" data-level="4.3.7" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.7</b> Model selection</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="Model-fit.html"><a href="Model-fit.html#exercises-1"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
 </ul></li>
@@ -225,7 +226,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a></li>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Mortality.html"><a href="Mortality.html#InformativePriors"><i class="fa fa-check"></i><b>7.1.1</b> Informative prior distribution</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
 <li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
 <li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry estimates of F and M</a></li>
@@ -247,20 +251,11 @@ div.csl-indent {
 <li class="chapter" data-level="9.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>9.2</b> Does spawning stock size affect recruitment?</a></li>
 <li class="chapter" data-level="9.3" data-path="Recruit.html"><a href="Recruit.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="Trend.html"><a href="Trend.html"><i class="fa fa-check"></i><b>10</b> Abundance trends</a>
+<li class="chapter" data-level="10" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>10</b> Integrated Population Models</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="Trend.html"><a href="Trend.html#Linear"><i class="fa fa-check"></i><b>10.1</b> Linear model</a></li>
-<li class="chapter" data-level="10.2" data-path="Trend.html"><a href="Trend.html#ExpGr"><i class="fa fa-check"></i><b>10.2</b> Exponential growth model</a>
-<ul>
-<li class="chapter" data-level="10.2.1" data-path="Trend.html"><a href="Trend.html#Forecast"><i class="fa fa-check"></i><b>10.2.1</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="Trend.html"><a href="Trend.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>11.1</b> Two-age model</a></li>
-<li class="chapter" data-level="11.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>11.2</b> Full age-structured model</a></li>
-<li class="chapter" data-level="11.3" data-path="PopModels.html"><a href="PopModels.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+<li class="chapter" data-level="10.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>10.1</b> Two-age model</a></li>
+<li class="chapter" data-level="10.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>10.2</b> Full age-structured model</a></li>
+<li class="chapter" data-level="10.3" data-path="PopModels.html"><a href="PopModels.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
@@ -289,24 +284,24 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 2</span> A Brief Introduction to R and RStudio<a href="R-intro.html#R-intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>R <span class="citation">(<a href="#ref-R-base">R Core Team 2022</a>)</span> is a free software environment for data manipulation&lt;, statistical analyses, and graphics. It is easily extended through add-on software packages including some for commonly used fisheries models. There are a number of software interfaces for working in R and you should use the interface with which you are most comfortable. For this book, we use the free software <a href="https://posit.co/products/open-source/rstudio/">RStudio</a>, which can be run in either the Windows, Macintosh, or Unix environment. There are many online resources for installing and learning R and RStudio, and even a recent book for fisheries analysis using R <span class="citation">(<a href="#ref-ogle_2018">Ogle 2018</a>)</span>. We assume in this book that R and RStudio have been installed. We get started by examining a few basic R commands but will primarily illustrate the use of R through code examples in the remaining chapters. We will also describe some general methods for getting help and learning more about R.</p>
 <p>As a first example using R, let’s estimate population size through a two-sample mark-recapture study. Consider a pond with N=100 fish. If you take a first sample (n<sub>1</sub>=50) and mark (tag) those fish, then half the fish in the pond are tagged. If you take a second sample (say n<sub>2</sub>=30), how many tagged fish (m<sub>2</sub>) would you expect in the second sample? That’s right, 15! Of course, in practice, we don’t know N but we solve for it. We begin by setting the two proportions equal: <span class="math inline">\(n_1/N=m_2/n_2\)</span>. Solving for N gives us our estimator (N<sub>hat</sub>): <span class="math inline">\(\hat{N} = \frac{n_1*n_2}{m_2}\)</span></p>
-<p>We can carry out the calculations using R code as follows. First, open a new RStudio window (menu commands File : New File : R Script). This Source window will contain your R script, or the sequence of R commands you intend to execute. Copy and paste the following code into the Source window (from the online <a href="https://bookdown.org/Joseph_Hightower/bayesianfish/">version</a> if using a print copy of the book):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="R-intro.html#cb3-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;Q:/My Drive/FishAnalysis&quot;</span>) <span class="co"># Edit to show your working directory</span></span>
-<span id="cb3-2"><a href="R-intro.html#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="R-intro.html#cb3-3" tabindex="-1"></a><span class="co"># Two-sample population estimate</span></span>
-<span id="cb3-4"><a href="R-intro.html#cb3-4" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">26</span> <span class="co"># Number caught and marked in first sample</span></span>
-<span id="cb3-5"><a href="R-intro.html#cb3-5" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">14</span> <span class="co"># Number caught and examined for marks in second sample</span></span>
-<span id="cb3-6"><a href="R-intro.html#cb3-6" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="dv">7</span> <span class="co"># Number of marked fish in second sample</span></span>
-<span id="cb3-7"><a href="R-intro.html#cb3-7" tabindex="-1"></a>N_hat <span class="ot">&lt;-</span> n1<span class="sc">*</span>n2<span class="sc">/</span>m2 <span class="co"># Store estimate as variable N_hat</span></span>
-<span id="cb3-8"><a href="R-intro.html#cb3-8" tabindex="-1"></a>N_hat <span class="co"># Prints N_hat in Console window</span></span></code></pre></div>
+<p>We can carry out the calculations using R code as follows. First, open a new RStudio window (menu commands File : New File : R Script). This Source window will contain your R script, or the sequence of R commands you intend to execute. Enter or copy and paste the following code into the Source window (from the online <a href="https://drive.google.com/file/d/15Nq-_zQjjlDBp9ghC6w0XwzLMKVnFJwC/view?usp=sharing">file</a> if using a print copy of the book):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="R-intro.html#cb1-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;Q:/My Drive/FishAnalysis&quot;</span>) <span class="co"># Edit to show your working directory</span></span>
+<span id="cb1-2"><a href="R-intro.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="R-intro.html#cb1-3" tabindex="-1"></a><span class="co"># Two-sample population estimate</span></span>
+<span id="cb1-4"><a href="R-intro.html#cb1-4" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">26</span> <span class="co"># Number caught and marked in first sample</span></span>
+<span id="cb1-5"><a href="R-intro.html#cb1-5" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">14</span> <span class="co"># Number caught and examined for marks in second sample</span></span>
+<span id="cb1-6"><a href="R-intro.html#cb1-6" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="dv">7</span> <span class="co"># Number of marked fish in second sample</span></span>
+<span id="cb1-7"><a href="R-intro.html#cb1-7" tabindex="-1"></a>N_hat <span class="ot">&lt;-</span> n1<span class="sc">*</span>n2<span class="sc">/</span>m2 <span class="co"># Store estimate as variable N_hat</span></span>
+<span id="cb1-8"><a href="R-intro.html#cb1-8" tabindex="-1"></a>N_hat <span class="co"># Prints N_hat in Console window</span></span></code></pre></div>
 <p>Any text following a pound sign (#) is a comment, whether on a line by itself or following executable R code. Comments do not affect the program’s execution, but are extremely helpful in documenting your code. Taking the time to enter comments is always worthwhile, whether for your own information or when code is to be shared with others.</p>
 <p>Next, position the cursor on the first line and execute one line at a time by clicking on the Run icon. This allows you to see the effect of each statement. The first line calls the <code>setwd()</code> function to establish the working directory for any files saved. Doing this routinely will ensure that files end up in the proper location. You can find out your working directory path by using the RStudio menu command (Session | Set Working Directory | Choose Directory). That allows you to navigate to the correct location, and the <code>setwd()</code> code will be printed to the Console. You can then save that line of code for future use.</p>
 <p>The next three executable lines assign (&lt;- ) values to variables, which have arbitrary names. Here, I have used conventional fisheries mark-recapture names for the sample sizes and number of recaptures, but more descriptive names could be used (e.g., Mark_Sample) for clarity. Each variable is a new object that will appear in the Environment window once that line of code has been run. The next line of code calculates the estimate, which is stored as N_hat. The final line prints the value of N_hat in the Console window. The population estimate (52) makes sense because you marked 26 and half the fish in the second sample were marked.</p>
 <p>After you have run this code in RStudio, be sure to save the file. This is a good general practice – never create code from scratch when you can modify existing code! It cuts down on typing errors and allows you to build on existing code when doing new but similar things. The code could be from your prior work or from a journal article or book. The ability to share R and JAGS code is very helpful in learning and working efficiently. Saving the file to a working directory specified in the code helps in keeping together all files related to a specific project. Use a descriptive name for the code (R script) so that it can be readily located in the future.</p>
 <p>Much of the work done in R is accomplished by using functions, which are a set of statements that perform a specific task. Typing the name of an R function into the search box in the RStudio Help window is one quick way to get help (e.g., function defaults, arguments, examples). However, the R documentation is sometimes overly detailed and cryptic, so another good option is an online search (e.g., “R function max” or “how to load csv file R”). Another helpful alternative is the <a href="https://cran.r-project.org/doc/contrib/Short-refcard.pdf">R Reference Card</a>, which provides a brief summary of some of the more frequently used R commands. For example, the reference card lists a number of math functions such as <code>log(x, base)</code>, which returns the log of x to the specified base. The statement <code>log(x)</code> returns the default natural-log base. This is typical of R, in that functions have default arguments that need not be specified. (It can also be a bit dangerous if the default action is not what you intended!) Another important aspect of R is that the object returned by the <code>log()</code> function depends on the argument. Consider the following four lines of code:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="R-intro.html#cb4-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">2.72</span></span>
-<span id="cb4-2"><a href="R-intro.html#cb4-2" tabindex="-1"></a><span class="fu">log</span>(x)</span>
-<span id="cb4-3"><a href="R-intro.html#cb4-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>)</span>
-<span id="cb4-4"><a href="R-intro.html#cb4-4" tabindex="-1"></a><span class="fu">log</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="R-intro.html#cb2-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">2.72</span></span>
+<span id="cb2-2"><a href="R-intro.html#cb2-2" tabindex="-1"></a><span class="fu">log</span>(x)</span>
+<span id="cb2-3"><a href="R-intro.html#cb2-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>)</span>
+<span id="cb2-4"><a href="R-intro.html#cb2-4" tabindex="-1"></a><span class="fu">log</span>(x)</span></code></pre></div>
 <p>We can test the code in a new R script window. If you have worked through this section in a single session, then objects from the mark-recapture example will be in the Environment window. Start with a clean slate by clicking on the broom icon in the Environment window. Like most things in R, this can also be accomplished through menu commands (Session : Clear Workspace) or R code <code>rm(list=ls())</code>. The first R statement assigns the value 2.72 to x, and the second statement prints the natural log of 2.72 in the Console window. The third line uses the <code>c()</code> (combine) function to create a vector of length two. Because we used the same variable name to store the result, R replaces the original integer value of x with a vector containing two integers. (It is done here as an example, but in the future, we will avoid this bad practice of reusing a variable name for a different purpose!) In the final line of code, the <code>log()</code> function returns a vector by applying the <code>log()</code> function element-by-element. This flexibility (allowing x to be defined first as a scalar then vector, and allowing either type as an argument to the <code>log()</code> function) is a strength of R, but it also increases the risk of coding errors compared to programming languages that are more structured. The keys for success in R programming are to check and test code carefully and to reuse existing code whenever possible. The chapters that follow will provide many more examples of R code, with comments and explanation as needed as new features are introduced. As you encounter R code, you should always run it to make sure that you understand how it works and its purpose.</p>
 
 </div>
@@ -328,14 +323,14 @@ R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</
 <a href="Distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/clipboard.min.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
-<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

@@ -15,14 +15,6 @@ LowS <- 0.5 # Adult survival, arbitrary lower bound
 HighS <- 0.9 # Arbitrary upper bound
 AnnualS <- runif(n=(Y-1), min=LowS, max=HighS)
 
-#MeanR <- 400 # Mean annual recruits
-#N.r <- rpois(n=Y, lambda=MeanR)
-#N.a <- array(data=NA, dim=Y)
-#N.a[1] <- N.r[1] + rpois(n=1, lambda=MeanR) # Arbitrary year-1 population size
-#for (y in 2:Y){
-#  N.a[y] <- N.r[y] + rbinom(n=1, size=N.a[y-1], prob=AnnualS[y-1])
-#} #y
-
 MeanR <- 400 # Arbitrary mean annual recruitment
 N.r <- array(data=NA, dim=Y)
 SD_rec <- 0.25 # Low level of lognormal error in recruitment

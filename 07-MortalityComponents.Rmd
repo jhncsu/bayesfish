@@ -1,5 +1,7 @@
 # Mortality Components {#Mortality}
 
+Reliable estimates of the survival rate (Chapter \@ref(Survival)) are essential in understanding fish population dynamics, but for exploited species, there is generally interest in partitioning mortality (1-survival) into its component rates. Knowing the relative importance of fishing\index{fishing mortality} versus natural mortality\index{natural mortality} clarifies the extent to which fishery managers can use regulations to affect population change. The sections that follow illustrate different approaches for examining the impact of fishing and for estimating fishing and natural mortality rates.
+
 ## Exploitation rate {#ExpRate}
 
 A tagging study can provide a real-time estimate of the exploitation rate\index{Rate, exploitation}, or the fraction of the population being harvested. Similar to the tag-return method of estimating survival (Section \@ref(BrownieSurvival)), the only field work required is the initial tagging effort. Here there is a single release of fish with external tags at the start of the study, and the number of returned tags is recorded over a specified interval. The study duration could be an entire year, or a fishing season for a population managed by seasonal harvest. A high exploitation rate might indicate that harvest regulations such as a size limit or creel limit could be worthwhile.  Alternatively a low estimate might indicate that other factors such as natural mortality or recruitment may be more important in regulating population size. With only a single release, we cannot estimate survival (or its complement, mortality) but it is nevertheless an important first step in judging the relative impact of fishing.
@@ -58,7 +60,230 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-A single run with Ntags=100 provided a credible interval of 0.27-0.46 (from a random return of 36 tags). Experiment with different sample sizes and consider what level of precision would be adequate for management purposes. As always, this is an optimistic scenario, with the number of returned tags perfectly conforming to a binomial distribution.
+A single run with a release of 100 tagged fish provided a credible interval of 0.27-0.46 (from a random return of 36 tags). Experiment with different sample sizes and consider what level of precision would be adequate for management purposes. As always, this is an optimistic scenario, with the number of returned tags perfectly conforming to a binomial distribution.
+
+### Informative prior distribution {#InformativePriors}
+@banner.etal_2020 discourage the (at least uncritical) use of "default" prior distributions\index{prior distribution} (which are used throughout this book). It is often true that previous studies contain relevant information, and Bayesian methods provide an objective framework for building on that previous information [@mccarthy2007]. The simple example of estimating the exploitation rate is a perfect opportunity to look at how an informative prior\index{informative prior distribution} would be implemented and to explore its effect on the posterior distribution.
+
+To compare posterior distributions obtained using uninformative and informative priors, we use two copies of the above code. In the uninformative prior version, we simply replace <code>dunif(0,1)</code> with <code>dbeta(1,1)</code> in the JAGS code, and replace the uniform initial value with the corresponding beta (<code>rbeta(n=1, shape1=1, shape2=1)</code>). Neither change affects the calculations because the two distributions are equivalent, but it sets up the model for the informative prior version.
+
+For the informative case, the exploitation rate simulation is unchanged. We simply add two lines of code for the pilot study that will be used for the prior. The informative beta distribution\index{beta distribution} in the JAGS code has two parameters: successes+1 and failures+1 [@bolker2008]. We augment jags.data with the pilot study data, and use the same initial values as in the uninformative prior version. The JAGS code is followed by R code for producing two plots, showing the prior and posterior distributons for the uninformative (upper plot) and informative (lower) cases. We specify margins for each plot to eliminate blank space. The <code>density()</code> function provides a smoothed probability density for the exploitation rate estimates. The <code>range()</code> function provides a common x- and y-axis range to facilitate comparisons between the two plots. The <code>lines()</code> function adds the prior distribution to each plot, generated using the <code>dbeta()</code> function.
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Tagging study to estimate exploitation rate
+u.true <- 0.4
+n.tagged <- 100
+n.returned <- rbinom(n=1, prob=u.true, size=n.tagged)
+
+# Load necessary library
+library(rjags)
+library(R2jags)
+
+# JAGS code
+sink("ExpRate.txt")
+cat("
+model{
+    # Priors
+    u.est ~ dbeta(1,1)  # Exploitation rate
+
+    # Likelihood
+    n.returned ~ dbin(u.est, n.tagged)
+}
+    ",fill=TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("n.returned", "n.tagged")
+
+# Initial values
+jags.inits <- function(){ list(u.est=rbeta(n=1, shape1=1, shape2=1))}
+
+model.file <- 'ExpRate.txt'
+
+# Parameters monitored
+jags.params <- c("u.est")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 4000, n.burnin=2000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+
+# Informative prior
+n.pilot <- 20
+n.returned.pilot <- rbinom(n=1, prob=u.true, size=n.pilot)
+
+# Load necessary library
+library(rjags)
+library(R2jags)
+
+# JAGS code
+sink("ExpRate.txt")
+cat("
+model{
+    # Priors
+    u.est ~ dbeta((n.returned.pilot+1), 
+         (n.pilot-n.returned.pilot+1)) # Exploitation rate
+
+    # Likelihood
+    n.returned ~ dbin(u.est, n.tagged)
+}
+    ",fill=TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("n.returned", "n.tagged", "n.pilot", "n.returned.pilot")
+
+# Initial values
+jags.inits <- function(){ list(u.est=rbeta(n=1, shape1=1, shape2=1))}
+
+model.file <- 'ExpRate.txt'
+
+# Parameters monitored
+jags.params <- c("u.est")
+
+# Call JAGS from R
+informative <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 4000, n.burnin=2000,
+                model.file)
+print(informative)
+plot(informative)
+
+# Vague prior and posterior
+par(mfrow=c(2,1))
+par(mar=c(2,4,2,1)) # bottom, left, right, top margins
+dens1 <- density(jagsfit$BUGSoutput$sims.list$u.est)
+dens2 <- density(informative$BUGSoutput$sims.list$u.est)
+y.bounds <- range(dens1$y, dens2$y)
+x.bounds <- range(jagsfit$BUGSoutput$sims.list$u.est, 
+              informative$BUGSoutput$sims.list$u.est)
+plot(density(jagsfit$BUGSoutput$sims.list$u.est), xlab="", main="", 
+     xlim=x.bounds, ylim=y.bounds)
+abline(v=u.true, col="red")
+x.vec <- seq(x.bounds[1], x.bounds[2], length.out=101)
+lines(x.vec,
+      dbeta(seq(x.bounds[1], x.bounds[2], length.out=101), shape1=1, shape2=1),
+      lty=2)
+legend(x = "topleft", lty = c(2,1), text.font = 1,  
+       legend=c("Prior", "Posterior")) 
+
+# Informative prior and posterior
+par(mar=c(4,4,1,1))
+plot(dens2,xlab="Estimated exploitation rate", main="", 
+     xlim=x.bounds, ylim=y.bounds)
+abline(v=u.true, col="red")
+lines(x.vec, dbeta(seq(x.bounds[1], x.bounds[2], 
+                    length.out=101), shape1=(n.returned.pilot+1), 
+                    shape2=(n.pilot-n.returned.pilot+1)), lty=2)
+
+```
+
+A pilot study provides a valuable opportunity to work out field logistics, as well as allowing for construction of an informative prior. Our simulation suggests a modest gain in precision from a pilot release of 20 tagged fish, given a full study release of 100 (Figure \@ref(fig:InfPriorPlot)). The benefit of an informative prior depends on the information content of the prior versus the new data [@mccarthy.masters_2005]. Also, our simulated pilot study has a random aspect (number returned), so a small pilot release will occasionally produce a prior that is unhelpful for estimating the true exploitation rate. Planning this type of study should be done using multiple simulation runs with varying sample sizes for the pilot and full studies. For example, try starting with a pilot study sample size of 1, which approximates the uninformative prior case. As you increase the sample size for the pilot study, when is there a noticeable change in the posterior distribution, compared to the uninformative prior case? This can also be evaluated by comparing the width of credible intervals [@mccarthy.masters_2005]. How does an increase in the sample size for the full study change the effect of an informative prior?
+
+The beta distribution works well for characterizing a pilot tagging study, because the two parameters are based on the number of successes (returned tag) and failures (not returned). In general, informative priors can be based on the mean and variance of previous estimates, or can include the additional variation within individual studies [@mccarthy.masters_2005; @regehr.etal_2018]. Another approach is to base the prior on ecological theory; for example, a prior for survival rate based on its relationship to body mass [[@mccarthy.masters_2005]. @lemoine_2019 recommends carrying out analyses of real data using multiple prior distributions of varying strength, to better understand the information content of the new data and the effect of priors. 
+
+```{r InfPriorPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Prior and posterior distributions for estimated exploitation rate, using uninformative (upper) and informative (lower) priors. The full study sample size is 100 tagged fish; the pilot study (lower panel) has a sample size of 20. The true exploitation rate is shown as a vertical red line.', out.width="90%"}
+
+rm(list=ls()) # Clear Environment 
+set.seed(12345) # Ensure that book will have a reasonable result
+par(mar = c(4, 4, 1, .1))
+
+UninfPrior <- function() {
+    # Priors
+    u.est ~ dbeta(1,1)  # Exploitation rate
+
+    # Likelihood
+    n.returned ~ dbin(u.est, n.tagged)
+}
+
+InfPrior <- function() {
+    # Priors
+    u.est ~ dbeta((n.returned.pilot+1), 
+         (n.pilot-n.returned.pilot+1)) # Exploitation rate
+
+    # Likelihood
+    n.returned ~ dbin(u.est, n.tagged)
+}
+
+# Tagging study to estimate exploitation rate
+u.true <- 0.4
+n.tagged <- 100
+n.returned <- rbinom(n=1, prob=u.true, size=n.tagged)
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n.returned", "n.tagged")
+
+# Initial values.
+jags.inits <- function(){list(u.est=rbeta(n=1, shape1=1, shape2=1))}
+
+# Fit the model
+UninfPrior_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 10000,
+    model.file = UninfPrior,
+    parameters.to.save = c("u.est")
+  )
+
+# Informative prior - add pilot study
+n.pilot <- 20
+n.returned.pilot <- rbinom(n=1, prob=u.true, size=n.pilot)
+
+# JAGS code
+
+# Bundle data
+jags.data <- list("n.returned", "n.tagged", "n.pilot", "n.returned.pilot")
+
+# Initial values.
+jags.inits <- function(){list(u.est=rbeta(n=1, shape1=1, shape2=1))}
+
+# Fit the model
+InfPrior_jags <- 
+  jags(
+    data = jags.data, inits=jags.inits,
+    n.chains = 3, n.thin = 1, n.iter = 10000,
+    model.file = InfPrior,
+    parameters.to.save = c("u.est")
+  )
+
+# Vague prior and posterior
+par(mfrow=c(2,1))
+par(mar=c(2,4,2,1)) # bottom, left, right, top margins
+dens1 <- density(UninfPrior_jags$BUGSoutput$sims.list$u.est)
+dens2 <- density(InfPrior_jags$BUGSoutput$sims.list$u.est)
+y.bounds <- range(dens1$y, dens2$y)
+x.bounds <- range(UninfPrior_jags$BUGSoutput$sims.list$u.est, 
+              InfPrior_jags$BUGSoutput$sims.list$u.est)
+plot(density(UninfPrior_jags$BUGSoutput$sims.list$u.est), xlab="", main="", 
+     xlim=x.bounds, ylim=y.bounds)
+abline(v=u.true, col="red")
+x.vec <- seq(x.bounds[1], x.bounds[2], length.out=101)
+lines(x.vec,
+      dbeta(seq(x.bounds[1], x.bounds[2], length.out=101), shape1=1, shape2=1),
+      lty=2)
+legend(x = "topleft", lty = c(2,1), text.font = 1,  
+       legend=c("Prior", "Posterior")) 
+
+# Informative prior and posterior
+par(mar=c(4,4,1,1))
+plot(dens2,xlab="Estimated exploitation rate", main="", 
+     xlim=x.bounds, ylim=y.bounds)
+abline(v=u.true, col="red")
+lines(x.vec, dbeta(seq(x.bounds[1], x.bounds[2], 
+                    length.out=101), shape1=(n.returned.pilot+1), 
+                    shape2=(n.pilot-n.returned.pilot+1)), lty=2)
+
+```
+
 
 ## Completed tagging study {#Hearn}
 

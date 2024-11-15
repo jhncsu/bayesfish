@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-10-26" />
+<meta name="date" content="2024-11-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a></li>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Mortality.html"><a href="Mortality.html#InformativePriors"><i class="fa fa-check"></i><b>7.1.1</b> Informative prior distribution</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
 <li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
 <li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry estimates of F and M</a></li>
@@ -247,20 +250,11 @@ div.csl-indent {
 <li class="chapter" data-level="9.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>9.2</b> Does spawning stock size affect recruitment?</a></li>
 <li class="chapter" data-level="9.3" data-path="Recruit.html"><a href="Recruit.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="Trend.html"><a href="Trend.html"><i class="fa fa-check"></i><b>10</b> Abundance trends</a>
+<li class="chapter" data-level="10" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>10</b> Integrated Population Models</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="Trend.html"><a href="Trend.html#Linear"><i class="fa fa-check"></i><b>10.1</b> Linear model</a></li>
-<li class="chapter" data-level="10.2" data-path="Trend.html"><a href="Trend.html#ExpGr"><i class="fa fa-check"></i><b>10.2</b> Exponential growth model</a>
-<ul>
-<li class="chapter" data-level="10.2.1" data-path="Trend.html"><a href="Trend.html#Forecast"><i class="fa fa-check"></i><b>10.2.1</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="Trend.html"><a href="Trend.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>11.1</b> Two-age model</a></li>
-<li class="chapter" data-level="11.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>11.2</b> Full age-structured model</a></li>
-<li class="chapter" data-level="11.3" data-path="PopModels.html"><a href="PopModels.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+<li class="chapter" data-level="10.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>10.1</b> Two-age model</a></li>
+<li class="chapter" data-level="10.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>10.2</b> Full age-structured model</a></li>
+<li class="chapter" data-level="10.3" data-path="PopModels.html"><a href="PopModels.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
@@ -433,7 +427,7 @@ FIGURE 3.2: Summary bar plot of die rolls.
 </div>
 <div id="NegBinom" class="section level3 hasAnchor" number="3.1.5">
 <h3><span class="header-section-number">3.1.5</span> Negative binomial<a href="Distributions.html#NegBinom" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As noted above, the negative binomial distribution is used in similar situations to the Poisson except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>; <a href="#ref-link.barker_2009">Link and Barker 2009</a>)</span>. The R function for generating negative binomial random variates (<code>rnbinom()</code>) can be parameterized in different ways; we use the “ecological” parameterization recommended by <span class="citation">Bolker (<a href="#ref-bolker2008">2008</a>)</span>. This uses the mean (termed <span class="math inline">\(\mu\)</span>) but not the variance, instead using an overdispersion parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. The distribution approximates a Poisson when k is large (e.g., &gt;10*<span class="math inline">\(\mu\)</span>). The code includes calculation of the variance as a function of mu and k <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. Alternatively the mean and variance (V) can be specified and used to solve for k: <span class="math inline">\(k = \mu^2/(V-\mu)\)</span>.</p>
+<p>As noted above, the negative binomial distribution is used in similar situations to the Poisson except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>; <a href="#ref-link.barker_2010">Link and Barker 2010</a>)</span>. The R function for generating negative binomial random variates (<code>rnbinom()</code>) can be parameterized in different ways; we use the “ecological” parameterization recommended by <span class="citation">Bolker (<a href="#ref-bolker2008">2008</a>)</span>. This uses the mean (termed <span class="math inline">\(\mu\)</span>) but not the variance, instead using an overdispersion parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. The distribution approximates a Poisson when k is large (e.g., &gt;10*<span class="math inline">\(\mu\)</span>). The code includes calculation of the variance as a function of mu and k <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. Alternatively the mean and variance (V) can be specified and used to solve for k: <span class="math inline">\(k = \mu^2/(V-\mu)\)</span>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="Distributions.html#cb17-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
 <span id="cb17-2"><a href="Distributions.html#cb17-2" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="Distributions.html#cb17-3" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">30</span></span>
@@ -568,8 +562,8 @@ Bolker, Benjamin M. 2008. <em>Ecological <span>Models</span> and <span>Data</spa
 <div id="ref-law.kelton_1982" class="csl-entry">
 Law, Averill M., and W. David Kelton. 1982. <em>Simulation <span>Modeling</span> and <span>Analysis</span></em>. McGraw-Hill. <a href="https://books.google.com?id=xOBQAAAAMAAJ">https://books.google.com?id=xOBQAAAAMAAJ</a>.
 </div>
-<div id="ref-link.barker_2009" class="csl-entry">
-Link, William A., and Richard J. Barker. 2009. <em>Bayesian <span>Inference</span>: <span>With Ecological Applications</span></em>. 1st edition. Amsterdam Boston London: Academic Press.
+<div id="ref-link.barker_2010" class="csl-entry">
+Link, William A., and Richard J. Barker. 2010. <em>Bayesian <span>Inference</span>: <span>With Ecological Applications</span></em>. 1st edition. Amsterdam Boston London: Academic Press.
 </div>
 </div>
             </section>

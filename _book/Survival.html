@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-10-26" />
+<meta name="date" content="2024-11-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a></li>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Mortality.html"><a href="Mortality.html#InformativePriors"><i class="fa fa-check"></i><b>7.1.1</b> Informative prior distribution</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
 <li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
 <li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry estimates of F and M</a></li>
@@ -247,20 +250,11 @@ div.csl-indent {
 <li class="chapter" data-level="9.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>9.2</b> Does spawning stock size affect recruitment?</a></li>
 <li class="chapter" data-level="9.3" data-path="Recruit.html"><a href="Recruit.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="Trend.html"><a href="Trend.html"><i class="fa fa-check"></i><b>10</b> Abundance trends</a>
+<li class="chapter" data-level="10" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>10</b> Integrated Population Models</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="Trend.html"><a href="Trend.html#Linear"><i class="fa fa-check"></i><b>10.1</b> Linear model</a></li>
-<li class="chapter" data-level="10.2" data-path="Trend.html"><a href="Trend.html#ExpGr"><i class="fa fa-check"></i><b>10.2</b> Exponential growth model</a>
-<ul>
-<li class="chapter" data-level="10.2.1" data-path="Trend.html"><a href="Trend.html#Forecast"><i class="fa fa-check"></i><b>10.2.1</b> Forecasting</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="Trend.html"><a href="Trend.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>11</b> Integrated Population Models</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>11.1</b> Two-age model</a></li>
-<li class="chapter" data-level="11.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>11.2</b> Full age-structured model</a></li>
-<li class="chapter" data-level="11.3" data-path="PopModels.html"><a href="PopModels.html#exercises-8"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+<li class="chapter" data-level="10.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>10.1</b> Two-age model</a></li>
+<li class="chapter" data-level="10.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>10.2</b> Full age-structured model</a></li>
+<li class="chapter" data-level="10.3" data-path="PopModels.html"><a href="PopModels.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
@@ -624,7 +618,7 @@ div.csl-indent {
 <span id="cb55-29"><a href="Survival.html#cb55-29" tabindex="-1"></a>  } <span class="co">#y</span></span>
 <span id="cb55-30"><a href="Survival.html#cb55-30" tabindex="-1"></a>} <span class="co">#a</span></span></code></pre></div>
 <p>The model tracks coded ages 1:A, which could represent a range of older ages with comparable survival rates. True abundance at age 1 (N[1,]) is drawn from a Poisson distribution, based on an arbitrary mean initial cohort size. Initial numbers for ages 2:A in the first year are also obtained from a Poisson distribution, where the expected number at age a is obtained by a product of survival rates multiplied by mean recruitment. For example, the expected number is MeanR * S at age 2 (adjusting for survival over one year), MeanR * S^2 for age 3, etc. The code then loops over years (columns) and ages (rows) to fill in the rest of the matrix, using a binomial distribution to simulate the survival process (and using the year-specific survival rate). The survey catch-at-age matrix includes variation due to sampling (binomally-distributed using an assumed capture probability of 0.05), as well as year-class strength and survival. Click on N and SurveyC in the Environment window to compare the two matrices in Source windows.</p>
-<p>The JAGS code for estimating cohort size and annual survival is generally similar to the simulation code. Prior distributions and initial values for predicted survey catches use lognormal distributions. The log-scale mean for the initial values was set at a high value to reduce the risk of a runtime JAGS error due to an inconsistent parent node (e.g., estimated survey “abundance” at time y-1 less than observed survey catch at time y). The likelihood for the survey catch matrix uses a Poisson distribution.</p>
+<p>The JAGS code for estimating cohort size and annual survival is generally similar to the simulation code. Prior distributions and initial values for predicted survey catches use lognormal distributions. Using high initial values for the abundance parameters reduces the risk of a JAGS error due to an inconsistent parent node (e.g., estimated survey “abundance” at time y-1 less than observed survey catch at time y). The likelihood for the survey catch matrix uses a Poisson distribution.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="Survival.html#cb56-1" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
 <span id="cb56-2"><a href="Survival.html#cb56-2" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
 <span id="cb56-3"><a href="Survival.html#cb56-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
