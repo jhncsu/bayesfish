@@ -9,7 +9,7 @@ bibliography:
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
-lot: yes
+lot: no
 lof: yes
 site: bookdown::bookdown_site
 description: "This book is intended to be a bridge between traditional fisheries analytical
