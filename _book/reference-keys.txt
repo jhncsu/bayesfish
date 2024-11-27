@@ -1,9 +1,7 @@
-fig:coinToss
-fig:dieRoll
-fig:NB-vary-k
-fig:Beta
-fig:Lognormal
-fig:Gamma
+fig:Bootstrap
+fig:BayesMR
+fig:TracePlots
+fig:PPC
 introduction
 R-intro
 Distributions
@@ -66,7 +64,9 @@ TwoAge
 CAGEAN
 exercises-7
 title-placeholder
-fig:Bootstrap
-fig:BayesMR
-fig:TracePlots
-fig:PPC
+fig:coinToss
+fig:dieRoll
+fig:NB-vary-k
+fig:Beta
+fig:Lognormal
+fig:Gamma

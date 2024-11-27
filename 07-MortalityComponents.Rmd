@@ -843,7 +843,7 @@ abline(v=u.true[2], col="red")
 
 Estimates have similar precision to the original example if the reporting rate is high (Figure \@ref(fig:BrowniePlot)). Precision is reduced at lower reporting rates because of the reduced sample size of returned tags and uncertainty about lambda.
 
-## Telemetry estimates of F and M {#TelemetryFandM}
+## Telemetry-based {#TelemetryFandM}
 
 In Section \@ref(TelemetryBased), we used fixed receiving stations and telemetry tags to estimate the survival rate. Here we extend that approach to partition total mortality into fishing and natural components by giving telemetered fish an external high-reward tag [Design C of @hightower.harris2017]. Live fish "detect themselves" and provide information on survival by passing within range of a receiver. Harvest information comes from the reported high-reward tags. Thus we have observations on two of the three possible states, with natural mortality being the only unobserved true state. An important practical advantage of this approach is that field surveys are not needed after tagging is done (other than maintaining the receiver array and downloading detection data).
 

@@ -1,0 +1,149 @@
+\indexentry{exploitation rate|hyperpage}{1}
+\indexentry{Markov Chain Monte Carlo|hyperpage}{2}
+\indexentry{mark-recapture|hyperpage}{3}
+\indexentry{Bernoulli distribution|hyperpage}{7}
+\indexentry{Bernoulli distribution|hyperpage}{8}
+\indexentry{exploitation rate|hyperpage}{9}
+\indexentry{tag reporting rate|hyperpage}{9}
+\indexentry{survival rate|hyperpage}{9}
+\indexentry{Bernoulli distribution|hyperpage}{9}
+\indexentry{Bernoulli distribution|hyperpage}{9}
+\indexentry{binomial distribution|hyperpage}{10}
+\indexentry{Bernoulli distribution|hyperpage}{10}
+\indexentry{Bernoulli distribution|hyperpage}{10}
+\indexentry{mark-recapture|hyperpage}{10}
+\indexentry{exploitation rate|hyperpage}{10}
+\indexentry{survival rate|hyperpage}{10}
+\indexentry{Bernoulli distribution|hyperpage}{11}
+\indexentry{binomial distribution|hyperpage}{12}
+\indexentry{multinomial distribution|hyperpage}{13}
+\indexentry{survival rate|hyperpage}{13}
+\indexentry{recruitment|hyperpage}{13}
+\indexentry{multinomial distribution|hyperpage}{13}
+\indexentry{Poisson distribution|hyperpage}{15}
+\indexentry{negative binomial distribution|hyperpage}{15}
+\indexentry{negative binomial distribution|hyperpage}{16}
+\indexentry{Poisson distribution|hyperpage}{16}
+\indexentry{uniform distribution|hyperpage}{17}
+\indexentry{survival rate|hyperpage}{17}
+\indexentry{tag-reporting rate|hyperpage}{17}
+\indexentry{exploitation rate|hyperpage}{18}
+\indexentry{beta distribution|hyperpage}{18}
+\indexentry{survival rate|hyperpage}{18}
+\indexentry{uniform distribution|hyperpage}{18}
+\indexentry{normal distribution|hyperpage}{19}
+\indexentry{lognormal distribution|hyperpage}{20}
+\indexentry{recruitment|hyperpage}{20}
+\indexentry{gamma distribution|hyperpage}{21}
+\indexentry{model fitting|hyperpage}{25}
+\indexentry{mark-recapture|hyperpage}{25}
+\indexentry{mark-recapture|hyperpage}{26}
+\indexentry{binomial distribution|hyperpage}{26}
+\indexentry{binomial distribution|hyperpage}{26}
+\indexentry{mark-recapture|hyperpage}{26}
+\indexentry{mark-recapture|hyperpage}{27}
+\indexentry{mark-recapture|hyperpage}{27}
+\indexentry{binomial distribution|hyperpage}{28}
+\indexentry{frequentist paradigm|hyperpage}{28}
+\indexentry{Bayesian paradigm|hyperpage}{28}
+\indexentry{prior distribution|hyperpage}{28}
+\indexentry{posterior distribution|hyperpage}{29}
+\indexentry{uninformative prior|hyperpage}{29}
+\indexentry{Markov Chain Monte Carlo|hyperpage}{32}
+\indexentry{MCMC|hyperindexformat{\see {Markov Chain Monte Carlo}}}{32}
+\indexentry{posterior distribution|hyperpage}{32}
+\indexentry{thinning|hyperpage}{32}
+\indexentry{convergence|hyperpage}{32}
+\indexentry{Rhat|hyperpage}{32}
+\indexentry{deviance|hyperpage}{32}
+\indexentry{effective sample size|hyperpage}{32}
+\indexentry{Bayesian credible interval|hyperpage}{32}
+\indexentry{pD|hyperpage}{33}
+\indexentry{Deviance Information Criterion|hyperpage}{34}
+\indexentry{DIC|hyperindexformat{\see {Deviance Information Criterion}}}{34}
+\indexentry{Akaike's Information Criterion|hyperpage}{34}
+\indexentry{AIC|hyperindexformat{\see {Akaike's Information Criterion}}}{34}
+\indexentry{prior distribution|hyperpage}{34}
+\indexentry{convergence|hyperpage}{39}
+\indexentry{Rhat|hyperpage}{39}
+\indexentry{likelihood|hyperpage}{40}
+\indexentry{posterior distribution|hyperpage}{40}
+\indexentry{binomial distribution|hyperpage}{40}
+\indexentry{deviance|hyperpage}{42}
+\indexentry{posterior predictive check|hyperpage}{43}
+\indexentry{Poisson distribution|hyperpage}{43}
+\indexentry{likelihood|hyperpage}{46}
+\indexentry{posterior distribution|hyperpage}{46}
+\indexentry{negative binomial distribution|hyperpage}{47}
+\indexentry{Poisson distribution|hyperpage}{47}
+\indexentry{posterior predictive check|hyperpage}{47}
+\indexentry{model selection|hyperpage}{48}
+\indexentry{negative binomial distribution|hyperpage}{49}
+\indexentry{DIC|hyperpage}{51}
+\indexentry{Removal models|hyperpage}{55}
+\indexentry{Capture probability|hyperpage}{55}
+\indexentry{Credible interval|hyperpage}{58}
+\indexentry{Model, binomial-mixture|hyperpage}{61}
+\indexentry{Model, hierarchical|hyperpage}{63}
+\indexentry{Model, hierarchical|hyperpage}{65}
+\indexentry{Survival rate|hyperpage}{67}
+\indexentry{Mortality, fishing|hyperpage}{67}
+\indexentry{Mortality, natural|hyperpage}{67}
+\indexentry{Catch-and-release|hyperpage}{67}
+\indexentry{Discard|hyperpage}{67}
+\indexentry{Distribution, multinomial|hyperpage}{68}
+\indexentry{Distribution, multinomial|hyperpage}{70}
+\indexentry{Catch curve|hyperpage}{71}
+\indexentry{Gear selectivity|hyperpage}{71}
+\indexentry{Logistic|hyperpage}{71}
+\indexentry{Gear selectivity|hyperpage}{74}
+\indexentry{Distribution, multinomial|hyperpage}{74}
+\indexentry{Distribution, multinomial|hyperpage}{77}
+\indexentry{Virtural population analysis|hyperpage}{77}
+\indexentry{Cohort analysis|hyperpage}{77}
+\indexentry{Capture history matrix|hyperpage}{81}
+\indexentry{Cormack-Jolly-Seber model|hyperpage}{82}
+\indexentry{Distribution, multinomial|hyperpage}{85}
+\indexentry{Distribution, multinomial|hyperpage}{87}
+\indexentry{Distribution, multinomial|hyperpage}{87}
+\indexentry{Distribution, multinomial|hyperpage}{89}
+\indexentry{fishing mortality|hyperpage}{91}
+\indexentry{natural mortality|hyperpage}{91}
+\indexentry{Rate, exploitation|hyperpage}{91}
+\indexentry{prior distribution|hyperpage}{93}
+\indexentry{informative prior distribution|hyperpage}{93}
+\indexentry{beta distribution|hyperpage}{94}
+\indexentry{Rate, natural death|hyperpage}{97}
+\indexentry{Mortality, fishing|hyperpage}{97}
+\indexentry{Mortality, natural|hyperpage}{97}
+\indexentry{Rate, tag-reporting|hyperpage}{102}
+\indexentry{Mortality, fishing|hyperpage}{102}
+\indexentry{Mortality, natural|hyperpage}{102}
+\indexentry{Planted tags|hyperpage}{105}
+\indexentry{Distribution, categorical|hyperpage}{108}
+\indexentry{MCMC|hyperpage}{109}
+\indexentry{Multistate model|hyperpage}{110}
+\indexentry{von Bertalanffy growth|hyperpage}{117}
+\indexentry{error!additive|hyperpage}{118}
+\indexentry{error!multiplicative|hyperpage}{118}
+\indexentry{error!additive|hyperpage}{120}
+\indexentry{error!multiplicative|hyperpage}{120}
+\indexentry{prior distribution|hyperpage}{120}
+\indexentry{Recruitment|hyperpage}{131}
+\indexentry{Overfishing, recruitment|hyperpage}{131}
+\indexentry{Beverton-Holt equation|hyperpage}{131}
+\indexentry{integrated population model|hyperpage}{141}
+\indexentry{capture-recapture|hyperpage}{141}
+\indexentry{capture-recapture|hyperpage}{141}
+\indexentry{telemetry|hyperpage}{141}
+\indexentry{recruitment|hyperpage}{142}
+\indexentry{Distribution, Binomial|hyperpage}{143}
+\indexentry{stock assessment|hyperpage}{146}
+\indexentry{catch-at-age analysis|hyperpage}{147}
+\indexentry{virtual population analysis|hyperpage}{147}
+\indexentry{cohort analysis|hyperpage}{147}
+\indexentry{mortality, fishing|hyperpage}{147}
+\indexentry{mortality, natural|hyperpage}{147}
+\indexentry{distribution, binomial|hyperpage}{149}
+\indexentry{distribution, multinomial|hyperpage}{149}
+\indexentry{natural mortality|hyperpage}{152}

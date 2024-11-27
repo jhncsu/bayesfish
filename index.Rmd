@@ -6,6 +6,7 @@ documentclass: krantz
 bibliography:
 - book.bib
 - packages.bib
+- AddRefs.bib
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
@@ -14,7 +15,7 @@ lof: yes
 site: bookdown::bookdown_site
 description: "This book is intended to be a bridge between traditional fisheries analytical
   methods and Bayesian statistics. It is a hands-on introduction to models for estimating
-  abundance, survival, growth, recruitment, and population trends."
+  abundance, survival, growth, and recruitment."
 graphics: yes
 ---
 
@@ -31,9 +32,9 @@ lapply(c('xfun'), function(pkg) {
 
 # Preface {-}
 
-This book is based in large part on material I developed while teaching (1991-2014) at NC State University. My hope is that the book will be a bridge between traditional fisheries analytical methods and Bayesian approaches that offer many advantages in ecological modeling. Many other texts address fish population dynamics and quantitative management [e.g., @hilborn.walters_1992; @quinn.deriso_1999]; here the focus here is strictly on Bayesian approaches for fitting fisheries models. The book might be useful as an upper-level undergraduate or early graduate text, or for a working fisheries biologist interested in a hands-on introduction to Bayesian methods.
+This book is based in large part on material I developed while teaching (1991-2014) at NC State University. My hope is that the book will be a bridge between traditional fisheries analytical methods and Bayesian approaches that offer many advantages in ecological modeling. Many other texts address fish population dynamics and quantitative management [e.g., @hilborn.walters_1992; @quinn.deriso_1999]; here the focus is strictly on Bayesian approaches for fitting fisheries models. The book might be useful as an upper-level undergraduate or early graduate text, or for a working fisheries biologist interested in a hands-on introduction to Bayesian methods.
 
-The general approach for this book follows that used by @kéry_2010 and @kéry.schaub_2011, in that sample data for each Bayesian analysis are produced by simulation. Analyzing simulated data is helpful for learning because the expected results are known. Simulating a field study also provides the flexibility to vary study parameters such as the number of samples or the within-sample variability. Running the simulation and analysis code multiple times under different settings will aid in understanding the methods and their limitations. This brings up a general point about this book: reading about an analysis is not enough -- it is essential to run the code in order to understand the methods. Exercises included at the end of each chapter should also aid in understanding the strengths and weaknesses of each analysis. A solutions manual is available from the author.
+The general approach for this book follows that used by @kéry_2010 and @kéry.schaub_2011, in that sample data for each Bayesian analysis are produced by simulation. Analyzing simulated data is helpful for learning because the true parameter values are known. Simulating a field study also provides the flexibility to vary study parameters such as the number of samples or sampling variation. Running the simulation and analysis code multiple times under different settings will aid in understanding the methods and their limitations. This brings up a general point about this book: reading about an analysis is not enough -- it is essential to run the code in order to understand the methods. Exercises included at the end of each chapter should also aid in understanding the strengths and weaknesses of each analysis. A solutions manual is available from the author.
 
 ## Software information and conventions {-}
 
@@ -47,5 +48,5 @@ xfun::session_info()
 
 My first exposure to Bayesian statistical methods was via Matthew Krachey, who took the time as a PhD student to teach a few informal sessions on WinBUGS. I soon came to agree with @kéry_2010 that the BUGS language "frees the modeler in you" and would be a valuable tool for research and especially teaching. I incorporated the BUGS language into my graduate fisheries course and soon into research population models. Other colleagues who provided valuable assistance on statistical methods include Beth Gardner, Ken Pollock, and Brian Reich. I also benefited from some of the many excellent reference books on Bayesian methods for ecology [e.g., @mccarthy2007; @kéry_2010; @kéry.schaub_2011].
 
-Anonymous reviewers of previous drafts made a number of helpful suggestions that I have attempted to accommodate. Any remaining errors in the book are mine.
+Anonymous reviewers of a previous draft made a number of helpful suggestions that I have attempted to accommodate. Any remaining errors in the book are mine.
 
