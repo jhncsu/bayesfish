@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>A Title Placeholder | A Bayesian Introduction to Fish Population Analysis</title>
+  <title>Chapter 11 Final Thoughts | A Bayesian Introduction to Fish Population Analysis</title>
   <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
   <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A Title Placeholder | A Bayesian Introduction to Fish Population Analysis" />
+  <meta property="og:title" content="Chapter 11 Final Thoughts | A Bayesian Introduction to Fish Population Analysis" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Title Placeholder | A Bayesian Introduction to Fish Population Analysis" />
+  <meta name="twitter:title" content="Chapter 11 Final Thoughts | A Bayesian Introduction to Fish Population Analysis" />
   
   <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-12-10" />
+<meta name="date" content="2024-12-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,16 +31,16 @@
   
   
 <link rel="prev" href="PopModels.html"/>
-<link rel="next" href="references.html"/>
-<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<link rel="next" href="title-placeholder.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,75 +49,11 @@
 
 
 
-<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <style type="text/css">
   
@@ -257,6 +193,7 @@ div.csl-indent {
 <li class="chapter" data-level="10.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>10.2</b> Full age-structured model</a></li>
 <li class="chapter" data-level="10.3" data-path="PopModels.html"><a href="PopModels.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="FinalThoughts.html"><a href="FinalThoughts.html"><i class="fa fa-check"></i><b>11</b> Final Thoughts</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -280,10 +217,38 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="title-placeholder" class="section level1 hasAnchor" number="11">
-<h1><span class="header-section-number">A</span> Title Placeholder<a href="title-placeholder.html#title-placeholder" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>If there is anything to put in an appendix, it would go here.</p>
+<div id="FinalThoughts" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Final Thoughts<a href="FinalThoughts.html#FinalThoughts" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>If you made it this far, a few themes should be apparent. The first is the important role of simulation in planning and conducting field research. Even writing the code to simulate a field study forces one to think about the design and parameters such as sample size that are under the investigator’s control. Once the combined code for simulation and analysis is working, runs under different settings can show what is required to obtain useful results, at least for the simulated (ideal) case. The simulations and models used in this book can also be extended to include additional sources of error, such as ageing error or tag loss. This planning approach will also require some thought about what <em>is</em> a useful result, for example, a tolerable credible interval width or mean relative error. Upfront simulation and planning improves the odds of a successful field study, or perhaps prevents a waste of time and money conducting a study that would not be address management needs.</p>
+<p>Another theme has been the value of JAGS in constructing and fitting fisheries models. In my experience, BUGS-family code has been a valuable teaching tool, helping students visualize the models and how parameter estimates are obtained. Writing and running JAGS code is vastly superior to a black-box analysis from a learning perspective. From a research perspective, JAGS code can be tailored to the specific characteristics of a field study. Examples in this book hopefully have illustrated how auxiliary studies can be folded into a Bayesian analysis to improve parameter estimates. JAGS software is still popular and being actively developed but there are a number of options for Bayesian analysis <span class="citation">(<a href="#ref-strumbelj.etal_2024">Štrumbelj et al. 2024</a>)</span>. A new book by <span class="citation">Kéry and Kellner (<a href="#ref-kery.kellner_2024">2024</a>)</span> on Bayesian model fitting using JAGS, Nimble, and Stan, should be a good resource for exploring the strengths and weaknesses of those software packages. In any case, experience with JAGS should provide a strong foundation for future fisheries work, even if Bayesian analyses transition to next-generation software.</p>
+<p>This is intended to be an introductory text, so some important topics were not covered or only mentioned in passing. The binomial-mixture model (Section <a href="#Binomial-mixture"><strong>??</strong></a> is a simple example of a hierarchical model, but the approach is much broader. Hierarchical modeling can be used to separate the observation process from the underlying ecological process (latent state) that is of primary interest <span class="citation">(<a href="#ref-royle.dorazio_2008">Royle and Dorazio 2008</a>)</span>. For example, <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> illustrate this approach in a hierarchical population model for ibex (<em>Capra ibex</em>). Annual counts include both process error and observation error so a model that separates the two error sources provides more biologically relevant estimates of population parameters <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>. Recent publications using Bayesian hierarchical models seem to be predominately based on terrestrial studies but the concepts and analytical methods are entirely transferrable to fisheries systems.</p>
+<p>One of the typical responsibilities of a fishery biologist is to make recommendations or decisions in the face of uncertainty. The focus for this book has been on estimating population parameters, including measures of uncertainty. The next step, and one not addressed in this book, is to use the population parameters to explore management options. For example, a harvest model might be used to explore the potential benefits of harvest regulation. The harvest model will depend on information about growth (Chapter <a href="Growth.html#Growth">8</a>, fishing and natural mortality (Chapter <a href="Mortality.html#Mortality">7</a>, and possibly recruitment (Chapter <a href="Recruit.html#Recruit">9</a>. The harvest model could be constructed within an IPM (Chapter <a href="PopModels.html#PopModels">10</a>, so that the uncertainty associated with the various population parameters would not be lost <span class="citation">(e.g., <a href="#ref-doll.etal_2021">Doll et al. 2021</a>)</span>. For a commercial fishery, the harvest model would typically be in terms of weight, corresponding to how income is derived. The model could be used to examine the potential gains and losses from management options such as a quota or seasonal closure. For a recreational fishery, a harvest model might focus on numbers (catch rate) rather than weight, or on the proportion of fish within “memorable” and “trophy” size ranges <span class="citation">(<a href="#ref-doll.etal_2021">Doll et al. 2021</a>)</span>. Management for a recreational fishery is more likely to use creel and size regulations and could, for example, compare the benefits of various minimum and slot size limits.</p>
+<p><span class="citation">Kéry (<a href="#ref-kéry_2010">2010</a>)</span> closed his book with a prediction that, for many readers, WinBUGS will have “changed forever the way in which you think about, and conduct, statistical modeling.” WinBUGS certainly started that process for me, followed by other BUGS-family variants including JAGS. It will be interesting to see the future contributions of Bayesian software packages to fisheries science and management.</p>
 
+</div>
+
+
+
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-doll.etal_2021" class="csl-entry">
+Doll, Jason C., Chris J. Wood, David W. Goodfred, and Jacob M. Rash. 2021. <span>“Incorporating <span>Batch Mark</span>–<span>Recapture Data</span> into an <span>Integrated Population Model</span> of <span>Brown Trout</span>.”</span> <em>North American Journal of Fisheries Management</em> 41 (5): 1390–1407. <a href="https://doi.org/10.1002/nafm.10650">https://doi.org/10.1002/nafm.10650</a>.
+</div>
+<div id="ref-kéry_2010" class="csl-entry">
+Kéry, Marc. 2010. <em>Introduction to <span>WinBUGS</span> for <span>Ecologists</span>: <span>Bayesian</span> Approach to Regression, <span>ANOVA</span>, Mixed Models and Related Analyses</em>. 1st ed. Amsterdam: Academic Press.
+</div>
+<div id="ref-kery.kellner_2024" class="csl-entry">
+Kéry, Marc, and Kenneth Kellner. 2024. <em>Applied <span>Statistical Modelling</span> for <span>Ecologists</span></em>. 1st ed.
+</div>
+<div id="ref-kéry.schaub_2011" class="csl-entry">
+Kéry, Marc, and Michael Schaub. 2011. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st ed. Amsterdam: Academic Press.
+</div>
+<div id="ref-royle.dorazio_2008" class="csl-entry">
+Royle, J. Andrew, and Robert M. Dorazio. 2008. <em>Hierarchical Modeling and Inference in Ecology: <span>The</span> Analysis of Data from Populations, Metapopulations and Communities</em>. 1st ed. Amsterdam: Academic Press.
+</div>
+<div id="ref-strumbelj.etal_2024" class="csl-entry">
+Štrumbelj, Erik, Alexandre Bouchard-Côté, Jukka Corander, Andrew Gelman, Håvard Rue, Lawrence Murray, Henri Pesonen, Martyn Plummer, and Aki Vehtari. 2024. <span>“Past, <span>Present</span> and <span>Future</span> of <span>Software</span> for <span>Bayesian Inference</span>.”</span> <em>Statistical Science</em> 39 (1): 46–61. <a href="https://doi.org/10.1214/23-STS907">https://doi.org/10.1214/23-STS907</a>.
+</div>
 </div>
             </section>
 
@@ -291,17 +256,17 @@ div.csl-indent {
         </div>
       </div>
 <a href="PopModels.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="title-placeholder.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/clipboard.min.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
-<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -322,7 +287,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/yihui/bookdown-crc/edit/master/90-more.Rmd",
+"link": "https://github.com/yihui/bookdown-crc/edit/master/11_FinalThoughts.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -345,20 +310,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-11-23" />
+<meta name="date" content="2024-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +32,15 @@
   
 <link rel="prev" href="about-the-author.html"/>
 <link rel="next" href="R-intro.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,11 +49,75 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -220,7 +284,7 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 1</span> Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Survey a group of fishery biologists and many would say that they entered the field because of a love of the outdoors. They might also admit that, despite a preference for being outside, much of their work is done at a computer. There are mundane tasks like email correspondence, but of greater importance (and relevance for this book) are the steps in getting the information needed for effective management. Those steps include planning and conducting field studies, carrying out correct analyses, and presenting results in reports and presentations. A strong statistical foundation is essential for accomplishing these tasks. Otherwise, management ends up being a trial-and-error process that is inefficient and often ineffective. The purpose of this book is to provide an introduction to these quantitative methods.</p>
 <p>The models that we will investigate have a statistical foundation but our interest is primarily in parameter estimation rather than hypothesis testing. This is the opposite of most university statistics courses, but it reflects the reality of fishery management. For example, we might conduct a tagging study in order to estimate the exploitation rate, or the fraction of the legal-sized fish that are harvested in a year. We are not interested in a trivial hypothesis test (“Is the exploitation rate 0?”) but just in getting a reliable estimate. If a substantial fraction of the population is being harvested, then the fishery manager might consider harvest restrictions such as a closed season, bag limit, or size limit. The tagging study could be done using red tags that have a reward of $100 and yellow tags that have a reward of $5. Anglers typically return high-reward tags at a higher rate than low-reward tags, so one part of the planning process would be to decide how many tags of each type to use. Once the study is complete, the model used for planning can often be modified for analysis of the tag-return data. One step in the process would be to determine whether the model needs separate parameters for the return rates of high- and low-reward tags. That could be viewed as a hypothesis-testing situation, but can also be thought of as model selection (simpler model with one rate versus a more complex model with two). Ultimately, we simply want to produce the best possible information about the effect of fishing on the population. This would include not only a point estimate but also measures of uncertainty that aid in decision making.</p>
-<p>Examples in the chapters that follow use Bayesian statistical methods to illustrate the steps in planning and analysis of field studies. Fisheries analyses (and university statistics courses) have traditionally been based on so-called frequentist statistical methods, that are based on the expected frequency of observing the data in hand, if the study were repeated many times <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>. Until recently, an important advantage of frequentist methods was that parameter estimation, hypothesis testing, etc. could be implemented with commonly available computing resources <span class="citation">(<a href="#ref-dorazio_2016">Dorazio 2016</a>)</span>. In contrast, Bayesian methods of statistical inference were not practical until fairly recently, when generic algorithms known as Markov Chain Monte Carlo (see Section <a href="Model-fit.html#JAGS-model-fit">4.3</a>) became available <span class="citation">(<a href="#ref-dorazio_2016">Dorazio 2016</a>)</span>. Another important factor in the increased adoption of Bayesian methods is the availability of public-domain software to fit the models <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>. The earliest version was known as BUGS (Bayesian inference Using Gibbs Sampling; <span class="citation">D. Lunn et al. (<a href="#ref-lunn.etal2009">2009</a>)</span>), followed by a Windows version WinBUGS <span class="citation">(<a href="#ref-lunn.etal2000">D. J. Lunn et al. 2000</a>)</span>, then an open version OpenBUGS <span class="citation">(<a href="#ref-lunn.etal2009">D. Lunn et al. 2009</a>)</span>, as well as JAGS <span class="citation">(<a href="#ref-plummer2003">Plummer 2003</a>)</span> which was developed independently but uses essentially identical code. The BUGS language is a great tool both for learning and for getting work done. Rather than trying to force the data into a rigid black box for analysis, study-specific code can be produced that is readable and biologically meaningful. Another advantage of BUGS software is that it forces you to think about the biological and field-sampling processes that generated your data. We will use JAGS in this book, but the code should work without modification in other versions of the BUGS family, and could be converted to run under other Bayesian software such as NIMBLE <span class="citation">(<a href="#ref-devalpine.etal_2017">de Valpine et al. 2017</a>)</span> or Stan <span class="citation">(<a href="#ref-gelman.etal_2015">Gelman, Lee, and Guo 2015</a>)</span>. The JAGS code used in this book will be run from R <span class="citation">(<a href="#ref-R-base">R Core Team 2022</a>)</span>, a general software environment that is briefly described in Chapter <a href="R-intro.html#R-intro">2</a>.</p>
+<p>Examples in the chapters that follow use Bayesian statistical methods to illustrate the steps in planning and analysis of field studies. Fisheries analyses (and university statistics courses) have traditionally been based on so-called frequentist statistical methods, that are based on the expected frequency of observing the data in hand, if the study were repeated many times <span class="citation">(<a href="#ref-mccarthy2007">McCarthy 2007</a>)</span>. Until recently, an important advantage of frequentist methods was that parameter estimation, hypothesis testing, etc. could be implemented with commonly available computing resources <span class="citation">(<a href="#ref-dorazio_2016">Dorazio 2016</a>)</span>. In contrast, Bayesian methods of statistical inference were not practical until fairly recently, when generic algorithms known as Markov Chain Monte Carlo (see Section <a href="Model-fit.html#JAGS-model-fit">4.3</a>) became available <span class="citation">(<a href="#ref-dorazio_2016">Dorazio 2016</a>)</span>. Another important factor in the increased adoption of Bayesian methods is the availability of public-domain software to fit the models <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>. The earliest version was known as BUGS (Bayesian inference Using Gibbs Sampling; <span class="citation">D. Lunn et al. (<a href="#ref-lunn.etal2009">2009</a>)</span>), followed by a Windows version WinBUGS <span class="citation">(<a href="#ref-lunn.etal2000">D. J. Lunn et al. 2000</a>)</span>, then an open version OpenBUGS <span class="citation">(<a href="#ref-lunn.etal2009">D. Lunn et al. 2009</a>)</span>, as well as JAGS <span class="citation">(<a href="#ref-plummer2003">M. Plummer 2003</a>)</span> which was developed independently but uses essentially identical code. The BUGS language is a great tool both for learning and for getting work done. Rather than trying to force the data into a rigid black box for analysis, study-specific code can be produced that is readable and biologically meaningful. Another advantage of BUGS software is that it forces you to think about the biological and field-sampling processes that generated your data. We will use JAGS in this book, but the code should work without modification in other versions of the BUGS family, and could be converted to run under other Bayesian software such as NIMBLE <span class="citation">(<a href="#ref-devalpine.etal_2017">de Valpine et al. 2017</a>)</span> or Stan <span class="citation">(<a href="#ref-gelman.etal_2015">Gelman, Lee, and Guo 2015</a>)</span>. The JAGS code used in this book will be run from R <span class="citation">(<a href="#ref-R-base">R Core Team 2022</a>)</span>, a general software environment that is briefly described in Chapter <a href="R-intro.html#R-intro">2</a>.</p>
 
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -262,14 +326,14 @@ R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</
 <a href="R-intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -313,6 +377,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

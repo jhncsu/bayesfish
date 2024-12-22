@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Integrated Population Models | A Bayesian Introduction to Fish Population Analysis</title>
-  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
   <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Integrated Population Models | A Bayesian Introduction to Fish Population Analysis" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 10 Integrated Population Models | A Bayesian Introduction to Fish Population Analysis" />
   
-  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, recruitment, and population trends." />
+  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
   
 
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-11-22" />
+<meta name="date" content="2024-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -232,7 +232,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
 <li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
-<li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry estimates of F and M</a></li>
+<li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry-based</a></li>
 <li class="chapter" data-level="7.5" data-path="Mortality.html"><a href="Mortality.html#exercises-4"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="Growth.html"><a href="Growth.html"><i class="fa fa-check"></i><b>8</b> Growth</a>
@@ -282,149 +282,152 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="PopModels" class="section level1 hasAnchor" number="10">
 <h1><span class="header-section-number">Chapter 10</span> Integrated Population Models<a href="PopModels.html#PopModels" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The field and analytical methods discussed thus far have addressed population rates one at a time (e.g., estimating abundance or survival). An improved approach would be to design a complementary set of field studies that provides a complete picture of population dynamics. For example, <span class="citation">Conn et al. (<a href="#ref-conn.etal_2008">2008</a>)</span> used harvest and tag recovery data to fit an integrated population model (IPM) for black bear (<em>Ursus americanus</em>). Their model provided estimates that were more precise and biologically realistic than point estimates using capture-recapture data alone. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> developed an avian IPM using adult population counts, nest surveys, and capture-recapture data on survival. We begin here with a somewhat simpler approach, a two-age model (ages 1 and 2+) using capture-recapture and telemetry data, then examine a full age-structured stock assessment model (Section <a href="PopModels.html#CAGEAN">10.2</a>).</p>
+<p>The field and analytical methods discussed thus far have addressed population rates one at a time (e.g., estimating abundance or survival). An improved approach would be to design a complementary set of field studies that provides a complete picture of population dynamics. For example, <span class="citation">Conn et al. (<a href="#ref-conn.etal_2008">2008</a>)</span> used harvest and tag recovery data to fit an integrated population model (IPM) for black bear (<em>Ursus americanus</em>). Their model provided estimates that were more precise and biologically realistic than point estimates using capture-recapture data alone. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> developed an avian IPM using adult population counts, nest surveys, and capture-recapture data on survival. We begin here with a somewhat simpler approach, a two-age model (ages 1 and 2+) using capture-recapture and telemetry data, then examine a full age-structured model as typically used in fish stock assessment (Section <a href="PopModels.html#CAGEAN">10.2</a>).</p>
 <div id="TwoAge" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Two-age model<a href="PopModels.html#TwoAge" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This example shows how two independent field studies (capture-recapture estimates of abundance and telemetry information on survival) can be combined to make inferences about population dynamics. The cost of this approach in time and money is higher than a basic relative-abundance survey, but it provides insights about population dynamics (recruitment and survival) that would not be possible with relative abundance data alone. The cost could be justified for a subset of cases; for example, a population at low abundance or one supporting an important fishery. We begin with the simulation model:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="PopModels.html#cb84-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb84-2"><a href="PopModels.html#cb84-2" tabindex="-1"></a></span>
-<span id="cb84-3"><a href="PopModels.html#cb84-3" tabindex="-1"></a><span class="co"># Simulation to create population size and field data</span></span>
-<span id="cb84-4"><a href="PopModels.html#cb84-4" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb84-5"><a href="PopModels.html#cb84-5" tabindex="-1"></a></span>
-<span id="cb84-6"><a href="PopModels.html#cb84-6" tabindex="-1"></a>LowS <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Adult survival, arbitrary lower bound</span></span>
-<span id="cb84-7"><a href="PopModels.html#cb84-7" tabindex="-1"></a>HighS <span class="ot">&lt;-</span> <span class="fl">0.9</span> <span class="co"># Arbitrary upper bound</span></span>
-<span id="cb84-8"><a href="PopModels.html#cb84-8" tabindex="-1"></a>AnnualS <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">min=</span>LowS, <span class="at">max=</span>HighS)</span>
-<span id="cb84-9"><a href="PopModels.html#cb84-9" tabindex="-1"></a></span>
-<span id="cb84-10"><a href="PopModels.html#cb84-10" tabindex="-1"></a>MeanR <span class="ot">&lt;-</span> <span class="dv">400</span> <span class="co"># Arbitrary mean annual recruitment</span></span>
-<span id="cb84-11"><a href="PopModels.html#cb84-11" tabindex="-1"></a>N.r <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Y)</span>
-<span id="cb84-12"><a href="PopModels.html#cb84-12" tabindex="-1"></a>SD_rec <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Low level of lognormal error in recruitment</span></span>
-<span id="cb84-13"><a href="PopModels.html#cb84-13" tabindex="-1"></a>N.r <span class="ot">&lt;-</span> <span class="fu">trunc</span>(MeanR <span class="sc">*</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="dv">0</span>, SD_rec))</span>
-<span id="cb84-14"><a href="PopModels.html#cb84-14" tabindex="-1"></a>N.a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Y)</span>
-<span id="cb84-15"><a href="PopModels.html#cb84-15" tabindex="-1"></a>N.a[<span class="dv">1</span>] <span class="ot">&lt;-</span> N.r[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rpois</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">lambda=</span>MeanR) <span class="co"># Arbitrary year-1 population size</span></span>
-<span id="cb84-16"><a href="PopModels.html#cb84-16" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Y){</span>
-<span id="cb84-17"><a href="PopModels.html#cb84-17" tabindex="-1"></a>  N.a[y] <span class="ot">&lt;-</span> N.r[y] <span class="sc">+</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>N.a[y<span class="dv">-1</span>], <span class="at">prob=</span>AnnualS[y<span class="dv">-1</span>])</span>
-<span id="cb84-18"><a href="PopModels.html#cb84-18" tabindex="-1"></a>} <span class="co">#y</span></span>
-<span id="cb84-19"><a href="PopModels.html#cb84-19" tabindex="-1"></a></span>
-<span id="cb84-20"><a href="PopModels.html#cb84-20" tabindex="-1"></a><span class="co"># Short-term (closed) two-sample population estimate</span></span>
-<span id="cb84-21"><a href="PopModels.html#cb84-21" tabindex="-1"></a>CapProb <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Fraction of population sampled</span></span>
-<span id="cb84-22"><a href="PopModels.html#cb84-22" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>N.a, <span class="at">prob=</span>CapProb) <span class="co"># Caught and marked in first sample</span></span>
-<span id="cb84-23"><a href="PopModels.html#cb84-23" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>N.a, <span class="at">prob=</span>CapProb) </span>
-<span id="cb84-24"><a href="PopModels.html#cb84-24" tabindex="-1"></a><span class="co"># Caught and examined for marks in second sample</span></span>
-<span id="cb84-25"><a href="PopModels.html#cb84-25" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>n2, <span class="at">prob=</span>n1<span class="sc">/</span>N.a) <span class="co"># Marked fish in second sample</span></span>
-<span id="cb84-26"><a href="PopModels.html#cb84-26" tabindex="-1"></a></span>
-<span id="cb84-27"><a href="PopModels.html#cb84-27" tabindex="-1"></a><span class="co"># Telemetry information on annual survival</span></span>
-<span id="cb84-28"><a href="PopModels.html#cb84-28" tabindex="-1"></a>TelRelease <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Number of telemetry tags to release annually</span></span>
-<span id="cb84-29"><a href="PopModels.html#cb84-29" tabindex="-1"></a>TelTags <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>((Y<span class="dv">-1</span>),Y))</span>
-<span id="cb84-30"><a href="PopModels.html#cb84-30" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)){</span>
-<span id="cb84-31"><a href="PopModels.html#cb84-31" tabindex="-1"></a>  TelTags[y,y] <span class="ot">&lt;-</span> TelRelease</span>
-<span id="cb84-32"><a href="PopModels.html#cb84-32" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> ((y<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>Y)){</span>
-<span id="cb84-33"><a href="PopModels.html#cb84-33" tabindex="-1"></a>    TelTags[y,t] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>TelTags[y,(t<span class="dv">-1</span>)], <span class="at">prob=</span>AnnualS[t<span class="dv">-1</span>])</span>
-<span id="cb84-34"><a href="PopModels.html#cb84-34" tabindex="-1"></a>  }} <span class="co"># y,t</span></span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="PopModels.html#cb83-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb83-2"><a href="PopModels.html#cb83-2" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="PopModels.html#cb83-3" tabindex="-1"></a><span class="co"># Simulation to create population size and field data</span></span>
+<span id="cb83-4"><a href="PopModels.html#cb83-4" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb83-5"><a href="PopModels.html#cb83-5" tabindex="-1"></a></span>
+<span id="cb83-6"><a href="PopModels.html#cb83-6" tabindex="-1"></a>LowS <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Adult survival, arbitrary lower bound</span></span>
+<span id="cb83-7"><a href="PopModels.html#cb83-7" tabindex="-1"></a>HighS <span class="ot">&lt;-</span> <span class="fl">0.9</span> <span class="co"># Arbitrary upper bound</span></span>
+<span id="cb83-8"><a href="PopModels.html#cb83-8" tabindex="-1"></a>AnnualS <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">min=</span>LowS, <span class="at">max=</span>HighS)</span>
+<span id="cb83-9"><a href="PopModels.html#cb83-9" tabindex="-1"></a></span>
+<span id="cb83-10"><a href="PopModels.html#cb83-10" tabindex="-1"></a>MeanR <span class="ot">&lt;-</span> <span class="dv">400</span> <span class="co"># Arbitrary mean annual recruitment</span></span>
+<span id="cb83-11"><a href="PopModels.html#cb83-11" tabindex="-1"></a>N.r <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Y)</span>
+<span id="cb83-12"><a href="PopModels.html#cb83-12" tabindex="-1"></a>SD_rec <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Low level of lognormal error in recruitment</span></span>
+<span id="cb83-13"><a href="PopModels.html#cb83-13" tabindex="-1"></a>N.r <span class="ot">&lt;-</span> <span class="fu">trunc</span>(MeanR <span class="sc">*</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="dv">0</span>, SD_rec))</span>
+<span id="cb83-14"><a href="PopModels.html#cb83-14" tabindex="-1"></a>N.a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Y)</span>
+<span id="cb83-15"><a href="PopModels.html#cb83-15" tabindex="-1"></a>N.a[<span class="dv">1</span>] <span class="ot">&lt;-</span> N.r[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rpois</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">lambda=</span>MeanR) </span>
+<span id="cb83-16"><a href="PopModels.html#cb83-16" tabindex="-1"></a>  <span class="co"># Arbitrary year-1 population size</span></span>
+<span id="cb83-17"><a href="PopModels.html#cb83-17" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Y){</span>
+<span id="cb83-18"><a href="PopModels.html#cb83-18" tabindex="-1"></a>  N.a[y] <span class="ot">&lt;-</span> N.r[y] <span class="sc">+</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>N.a[y<span class="dv">-1</span>], <span class="at">prob=</span>AnnualS[y<span class="dv">-1</span>])</span>
+<span id="cb83-19"><a href="PopModels.html#cb83-19" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb83-20"><a href="PopModels.html#cb83-20" tabindex="-1"></a></span>
+<span id="cb83-21"><a href="PopModels.html#cb83-21" tabindex="-1"></a><span class="co"># Short-term (closed) two-sample population estimate</span></span>
+<span id="cb83-22"><a href="PopModels.html#cb83-22" tabindex="-1"></a>CapProb <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Fraction of population sampled</span></span>
+<span id="cb83-23"><a href="PopModels.html#cb83-23" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>N.a, <span class="at">prob=</span>CapProb) </span>
+<span id="cb83-24"><a href="PopModels.html#cb83-24" tabindex="-1"></a>  <span class="co"># Caught and marked in first sample</span></span>
+<span id="cb83-25"><a href="PopModels.html#cb83-25" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>N.a, <span class="at">prob=</span>CapProb) </span>
+<span id="cb83-26"><a href="PopModels.html#cb83-26" tabindex="-1"></a>  <span class="co"># Caught and examined for marks in second sample</span></span>
+<span id="cb83-27"><a href="PopModels.html#cb83-27" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span>Y, <span class="at">size=</span>n2, <span class="at">prob=</span>n1<span class="sc">/</span>N.a) <span class="co"># Marked fish in second sample</span></span>
+<span id="cb83-28"><a href="PopModels.html#cb83-28" tabindex="-1"></a></span>
+<span id="cb83-29"><a href="PopModels.html#cb83-29" tabindex="-1"></a><span class="co"># Telemetry information on annual survival</span></span>
+<span id="cb83-30"><a href="PopModels.html#cb83-30" tabindex="-1"></a>TelRelease <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Number of telemetry tags to release annually</span></span>
+<span id="cb83-31"><a href="PopModels.html#cb83-31" tabindex="-1"></a>TelTags <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>((Y<span class="dv">-1</span>),Y))</span>
+<span id="cb83-32"><a href="PopModels.html#cb83-32" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)){</span>
+<span id="cb83-33"><a href="PopModels.html#cb83-33" tabindex="-1"></a>  TelTags[y,y] <span class="ot">&lt;-</span> TelRelease</span>
+<span id="cb83-34"><a href="PopModels.html#cb83-34" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> ((y<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>Y)){</span>
+<span id="cb83-35"><a href="PopModels.html#cb83-35" tabindex="-1"></a>    TelTags[y,t] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span>TelTags[y,(t<span class="dv">-1</span>)], </span>
+<span id="cb83-36"><a href="PopModels.html#cb83-36" tabindex="-1"></a>                           <span class="at">prob=</span>AnnualS[t<span class="dv">-1</span>])</span>
+<span id="cb83-37"><a href="PopModels.html#cb83-37" tabindex="-1"></a>  }} <span class="co"># y,t</span></span></code></pre></div>
 <p>We model absolute population size, and assume that fish age 1 and older have the same survival rate, which varies annually within user-specified lower and upper bounds. Recruitment (surviving age-0 fish from the prior year) varies annually about an arbitrary mean according to a lognormal distribution (Section <a href="Recruit.html#Recruit-Fit">9.1</a>). We require a starting population in year 1 and draw the adult survivors from a Poisson distribution, using the same mean as recruitment. Population size in subsequent years is</p>
 <p><span class="math inline">\(N.a_y = N.r_y + Binomial(N.a_{y-1}, AnnualS_{y-1})\)</span></p>
 <p>i.e., incoming recruitment plus surviving adults.</p>
 <p>Model parameters are estimated using simulated data from two field studies that are assumed to be independent and would provide information on abundance and survival. The first data source is a two-sample (closed) capture-recapture estimate, assumed to be done at the start of each year. The capture probability, used to generate the two binomally-distributed samples, is set at a relatively high default value to obtain better recruitment estimates. The number of recaptures is also binomally distributed, using the observed marked fraction (on average equal to the capture probability). The second data source is a telemetry study that provides annual information on the number of surviving telemetered fish. For example, fixed receivers might be used to detect migratory fish that return annually to a spawning area. We arbitrarily assume that 20 telemetered fish are released each year. For simplicity, transmitters are assumed to last for the duration of the study. Examine the TelTags matrix to see how the annual releases maintain a good sample size.</p>
-<p>Parameter estimates are obtained using uninformative prior distributions for recruitment and annual survival. Population size in year 1 is Poisson distributed, using the capture-recapture point estimate as the expected value. Population size in subsequent years is also drawn from a Poisson distribution, using the population projection equation as the expected value. Both likelihoods use a binomial distribution (Section <a href="Distributions.html#BinomialDist">3.1.2</a>). The probability for the capture-recapture data is the estimated fraction of the population that is marked. The probability for the telemetry data is the estimated annual survival rate.</p>
-<p>Following the JAGS section is some R code to compare the true values with model estimates. The <code>par(xpd=TRUE)</code> turns off clipping so that a legend can be added outside the plot boundary (using inset to set the relative coordinates of the legend). For the third plot, the Chapman modification of the capture-recapture estimator <span class="citation">(<a href="#ref-ricker1975">Ricker 1975</a>)</span> was used to avoid getting a plotting error due to an infinite point estimate in cases with <span class="math inline">\(m_2=0\)</span>. The capture-recapture point estimates (red line) tend to be more variable than the population estimates obtained from the integrated model (black line).</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="PopModels.html#cb85-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb85-2"><a href="PopModels.html#cb85-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb85-3"><a href="PopModels.html#cb85-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb85-4"><a href="PopModels.html#cb85-4" tabindex="-1"></a></span>
-<span id="cb85-5"><a href="PopModels.html#cb85-5" tabindex="-1"></a><span class="co"># JAGS code ##################################</span></span>
-<span id="cb85-6"><a href="PopModels.html#cb85-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;IPM.txt&quot;</span>)</span>
-<span id="cb85-7"><a href="PopModels.html#cb85-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb85-8"><a href="PopModels.html#cb85-8" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb85-9"><a href="PopModels.html#cb85-9" tabindex="-1"></a></span>
-<span id="cb85-10"><a href="PopModels.html#cb85-10" tabindex="-1"></a><span class="st"># Priors</span></span>
-<span id="cb85-11"><a href="PopModels.html#cb85-11" tabindex="-1"></a></span>
-<span id="cb85-12"><a href="PopModels.html#cb85-12" tabindex="-1"></a><span class="st"> Mean_lnR.est ~ dnorm(0, 1E-6)  # Recruitment uses ln-scale parameter</span></span>
-<span id="cb85-13"><a href="PopModels.html#cb85-13" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
-<span id="cb85-14"><a href="PopModels.html#cb85-14" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
-<span id="cb85-15"><a href="PopModels.html#cb85-15" tabindex="-1"></a><span class="st"> for(y in 1:(Y-1)) {</span></span>
-<span id="cb85-16"><a href="PopModels.html#cb85-16" tabindex="-1"></a><span class="st">    N.r.est[y] ~ dlnorm(Mean_lnR.est,tau)</span></span>
-<span id="cb85-17"><a href="PopModels.html#cb85-17" tabindex="-1"></a><span class="st">     # Hierarchical structure for recruitment</span></span>
-<span id="cb85-18"><a href="PopModels.html#cb85-18" tabindex="-1"></a><span class="st">  } #y</span></span>
-<span id="cb85-19"><a href="PopModels.html#cb85-19" tabindex="-1"></a></span>
-<span id="cb85-20"><a href="PopModels.html#cb85-20" tabindex="-1"></a><span class="st">for (y in 1:(Y-1)){</span></span>
-<span id="cb85-21"><a href="PopModels.html#cb85-21" tabindex="-1"></a><span class="st">  AnnualS.est[y] ~ dunif(0,1)  # Uninformative prior, adult survival</span></span>
-<span id="cb85-22"><a href="PopModels.html#cb85-22" tabindex="-1"></a><span class="st">}#y</span></span>
-<span id="cb85-23"><a href="PopModels.html#cb85-23" tabindex="-1"></a></span>
-<span id="cb85-24"><a href="PopModels.html#cb85-24" tabindex="-1"></a><span class="st"># Population projection</span></span>
-<span id="cb85-25"><a href="PopModels.html#cb85-25" tabindex="-1"></a><span class="st"> N.a.est[1] ~ dpois((n1[1]+1)*(n2[1]+1)/(m2[1]+1)-1) </span></span>
-<span id="cb85-26"><a href="PopModels.html#cb85-26" tabindex="-1"></a><span class="st">  # Year-1 total, Chapman mod in case m2=0</span></span>
-<span id="cb85-27"><a href="PopModels.html#cb85-27" tabindex="-1"></a><span class="st">  # Year-1 estimate needed to start model because no prior year information</span></span>
-<span id="cb85-28"><a href="PopModels.html#cb85-28" tabindex="-1"></a><span class="st"> for(y in 2:Y) {</span></span>
-<span id="cb85-29"><a href="PopModels.html#cb85-29" tabindex="-1"></a><span class="st">     N.a.est[y] ~ dpois(N.r.est[y-1] + (AnnualS.est[y-1]*N.a.est[y-1]))</span></span>
-<span id="cb85-30"><a href="PopModels.html#cb85-30" tabindex="-1"></a><span class="st">     # Index shifted by one year for recruitment estimates</span></span>
-<span id="cb85-31"><a href="PopModels.html#cb85-31" tabindex="-1"></a><span class="st">     } #y</span></span>
-<span id="cb85-32"><a href="PopModels.html#cb85-32" tabindex="-1"></a></span>
-<span id="cb85-33"><a href="PopModels.html#cb85-33" tabindex="-1"></a><span class="st">#Likelihoods</span></span>
-<span id="cb85-34"><a href="PopModels.html#cb85-34" tabindex="-1"></a><span class="st"># Two-sample capture-recapture estimate for total pop size at start of year</span></span>
-<span id="cb85-35"><a href="PopModels.html#cb85-35" tabindex="-1"></a><span class="st">  for (y in 2:Y){  # m2[1] used above to get starting pop size</span></span>
-<span id="cb85-36"><a href="PopModels.html#cb85-36" tabindex="-1"></a><span class="st">    m2[y] ~ dbin((n1[y]/N.a.est[y]), n2[y])</span></span>
-<span id="cb85-37"><a href="PopModels.html#cb85-37" tabindex="-1"></a><span class="st">    } #y</span></span>
-<span id="cb85-38"><a href="PopModels.html#cb85-38" tabindex="-1"></a></span>
-<span id="cb85-39"><a href="PopModels.html#cb85-39" tabindex="-1"></a><span class="st"># Telemetry information on survival rate</span></span>
-<span id="cb85-40"><a href="PopModels.html#cb85-40" tabindex="-1"></a><span class="st">for (y in 1:(Y-1)){</span></span>
-<span id="cb85-41"><a href="PopModels.html#cb85-41" tabindex="-1"></a><span class="st">  for (t in ((y+1):Y)){</span></span>
-<span id="cb85-42"><a href="PopModels.html#cb85-42" tabindex="-1"></a><span class="st">    TelTags[y,t] ~ dbin(AnnualS.est[t-1],TelTags[y,(t-1)])</span></span>
-<span id="cb85-43"><a href="PopModels.html#cb85-43" tabindex="-1"></a><span class="st">  }} # y, t</span></span>
-<span id="cb85-44"><a href="PopModels.html#cb85-44" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb85-45"><a href="PopModels.html#cb85-45" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
-<span id="cb85-46"><a href="PopModels.html#cb85-46" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb85-47"><a href="PopModels.html#cb85-47" tabindex="-1"></a></span>
-<span id="cb85-48"><a href="PopModels.html#cb85-48" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb85-49"><a href="PopModels.html#cb85-49" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>, <span class="st">&quot;TelTags&quot;</span>)</span>
-<span id="cb85-50"><a href="PopModels.html#cb85-50" tabindex="-1"></a></span>
-<span id="cb85-51"><a href="PopModels.html#cb85-51" tabindex="-1"></a><span class="co"># Initial values</span></span>
-<span id="cb85-52"><a href="PopModels.html#cb85-52" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">N.r.est=</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">meanlog=</span><span class="dv">10</span>, <span class="at">sdlog=</span><span class="dv">1</span>),</span>
-<span id="cb85-53"><a href="PopModels.html#cb85-53" tabindex="-1"></a>                               <span class="at">AnnualS.est=</span><span class="fu">runif</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
-<span id="cb85-54"><a href="PopModels.html#cb85-54" tabindex="-1"></a></span>
-<span id="cb85-55"><a href="PopModels.html#cb85-55" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;IPM.txt&#39;</span></span>
-<span id="cb85-56"><a href="PopModels.html#cb85-56" tabindex="-1"></a></span>
-<span id="cb85-57"><a href="PopModels.html#cb85-57" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb85-58"><a href="PopModels.html#cb85-58" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AnnualS.est&quot;</span>, <span class="st">&quot;N.a.est&quot;</span>, <span class="st">&quot;N.r.est&quot;</span>, <span class="st">&quot;SD_rec.est&quot;</span>)</span>
-<span id="cb85-59"><a href="PopModels.html#cb85-59" tabindex="-1"></a></span>
-<span id="cb85-60"><a href="PopModels.html#cb85-60" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb85-61"><a href="PopModels.html#cb85-61" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb85-62"><a href="PopModels.html#cb85-62" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">40000</span>,</span>
-<span id="cb85-63"><a href="PopModels.html#cb85-63" tabindex="-1"></a>                model.file)</span>
-<span id="cb85-64"><a href="PopModels.html#cb85-64" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb85-65"><a href="PopModels.html#cb85-65" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
-<span id="cb85-66"><a href="PopModels.html#cb85-66" tabindex="-1"></a></span>
-<span id="cb85-67"><a href="PopModels.html#cb85-67" tabindex="-1"></a><span class="co"># Code for plots comparing true values and model estimates</span></span>
-<span id="cb85-68"><a href="PopModels.html#cb85-68" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb85-69"><a href="PopModels.html#cb85-69" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)), </span>
-<span id="cb85-70"><a href="PopModels.html#cb85-70" tabindex="-1"></a>     jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est, <span class="at">ylab=</span><span class="st">&quot;Annual S&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb85-71"><a href="PopModels.html#cb85-71" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(AnnualS,</span>
-<span id="cb85-72"><a href="PopModels.html#cb85-72" tabindex="-1"></a>                                  jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est),</span>
-<span id="cb85-73"><a href="PopModels.html#cb85-73" tabindex="-1"></a>                              <span class="fu">max</span>(AnnualS,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est)))</span>
-<span id="cb85-74"><a href="PopModels.html#cb85-74" tabindex="-1"></a><span class="fu">points</span>(AnnualS, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>)</span>
-<span id="cb85-75"><a href="PopModels.html#cb85-75" tabindex="-1"></a></span>
-<span id="cb85-76"><a href="PopModels.html#cb85-76" tabindex="-1"></a><span class="co">#hist(jagsfit$BUGSoutput$sims.list$MeanR.est, main=&quot;&quot;, xlab=&quot;Mean recruitment&quot;)</span></span>
-<span id="cb85-77"><a href="PopModels.html#cb85-77" tabindex="-1"></a><span class="co">#abline(v=MeanR, col=&quot;red&quot;)</span></span>
-<span id="cb85-78"><a href="PopModels.html#cb85-78" tabindex="-1"></a></span>
-<span id="cb85-79"><a href="PopModels.html#cb85-79" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)), </span>
-<span id="cb85-80"><a href="PopModels.html#cb85-80" tabindex="-1"></a>     jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.r.est, <span class="at">ylab=</span><span class="st">&quot;Annual recruitment (years 2-Y)&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb85-81"><a href="PopModels.html#cb85-81" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(N.r,</span>
-<span id="cb85-82"><a href="PopModels.html#cb85-82" tabindex="-1"></a>                                  jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.r.est),</span>
-<span id="cb85-83"><a href="PopModels.html#cb85-83" tabindex="-1"></a>                              <span class="fu">max</span>(N.r,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.r.est)))</span>
-<span id="cb85-84"><a href="PopModels.html#cb85-84" tabindex="-1"></a><span class="fu">points</span>(N.r[<span class="dv">2</span><span class="sc">:</span>Y], <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>)</span>
-<span id="cb85-85"><a href="PopModels.html#cb85-85" tabindex="-1"></a><span class="fu">par</span>(<span class="at">xpd=</span><span class="cn">TRUE</span>) <span class="co"># Turn off clipping to put legend above plot</span></span>
-<span id="cb85-86"><a href="PopModels.html#cb85-86" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>,</span>
-<span id="cb85-87"><a href="PopModels.html#cb85-87" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Est&quot;</span>, <span class="st">&quot;True&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>),</span>
-<span id="cb85-88"><a href="PopModels.html#cb85-88" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">19</span>,<span class="dv">17</span>), <span class="at">text.col =</span> <span class="st">&quot;black&quot;</span>,  <span class="at">horiz =</span> T , <span class="at">inset =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.2</span>))</span>
-<span id="cb85-89"><a href="PopModels.html#cb85-89" tabindex="-1"></a><span class="fu">par</span>(<span class="at">xpd=</span><span class="cn">FALSE</span>)</span>
-<span id="cb85-90"><a href="PopModels.html#cb85-90" tabindex="-1"></a></span>
-<span id="cb85-91"><a href="PopModels.html#cb85-91" tabindex="-1"></a>MR_N.hat <span class="ot">&lt;-</span> (n1<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(n2<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(m2<span class="sc">+</span><span class="dv">1</span>) <span class="sc">-</span><span class="dv">1</span> <span class="co"># Chapman modification in case m2=0</span></span>
-<span id="cb85-92"><a href="PopModels.html#cb85-92" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>Y), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est, </span>
-<span id="cb85-93"><a href="PopModels.html#cb85-93" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Pop size (includes new recruits)&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb85-94"><a href="PopModels.html#cb85-94" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, </span>
-<span id="cb85-95"><a href="PopModels.html#cb85-95" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(N.a,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est,MR_N.hat),</span>
-<span id="cb85-96"><a href="PopModels.html#cb85-96" tabindex="-1"></a>            <span class="fu">max</span>(N.a,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est,MR_N.hat)))</span>
-<span id="cb85-97"><a href="PopModels.html#cb85-97" tabindex="-1"></a><span class="fu">points</span>(N.a, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>) <span class="co"># True adult pop size</span></span>
-<span id="cb85-98"><a href="PopModels.html#cb85-98" tabindex="-1"></a><span class="fu">points</span>(MR_N.hat, <span class="at">col=</span><span class="st">&#39;red&#39;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>) <span class="co"># Capture-recapture point estimates</span></span></code></pre></div>
-<p>Results for the default case show that total population size and annual survival tend to be reliably estimated (Figure <a href="PopModels.html#fig:TwoAgePlot">10.1</a>). Annual recruitment tends to be less well estimated. There is no direct information on recruitment, so the model makes indirect inferences from the total year-y abundance (new age-1 recruits plus 2+ survivors) and telemetry information on survival.</p>
+<p>A hierarchical structure is used to estimate annual recruitment. The overall ln-scale mean and precision are estimated using uninformative priors. Annual recruitment estimates for years 2-Y are drawn from a lognormal distribution using the shared ln-scale mean and precision. (Recruitment in year 1 is used in the simulation but is not estimated because the population projection equation is only used in years 2-Y.) A uniform 0-1 prior is used for annual survival.</p>
+<p>Population size in year 1 is Poisson distributed, using the capture-recapture point estimate as the expected value. Population size in subsequent years is also drawn from a Poisson distribution, using the population projection equation as the expected value. Both likelihoods use a binomial distribution (Section <a href="Distributions.html#BinomialDist">3.1.2</a>). The probability for the capture-recapture data is the estimated fraction of the population that is marked. The probability for the telemetry data is the estimated annual survival rate.</p>
+<p>Following the JAGS section is some R code to compare the true values with model estimates. The <code>par(xpd=TRUE)</code> turns off clipping so that a legend can be added outside the plot boundary (using inset to set the relative coordinates of the legend). For the third plot, the Chapman modification of the capture-recapture estimator <span class="citation">(<a href="#ref-ricker1975">Ricker 1975</a>)</span> was used to avoid getting a plotting error due to an infinite point estimate in cases with <span class="math inline">\(m_2=0\)</span>.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="PopModels.html#cb84-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb84-2"><a href="PopModels.html#cb84-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb84-3"><a href="PopModels.html#cb84-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb84-4"><a href="PopModels.html#cb84-4" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="PopModels.html#cb84-5" tabindex="-1"></a><span class="co"># JAGS code ##################################</span></span>
+<span id="cb84-6"><a href="PopModels.html#cb84-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;IPM.txt&quot;</span>)</span>
+<span id="cb84-7"><a href="PopModels.html#cb84-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb84-8"><a href="PopModels.html#cb84-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb84-9"><a href="PopModels.html#cb84-9" tabindex="-1"></a></span>
+<span id="cb84-10"><a href="PopModels.html#cb84-10" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb84-11"><a href="PopModels.html#cb84-11" tabindex="-1"></a></span>
+<span id="cb84-12"><a href="PopModels.html#cb84-12" tabindex="-1"></a><span class="st"> Mean_lnR.est ~ dnorm(0, 1E-6)  # Recruitment uses ln-scale parameter</span></span>
+<span id="cb84-13"><a href="PopModels.html#cb84-13" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
+<span id="cb84-14"><a href="PopModels.html#cb84-14" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
+<span id="cb84-15"><a href="PopModels.html#cb84-15" tabindex="-1"></a><span class="st"> for(y in 1:(Y-1)) {</span></span>
+<span id="cb84-16"><a href="PopModels.html#cb84-16" tabindex="-1"></a><span class="st">    N.r.est[y] ~ dlnorm(Mean_lnR.est,tau)</span></span>
+<span id="cb84-17"><a href="PopModels.html#cb84-17" tabindex="-1"></a><span class="st">     # Hierarchical structure for recruitment</span></span>
+<span id="cb84-18"><a href="PopModels.html#cb84-18" tabindex="-1"></a><span class="st">  } #y</span></span>
+<span id="cb84-19"><a href="PopModels.html#cb84-19" tabindex="-1"></a></span>
+<span id="cb84-20"><a href="PopModels.html#cb84-20" tabindex="-1"></a><span class="st">for (y in 1:(Y-1)){</span></span>
+<span id="cb84-21"><a href="PopModels.html#cb84-21" tabindex="-1"></a><span class="st">  AnnualS.est[y] ~ dunif(0,1)  # Uninformative prior, adult survival</span></span>
+<span id="cb84-22"><a href="PopModels.html#cb84-22" tabindex="-1"></a><span class="st">}#y</span></span>
+<span id="cb84-23"><a href="PopModels.html#cb84-23" tabindex="-1"></a></span>
+<span id="cb84-24"><a href="PopModels.html#cb84-24" tabindex="-1"></a><span class="st"># Population projection</span></span>
+<span id="cb84-25"><a href="PopModels.html#cb84-25" tabindex="-1"></a><span class="st"> N.a.est[1] ~ dpois((n1[1]+1)*(n2[1]+1)/(m2[1]+1)-1) </span></span>
+<span id="cb84-26"><a href="PopModels.html#cb84-26" tabindex="-1"></a><span class="st">  # Year-1 total, Chapman mod in case m2=0</span></span>
+<span id="cb84-27"><a href="PopModels.html#cb84-27" tabindex="-1"></a><span class="st">  # Needed to start model because no prior year information</span></span>
+<span id="cb84-28"><a href="PopModels.html#cb84-28" tabindex="-1"></a><span class="st"> for(y in 2:Y) {</span></span>
+<span id="cb84-29"><a href="PopModels.html#cb84-29" tabindex="-1"></a><span class="st">     N.a.est[y] ~ dpois(N.r.est[y-1] + (AnnualS.est[y-1]*N.a.est[y-1]))</span></span>
+<span id="cb84-30"><a href="PopModels.html#cb84-30" tabindex="-1"></a><span class="st">     # Index shifted by one year for recruitment estimates</span></span>
+<span id="cb84-31"><a href="PopModels.html#cb84-31" tabindex="-1"></a><span class="st">     } #y</span></span>
+<span id="cb84-32"><a href="PopModels.html#cb84-32" tabindex="-1"></a></span>
+<span id="cb84-33"><a href="PopModels.html#cb84-33" tabindex="-1"></a><span class="st">#Likelihoods</span></span>
+<span id="cb84-34"><a href="PopModels.html#cb84-34" tabindex="-1"></a><span class="st"># Capture-recapture estimate for total pop size at start of year</span></span>
+<span id="cb84-35"><a href="PopModels.html#cb84-35" tabindex="-1"></a><span class="st">  for (y in 2:Y){  # m2[1] used above to get starting pop size</span></span>
+<span id="cb84-36"><a href="PopModels.html#cb84-36" tabindex="-1"></a><span class="st">    m2[y] ~ dbin((n1[y]/N.a.est[y]), n2[y])</span></span>
+<span id="cb84-37"><a href="PopModels.html#cb84-37" tabindex="-1"></a><span class="st">    } #y</span></span>
+<span id="cb84-38"><a href="PopModels.html#cb84-38" tabindex="-1"></a></span>
+<span id="cb84-39"><a href="PopModels.html#cb84-39" tabindex="-1"></a><span class="st"># Telemetry information on survival rate</span></span>
+<span id="cb84-40"><a href="PopModels.html#cb84-40" tabindex="-1"></a><span class="st">for (y in 1:(Y-1)){</span></span>
+<span id="cb84-41"><a href="PopModels.html#cb84-41" tabindex="-1"></a><span class="st">  for (t in ((y+1):Y)){</span></span>
+<span id="cb84-42"><a href="PopModels.html#cb84-42" tabindex="-1"></a><span class="st">    TelTags[y,t] ~ dbin(AnnualS.est[t-1],TelTags[y,(t-1)])</span></span>
+<span id="cb84-43"><a href="PopModels.html#cb84-43" tabindex="-1"></a><span class="st">  }} # y, t</span></span>
+<span id="cb84-44"><a href="PopModels.html#cb84-44" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb84-45"><a href="PopModels.html#cb84-45" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb84-46"><a href="PopModels.html#cb84-46" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb84-47"><a href="PopModels.html#cb84-47" tabindex="-1"></a></span>
+<span id="cb84-48"><a href="PopModels.html#cb84-48" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb84-49"><a href="PopModels.html#cb84-49" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>, <span class="st">&quot;TelTags&quot;</span>)</span>
+<span id="cb84-50"><a href="PopModels.html#cb84-50" tabindex="-1"></a></span>
+<span id="cb84-51"><a href="PopModels.html#cb84-51" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb84-52"><a href="PopModels.html#cb84-52" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">N.r.est=</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">meanlog=</span><span class="dv">10</span>,</span>
+<span id="cb84-53"><a href="PopModels.html#cb84-53" tabindex="-1"></a>                                               <span class="at">sdlog=</span><span class="dv">1</span>),</span>
+<span id="cb84-54"><a href="PopModels.html#cb84-54" tabindex="-1"></a>                               <span class="at">AnnualS.est=</span><span class="fu">runif</span>(<span class="at">n=</span>(Y<span class="dv">-1</span>), <span class="at">min=</span><span class="dv">0</span>, </span>
+<span id="cb84-55"><a href="PopModels.html#cb84-55" tabindex="-1"></a>                                                 <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb84-56"><a href="PopModels.html#cb84-56" tabindex="-1"></a></span>
+<span id="cb84-57"><a href="PopModels.html#cb84-57" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;IPM.txt&#39;</span></span>
+<span id="cb84-58"><a href="PopModels.html#cb84-58" tabindex="-1"></a></span>
+<span id="cb84-59"><a href="PopModels.html#cb84-59" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb84-60"><a href="PopModels.html#cb84-60" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AnnualS.est&quot;</span>, <span class="st">&quot;N.a.est&quot;</span>, <span class="st">&quot;N.r.est&quot;</span>, <span class="st">&quot;SD_rec.est&quot;</span>)</span>
+<span id="cb84-61"><a href="PopModels.html#cb84-61" tabindex="-1"></a></span>
+<span id="cb84-62"><a href="PopModels.html#cb84-62" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb84-63"><a href="PopModels.html#cb84-63" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb84-64"><a href="PopModels.html#cb84-64" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">40000</span>,</span>
+<span id="cb84-65"><a href="PopModels.html#cb84-65" tabindex="-1"></a>                model.file)</span>
+<span id="cb84-66"><a href="PopModels.html#cb84-66" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb84-67"><a href="PopModels.html#cb84-67" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb84-68"><a href="PopModels.html#cb84-68" tabindex="-1"></a></span>
+<span id="cb84-69"><a href="PopModels.html#cb84-69" tabindex="-1"></a><span class="co"># Code for plots comparing true values and model estimates</span></span>
+<span id="cb84-70"><a href="PopModels.html#cb84-70" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb84-71"><a href="PopModels.html#cb84-71" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)), </span>
+<span id="cb84-72"><a href="PopModels.html#cb84-72" tabindex="-1"></a>     jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est, <span class="at">ylab=</span><span class="st">&quot;Annual Survival&quot;</span>, </span>
+<span id="cb84-73"><a href="PopModels.html#cb84-73" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, </span>
+<span id="cb84-74"><a href="PopModels.html#cb84-74" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">range</span>(AnnualS,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualS.est))</span>
+<span id="cb84-75"><a href="PopModels.html#cb84-75" tabindex="-1"></a>     <span class="fu">points</span>(AnnualS, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>)</span>
+<span id="cb84-76"><a href="PopModels.html#cb84-76" tabindex="-1"></a>     </span>
+<span id="cb84-77"><a href="PopModels.html#cb84-77" tabindex="-1"></a>     <span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)), </span>
+<span id="cb84-78"><a href="PopModels.html#cb84-78" tabindex="-1"></a>          jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.r.est, </span>
+<span id="cb84-79"><a href="PopModels.html#cb84-79" tabindex="-1"></a>          <span class="at">ylab=</span><span class="st">&quot;Annual recruitment (years 2-Y)&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb84-80"><a href="PopModels.html#cb84-80" tabindex="-1"></a>          <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, </span>
+<span id="cb84-81"><a href="PopModels.html#cb84-81" tabindex="-1"></a>          <span class="at">ylim=</span><span class="fu">range</span>(N.r,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.r.est))</span>
+<span id="cb84-82"><a href="PopModels.html#cb84-82" tabindex="-1"></a>     <span class="fu">points</span>(N.r[<span class="dv">2</span><span class="sc">:</span>Y], <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>)</span>
+<span id="cb84-83"><a href="PopModels.html#cb84-83" tabindex="-1"></a>     <span class="fu">par</span>(<span class="at">xpd=</span><span class="cn">TRUE</span>) <span class="co"># Turn off clipping to put legend above plot</span></span>
+<span id="cb84-84"><a href="PopModels.html#cb84-84" tabindex="-1"></a>     <span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>,</span>
+<span id="cb84-85"><a href="PopModels.html#cb84-85" tabindex="-1"></a>            <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Est&quot;</span>, <span class="st">&quot;True&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb84-86"><a href="PopModels.html#cb84-86" tabindex="-1"></a>            <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">19</span>,<span class="dv">17</span>), <span class="at">text.col =</span> <span class="st">&quot;black&quot;</span>,  <span class="at">horiz =</span> T , </span>
+<span id="cb84-87"><a href="PopModels.html#cb84-87" tabindex="-1"></a>            <span class="at">inset =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.15</span>))</span>
+<span id="cb84-88"><a href="PopModels.html#cb84-88" tabindex="-1"></a>     <span class="fu">par</span>(<span class="at">xpd=</span><span class="cn">FALSE</span>)</span>
+<span id="cb84-89"><a href="PopModels.html#cb84-89" tabindex="-1"></a>     </span>
+<span id="cb84-90"><a href="PopModels.html#cb84-90" tabindex="-1"></a>     MR_N.hat <span class="ot">&lt;-</span> (n1<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(n2<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span>(m2<span class="sc">+</span><span class="dv">1</span>) <span class="sc">-</span><span class="dv">1</span> <span class="co"># Chapman modification in case m2=0</span></span>
+<span id="cb84-91"><a href="PopModels.html#cb84-91" tabindex="-1"></a>     <span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>Y), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est, </span>
+<span id="cb84-92"><a href="PopModels.html#cb84-92" tabindex="-1"></a>          <span class="at">ylab=</span><span class="st">&quot;Pop size (includes new recruits)&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb84-93"><a href="PopModels.html#cb84-93" tabindex="-1"></a>          <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, </span>
+<span id="cb84-94"><a href="PopModels.html#cb84-94" tabindex="-1"></a>          <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(N.a,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est,MR_N.hat),</span>
+<span id="cb84-95"><a href="PopModels.html#cb84-95" tabindex="-1"></a>                 <span class="fu">max</span>(N.a,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.a.est,MR_N.hat)))</span>
+<span id="cb84-96"><a href="PopModels.html#cb84-96" tabindex="-1"></a>     <span class="fu">points</span>(N.a, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>) <span class="co"># True adult pop size</span></span>
+<span id="cb84-97"><a href="PopModels.html#cb84-97" tabindex="-1"></a>     <span class="fu">points</span>(MR_N.hat, <span class="at">col=</span><span class="st">&#39;red&#39;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>) <span class="co"># Point estimates</span></span></code></pre></div>
+<p>Results for the default case show that total population size and annual survival tend to be reliably estimated (Figure <a href="PopModels.html#fig:TwoAgePlot">10.1</a>). Especially at lower capture probabilities, the capture-recapture point estimates (red line) tend to be more variable than the population estimates obtained from the integrated model (black line). Annual recruitment tends to be less well estimated than total population size or survival rate. There is no direct information on recruitment, so the model makes indirect inferences from total abundance (new age-1 recruits plus 2+ survivors) and telemetry information on survival rate.</p>
 <div class="figure"><span style="display:block;" id="fig:TwoAgePlot"></span>
 <img src="bookdown_files/figure-html/TwoAgePlot-1.png" alt="Estimates of annual survival (left), recruitment (center), and total population size (right) from a two-age integrated population model fitted to capture-recapture and telemetry data. True values are shown in blue; capture-recapture point estimates (right) are in red." width="90%" />
 <p class="caption">
@@ -435,217 +438,222 @@ FIGURE 10.1: Estimates of annual survival (left), recruitment (center), and tota
 </div>
 <div id="CAGEAN" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> Full age-structured model<a href="PopModels.html#CAGEAN" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Another type of IPM is a fish stock assessment that typically uses catch by age and year to estimate population size and fishing mortality rate <span class="citation">(<a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>. Fish stock assessment models share many characteristics with IPMs developed for terrestrial species, but typically have a much greater spatial scale and are more focused on harvst regulation <span class="citation">(<a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>. These models serve as the foundation for much of marine fishery management, as well as in freshwater fisheries where sufficient data are available <span class="citation">(e.g., <a href="#ref-fielder.bence_2014">Fielder and Bence 2014</a>)</span>. Catch data are a valuable source of information because they reflect absolute abundance. Summing the catches from a cohort (year class) across years (along a diagonal in the catch-at-age matrix) provides a conservative estimate of the initial abundance of that cohort. Early versions of catch-at-age analysis (virtual population analysis; cohort analysis) were simple upward adjustments of the summed catches in order to account for natural mortality <span class="citation">(<a href="#ref-ricker1975">Ricker 1975</a>)</span>. Current catch-at-age analyses have a statistical foundation using either maximum-likelihood or Bayesian estimation <span class="citation">(<a href="#ref-maunder.punt_2013">Maunder and Punt 2013</a>)</span>. Catch data alone are insufficient to obtain reliable results, so current assessments integrate fishery catch data with axuiliary information from the fishery (e.g., annual level of fishing effort) or surveys <span class="citation">(<a href="#ref-deriso.etal_1985">Deriso, Quinn II, and Neal 1985</a>; <a href="#ref-maunder.punt_2013">Maunder and Punt 2013</a>; <a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>. Most current stock assessments are done using flexible and powerful off-the-shelf software such as AD Model Builder or Stock Synthesis <span class="citation">(<a href="#ref-fournier.etal_2012">Fournier et al. 2012</a>; <a href="#ref-methot.wetzell_2013">Methot and Wetzell 2013</a>)</span>.</p>
-<p>Here we use JAGS to fit a relatively simple age-structured stock assessment model. We assume a single fishery with gear selectivity that is constant over time. Our auxiliary data are survey catches by age and year, with a survey selectivity pattern that is also constant over time. The default selectivity pattern for the survey provides information mostly on younger ages whereas the fishery primarily exploits older fish. Thus a combined analysis is able to make better inferences than either data set alone. Essentially the goal of the analysis is to find the population estimates that are most consistent with the observed catches and auxiliary data.</p>
-<p>The simulation code builds on that used in the cohort-specific catch-curve analysis (<a href="Survival.html#Cohort">6.1.2</a>) and recruitment (<a href="Recruit.html#Recruit">9</a>) sections. The number of ages is arbitrary but should be sufficient to characterize the selectivity patterns for the fishery and survey. Annual fishing mortality varies randomly between user-set lower and upper bounds. Natural mortality can be difficult to estimate internally <span class="citation">(<a href="#ref-quinn.deriso_1999">Quinn and Deriso 1999</a>; <a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>, so here it is fixed in the simulation and the fitted model <span class="citation">(e.g., using external information such as longevity: <a href="#ref-lorenzen1996">Lorenzen 1996</a>; <a href="#ref-then.etal_2015">Then et al. 2015</a>)</span>.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="PopModels.html#cb86-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
-<span id="cb86-2"><a href="PopModels.html#cb86-2" tabindex="-1"></a></span>
-<span id="cb86-3"><a href="PopModels.html#cb86-3" tabindex="-1"></a><span class="co"># Simulation to create survey and fishery catch-at-age matrices</span></span>
+<p>Another type of IPM is a fish stock assessment that typically uses catch by age and year to estimate population size and fishing mortality rate <span class="citation">(<a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>. Fish stock assessment models share many characteristics with IPMs developed for terrestrial species, but typically have a much greater spatial scale and are more focused on harvest regulation <span class="citation">(<a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>. These models serve as the foundation for much of marine fishery management, as well as in freshwater fisheries where sufficient data are available <span class="citation">(e.g., <a href="#ref-fielder.bence_2014">Fielder and Bence 2014</a>)</span>. Catch data are a valuable source of information because they reflect absolute abundance. Summing the catches from a cohort (year class) across years (along a diagonal in the catch-at-age matrix) provides a conservative estimate of the initial abundance of that cohort. Early versions of catch-at-age analysis (virtual population analysis; cohort analysis) were simple upward adjustments of the summed catches in order to account for natural mortality <span class="citation">(<a href="#ref-ricker1975">Ricker 1975</a>)</span>. Current catch-at-age analyses have a statistical foundation using either maximum-likelihood or Bayesian estimation <span class="citation">(<a href="#ref-maunder.punt_2013">Maunder and Punt 2013</a>)</span>. Catch data alone are insufficient to obtain reliable results, so current assessments integrate fishery catch data with axuiliary information from the fishery (e.g., annual level of fishing effort) or surveys <span class="citation">(<a href="#ref-deriso.etal_1985">Deriso, Quinn II, and Neal 1985</a>; <a href="#ref-maunder.punt_2013">Maunder and Punt 2013</a>; <a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>. Our example will use JAGS to fit a relatively simple age-structured stock assessment model, but we note that most current assessments are done using flexible and powerful off-the-shelf software such as AD Model Builder or Stock Synthesis <span class="citation">(<a href="#ref-fournier.etal_2012">Fournier et al. 2012</a>; <a href="#ref-methot.wetzell_2013">Methot and Wetzell 2013</a>)</span>.</p>
+<p>We assume a single fishery with gear selectivity that is constant over time. Our auxiliary data are survey catches by age and year, with a survey selectivity pattern that is also constant over time. The default selectivity pattern for the survey provides information mostly on younger ages whereas the fishery primarily exploits older fish. Thus a combined analysis is able to make better inferences than either data set alone. Essentially the goal of the analysis is to find the population estimates that are most consistent with the observed catches and auxiliary data.</p>
+<p>The simulation code builds on that used in the cohort-specific catch-curve analysis (<a href="Survival.html#Cohort">6.1.2</a>) and recruitment (<a href="Recruit.html#Recruit">9</a>) sections. The number of ages is arbitrary but should be sufficient to characterize the selectivity patterns for the fishery and survey. Annual instantaneous fishing mortality rate varies randomly between user-set lower and upper bounds. The instantaneous natural mortality rate can be difficult to estimate internally <span class="citation">(<a href="#ref-quinn.deriso_1999">Quinn and Deriso 1999</a>; <a href="#ref-schaub.etal_2024">Schaub et al. 2024</a>)</span>, so here it is fixed in the simulation and the fitted model <span class="citation">(e.g., using external information such as longevity: <a href="#ref-lorenzen1996">Lorenzen 1996</a>; <a href="#ref-then.etal_2015">Then et al. 2015</a>)</span>.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="PopModels.html#cb85-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb85-2"><a href="PopModels.html#cb85-2" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="PopModels.html#cb85-3" tabindex="-1"></a><span class="co"># Simulation to create survey and fishery catch-at-age matrices</span></span>
+<span id="cb85-4"><a href="PopModels.html#cb85-4" tabindex="-1"></a></span>
+<span id="cb85-5"><a href="PopModels.html#cb85-5" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="co"># Arbitrary number of ages and years (but enough to fit model)</span></span>
+<span id="cb85-6"><a href="PopModels.html#cb85-6" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb85-7"><a href="PopModels.html#cb85-7" tabindex="-1"></a></span>
+<span id="cb85-8"><a href="PopModels.html#cb85-8" tabindex="-1"></a>LowF <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Arbitrary lower bound</span></span>
+<span id="cb85-9"><a href="PopModels.html#cb85-9" tabindex="-1"></a>HighF <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Arbitrary upper bound</span></span>
+<span id="cb85-10"><a href="PopModels.html#cb85-10" tabindex="-1"></a></span>
+<span id="cb85-11"><a href="PopModels.html#cb85-11" tabindex="-1"></a>AnnualF <span class="ot">&lt;-</span> <span class="fu">runif</span>(Y, <span class="at">min=</span>LowF, <span class="at">max=</span>HighF)</span>
+<span id="cb85-12"><a href="PopModels.html#cb85-12" tabindex="-1"></a>AnnualM <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Fixed</span></span>
+<span id="cb85-13"><a href="PopModels.html#cb85-13" tabindex="-1"></a></span>
+<span id="cb85-14"><a href="PopModels.html#cb85-14" tabindex="-1"></a><span class="co"># F by age, using separable model</span></span>
+<span id="cb85-15"><a href="PopModels.html#cb85-15" tabindex="-1"></a>Fishery_k <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># Slope for logistic function</span></span>
+<span id="cb85-16"><a href="PopModels.html#cb85-16" tabindex="-1"></a>Fishery_a_50 <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># Age at 0.5 selectivity</span></span>
+<span id="cb85-17"><a href="PopModels.html#cb85-17" tabindex="-1"></a>SelF <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>A) <span class="co"># Fishery selectivity pattern</span></span>
+<span id="cb85-18"><a href="PopModels.html#cb85-18" tabindex="-1"></a>F_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Matrix for F by age and year</span></span>
+<span id="cb85-19"><a href="PopModels.html#cb85-19" tabindex="-1"></a>Z_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Matrix for Z by age and year</span></span>
+<span id="cb85-20"><a href="PopModels.html#cb85-20" tabindex="-1"></a>Exp_C_f <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Fishery catch-at-age matrix</span></span>
+<span id="cb85-21"><a href="PopModels.html#cb85-21" tabindex="-1"></a>C_f <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Obs fishery catch-at-age matrix</span></span>
+<span id="cb85-22"><a href="PopModels.html#cb85-22" tabindex="-1"></a>Exp_C_s <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Survey catch-at-age matrix</span></span>
+<span id="cb85-23"><a href="PopModels.html#cb85-23" tabindex="-1"></a>C_s <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Obs survey catch-at-age matrix</span></span>
+<span id="cb85-24"><a href="PopModels.html#cb85-24" tabindex="-1"></a>S_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for survival rate</span></span>
+<span id="cb85-25"><a href="PopModels.html#cb85-25" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
+<span id="cb85-26"><a href="PopModels.html#cb85-26" tabindex="-1"></a>  SelF[a] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>Fishery_k<span class="sc">*</span>(a<span class="sc">-</span>Fishery_a_50)))</span>
+<span id="cb85-27"><a href="PopModels.html#cb85-27" tabindex="-1"></a>} <span class="co">#a</span></span>
+<span id="cb85-28"><a href="PopModels.html#cb85-28" tabindex="-1"></a><span class="co">#plot(SelF)</span></span>
+<span id="cb85-29"><a href="PopModels.html#cb85-29" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y)) {</span>
+<span id="cb85-30"><a href="PopModels.html#cb85-30" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
+<span id="cb85-31"><a href="PopModels.html#cb85-31" tabindex="-1"></a>    F_a[a,y] <span class="ot">&lt;-</span> AnnualF[y] <span class="sc">*</span> SelF[a]</span>
+<span id="cb85-32"><a href="PopModels.html#cb85-32" tabindex="-1"></a>  } <span class="co">#a</span></span>
+<span id="cb85-33"><a href="PopModels.html#cb85-33" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb85-34"><a href="PopModels.html#cb85-34" tabindex="-1"></a>Z_a <span class="ot">&lt;-</span> F_a <span class="sc">+</span> AnnualM</span>
+<span id="cb85-35"><a href="PopModels.html#cb85-35" tabindex="-1"></a>S_a <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>Z_a)</span>
+<span id="cb85-36"><a href="PopModels.html#cb85-36" tabindex="-1"></a></span>
+<span id="cb85-37"><a href="PopModels.html#cb85-37" tabindex="-1"></a>MeanR <span class="ot">&lt;-</span> <span class="fl">1E5</span> <span class="co"># Arbitrary mean initial cohort size</span></span>
+<span id="cb85-38"><a href="PopModels.html#cb85-38" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A, Y))</span>
+<span id="cb85-39"><a href="PopModels.html#cb85-39" tabindex="-1"></a>SD_rec <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Low level of lognormal error in recruitment</span></span>
+<span id="cb85-40"><a href="PopModels.html#cb85-40" tabindex="-1"></a>N[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">trunc</span>(MeanR <span class="sc">*</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="dv">0</span>, SD_rec)) </span>
+<span id="cb85-41"><a href="PopModels.html#cb85-41" tabindex="-1"></a><span class="co"># Starting size of each cohort at first age</span></span>
+<span id="cb85-42"><a href="PopModels.html#cb85-42" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>A){</span>
+<span id="cb85-43"><a href="PopModels.html#cb85-43" tabindex="-1"></a>  N[a,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">trunc</span>(<span class="fu">prod</span>(S_a[<span class="dv">1</span><span class="sc">:</span>(a<span class="dv">-1</span>),<span class="dv">1</span>])<span class="sc">*</span>MeanR <span class="sc">*</span> <span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="dv">0</span>, SD_rec))</span>
+<span id="cb85-44"><a href="PopModels.html#cb85-44" tabindex="-1"></a>  <span class="co"># Use year-1 S_a to generate year-1 N</span></span>
+<span id="cb85-45"><a href="PopModels.html#cb85-45" tabindex="-1"></a>  <span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Y){</span>
+<span id="cb85-46"><a href="PopModels.html#cb85-46" tabindex="-1"></a>    N[a,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, N[(a<span class="dv">-1</span>), (y<span class="dv">-1</span>)], S_a[(a<span class="dv">-1</span>),(y<span class="dv">-1</span>)])</span>
+<span id="cb85-47"><a href="PopModels.html#cb85-47" tabindex="-1"></a>  } <span class="co">#y</span></span>
+<span id="cb85-48"><a href="PopModels.html#cb85-48" tabindex="-1"></a>} <span class="co">#a</span></span>
+<span id="cb85-49"><a href="PopModels.html#cb85-49" tabindex="-1"></a></span>
+<span id="cb85-50"><a href="PopModels.html#cb85-50" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)){ <span class="co"># Deaths due to fishing (binomial random variate)</span></span>
+<span id="cb85-51"><a href="PopModels.html#cb85-51" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(A<span class="dv">-1</span>)){</span>
+<span id="cb85-52"><a href="PopModels.html#cb85-52" tabindex="-1"></a>    Exp_C_f[a,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, N[a,y]<span class="sc">-</span>N[(a<span class="sc">+</span><span class="dv">1</span>),(y<span class="sc">+</span><span class="dv">1</span>)],(F_a[a,y]<span class="sc">/</span>Z_a[a,y]))</span>
+<span id="cb85-53"><a href="PopModels.html#cb85-53" tabindex="-1"></a>  } <span class="co">#y</span></span>
+<span id="cb85-54"><a href="PopModels.html#cb85-54" tabindex="-1"></a>} <span class="co">#a</span></span>
+<span id="cb85-55"><a href="PopModels.html#cb85-55" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)){ <span class="co"># Random catch last age</span></span>
+<span id="cb85-56"><a href="PopModels.html#cb85-56" tabindex="-1"></a>  Exp_C_f[A,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>,N[A,y],F_a[A,y]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>Z_a[A,y]))<span class="sc">/</span>Z_a[A,y])</span>
+<span id="cb85-57"><a href="PopModels.html#cb85-57" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb85-58"><a href="PopModels.html#cb85-58" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){ <span class="co"># Random catch last year</span></span>
+<span id="cb85-59"><a href="PopModels.html#cb85-59" tabindex="-1"></a>  Exp_C_f[a,Y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>,N[a,Y],F_a[a,Y]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>Z_a[a,Y]))<span class="sc">/</span>Z_a[a,Y])</span>
+<span id="cb85-60"><a href="PopModels.html#cb85-60" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb85-61"><a href="PopModels.html#cb85-61" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y){</span>
+<span id="cb85-62"><a href="PopModels.html#cb85-62" tabindex="-1"></a>  C_f[,y] <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">rmultinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span><span class="fu">sum</span>(Exp_C_f[,y]), </span>
+<span id="cb85-63"><a href="PopModels.html#cb85-63" tabindex="-1"></a>                                   <span class="at">prob=</span>Exp_C_f[,y])))</span>
+<span id="cb85-64"><a href="PopModels.html#cb85-64" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb85-65"><a href="PopModels.html#cb85-65" tabindex="-1"></a></span>
+<span id="cb85-66"><a href="PopModels.html#cb85-66" tabindex="-1"></a><span class="co"># Generate survey catch-at-age matrix</span></span>
+<span id="cb85-67"><a href="PopModels.html#cb85-67" tabindex="-1"></a>Survey_q <span class="ot">&lt;-</span> <span class="fl">1E-3</span> <span class="co"># Catchability coefficient (Adjust relative to MeanR)</span></span>
+<span id="cb85-68"><a href="PopModels.html#cb85-68" tabindex="-1"></a>Survey_k <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="co"># Slope for logistic function</span></span>
+<span id="cb85-69"><a href="PopModels.html#cb85-69" tabindex="-1"></a>Survey_a_50 <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># Age at 0.5 selectivity</span></span>
+<span id="cb85-70"><a href="PopModels.html#cb85-70" tabindex="-1"></a>SelS <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>A) <span class="co"># Survey selectivity pattern</span></span>
+<span id="cb85-71"><a href="PopModels.html#cb85-71" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
+<span id="cb85-72"><a href="PopModels.html#cb85-72" tabindex="-1"></a>  SelS[a] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>Survey_k<span class="sc">*</span>(a<span class="sc">-</span>Survey_a_50)))</span>
+<span id="cb85-73"><a href="PopModels.html#cb85-73" tabindex="-1"></a>} <span class="co">#a</span></span>
+<span id="cb85-74"><a href="PopModels.html#cb85-74" tabindex="-1"></a><span class="co">#plot(SelS)</span></span>
+<span id="cb85-75"><a href="PopModels.html#cb85-75" tabindex="-1"></a></span>
+<span id="cb85-76"><a href="PopModels.html#cb85-76" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y) {</span>
+<span id="cb85-77"><a href="PopModels.html#cb85-77" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
+<span id="cb85-78"><a href="PopModels.html#cb85-78" tabindex="-1"></a>    Exp_C_s[a,y] <span class="ot">&lt;-</span> Survey_q<span class="sc">*</span>SelS[a]<span class="sc">*</span>N[a,y]</span>
+<span id="cb85-79"><a href="PopModels.html#cb85-79" tabindex="-1"></a>  } <span class="co">#a</span></span>
+<span id="cb85-80"><a href="PopModels.html#cb85-80" tabindex="-1"></a>} <span class="co">#y </span></span>
+<span id="cb85-81"><a href="PopModels.html#cb85-81" tabindex="-1"></a></span>
+<span id="cb85-82"><a href="PopModels.html#cb85-82" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y){</span>
+<span id="cb85-83"><a href="PopModels.html#cb85-83" tabindex="-1"></a>  C_s[,y] <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">rmultinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span><span class="fu">sum</span>(Exp_C_s[,y]), </span>
+<span id="cb85-84"><a href="PopModels.html#cb85-84" tabindex="-1"></a>                                   <span class="at">prob=</span>Exp_C_s[,y])))</span>
+<span id="cb85-85"><a href="PopModels.html#cb85-85" tabindex="-1"></a>  } <span class="co">#y</span></span></code></pre></div>
+<p>Survival across ages and years varies randomly according to a binomial distribution (Section <a href="Distributions.html#BinomialDist">3.1.2</a>). Age- and year-specific catch also varies randomly according to a binomial distribution, based on the fraction of deaths due to fishing (F/Z). Sampling variation in the fishery and survey catch matrices is based on a multinomial distribution (Section <a href="Distributions.html#Multinomial">3.1.3</a>). Compare the fishery and survey catch matrices to see the effects of gear selectivity. Also examine the population matrix to see strong and weak year classes moving through the population.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="PopModels.html#cb86-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb86-2"><a href="PopModels.html#cb86-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb86-3"><a href="PopModels.html#cb86-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
 <span id="cb86-4"><a href="PopModels.html#cb86-4" tabindex="-1"></a></span>
-<span id="cb86-5"><a href="PopModels.html#cb86-5" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="co"># Arbitrary number of ages and years (but enough to fit model)</span></span>
-<span id="cb86-6"><a href="PopModels.html#cb86-6" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb86-7"><a href="PopModels.html#cb86-7" tabindex="-1"></a></span>
-<span id="cb86-8"><a href="PopModels.html#cb86-8" tabindex="-1"></a>LowF <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Arbitrary lower bound</span></span>
-<span id="cb86-9"><a href="PopModels.html#cb86-9" tabindex="-1"></a>HighF <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Arbitrary upper bound</span></span>
-<span id="cb86-10"><a href="PopModels.html#cb86-10" tabindex="-1"></a></span>
-<span id="cb86-11"><a href="PopModels.html#cb86-11" tabindex="-1"></a>AnnualF <span class="ot">&lt;-</span> <span class="fu">runif</span>(Y, <span class="at">min=</span>LowF, <span class="at">max=</span>HighF)</span>
-<span id="cb86-12"><a href="PopModels.html#cb86-12" tabindex="-1"></a>AnnualM <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># Fixed</span></span>
-<span id="cb86-13"><a href="PopModels.html#cb86-13" tabindex="-1"></a></span>
-<span id="cb86-14"><a href="PopModels.html#cb86-14" tabindex="-1"></a><span class="co"># F by age, using separable model</span></span>
-<span id="cb86-15"><a href="PopModels.html#cb86-15" tabindex="-1"></a>Fishery_k <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># Slope for logistic function</span></span>
-<span id="cb86-16"><a href="PopModels.html#cb86-16" tabindex="-1"></a>Fishery_a_50 <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># Age at 0.5 selectivity</span></span>
-<span id="cb86-17"><a href="PopModels.html#cb86-17" tabindex="-1"></a>SelF <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>A) <span class="co"># Fishery selectivity pattern</span></span>
-<span id="cb86-18"><a href="PopModels.html#cb86-18" tabindex="-1"></a>F_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Matrix for F by age and year</span></span>
-<span id="cb86-19"><a href="PopModels.html#cb86-19" tabindex="-1"></a>Z_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Matrix for Z by age and year</span></span>
-<span id="cb86-20"><a href="PopModels.html#cb86-20" tabindex="-1"></a>Exp_C_f <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Fishery catch-at-age matrix</span></span>
-<span id="cb86-21"><a href="PopModels.html#cb86-21" tabindex="-1"></a>C_f <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Obs fishery catch-at-age matrix</span></span>
-<span id="cb86-22"><a href="PopModels.html#cb86-22" tabindex="-1"></a>Exp_C_s <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Survey catch-at-age matrix</span></span>
-<span id="cb86-23"><a href="PopModels.html#cb86-23" tabindex="-1"></a>C_s <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,Y)) <span class="co"># Obs survey catch-at-age matrix</span></span>
-<span id="cb86-24"><a href="PopModels.html#cb86-24" tabindex="-1"></a>S_a <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A,(Y<span class="dv">-1</span>))) <span class="co"># Matrix for survival rate</span></span>
-<span id="cb86-25"><a href="PopModels.html#cb86-25" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
-<span id="cb86-26"><a href="PopModels.html#cb86-26" tabindex="-1"></a>  SelF[a] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>Fishery_k<span class="sc">*</span>(a<span class="sc">-</span>Fishery_a_50)))</span>
-<span id="cb86-27"><a href="PopModels.html#cb86-27" tabindex="-1"></a>} <span class="co">#a</span></span>
-<span id="cb86-28"><a href="PopModels.html#cb86-28" tabindex="-1"></a><span class="co">#plot(SelF)</span></span>
-<span id="cb86-29"><a href="PopModels.html#cb86-29" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y)) {</span>
-<span id="cb86-30"><a href="PopModels.html#cb86-30" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
-<span id="cb86-31"><a href="PopModels.html#cb86-31" tabindex="-1"></a>    F_a[a,y] <span class="ot">&lt;-</span> AnnualF[y] <span class="sc">*</span> SelF[a]</span>
-<span id="cb86-32"><a href="PopModels.html#cb86-32" tabindex="-1"></a>  } <span class="co">#a</span></span>
-<span id="cb86-33"><a href="PopModels.html#cb86-33" tabindex="-1"></a>} <span class="co">#y</span></span>
-<span id="cb86-34"><a href="PopModels.html#cb86-34" tabindex="-1"></a>Z_a <span class="ot">&lt;-</span> F_a <span class="sc">+</span> AnnualM</span>
-<span id="cb86-35"><a href="PopModels.html#cb86-35" tabindex="-1"></a>S_a <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>Z_a)</span>
-<span id="cb86-36"><a href="PopModels.html#cb86-36" tabindex="-1"></a></span>
-<span id="cb86-37"><a href="PopModels.html#cb86-37" tabindex="-1"></a>MeanR <span class="ot">&lt;-</span> <span class="fl">1E5</span> <span class="co"># Arbitrary mean initial cohort size</span></span>
-<span id="cb86-38"><a href="PopModels.html#cb86-38" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span><span class="fu">c</span>(A, Y))</span>
-<span id="cb86-39"><a href="PopModels.html#cb86-39" tabindex="-1"></a>SD_rec <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># Low level of lognormal error in recruitment</span></span>
-<span id="cb86-40"><a href="PopModels.html#cb86-40" tabindex="-1"></a>N[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">trunc</span>(MeanR <span class="sc">*</span> <span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="dv">0</span>, SD_rec)) </span>
-<span id="cb86-41"><a href="PopModels.html#cb86-41" tabindex="-1"></a><span class="co"># Starting size of each cohort at first age</span></span>
-<span id="cb86-42"><a href="PopModels.html#cb86-42" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>A){</span>
-<span id="cb86-43"><a href="PopModels.html#cb86-43" tabindex="-1"></a>  N[a,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">trunc</span>(<span class="fu">prod</span>(S_a[<span class="dv">1</span><span class="sc">:</span>(a<span class="dv">-1</span>),<span class="dv">1</span>])<span class="sc">*</span>MeanR <span class="sc">*</span> <span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="dv">0</span>, SD_rec))</span>
-<span id="cb86-44"><a href="PopModels.html#cb86-44" tabindex="-1"></a>  <span class="co"># Use year-1 S_a to generate year-1 N</span></span>
-<span id="cb86-45"><a href="PopModels.html#cb86-45" tabindex="-1"></a>  <span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Y){</span>
-<span id="cb86-46"><a href="PopModels.html#cb86-46" tabindex="-1"></a>    N[a,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, N[(a<span class="dv">-1</span>), (y<span class="dv">-1</span>)], S_a[(a<span class="dv">-1</span>),(y<span class="dv">-1</span>)])</span>
-<span id="cb86-47"><a href="PopModels.html#cb86-47" tabindex="-1"></a>  } <span class="co">#y</span></span>
-<span id="cb86-48"><a href="PopModels.html#cb86-48" tabindex="-1"></a>} <span class="co">#a</span></span>
-<span id="cb86-49"><a href="PopModels.html#cb86-49" tabindex="-1"></a></span>
-<span id="cb86-50"><a href="PopModels.html#cb86-50" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)){ <span class="co"># Deaths due to fishing (binomial random variate)</span></span>
-<span id="cb86-51"><a href="PopModels.html#cb86-51" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(A<span class="dv">-1</span>)){</span>
-<span id="cb86-52"><a href="PopModels.html#cb86-52" tabindex="-1"></a>    Exp_C_f[a,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, N[a,y]<span class="sc">-</span>N[(a<span class="sc">+</span><span class="dv">1</span>),(y<span class="sc">+</span><span class="dv">1</span>)],(F_a[a,y]<span class="sc">/</span>Z_a[a,y]))</span>
-<span id="cb86-53"><a href="PopModels.html#cb86-53" tabindex="-1"></a>  } <span class="co">#y</span></span>
-<span id="cb86-54"><a href="PopModels.html#cb86-54" tabindex="-1"></a>} <span class="co">#a</span></span>
-<span id="cb86-55"><a href="PopModels.html#cb86-55" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(Y<span class="dv">-1</span>)){ <span class="co"># Random catch last age</span></span>
-<span id="cb86-56"><a href="PopModels.html#cb86-56" tabindex="-1"></a>  Exp_C_f[A,y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>,N[A,y],F_a[A,y]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>Z_a[A,y]))<span class="sc">/</span>Z_a[A,y])</span>
-<span id="cb86-57"><a href="PopModels.html#cb86-57" tabindex="-1"></a>} <span class="co">#y</span></span>
-<span id="cb86-58"><a href="PopModels.html#cb86-58" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){ <span class="co"># Random catch last year</span></span>
-<span id="cb86-59"><a href="PopModels.html#cb86-59" tabindex="-1"></a>  Exp_C_f[a,Y] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>,N[a,Y],F_a[a,Y]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>Z_a[a,Y]))<span class="sc">/</span>Z_a[a,Y])</span>
-<span id="cb86-60"><a href="PopModels.html#cb86-60" tabindex="-1"></a>} <span class="co">#y</span></span>
-<span id="cb86-61"><a href="PopModels.html#cb86-61" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y){</span>
-<span id="cb86-62"><a href="PopModels.html#cb86-62" tabindex="-1"></a>  C_f[,y] <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">rmultinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span><span class="fu">sum</span>(Exp_C_f[,y]), </span>
-<span id="cb86-63"><a href="PopModels.html#cb86-63" tabindex="-1"></a>                                   <span class="at">prob=</span>Exp_C_f[,y])))</span>
-<span id="cb86-64"><a href="PopModels.html#cb86-64" tabindex="-1"></a>} <span class="co">#y</span></span>
-<span id="cb86-65"><a href="PopModels.html#cb86-65" tabindex="-1"></a></span>
-<span id="cb86-66"><a href="PopModels.html#cb86-66" tabindex="-1"></a><span class="co"># Generate survey catch-at-age matrix</span></span>
-<span id="cb86-67"><a href="PopModels.html#cb86-67" tabindex="-1"></a>Survey_q <span class="ot">&lt;-</span> <span class="fl">1E-3</span> <span class="co"># Catchability coefficient (Adjust relative to MeanR)</span></span>
-<span id="cb86-68"><a href="PopModels.html#cb86-68" tabindex="-1"></a>Survey_k <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="co"># Slope for logistic function</span></span>
-<span id="cb86-69"><a href="PopModels.html#cb86-69" tabindex="-1"></a>Survey_a_50 <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># Age at 0.5 selectivity</span></span>
-<span id="cb86-70"><a href="PopModels.html#cb86-70" tabindex="-1"></a>SelS <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>A) <span class="co"># Survey selectivity pattern</span></span>
-<span id="cb86-71"><a href="PopModels.html#cb86-71" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
-<span id="cb86-72"><a href="PopModels.html#cb86-72" tabindex="-1"></a>  SelS[a] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>Survey_k<span class="sc">*</span>(a<span class="sc">-</span>Survey_a_50)))</span>
-<span id="cb86-73"><a href="PopModels.html#cb86-73" tabindex="-1"></a>} <span class="co">#a</span></span>
-<span id="cb86-74"><a href="PopModels.html#cb86-74" tabindex="-1"></a><span class="co">#plot(SelS)</span></span>
+<span id="cb86-5"><a href="PopModels.html#cb86-5" tabindex="-1"></a><span class="co"># JAGS code ##################################</span></span>
+<span id="cb86-6"><a href="PopModels.html#cb86-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;CatchAge.txt&quot;</span>)</span>
+<span id="cb86-7"><a href="PopModels.html#cb86-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb86-8"><a href="PopModels.html#cb86-8" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb86-9"><a href="PopModels.html#cb86-9" tabindex="-1"></a><span class="st"># Model parameters: AnnualF[1:Y], k and a_50 for fishery and survey, </span></span>
+<span id="cb86-10"><a href="PopModels.html#cb86-10" tabindex="-1"></a><span class="st">survey q, Mean recruitment, SD, and annual deviations years 1:Y,</span></span>
+<span id="cb86-11"><a href="PopModels.html#cb86-11" tabindex="-1"></a><span class="st"># initial numbers ages 2:A for year 1</span></span>
+<span id="cb86-12"><a href="PopModels.html#cb86-12" tabindex="-1"></a></span>
+<span id="cb86-13"><a href="PopModels.html#cb86-13" tabindex="-1"></a><span class="st"> Mean_lnR.est ~ dnorm(0, 1E-6)</span></span>
+<span id="cb86-14"><a href="PopModels.html#cb86-14" tabindex="-1"></a><span class="st">   # Recruitment uses ln-scale parameter</span></span>
+<span id="cb86-15"><a href="PopModels.html#cb86-15" tabindex="-1"></a><span class="st"> MeanR.est &lt;- exp(Mean_lnR.est)</span></span>
+<span id="cb86-16"><a href="PopModels.html#cb86-16" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
+<span id="cb86-17"><a href="PopModels.html#cb86-17" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
+<span id="cb86-18"><a href="PopModels.html#cb86-18" tabindex="-1"></a><span class="st"> for(y in 1:Y) {</span></span>
+<span id="cb86-19"><a href="PopModels.html#cb86-19" tabindex="-1"></a><span class="st">    Recruit.est[y] ~ dlnorm(Mean_lnR.est,tau)</span></span>
+<span id="cb86-20"><a href="PopModels.html#cb86-20" tabindex="-1"></a><span class="st">     # Hierarchical structure for recruitment</span></span>
+<span id="cb86-21"><a href="PopModels.html#cb86-21" tabindex="-1"></a><span class="st">    N.est[1,y]&lt;-Recruit.est[y] }</span></span>
+<span id="cb86-22"><a href="PopModels.html#cb86-22" tabindex="-1"></a></span>
+<span id="cb86-23"><a href="PopModels.html#cb86-23" tabindex="-1"></a><span class="st">    for(a in 2:A){</span></span>
+<span id="cb86-24"><a href="PopModels.html#cb86-24" tabindex="-1"></a><span class="st">      Initial.est[a-1] ~ dlnorm(0, 1E-6)</span></span>
+<span id="cb86-25"><a href="PopModels.html#cb86-25" tabindex="-1"></a><span class="st">        # Offset index to run Initials vector from 1 to A-1</span></span>
+<span id="cb86-26"><a href="PopModels.html#cb86-26" tabindex="-1"></a><span class="st">    N.est[a,1]&lt;-Initial.est[a-1] }</span></span>
+<span id="cb86-27"><a href="PopModels.html#cb86-27" tabindex="-1"></a></span>
+<span id="cb86-28"><a href="PopModels.html#cb86-28" tabindex="-1"></a><span class="st">Fishery_k.est ~ dnorm(0, 1E-3)</span></span>
+<span id="cb86-29"><a href="PopModels.html#cb86-29" tabindex="-1"></a><span class="st">  # Allow for positive or negative slope for logistic function</span></span>
+<span id="cb86-30"><a href="PopModels.html#cb86-30" tabindex="-1"></a><span class="st">Fishery_a_50.est ~ dunif(0,A)</span></span>
+<span id="cb86-31"><a href="PopModels.html#cb86-31" tabindex="-1"></a><span class="st">for (a in 1:A){</span></span>
+<span id="cb86-32"><a href="PopModels.html#cb86-32" tabindex="-1"></a><span class="st">  SelF.est[a] &lt;- 1/(1+exp(-Fishery_k.est*(a-Fishery_a_50.est)))</span></span>
+<span id="cb86-33"><a href="PopModels.html#cb86-33" tabindex="-1"></a><span class="st">  }#a</span></span>
+<span id="cb86-34"><a href="PopModels.html#cb86-34" tabindex="-1"></a></span>
+<span id="cb86-35"><a href="PopModels.html#cb86-35" tabindex="-1"></a><span class="st">for (y in 1:Y){</span></span>
+<span id="cb86-36"><a href="PopModels.html#cb86-36" tabindex="-1"></a><span class="st">  AnnualF.est[y] ~ dunif(0,2) # Arbitrary range</span></span>
+<span id="cb86-37"><a href="PopModels.html#cb86-37" tabindex="-1"></a><span class="st">  for (a in 1:A){</span></span>
+<span id="cb86-38"><a href="PopModels.html#cb86-38" tabindex="-1"></a><span class="st">    F_a.est[a,y] &lt;- AnnualF.est[y] * SelF.est[a]</span></span>
+<span id="cb86-39"><a href="PopModels.html#cb86-39" tabindex="-1"></a><span class="st">      # Separable model (F[a,y]=Sel[a]*F[y])</span></span>
+<span id="cb86-40"><a href="PopModels.html#cb86-40" tabindex="-1"></a><span class="st">    Z_a.est[a,y] &lt;- F_a.est[a,y] + AnnualM</span></span>
+<span id="cb86-41"><a href="PopModels.html#cb86-41" tabindex="-1"></a><span class="st">      # Assume that M is known (fixed externally)</span></span>
+<span id="cb86-42"><a href="PopModels.html#cb86-42" tabindex="-1"></a><span class="st">  }#a</span></span>
+<span id="cb86-43"><a href="PopModels.html#cb86-43" tabindex="-1"></a><span class="st">}#y</span></span>
+<span id="cb86-44"><a href="PopModels.html#cb86-44" tabindex="-1"></a></span>
+<span id="cb86-45"><a href="PopModels.html#cb86-45" tabindex="-1"></a><span class="st">Survey_q.est ~ dgamma(1,1) # Uninformative nonnegative prior</span></span>
+<span id="cb86-46"><a href="PopModels.html#cb86-46" tabindex="-1"></a><span class="st">Survey_k.est ~ dnorm(0, 1E-3)</span></span>
+<span id="cb86-47"><a href="PopModels.html#cb86-47" tabindex="-1"></a><span class="st">  # Allow for positive or negative slope for logistic function</span></span>
+<span id="cb86-48"><a href="PopModels.html#cb86-48" tabindex="-1"></a><span class="st">Survey_a_50.est ~ dunif(0, A)</span></span>
+<span id="cb86-49"><a href="PopModels.html#cb86-49" tabindex="-1"></a><span class="st">for (a in 1:A){</span></span>
+<span id="cb86-50"><a href="PopModels.html#cb86-50" tabindex="-1"></a><span class="st">  SelS.est[a] &lt;- 1/(1+exp(-Survey_k.est*(a-Survey_a_50.est)))</span></span>
+<span id="cb86-51"><a href="PopModels.html#cb86-51" tabindex="-1"></a><span class="st">  } #a</span></span>
+<span id="cb86-52"><a href="PopModels.html#cb86-52" tabindex="-1"></a></span>
+<span id="cb86-53"><a href="PopModels.html#cb86-53" tabindex="-1"></a><span class="st">    # Population projection</span></span>
+<span id="cb86-54"><a href="PopModels.html#cb86-54" tabindex="-1"></a><span class="st">    for(a in 2:A) {</span></span>
+<span id="cb86-55"><a href="PopModels.html#cb86-55" tabindex="-1"></a><span class="st">   for(y in 2:Y) {</span></span>
+<span id="cb86-56"><a href="PopModels.html#cb86-56" tabindex="-1"></a><span class="st">     N.est[a,y] ~ dbin(exp(-AnnualM-F_a.est[(a-1),(y-1)]),</span></span>
+<span id="cb86-57"><a href="PopModels.html#cb86-57" tabindex="-1"></a><span class="st">                         trunc(N.est[a-1,y-1])) } }</span></span>
+<span id="cb86-58"><a href="PopModels.html#cb86-58" tabindex="-1"></a></span>
+<span id="cb86-59"><a href="PopModels.html#cb86-59" tabindex="-1"></a><span class="st">    #Likelihoods</span></span>
+<span id="cb86-60"><a href="PopModels.html#cb86-60" tabindex="-1"></a><span class="st">    for (a in 1:A) {</span></span>
+<span id="cb86-61"><a href="PopModels.html#cb86-61" tabindex="-1"></a><span class="st">   for (y in 1:Y) {</span></span>
+<span id="cb86-62"><a href="PopModels.html#cb86-62" tabindex="-1"></a><span class="st">     C_f.est[a,y] &lt;- N.est[a,y]*F_a.est[a,y]*(1-exp(-Z_a.est[a,y]))</span></span>
+<span id="cb86-63"><a href="PopModels.html#cb86-63" tabindex="-1"></a><span class="st">                      /Z_a.est[a,y]</span></span>
+<span id="cb86-64"><a href="PopModels.html#cb86-64" tabindex="-1"></a><span class="st">     C_f[a,y] ~ dpois(C_f.est[a,y])</span></span>
+<span id="cb86-65"><a href="PopModels.html#cb86-65" tabindex="-1"></a><span class="st">     C_s.est[a,y] &lt;- N.est[a,y]*Survey_q.est*SelS.est[a]</span></span>
+<span id="cb86-66"><a href="PopModels.html#cb86-66" tabindex="-1"></a><span class="st">     C_s[a,y] ~ dpois(C_s.est[a,y])</span></span>
+<span id="cb86-67"><a href="PopModels.html#cb86-67" tabindex="-1"></a><span class="st">   } } # y, a</span></span>
+<span id="cb86-68"><a href="PopModels.html#cb86-68" tabindex="-1"></a><span class="st">   for (y in 1:Y){</span></span>
+<span id="cb86-69"><a href="PopModels.html#cb86-69" tabindex="-1"></a><span class="st">    N.est.total[y] &lt;- sum(N.est[,y])</span></span>
+<span id="cb86-70"><a href="PopModels.html#cb86-70" tabindex="-1"></a><span class="st">   }</span></span>
+<span id="cb86-71"><a href="PopModels.html#cb86-71" tabindex="-1"></a></span>
+<span id="cb86-72"><a href="PopModels.html#cb86-72" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb86-73"><a href="PopModels.html#cb86-73" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb86-74"><a href="PopModels.html#cb86-74" tabindex="-1"></a><span class="fu">sink</span>()</span>
 <span id="cb86-75"><a href="PopModels.html#cb86-75" tabindex="-1"></a></span>
-<span id="cb86-76"><a href="PopModels.html#cb86-76" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y) {</span>
-<span id="cb86-77"><a href="PopModels.html#cb86-77" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>A){</span>
-<span id="cb86-78"><a href="PopModels.html#cb86-78" tabindex="-1"></a>    Exp_C_s[a,y] <span class="ot">&lt;-</span> Survey_q<span class="sc">*</span>SelS[a]<span class="sc">*</span>N[a,y]</span>
-<span id="cb86-79"><a href="PopModels.html#cb86-79" tabindex="-1"></a>  } <span class="co">#a</span></span>
-<span id="cb86-80"><a href="PopModels.html#cb86-80" tabindex="-1"></a>} <span class="co">#y </span></span>
-<span id="cb86-81"><a href="PopModels.html#cb86-81" tabindex="-1"></a></span>
-<span id="cb86-82"><a href="PopModels.html#cb86-82" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y){</span>
-<span id="cb86-83"><a href="PopModels.html#cb86-83" tabindex="-1"></a>  C_s[,y] <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">rmultinom</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">size=</span><span class="fu">sum</span>(Exp_C_s[,y]), </span>
-<span id="cb86-84"><a href="PopModels.html#cb86-84" tabindex="-1"></a>                                   <span class="at">prob=</span>Exp_C_s[,y])))</span>
-<span id="cb86-85"><a href="PopModels.html#cb86-85" tabindex="-1"></a>  } <span class="co">#y</span></span></code></pre></div>
-<p>Survival across ages and years varies randomly according to a binomial distribution (Section <a href="Distributions.html#BinomialDist">3.1.2</a>). Age- and year-specific catch also varies randomly according to a binomial distribution, based on the fraction of deaths due to fishing (F*A/Z). Sampling variation in the fishery and survey catch matrices is based on a multinomial distribution (Section <a href="Distributions.html#Multinomial">3.1.3</a>). Compare the fishery and survey catch matrices to see the effects of gear selectivity. Also examine the population matrix to see strong and weak year classes moving through the population.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="PopModels.html#cb87-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb87-2"><a href="PopModels.html#cb87-2" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
-<span id="cb87-3"><a href="PopModels.html#cb87-3" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb87-4"><a href="PopModels.html#cb87-4" tabindex="-1"></a></span>
-<span id="cb87-5"><a href="PopModels.html#cb87-5" tabindex="-1"></a><span class="co"># JAGS code ##################################</span></span>
-<span id="cb87-6"><a href="PopModels.html#cb87-6" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;CatchAge.txt&quot;</span>)</span>
-<span id="cb87-7"><a href="PopModels.html#cb87-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
-<span id="cb87-8"><a href="PopModels.html#cb87-8" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb87-9"><a href="PopModels.html#cb87-9" tabindex="-1"></a><span class="st"># Model parameters: AnnualF[1:Y], k and a_50 for fishery and survey, survey q,</span></span>
-<span id="cb87-10"><a href="PopModels.html#cb87-10" tabindex="-1"></a><span class="st"># Mean recruitment, SD, and annual deviations years 1:Y,</span></span>
-<span id="cb87-11"><a href="PopModels.html#cb87-11" tabindex="-1"></a><span class="st"># initial numbers ages 2:A for year 1</span></span>
-<span id="cb87-12"><a href="PopModels.html#cb87-12" tabindex="-1"></a></span>
-<span id="cb87-13"><a href="PopModels.html#cb87-13" tabindex="-1"></a><span class="st"> Mean_lnR.est ~ dnorm(0, 1E-6)</span></span>
-<span id="cb87-14"><a href="PopModels.html#cb87-14" tabindex="-1"></a><span class="st">   # Recruitment uses ln-scale parameter</span></span>
-<span id="cb87-15"><a href="PopModels.html#cb87-15" tabindex="-1"></a><span class="st"> MeanR.est &lt;- exp(Mean_lnR.est)</span></span>
-<span id="cb87-16"><a href="PopModels.html#cb87-16" tabindex="-1"></a><span class="st"> SD_rec.est ~ dunif(0, 10)</span></span>
-<span id="cb87-17"><a href="PopModels.html#cb87-17" tabindex="-1"></a><span class="st"> tau &lt;- pow(SD_rec.est, -2)</span></span>
-<span id="cb87-18"><a href="PopModels.html#cb87-18" tabindex="-1"></a><span class="st"> for(y in 1:Y) {</span></span>
-<span id="cb87-19"><a href="PopModels.html#cb87-19" tabindex="-1"></a><span class="st">    Recruit.est[y] ~ dlnorm(Mean_lnR.est,tau)</span></span>
-<span id="cb87-20"><a href="PopModels.html#cb87-20" tabindex="-1"></a><span class="st">     # Hierarchical structure for recruitment</span></span>
-<span id="cb87-21"><a href="PopModels.html#cb87-21" tabindex="-1"></a><span class="st">    N.est[1,y]&lt;-Recruit.est[y] }</span></span>
-<span id="cb87-22"><a href="PopModels.html#cb87-22" tabindex="-1"></a></span>
-<span id="cb87-23"><a href="PopModels.html#cb87-23" tabindex="-1"></a><span class="st">    for(a in 2:A){</span></span>
-<span id="cb87-24"><a href="PopModels.html#cb87-24" tabindex="-1"></a><span class="st">      Initial.est[a-1] ~ dlnorm(0, 1E-6)</span></span>
-<span id="cb87-25"><a href="PopModels.html#cb87-25" tabindex="-1"></a><span class="st">        # Offset index to run Initials vector from 1 to A-1</span></span>
-<span id="cb87-26"><a href="PopModels.html#cb87-26" tabindex="-1"></a><span class="st">    N.est[a,1]&lt;-Initial.est[a-1] }</span></span>
-<span id="cb87-27"><a href="PopModels.html#cb87-27" tabindex="-1"></a></span>
-<span id="cb87-28"><a href="PopModels.html#cb87-28" tabindex="-1"></a><span class="st">Fishery_k.est ~ dnorm(0, 1E-3)</span></span>
-<span id="cb87-29"><a href="PopModels.html#cb87-29" tabindex="-1"></a><span class="st">  # Allow for positive or negative slope for logistic function</span></span>
-<span id="cb87-30"><a href="PopModels.html#cb87-30" tabindex="-1"></a><span class="st">Fishery_a_50.est ~ dunif(0,A)</span></span>
-<span id="cb87-31"><a href="PopModels.html#cb87-31" tabindex="-1"></a><span class="st">for (a in 1:A){</span></span>
-<span id="cb87-32"><a href="PopModels.html#cb87-32" tabindex="-1"></a><span class="st">  SelF.est[a] &lt;- 1/(1+exp(-Fishery_k.est*(a-Fishery_a_50.est)))</span></span>
-<span id="cb87-33"><a href="PopModels.html#cb87-33" tabindex="-1"></a><span class="st">  }#a</span></span>
-<span id="cb87-34"><a href="PopModels.html#cb87-34" tabindex="-1"></a></span>
-<span id="cb87-35"><a href="PopModels.html#cb87-35" tabindex="-1"></a><span class="st">for (y in 1:Y){</span></span>
-<span id="cb87-36"><a href="PopModels.html#cb87-36" tabindex="-1"></a><span class="st">  AnnualF.est[y] ~ dunif(0,2) # Arbitrary range</span></span>
-<span id="cb87-37"><a href="PopModels.html#cb87-37" tabindex="-1"></a><span class="st">  for (a in 1:A){</span></span>
-<span id="cb87-38"><a href="PopModels.html#cb87-38" tabindex="-1"></a><span class="st">    F_a.est[a,y] &lt;- AnnualF.est[y] * SelF.est[a]</span></span>
-<span id="cb87-39"><a href="PopModels.html#cb87-39" tabindex="-1"></a><span class="st">      # Separable model (F[a,y]=Sel[a]*F[y])</span></span>
-<span id="cb87-40"><a href="PopModels.html#cb87-40" tabindex="-1"></a><span class="st">    Z_a.est[a,y] &lt;- F_a.est[a,y] + AnnualM</span></span>
-<span id="cb87-41"><a href="PopModels.html#cb87-41" tabindex="-1"></a><span class="st">      # Assume that M is known (fixed externally)</span></span>
-<span id="cb87-42"><a href="PopModels.html#cb87-42" tabindex="-1"></a><span class="st">  }#a</span></span>
-<span id="cb87-43"><a href="PopModels.html#cb87-43" tabindex="-1"></a><span class="st">}#y</span></span>
-<span id="cb87-44"><a href="PopModels.html#cb87-44" tabindex="-1"></a></span>
-<span id="cb87-45"><a href="PopModels.html#cb87-45" tabindex="-1"></a><span class="st">Survey_q.est ~ dgamma(1,1) # Uninformative nonnegative prior</span></span>
-<span id="cb87-46"><a href="PopModels.html#cb87-46" tabindex="-1"></a><span class="st">Survey_k.est ~ dnorm(0, 1E-3)</span></span>
-<span id="cb87-47"><a href="PopModels.html#cb87-47" tabindex="-1"></a><span class="st">  # Allow for positive or negative slope for logistic function</span></span>
-<span id="cb87-48"><a href="PopModels.html#cb87-48" tabindex="-1"></a><span class="st">Survey_a_50.est ~ dunif(0, A)</span></span>
-<span id="cb87-49"><a href="PopModels.html#cb87-49" tabindex="-1"></a><span class="st">for (a in 1:A){</span></span>
-<span id="cb87-50"><a href="PopModels.html#cb87-50" tabindex="-1"></a><span class="st">  SelS.est[a] &lt;- 1/(1+exp(-Survey_k.est*(a-Survey_a_50.est)))</span></span>
-<span id="cb87-51"><a href="PopModels.html#cb87-51" tabindex="-1"></a><span class="st">  } #a</span></span>
-<span id="cb87-52"><a href="PopModels.html#cb87-52" tabindex="-1"></a></span>
-<span id="cb87-53"><a href="PopModels.html#cb87-53" tabindex="-1"></a><span class="st">    # Population projection</span></span>
-<span id="cb87-54"><a href="PopModels.html#cb87-54" tabindex="-1"></a><span class="st">    for(a in 2:A) {</span></span>
-<span id="cb87-55"><a href="PopModels.html#cb87-55" tabindex="-1"></a><span class="st">   for(y in 2:Y) {</span></span>
-<span id="cb87-56"><a href="PopModels.html#cb87-56" tabindex="-1"></a><span class="st">     N.est[a,y] ~ dbin(exp(-AnnualM-F_a.est[(a-1),(y-1)]),</span></span>
-<span id="cb87-57"><a href="PopModels.html#cb87-57" tabindex="-1"></a><span class="st">                         trunc(N.est[a-1,y-1])) } }</span></span>
-<span id="cb87-58"><a href="PopModels.html#cb87-58" tabindex="-1"></a></span>
-<span id="cb87-59"><a href="PopModels.html#cb87-59" tabindex="-1"></a><span class="st">    #Likelihoods</span></span>
-<span id="cb87-60"><a href="PopModels.html#cb87-60" tabindex="-1"></a><span class="st">    for (a in 1:A) {</span></span>
-<span id="cb87-61"><a href="PopModels.html#cb87-61" tabindex="-1"></a><span class="st">   for (y in 1:Y) {</span></span>
-<span id="cb87-62"><a href="PopModels.html#cb87-62" tabindex="-1"></a><span class="st">     C_f.est[a,y] &lt;- N.est[a,y]*F_a.est[a,y]*(1-exp(-Z_a.est[a,y]))</span></span>
-<span id="cb87-63"><a href="PopModels.html#cb87-63" tabindex="-1"></a><span class="st">                      /Z_a.est[a,y]</span></span>
-<span id="cb87-64"><a href="PopModels.html#cb87-64" tabindex="-1"></a><span class="st">     C_f[a,y] ~ dpois(C_f.est[a,y])</span></span>
-<span id="cb87-65"><a href="PopModels.html#cb87-65" tabindex="-1"></a><span class="st">     C_s.est[a,y] &lt;- N.est[a,y]*Survey_q.est*SelS.est[a]</span></span>
-<span id="cb87-66"><a href="PopModels.html#cb87-66" tabindex="-1"></a><span class="st">     C_s[a,y] ~ dpois(C_s.est[a,y])</span></span>
-<span id="cb87-67"><a href="PopModels.html#cb87-67" tabindex="-1"></a><span class="st">   } } # y, a</span></span>
-<span id="cb87-68"><a href="PopModels.html#cb87-68" tabindex="-1"></a><span class="st">   for (y in 1:Y){</span></span>
-<span id="cb87-69"><a href="PopModels.html#cb87-69" tabindex="-1"></a><span class="st">    N.est.total[y] &lt;- sum(N.est[,y])</span></span>
-<span id="cb87-70"><a href="PopModels.html#cb87-70" tabindex="-1"></a><span class="st">   }</span></span>
-<span id="cb87-71"><a href="PopModels.html#cb87-71" tabindex="-1"></a></span>
-<span id="cb87-72"><a href="PopModels.html#cb87-72" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb87-73"><a href="PopModels.html#cb87-73" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
-<span id="cb87-74"><a href="PopModels.html#cb87-74" tabindex="-1"></a><span class="fu">sink</span>()</span>
-<span id="cb87-75"><a href="PopModels.html#cb87-75" tabindex="-1"></a></span>
-<span id="cb87-76"><a href="PopModels.html#cb87-76" tabindex="-1"></a><span class="co"># Bundle data</span></span>
-<span id="cb87-77"><a href="PopModels.html#cb87-77" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C_f&quot;</span>, <span class="st">&quot;C_s&quot;</span>, <span class="st">&quot;AnnualM&quot;</span>)</span>
-<span id="cb87-78"><a href="PopModels.html#cb87-78" tabindex="-1"></a></span>
-<span id="cb87-79"><a href="PopModels.html#cb87-79" tabindex="-1"></a><span class="co"># Initial values</span></span>
-<span id="cb87-80"><a href="PopModels.html#cb87-80" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">Mean_lnR.est=</span><span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">meanlog=</span><span class="dv">10</span>, <span class="at">sdlog=</span><span class="dv">1</span>),</span>
-<span id="cb87-81"><a href="PopModels.html#cb87-81" tabindex="-1"></a>                               <span class="at">Recruit.est=</span><span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="at">meanlog=</span><span class="dv">10</span>, <span class="at">sdlog=</span><span class="dv">1</span>),</span>
-<span id="cb87-82"><a href="PopModels.html#cb87-82" tabindex="-1"></a>                               <span class="at">Initial.est=</span><span class="fu">rlnorm</span>(<span class="at">n=</span>(A<span class="dv">-1</span>), <span class="at">meanlog=</span><span class="dv">10</span>, <span class="at">sdlog=</span><span class="dv">1</span>),</span>
-<span id="cb87-83"><a href="PopModels.html#cb87-83" tabindex="-1"></a>                               <span class="at">Survey_q.est=</span><span class="fu">rgamma</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">shape=</span><span class="dv">1</span>, <span class="at">scale=</span><span class="dv">1</span>),</span>
-<span id="cb87-84"><a href="PopModels.html#cb87-84" tabindex="-1"></a>                               <span class="at">SD_rec.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
-<span id="cb87-85"><a href="PopModels.html#cb87-85" tabindex="-1"></a>                               <span class="at">AnnualF.est=</span><span class="fu">runif</span>(<span class="at">n=</span>Y, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">2</span>))}</span>
-<span id="cb87-86"><a href="PopModels.html#cb87-86" tabindex="-1"></a></span>
-<span id="cb87-87"><a href="PopModels.html#cb87-87" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;CatchAge.txt&#39;</span></span>
-<span id="cb87-88"><a href="PopModels.html#cb87-88" tabindex="-1"></a></span>
-<span id="cb87-89"><a href="PopModels.html#cb87-89" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
-<span id="cb87-90"><a href="PopModels.html#cb87-90" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AnnualF.est&quot;</span>, <span class="st">&quot;Recruit.est&quot;</span>, <span class="st">&quot;Initial.est&quot;</span>,</span>
-<span id="cb87-91"><a href="PopModels.html#cb87-91" tabindex="-1"></a>                 <span class="st">&quot;SelF.est&quot;</span>, <span class="st">&quot;Survey_q.est&quot;</span>, <span class="st">&quot;MeanR.est&quot;</span>,</span>
-<span id="cb87-92"><a href="PopModels.html#cb87-92" tabindex="-1"></a>                 <span class="st">&quot;SD_rec.est&quot;</span>, <span class="st">&quot;SelS.est&quot;</span>, <span class="st">&quot;N.est.total&quot;</span>)</span>
-<span id="cb87-93"><a href="PopModels.html#cb87-93" tabindex="-1"></a></span>
-<span id="cb87-94"><a href="PopModels.html#cb87-94" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
-<span id="cb87-95"><a href="PopModels.html#cb87-95" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
-<span id="cb87-96"><a href="PopModels.html#cb87-96" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">10</span>, <span class="at">n.iter =</span> <span class="dv">200000</span>,</span>
-<span id="cb87-97"><a href="PopModels.html#cb87-97" tabindex="-1"></a>                model.file)</span>
-<span id="cb87-98"><a href="PopModels.html#cb87-98" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
-<span id="cb87-99"><a href="PopModels.html#cb87-99" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
-<span id="cb87-100"><a href="PopModels.html#cb87-100" tabindex="-1"></a></span>
-<span id="cb87-101"><a href="PopModels.html#cb87-101" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb87-102"><a href="PopModels.html#cb87-102" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>Y), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualF.est, <span class="at">ylab=</span><span class="st">&quot;Annual F&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb87-103"><a href="PopModels.html#cb87-103" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(AnnualF,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualF.est),</span>
-<span id="cb87-104"><a href="PopModels.html#cb87-104" tabindex="-1"></a>                              <span class="fu">max</span>(AnnualF,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualF.est)))</span>
-<span id="cb87-105"><a href="PopModels.html#cb87-105" tabindex="-1"></a><span class="fu">points</span>(AnnualF, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span>
-<span id="cb87-106"><a href="PopModels.html#cb87-106" tabindex="-1"></a></span>
-<span id="cb87-107"><a href="PopModels.html#cb87-107" tabindex="-1"></a>N.total <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Y)</span>
-<span id="cb87-108"><a href="PopModels.html#cb87-108" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y){</span>
-<span id="cb87-109"><a href="PopModels.html#cb87-109" tabindex="-1"></a>  N.total[y] <span class="ot">&lt;-</span> <span class="fu">sum</span>(N[,y])</span>
-<span id="cb87-110"><a href="PopModels.html#cb87-110" tabindex="-1"></a>}</span>
-<span id="cb87-111"><a href="PopModels.html#cb87-111" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>Y), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.est.total, <span class="at">ylab=</span><span class="st">&quot;Total N&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb87-112"><a href="PopModels.html#cb87-112" tabindex="-1"></a>     <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(N.total,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.est.total),</span>
-<span id="cb87-113"><a href="PopModels.html#cb87-113" tabindex="-1"></a>                              <span class="fu">max</span>(N.total,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.est.total)))</span>
-<span id="cb87-114"><a href="PopModels.html#cb87-114" tabindex="-1"></a><span class="fu">points</span>(N.total[], <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span>
-<span id="cb87-115"><a href="PopModels.html#cb87-115" tabindex="-1"></a></span>
-<span id="cb87-116"><a href="PopModels.html#cb87-116" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>A), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>SelF.est, <span class="at">ylab=</span><span class="st">&quot;Fishery selectivity&quot;</span>,</span>
-<span id="cb87-117"><a href="PopModels.html#cb87-117" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
-<span id="cb87-118"><a href="PopModels.html#cb87-118" tabindex="-1"></a><span class="fu">points</span>(SelF, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span>
-<span id="cb87-119"><a href="PopModels.html#cb87-119" tabindex="-1"></a></span>
-<span id="cb87-120"><a href="PopModels.html#cb87-120" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>A), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>SelS.est, <span class="at">ylab=</span><span class="st">&quot;Survey selectivity&quot;</span>,</span>
-<span id="cb87-121"><a href="PopModels.html#cb87-121" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
-<span id="cb87-122"><a href="PopModels.html#cb87-122" tabindex="-1"></a><span class="fu">points</span>(SelS, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<span id="cb86-76"><a href="PopModels.html#cb86-76" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb86-77"><a href="PopModels.html#cb86-77" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C_f&quot;</span>, <span class="st">&quot;C_s&quot;</span>, <span class="st">&quot;AnnualM&quot;</span>)</span>
+<span id="cb86-78"><a href="PopModels.html#cb86-78" tabindex="-1"></a></span>
+<span id="cb86-79"><a href="PopModels.html#cb86-79" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb86-80"><a href="PopModels.html#cb86-80" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">Mean_lnR.est=</span><span class="fu">rlnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">meanlog=</span><span class="dv">10</span>, </span>
+<span id="cb86-81"><a href="PopModels.html#cb86-81" tabindex="-1"></a>                                                   <span class="at">sdlog=</span><span class="dv">1</span>),</span>
+<span id="cb86-82"><a href="PopModels.html#cb86-82" tabindex="-1"></a>                               <span class="at">Recruit.est=</span><span class="fu">rlnorm</span>(<span class="at">n=</span>Y, <span class="at">meanlog=</span><span class="dv">10</span>, </span>
+<span id="cb86-83"><a href="PopModels.html#cb86-83" tabindex="-1"></a>                                                  <span class="at">sdlog=</span><span class="dv">1</span>),</span>
+<span id="cb86-84"><a href="PopModels.html#cb86-84" tabindex="-1"></a>                               <span class="at">Initial.est=</span><span class="fu">rlnorm</span>(<span class="at">n=</span>(A<span class="dv">-1</span>), <span class="at">meanlog=</span><span class="dv">10</span>, </span>
+<span id="cb86-85"><a href="PopModels.html#cb86-85" tabindex="-1"></a>                                                  <span class="at">sdlog=</span><span class="dv">1</span>),</span>
+<span id="cb86-86"><a href="PopModels.html#cb86-86" tabindex="-1"></a>                               <span class="at">Survey_q.est=</span><span class="fu">rgamma</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">shape=</span><span class="dv">1</span>, </span>
+<span id="cb86-87"><a href="PopModels.html#cb86-87" tabindex="-1"></a>                                                   <span class="at">scale=</span><span class="dv">1</span>),</span>
+<span id="cb86-88"><a href="PopModels.html#cb86-88" tabindex="-1"></a>                               <span class="at">SD_rec.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">10</span>),</span>
+<span id="cb86-89"><a href="PopModels.html#cb86-89" tabindex="-1"></a>                               <span class="at">AnnualF.est=</span><span class="fu">runif</span>(<span class="at">n=</span>Y, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">2</span>))}</span>
+<span id="cb86-90"><a href="PopModels.html#cb86-90" tabindex="-1"></a></span>
+<span id="cb86-91"><a href="PopModels.html#cb86-91" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;CatchAge.txt&#39;</span></span>
+<span id="cb86-92"><a href="PopModels.html#cb86-92" tabindex="-1"></a></span>
+<span id="cb86-93"><a href="PopModels.html#cb86-93" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb86-94"><a href="PopModels.html#cb86-94" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AnnualF.est&quot;</span>, <span class="st">&quot;Recruit.est&quot;</span>, <span class="st">&quot;Initial.est&quot;</span>,</span>
+<span id="cb86-95"><a href="PopModels.html#cb86-95" tabindex="-1"></a>                 <span class="st">&quot;SelF.est&quot;</span>, <span class="st">&quot;Survey_q.est&quot;</span>, <span class="st">&quot;MeanR.est&quot;</span>,</span>
+<span id="cb86-96"><a href="PopModels.html#cb86-96" tabindex="-1"></a>                 <span class="st">&quot;SD_rec.est&quot;</span>, <span class="st">&quot;SelS.est&quot;</span>, <span class="st">&quot;N.est.total&quot;</span>)</span>
+<span id="cb86-97"><a href="PopModels.html#cb86-97" tabindex="-1"></a></span>
+<span id="cb86-98"><a href="PopModels.html#cb86-98" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb86-99"><a href="PopModels.html#cb86-99" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb86-100"><a href="PopModels.html#cb86-100" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">10</span>, <span class="at">n.iter =</span> <span class="dv">200000</span>,</span>
+<span id="cb86-101"><a href="PopModels.html#cb86-101" tabindex="-1"></a>                model.file)</span>
+<span id="cb86-102"><a href="PopModels.html#cb86-102" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb86-103"><a href="PopModels.html#cb86-103" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb86-104"><a href="PopModels.html#cb86-104" tabindex="-1"></a></span>
+<span id="cb86-105"><a href="PopModels.html#cb86-105" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb86-106"><a href="PopModels.html#cb86-106" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>Y), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualF.est, <span class="at">ylab=</span><span class="st">&quot;Annual F&quot;</span>, </span>
+<span id="cb86-107"><a href="PopModels.html#cb86-107" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, </span>
+<span id="cb86-108"><a href="PopModels.html#cb86-108" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">range</span>(AnnualF,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>AnnualF.est))</span>
+<span id="cb86-109"><a href="PopModels.html#cb86-109" tabindex="-1"></a><span class="fu">points</span>(AnnualF, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span>
+<span id="cb86-110"><a href="PopModels.html#cb86-110" tabindex="-1"></a></span>
+<span id="cb86-111"><a href="PopModels.html#cb86-111" tabindex="-1"></a>N.total <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>Y)</span>
+<span id="cb86-112"><a href="PopModels.html#cb86-112" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Y){</span>
+<span id="cb86-113"><a href="PopModels.html#cb86-113" tabindex="-1"></a>  N.total[y] <span class="ot">&lt;-</span> <span class="fu">sum</span>(N[,y])</span>
+<span id="cb86-114"><a href="PopModels.html#cb86-114" tabindex="-1"></a>}</span>
+<span id="cb86-115"><a href="PopModels.html#cb86-115" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>Y), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.est.total, <span class="at">ylab=</span><span class="st">&quot;Total N&quot;</span>, </span>
+<span id="cb86-116"><a href="PopModels.html#cb86-116" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, </span>
+<span id="cb86-117"><a href="PopModels.html#cb86-117" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">range</span>(N.total,jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>N.est.total))</span>
+<span id="cb86-118"><a href="PopModels.html#cb86-118" tabindex="-1"></a></span>
+<span id="cb86-119"><a href="PopModels.html#cb86-119" tabindex="-1"></a><span class="fu">points</span>(N.total[], <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span>
+<span id="cb86-120"><a href="PopModels.html#cb86-120" tabindex="-1"></a></span>
+<span id="cb86-121"><a href="PopModels.html#cb86-121" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>A), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>SelF.est, <span class="at">ylab=</span><span class="st">&quot;Fishery selectivity&quot;</span>,</span>
+<span id="cb86-122"><a href="PopModels.html#cb86-122" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb86-123"><a href="PopModels.html#cb86-123" tabindex="-1"></a><span class="fu">points</span>(SelF, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span>
+<span id="cb86-124"><a href="PopModels.html#cb86-124" tabindex="-1"></a></span>
+<span id="cb86-125"><a href="PopModels.html#cb86-125" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>A), jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>SelS.est, <span class="at">ylab=</span><span class="st">&quot;Survey selectivity&quot;</span>,</span>
+<span id="cb86-126"><a href="PopModels.html#cb86-126" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb86-127"><a href="PopModels.html#cb86-127" tabindex="-1"></a><span class="fu">points</span>(SelS, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
 <p>Convergence (Rhat &lt; 1.1) for this model requires a very large number of updates (and considerable time). Thinning is used to reduce the storage required. The plots following the JAGS code show that there is typically close agreement between the true and estimated values (Figure <a href="PopModels.html#fig:CAGEANPlot">10.2</a>). It is essential to keep in mind that this analysis is being done with an assumed rate of natural mortality. The results of such an analysis, including credible intervals, are conditional on the assumed value. In this case, natural mortality is fixed at the correct value, so these results show the best case in terms of accuracy and precision.</p>
 <div class="figure"><span style="display:block;" id="fig:CAGEANPlot"></span>
 <img src="bookdown_files/figure-html/CAGEANPlot-1.png" alt="Estimates of fishing mortality (left) and total abundance (right) from a stock assessment model fitted to fishery and survey catch-at-age matrices. True values and model estimates are shown in blue and black respectively. ***CHANGE PRODUCTION RUN TO 200K updates" width="90%" />
@@ -659,8 +667,8 @@ FIGURE 10.2: Estimates of fishing mortality (left) and total abundance (right) f
 <div id="exercises-7" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Exercises<a href="PopModels.html#exercises-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
-<li><p>For the two-age model (Section <a href="PopModels.html#TwoAge">10.1</a>), compare true and estimated mean recruitment in ten trials using the default capture probability of 0.1 versus 0.2 and 0.3. How well does the model estimate total population size and annual survival for each sampling intensity?</p></li>
-<li><p>For the stock assessment model (Section <a href="PopModels.html#CAGEAN">10.2</a>), set the number of updates at a modest level (e.g., 20,000) and compare the level of convergence when fishing mortality is consistently low (e.g., 0.05-0.15) or high (0.95-1.05). Why is there a difference in how readily convergence is achieved for the two cases?</p></li>
+<li><p>For the two-age model (Section <a href="PopModels.html#TwoAge">10.1</a>), compare true and estimated total abundance using abs((y-y.hat)/y) for five trials using capture probabilities of 0.1, 0.2, and 0.3. Would you recommend a field trial using a capture probability of 0.1?</p></li>
+<li><p>For the stock assessment model (Section <a href="PopModels.html#CAGEAN">10.2</a>), set the number of updates at a modest level (e.g., 20,000) and compare the level of convergence when fishing mortality is consistently low (e.g., 0.0-0.1) or high (1.0-1.1). Why is there a difference in how readily convergence is achieved for the two cases?</p></li>
 </ol>
 
 </div>

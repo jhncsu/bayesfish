@@ -5,47 +5,47 @@ The style file: apalike.bst
 Database file #1: book.bib
 Database file #2: packages.bib
 Database file #3: AddRefs.bib
+Warning--empty publisher in kery.kellner_2024
 Warning--there's a number but no series in ricker1975
-Warning--empty publisher in royle.dorazio_2008
-You've used 73 entries,
+You've used 81 entries,
             1935 wiz_defined-function locations,
-            907 strings with 17534 characters,
-and the built_in function-call counts, 28620 in all, are:
-= -- 2816
-> -- 1197
-< -- 46
-+ -- 420
-- -- 398
-* -- 2547
-:= -- 5031
-add.period$ -- 219
-call.type$ -- 73
-change.case$ -- 554
-chr.to.int$ -- 73
-cite$ -- 75
-duplicate$ -- 1013
-empty$ -- 1976
-format.name$ -- 523
-if$ -- 5479
+            935 strings with 18227 characters,
+and the built_in function-call counts, 31928 in all, are:
+= -- 3152
+> -- 1317
+< -- 51
++ -- 460
+- -- 438
+* -- 2850
+:= -- 5601
+add.period$ -- 244
+call.type$ -- 81
+change.case$ -- 615
+chr.to.int$ -- 81
+cite$ -- 83
+duplicate$ -- 1127
+empty$ -- 2215
+format.name$ -- 575
+if$ -- 6121
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 82
-newline$ -- 367
-num.names$ -- 220
-pop$ -- 441
+missing$ -- 94
+newline$ -- 408
+num.names$ -- 243
+pop$ -- 482
 preamble$ -- 1
-purify$ -- 564
+purify$ -- 624
 quote$ -- 0
-skip$ -- 752
+skip$ -- 837
 stack$ -- 0
-substring$ -- 2070
-swap$ -- 77
+substring$ -- 2350
+swap$ -- 86
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 406
+type$ -- 450
 warning$ -- 2
-while$ -- 243
+while$ -- 273
 width$ -- 0
-write$ -- 952
+write$ -- 1064
 (There were 2 warnings)

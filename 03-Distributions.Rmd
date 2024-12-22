@@ -2,7 +2,7 @@
 
 When a biologist conducts a field study, the usual purpose is to collect data that will be useful for management. Examples of data that could be collected include (i) whether a fish with a radio transmitter was detected, (ii) how many tags were reported by anglers over a fishing season, (iii) how many fish of each age were observed in a sample, or (iv) number of fish caught in a single tow of a net. Each of these examples arises from a different statistical distribution. The distribution affects the properties of the data and how those data might be analyzed. For example, observations in the first example are either Yes or No, which could be represented as a 1 or 0. Having only those two possible values certainly affects characteristics of that distribution as well as methods for analysis.
 
-In this chapter, we will examine some of the more common and important statistical distributions, and learn how to simulate observations from those distributions. Simulation will be an important skill in the chapters that follow, in that simulated data with known parameters provide a valuable way of evaluating field study designs and methods of analysis. The first few distributions that we consider are discrete (Section \@ref(Discrete)); that is, non-negative whole numbers that are appropriate for counts like the number of fish in a single haul of a net. The second category is continuous distributions (Section \@ref(Continuous)), for real numbers such as a catch *rate* of 0.52.
+In this chapter, we will examine some of the more common and important statistical distributions, and learn how to simulate observations from those distributions. Simulation will be an important skill in the chapters that follow, in that simulation provides a valuable way to evaluate field study designs and methods of analysis. The first few distributions that we consider are discrete (Section \@ref(Discrete)); that is, non-negative whole numbers that are appropriate for counts like the number of fish in a single haul of a net. The second category is continuous distributions (Section \@ref(Continuous)), for real numbers such as a catch *rate* of 0.52.
 
 ## Discrete {#Discrete}
 
@@ -50,6 +50,7 @@ One of the most important benefits of using simulation is the ability to examine
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
+# ls() function returns names of variables in Environment window
 
 N.obs <- 1000
 p <- 0.4
@@ -61,7 +62,7 @@ Counts <- table(y)
 barplot(Counts)
 ```
 
-The first line of code just clears the Environment, ensuring that we start from a clean slate. The `sum()` function provides a total for the y vector, which is equal to the number of successful trials. Dividing by the number of observations is an empirical estimate of p. The plot (Plot window) shows the result for one simulation (with N.obs replicates). How close to the expected count of 1s (400) did you observe? Try running this block of code several times. How does variation in the total number of successes compare to the previous case with N.obs=30?
+The first line of code uses the <code>rm()</code> (remove) function to clear the Environment, ensuring that we start from a clean slate. The `sum()` function provides a total for the y vector, which is equal to the number of successful trials. Dividing by the number of observations is an empirical estimate of p. The plot (Plot window) shows the result for one simulation (with N.obs replicates). How close to the expected count of 1s (400) did you observe? Try running this block of code several times. How does variation in the total number of successes compare to the previous case with N.obs=30?
 
 ### Binomial {#BinomialDist}
 
@@ -168,7 +169,7 @@ barplot(x.vec, names.arg=age.vec, xlab="Age", ylab="Number of fish")
 
 In this simulation, the age proportions (TrueP) are arbitrarily chosen (but could be based on field data). Run statements one-by-one to see how each line of code works. Note that the `rmultinom()` function returns a matrix with six rows and one column (n determines how many columns are returned). Rather than a column, we want a row vector, with the number of fish by age in successive columns. We use the `t()` (transpose) function to transpose the matrix and the `as.vector()` function to convert the matrix (with one row) into a row vector. We could have done this transformation in two steps but instead have nested the two functions. That results in more compact code but it is always a fine option to do the steps separately for greater clarity.
 
-Run the code beginning with the `x <- rmultinom()` line several times to see how much the age distribution varies from one random sample to the next. The underlying age proportions are fixed, but the counts vary quite a bit for this small sample size.  This is an example of how simulation is helpful in gaining experience and intuition in judging pure sampling variation versus a real biological result (e.g. good or bad year-class strength).
+Run the code beginning with the `x <- rmultinom()` line several times to see how much the age distribution varies from one random sample to the next. The underlying age proportions are fixed, but the counts vary quite a bit for this small sample size.  This is an example of how simulation is helpful in gaining experience and intuition in judging pure sampling variation versus a real biological result (e.g., good or bad year-class strength).
 
 ### Poisson  {#PoissonDist}
 
@@ -212,7 +213,7 @@ Now the `table()` function operates on counts transformed into factors (categori
 
 ### Negative binomial {#NegBinom}
 
-As noted above, the negative binomial\index{negative binomial distribution} distribution is used in similar situations to the Poisson\index{Poisson distribution} except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution [@bolker2008; @link.barker_2010]. The R function for generating negative binomial random variates (`rnbinom()`) can be parameterized in different ways; we use the "ecological" parameterization recommended by @bolker2008. This uses the mean (termed $\mu$) but not the variance, instead using an overdispersion parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean [@bolker2008]. The distribution approximates a Poisson when k is large (e.g., >10*$\mu$). The code includes calculation of the variance as a function of mu and k [@bolker2008]. Alternatively the mean and variance (V) can be specified and used to solve for k: $k = \mu^2/(V-\mu)$. Note that overdispersion implies that the variance is greater than the mean, so that the denominator is greater than zero.
+As noted above, the negative binomial\index{negative binomial distribution} distribution is used in similar situations to the Poisson\index{Poisson distribution} except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution [@bolker2008; @link.barker_2010]. The R function for generating negative binomial random variates (`rnbinom()`) can be parameterized in different ways; here I use the "ecological" parameterization recommended by @bolker2008. This uses the mean (termed $\mu$) but not the variance, instead using an overdispersion\index{overdispersion} parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean [@bolker2008]. The distribution approximates a Poisson when k is large (e.g., >10*$\mu$). The code includes calculation of the variance as a function of mu and k [@bolker2008]. Alternatively the mean and variance (V) can be specified and used to solve for k: $k = \mu^2/(V-\mu)$. Note that overdispersion\index{overdispersion} implies that the variance is greater than the mean, so that the denominator is greater than zero.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -264,15 +265,15 @@ Reps <- 30 # Replicate draws from a uniform distribution
 p <- runif(n=Reps)# Default range of 0-1. Can specify using min, max
 hist(p, breaks=5, main="")
 ```
-Try running the code several times and note the variation in pattern from one simulation run to the next. We use the breaks=5 option in the `hist()` function so that the histogram bin intervals are stable among runs. Specifying a null character string for "main=" prevents the plot from including a main title. Next, increase the sample size and note the increased smoothness of the observed distribution. What would be the expected mean of the distribution? Estimate the mean and compare the observed and expected value among runs. 
+Try running the code several times and note the variation in pattern from one simulation run to the next. I use the breaks=5 option in the `hist()` function so that the histogram bin intervals are stable among runs. Specifying a null character string for "main=" prevents the plot from including a main title. Next, increase the sample size and note the increased smoothness of the observed distribution. What would be the expected mean of the distribution? Estimate the mean and compare the observed and expected value among runs. 
 
 As noted above, the `runif()` function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate\index{exploitation rate} (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval; for example, `runif(n=Reps, min=0.3, max=0.4)`. The `runif()` function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.
 
 ### Beta  {#BetaDist}
 The beta distribution\index{beta distribution} has a lower bound of 0 and an upper bound of 1, so it is useful for modeling parameters with those bounds (i.e., probabilities). A fisheries model might use a beta distribution to simulate variation in a survival rate\index{survival rate} or the probability of a tag being returned. The uniform distribution\index{uniform distribution} (Section \@ref(Uniform)) can also be used for probabilities, but only for the case where all values are equally likely. The beta distribution is more flexible and can not only be flat but also u-shaped, bell-shaped, or left- or right-skewed. Figure \@ref(fig:Beta) shows sample distributions for shape parameters $\alpha$=1 and $\beta$=0.5, 1, and 5.
 
-```{r, Beta, fig.cap='Histograms for 200 random draws from a beta distribution, with alpha=1 and beta=0.5  (left), 1 (center), and 5 (right).',fig.show="hold", out.width="30%"}
-#| echo: false
+```{r, Beta, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Histograms for 200 random draws from a beta distribution, with alpha=1 and beta=0.5  (top), 1 (middle), and 5 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
+
 rm(list=ls()) # Clear Environment
 par(mar = c(4, 4, 1, .1))
 
