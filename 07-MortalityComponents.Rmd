@@ -6,7 +6,7 @@ Reliable estimates of the survival rate (Chapter \@ref(Survival)) are essential 
 
 A tagging study can provide a real-time estimate of the exploitation rate\index{exploitation rate}, or the fraction of the population being harvested. Similar to the tag-return\index{tag-return} method of estimating survival (Section \@ref(BrownieSurvival)), the only field work required is the initial tagging effort. Here there is a single release of fish with external tags at the start of the study, and the number of returned tags is recorded over a specified interval. The study duration could be an entire year, or a fishing season for a population managed by seasonal harvest. A high exploitation rate might indicate that harvest regulations such as a size limit or creel limit could be worthwhile.  Alternatively a low estimate might indicate that other factors such as natural mortality\index{natural mortality} or recruitment\index{recruitment} may be more important in regulating population size. With only a single release, we cannot estimate survival\index{survival rate} (or its complement, mortality) but it is nevertheless an important first step in judging the relative impact of fishing.
 
-There are several practical issues to consider in planning an exploitation rate study. We want to ensure that essentially all tags of harvested fish are reported, so high-reward tags\index{high-reward tags} (e.g., $100) could be used [@pollock.etal_2001]. Tag loss\index{tag loss} is another potential source of bias. It can be estimated by double-tagging (giving some or all fish two tags, and recording returns of two versus only one tag), but it greatly complicates the analysis. For this example, we will keep things simple and assume that tag loss\index{tag loss} is negligible. We also assume that there is no immediate tagging mortality\index{tagging mortality} (i.e., due to capture, handling and tagging). This can be challenging to investigate. It is sometimes estimated by holding a sample of fish in a cage after tagging but this can itself be a source of mortality [@pollock.pine2007].  For now, we assume that there is no short- or long-term mortality associated with tagging. We assume that all caught fish are harvested. If catch-and-release was occurring, our model could be extended to estimate rates of harvest and catch-and-release. The decision of how many fish to tag will depend on the required precision of the study, and as usual can be examined through simulation. Finally, it is important that tagged fish be representative of the entire population. This refers not only to size or age, but also the spatial pattern. Tagging could be done at randomly selected locations, or when the entire study population is concentrated within a single area (e.g., winter holding area or spawning location). The key is for all fish, including the tagged subset, to have the same probability of being harvested.
+There are several practical issues to consider in planning an exploitation rate study. We want to ensure that essentially all tags of harvested fish are reported, so high-reward tags\index{high-reward tags} (e.g., $100) could be used [@pollock.etal_2001]. Tag loss\index{tag loss} is another potential source of bias. It can be estimated by double-tagging (giving some or all fish two tags, and recording returns of two versus only one tag), but it greatly complicates the analysis. For this example, we will keep things simple and assume that tag loss\index{tag loss} is negligible. We also assume that there is no immediate tagging mortality\index{tagging mortality} (i.e., due to capture, handling and tagging). This can be challenging to investigate. It is sometimes estimated by holding a sample of fish in a cage after tagging but this can itself be a source of mortality [@pollock.pine2007].  For now, we assume that there is no short- or long-term mortality associated with tagging. We assume that all caught fish are harvested. If catch-and-release was occurring, our model could be extended to estimate rates of harvest and catch-and-release. The decision of how many fish to tag will depend on the required precision of the study, and as usual can be examined through simulation. Finally, it is important that tagged fish be representative of the entire population. This refers not only to size or age, but also the spatial distribution. Tagging could be done at randomly selected locations, or when the entire study population is concentrated within a single area (e.g., winter holding area or spawning location). The key is for all fish, including the tagged subset, to have the same probability of being harvested.
 
 Our simulation code uses an assumed exploitation rate\index{exploitation rate} (u) of 0.4. The value could be based on a literature review or prior work from the study area or similar areas regionally. The number of returned tags has a binomial distribution\index{binomial distribution} (Section \@ref(BinomialDist)):
 
@@ -19,7 +19,7 @@ n.tagged <- 100
 n.returned <- rbinom(n=1, prob=u.true, size=n.tagged)
 ```
 
-We need only a single observation for the returned number of tags. What lines of code could you add to look at the distribution of returned tags (using a new variable for the vector of tag returns)?
+The simulation provides only a single observation for the number of returned tags. What lines of code could you add to look at the distribution of returned tags (using a new variable for the vector of tag returns)?
 
 The JAGS code is also extremely simple. We have one line of code for the uninformative prior distribution\index{uninformative prior distribution} for the exploitation rate\index{exploitation rate}, and one for the likelihood\index{likelihood}.
 
@@ -67,7 +67,7 @@ A single run with a release of 100 tagged fish provided a credible interval of 0
 
 To compare posterior distributions obtained using uninformative and informative priors\index{informative prior distribution}, we use two copies of the above code. In the uninformative prior\index{uninformative prior distribution} version, we simply replace <code>dunif(0,1)</code> with <code>dbeta(1,1)</code> in the JAGS code, and replace the uniform initial value with the corresponding beta\index{beta distribution} (<code>rbeta(n=1, shape1=1, shape2=1)</code>). Neither change affects the calculations because the two distributions are equivalent, but it sets up the model for the informative prior\index{informative prior distribution} version.
 
-For the informative\index{informative prior distribution} case, the exploitation rate\index{exploitation rate} simulation is unchanged. We simply add two lines of code for the pilot study that will be used for the prior\index{prior distribution}. The informative beta distribution\index{beta distribution} in the JAGS code has two parameters: successes+1 and failures+1 [@bolker2008]. We augment jags.data with the pilot study data, and use the same initial values as in the uninformative prior\index{uninformative prior distribution} version. The JAGS code is followed by R code for producing two plots, showing the prior\index{prior distribution} and posterior distributions\index{posterior distribution} for the uninformative (upper plot) and informative (lower) cases. We specify margins for each plot to reduce blank space. The <code>density()</code> function provides a smoothed probability density for the exploitation rate estimates. The <code>lines()</code> function adds the prior distribution\index{prior distribution} to each plot, generated using the <code>dbeta()</code> function.
+For the informative\index{informative prior distribution} case, the exploitation rate\index{exploitation rate} simulation is unchanged. We simply add two lines of code for the pilot study that will be used for the prior\index{prior distribution}. The informative beta distribution\index{beta distribution} in the JAGS code has two parameters: successes+1 and failures+1 [@bolker2008]. We augment jags.data with the pilot study data, and use initial values from the informative prior\index{informative prior distribution}. The JAGS code is followed by R code for producing two plots, showing the prior\index{prior distribution} and posterior distributions\index{posterior distribution} for the uninformative (upper plot) and informative (lower) cases. We specify margins for each plot to reduce blank space. The <code>density()</code> function provides a smoothed probability density for the exploitation rate estimates. The <code>lines()</code> function adds the prior distribution\index{prior distribution} to each plot, generated using the <code>dbeta()</code> function.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -139,7 +139,9 @@ jags.data <- list("n.returned", "n.tagged", "n.pilot",
                   "n.returned.pilot")
 
 # Initial values
-jags.inits <- function(){ list(u.est=rbeta(n=1, shape1=1, shape2=1))}
+jags.inits <- function(){ list(u.est=rbeta(n=1, 
+                          shape1=(n.returned.pilot+1), 
+                          shape2=(n.pilot-n.returned.pilot+1)))}
 
 model.file <- 'ExpRate.txt'
 
@@ -163,7 +165,7 @@ x.bounds <- range(jagsfit$BUGSoutput$sims.list$u.est,
               informative$BUGSoutput$sims.list$u.est)
 plot(density(jagsfit$BUGSoutput$sims.list$u.est), xlab="", main="", 
      xlim=x.bounds, ylim=y.bounds)
-abline(v=u.true, col="red")
+abline(v=u.true,  lty=3, lwd=3)
 x.vec <- seq(x.bounds[1], x.bounds[2], length.out=101)
 lines(x.vec,
       dbeta(seq(x.bounds[1], x.bounds[2], length.out=101), shape1=1, 
@@ -175,18 +177,18 @@ legend(x = "topleft", lty = c(2,1), text.font = 1,
 par(mar=c(4,4,1,1))
 plot(dens2,xlab="Estimated exploitation rate", main="", 
      xlim=x.bounds, ylim=y.bounds)
-abline(v=u.true, col="red")
+abline(v=u.true,  lty=3, lwd=3)
 lines(x.vec, dbeta(seq(x.bounds[1], x.bounds[2], 
                     length.out=101), shape1=(n.returned.pilot+1), 
                     shape2=(n.pilot-n.returned.pilot+1)), lty=2)
 
 ```
 
-A pilot study provides a valuable opportunity to work out field logistics, as well as allowing for construction of an informative prior\index{informative prior distribution}. Our simulation suggests a modest gain in precision from a pilot release of 20 tagged fish, given a full study release of 100 (Figure \@ref(fig:InfPriorPlot)). The benefit of an informative prior\index{informative prior distribution} depends on the information content of the prior\index{prior distribution} versus the new data [@mccarthy.masters_2005]. Also, our simulated pilot study has a random aspect (number returned), so a small pilot release will occasionally produce a prior\index{prior distribution} that is unhelpful for estimating the true exploitation rate\index{exploitation rate}. Planning this type of study should be done using multiple simulation runs with varying sample sizes for the pilot and full studies. For example, try starting with a pilot study sample size of 1, which approximates the uninformative prior\index{uninformative prior distribution} case. As you increase the sample size for the pilot study, when is there a noticeable change in the posterior distribution\index{posterior distribution}, compared to the uninformative prior\index{uninformative prior distribution} case? This can also be evaluated by comparing the width of credible intervals\index{credible interval} [@mccarthy.masters_2005]. How does an increase in the sample size for the full study change the effect of an informative prior\index{informative prior distribution}?
+A pilot study provides a valuable opportunity to work out field logistics, as well as allowing for construction of an informative prior\index{informative prior distribution}. Informative priors\index{informative prior distribution} can also be based on the mean and variance of published estimates, and can include the additional variation within individual studies [@mccarthy.masters_2005; @regehr.etal_2018]. Another approach is to base the prior on ecological theory, for example, a prior for survival rate\index{survival rate} based on its relationship to body mass [[@mccarthy.masters_2005]. For our tagging example, the beta distribution\index{beta distribution} worked well as an informative prior because the two parameters are based on the number of successes (returned tag) and failures (not returned). The plotted distributions suggest a modest gain in precision from a pilot release of 20 tagged fish, given a full study release of 100 (Figure \@ref(fig:InfPriorPlot)). The effect of an informative prior\index{informative prior distribution} can also be evaluated by comparing the width of credible intervals\index{credible interval} [@mccarthy.masters_2005].
 
-The beta distribution\index{beta distribution} works well for characterizing a pilot tagging study, because the two parameters are based on the number of successes (returned tag) and failures (not returned). In general, informative priors\index{informative prior distribution} can be based on the mean and variance of previous estimates, or can include the additional variation within individual studies [@mccarthy.masters_2005; @regehr.etal_2018]. Another approach is to base the prior on ecological theory; for example, a prior for survival rate\index{survival rate} based on its relationship to body mass [[@mccarthy.masters_2005]. @lemoine_2019 recommends carrying out analyses of real data using multiple prior distributions\index{prior distribution} of varying strength, to better understand the information content of the new data and the effect of priors\index{prior distribution}. 
+The benefit of an informative prior\index{informative prior distribution} depends on the information content of the prior\index{prior distribution} versus the new data [@mccarthy.masters_2005]. @lemoine_2019 recommends carrying out analyses of real data using multiple prior distributions\index{prior distribution} of varying strength, to better understand the information content of the new data and the effect of priors\index{prior distribution}. One other point to consider if conducting a pilot tagging study, rather than using published information, is the random aspect of the number returned. Try multiple runs with small pilot releases to see how often the prior\index{prior distribution} is unhelpful for estimating the true exploitation rate\index{exploitation rate}. What factors would you consider when deciding whether to base an informative prior\index{informative prior distribution} on a pilot study versus a summary of published estimates?
 
-```{r InfPriorPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Prior and posterior distributions for estimated exploitation rate, using uninformative (upper) and informative (lower) priors. The full study sample size is 100 tagged fish; the pilot study (lower panel) has a sample size of 20. The true exploitation rate is shown as a vertical red line.', out.width="90%"}
+```{r InfPriorPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Prior and posterior distributions for estimated exploitation rate, using uninformative (upper) and informative (lower) priors. The full study sample size is 100 tagged fish; the pilot study (lower panel) has a sample size of 20. The true exploitation rate is shown as a dotted vertical line.', out.width="90%"}
 
 rm(list=ls()) # Clear Environment 
 set.seed(12345) # Ensure that book will have a reasonable result
@@ -266,7 +268,7 @@ x.bounds <- range(UninfPrior_jags$BUGSoutput$sims.list$u.est,
               InfPrior_jags$BUGSoutput$sims.list$u.est)
 plot(density(UninfPrior_jags$BUGSoutput$sims.list$u.est), xlab="", main="", 
      xlim=x.bounds, ylim=y.bounds)
-abline(v=u.true, col="red")
+abline(v=u.true,  lty=3, lwd=3)
 x.vec <- seq(x.bounds[1], x.bounds[2], length.out=101)
 lines(x.vec,
       dbeta(seq(x.bounds[1], x.bounds[2], length.out=101), shape1=1, shape2=1),
@@ -278,7 +280,7 @@ legend(x = "topleft", lty = c(2,1), text.font = 1,
 par(mar=c(4,4,1,1))
 plot(dens2,xlab="Estimated exploitation rate", main="", 
      xlim=x.bounds, ylim=y.bounds)
-abline(v=u.true, col="red")
+abline(v=u.true,  lty=3, lwd=3)
 lines(x.vec, dbeta(seq(x.bounds[1], x.bounds[2], 
                     length.out=101), shape1=(n.returned.pilot+1), 
                     shape2=(n.pilot-n.returned.pilot+1)), lty=2)
@@ -288,25 +290,25 @@ lines(x.vec, dbeta(seq(x.bounds[1], x.bounds[2],
 
 ## Completed tagging study {#Hearn}
 
-A single release of tags (Section \@ref(ExpRate)) can also be used to estimate the rate of natural mortality\index{natural mortality}. @hearn.etal1987 provide a method that can be used in completed tagging studies\index{completed tagging study}; that is, a study of sufficient duration that tag returns have ceased (assumed to indicate that no live tagged fish remain). Their method requires only that fishing mortality\index{fishing mortality} in each period be greater than zero, in order to establish the study's endpoint. It is assumed that tags of harvested fish are always reported\index{tag-reporting rate}, there is no mortality associated with tagging\index{tagging mortality}, and there is no tag loss\index{tag loss}. The model assumes a constant rate of natural mortality\index{natural mortality}, so the estimated rate would in practice represent the average over the study period.
-
-The following Bayesian version is a modification of the @hearn.etal1987 method. We allow for zero harvest but assume that tag returns are monitored for a sufficiently long time to confirm the true study length (i.e., to allow for the possibility of an interspersed 0). The @hearn.etal1987 model uses instantaneous rates, which we have to this point avoided. The relationship between probabilities (survival, death, exploitation, natural death) and instantaneous rates is as follows. The instantaneous rate of population decline is $dN/dt = -Zt$, where N is population size and Z is the instantaneous total mortality rate\index{instantaneous total mortality rate} (rate of decline due to fishing and natural sources). An advantage of instantaneous rates is that they are additive. We can partition Z into whatever categories are useful and estimable; for example, fishing\index{fishing mortality} versus natural mortality\index{natural mortality}, commmercial versus recreational fishing, longline versus trawl, etc.  The most common partitioning is for fishing (F) versus natural (M) sources: $dN/dt = -(M+F)t$. Integrating this equation provides us with an expression for population size at any time t:
+A single release of tags (Section \@ref(ExpRate)) can also be used to estimate the rate of natural mortality\index{instantaneous natural mortality rate}. @hearn.etal1987 provide a method that can be used in completed tagging studies\index{completed tagging study}, that is, a study of sufficient duration that tag returns have ceased (assumed to indicate that no live tagged fish remain). Their model uses instantaneous rates, which we have to this point avoided. The relationship between probabilities (survival\index{survival rate}, death\index{mortality rate}, exploitation\index{exploitation rate}, natural death\index{natural death rate}) and instantaneous rates is as follows. The instantaneous rate of population decline is $dN/dt = -Zt$, where N is population size and Z is the instantaneous total mortality rate\index{instantaneous total mortality rate} (rate of decline due to fishing and natural sources). An advantage of instantaneous rates is that they are additive. Stock assessment models routinely partition Z into whatever categories are useful and estimable; for example, fishing\index{fishing mortality} versus natural mortality\index{natural mortality}, commmercial versus recreational fishing, longline versus trawl, etc.  The most common partitioning is for fishing (F) versus natural (M) sources: $dN/dt = -(M+F)t$. Integrating this equation provides us with an expression for population size at any time t:
 
 $N_t = N_0 * exp(-(M+F)*t)$
 
-where N~0~ is initial abundance and $S=exp(-(M+F)*t)$ is the survival rate\index{survival rate}. The probability of dying from all causes is A=1-S. The exploitation rate\index{exploitation rate} is obtained as u=FA/Z, which makes sense as the fraction of total deaths due to fishing (F/Z). Similarly the probability of natural death is v=MA/Z. These expressions make it possible to go back and forth between probabilities and instantaneous rates, depending on which is more useful or traditional for a particular model. These expressions apply for the most common situation where fishing\index{fishing mortality} and natural mortality\index{natural mortality} occur simultaneously (referred to by @ricker1975 as a Type 2 fishery). @ricker1975 provides alternate expressions for the less common case (a Type 1 fishery) where natural mortality\index{natural mortality} occurs after a short fishing season.
+where N~0~ is initial abundance and $S=exp(-(M+F)*t)$ is the survival rate\index{survival rate}. The total mortality rate\index{total mortality rate} (probability of dying from all causes) is A=1-S. The exploitation rate\index{exploitation rate} is obtained as u=FA/Z, which makes sense as the fraction of total mortality due to fishing (F/Z). Similarly the probability of natural death\index{natural death rate} is v=MA/Z. These expressions make it possible to go back and forth between probabilities and instantaneous rates, depending on which is more useful or traditional for a particular model. These expressions apply for the most common situation where fishing\index{fishing mortality} and natural mortality\index{natural mortality} occur simultaneously (referred to by @ricker1975 as a Type 2 fishery). @ricker1975 provides alternate expressions for the less common case (a Type 1 fishery) where natural mortality\index{natural mortality} occurs after a short fishing season.
 
-Unlike the probabilities for survival, harvest, etc., instantaneous rates are unbounded. In a Bayesian context, this makes them more challenging to estimate compared to probabilities, which are conveniently bounded by 0 and 1. Instantaneous rates are also less intuitive in terms of their magnitude compared to probabilities. There is typically more uncertainty about M than F because natural deaths are almost never observed [@quinn.deriso_1999]. The joke about M is that it is often assumed to be 0.2, because .2 looks like a distorted version of a question mark. In a review of published natural mortality estimates, @vetter_1988 found that a majority were less than 0.5 but values exceeding 2.0 were occasionally reported.
+Unlike the probabilities for survival, harvest, etc., instantaneous rates are unbounded. In a Bayesian context, this makes them more challenging to estimate compared to probabilities, which are conveniently bounded by 0 and 1. Instantaneous rates are also less intuitive in terms of their magnitude compared to probabilities. There is typically more uncertainty about M than F because natural deaths are almost never observed [@hearn.etal1987; @quinn.deriso_1999]. The joke about M is that it is often assumed to be 0.2, because .2 looks like a distorted version of a question mark. In a review of published natural mortality estimates, @vetter_1988 found that a majority were less than 0.5 but values exceeding 2.0 were occasionally reported.
 
-We begin with simulation code:
+The @hearn.etal1987 method requires only that fishing mortality\index{fishing mortality} in each period be greater than zero, in order to establish the study's endpoint. Their model assumes a constant rate of natural mortality\index{instantaneous natural mortality rate}, so the estimated rate would in practice represent the average over the study. Their base model assumes that tags of harvested fish are always reported\index{tag-reporting rate}, there is no mortality associated with tagging\index{tagging mortality}, and there is no tag loss\index{tag loss}.
+
+The @hearn.etal1987 model used exact times at large for returned tags to estimate the natural mortality rate. The following Bayesian version is a modification of their method, using tag returns by period (assumed here to be annual) to establish the length of the completed study. Simulated fishing mortality rates are greater than 0 but vary randomly within a user-defined range. We begin with simulation code:
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
 
 n.tagged <- 100
-Periods <- 20 
-  # Set to high value to ensure that end of study is observed
-F.true <- 0.4
+Periods <- 40 
+# Set to high value to ensure that end of study is observed
+F.true <- runif(n=(Periods-1), min=0.3, max=0.5)
 M.true <- 0.2
 S.true <- exp(-F.true - M.true)
 u.true <- F.true * (1-S.true) / (F.true + M.true)
@@ -316,10 +318,11 @@ TagsAtRisk[1] <- n.tagged
 TagFates <- array(data=NA, dim=(Periods-1)) # Returns by period
 
 for (j in 2:Periods){
-  TagsAtRisk[j] <- rbinom(n=1, size=TagsAtRisk[j-1], prob=S.true)
+  TagsAtRisk[j] <- rbinom(n=1, size=TagsAtRisk[j-1], prob=S.true[j-1])
   TagFates[j-1] <- rbinom(n=1, size=(TagsAtRisk[j-1]
-                        -TagsAtRisk[j]),(F.true/(F.true+M.true))) 
-    # Random realization: fishing deaths
+                     -TagsAtRisk[j]),prob=(F.true[j-1]
+                      /(F.true[j-1]+M.true))) 
+  # Random realization: fishing deaths
 } #j
 
 t.Completed <- max(which(TagFates[]>0))
@@ -388,15 +391,17 @@ mar = c(5.1, 4.1, 4.1, 2.1)
 # Look at posterior distribution versus true value
 hist(jagsfit$BUGSoutput$sims.list$M.est, 
      xlab="Estimated natural mortality rate", main="")
-abline(v=M.true, col="red")
+abline(v=M.true,  lty=3, lwd=3)
 
 ```
 
 This approach works because there are only two fates for tagged fish: caught and reported or natural death. Using a completed tagging study\index{completed tagging study} means that (when all assumptions hold) the number of natural deaths is known exactly (number of tag releases - total returns). The model adjusts the estimate of M in order to account for all the natural deaths by the end of the completed study. The length of the completed tagging study\index{completed tagging study} depends on the assumed values for F and M. The estimated natural mortality rate\index{instantaneous natural mortality rate} will be higher when the study length is short and when many tagged fish are not seen again.
 
-For the default settings, estimates of M tend to be reliable (Figure \@ref(fig:HearnPlot)), which is unsurprising given that it is modeled as a constant rate and estimated from multiple years of data. Run the full code (simulation and analysis) multiple times, using different assumed values for the natural mortality rate\index{instantaneous natural mortality rate}, to build intuition about the reliability of this method. (Make sure that the number of periods is sufficiently large to contain the end of the completed study if a low natural mortality rate is used.) How would uncertainty change with a different number of tags released?
+There are elements of randomness in the length of the completed tagging study. One example is when tagged fish at risk survive for one or more periods beyond the last tag return but are ultimately natural deaths. This can occasionally be seen by comparing the TagsAtRisk and TagFates vectors. There can also be embedded zeros in the vector of tag returns when the number of tags at risk is low. Simulation runs suggest that this approach to determining study length works reasonably well but should be evaluated for the likely range of fishing \index{instantaneous fishing mortality rate} and natural mortality\index{instantaneous natural mortality rate} rates.
 
-```{r HearnPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example of estimated posterior distribution and true natural mortality rate (vertical red line) using the completed tagging study (Hearn et al. 1987) approach.', out.width="90%"}
+For the default settings, estimates of M tend to be reliable (Figure \@ref(fig:HearnPlot)), which is unsurprising given that it is modeled as a constant rate and estimated from multiple years of data. Run the full code (simulation and analysis) multiple times, using different assumed values for the natural mortality rate\index{instantaneous natural mortality rate}, to build intuition about the reliability of this method. (Periods here are assumed to be years, but a larger number of periods might be needed for monthly intervals or if a very low natural mortality rate is used.) How would uncertainty change with a different number of tags released?
+
+```{r HearnPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example of estimated posterior distribution and true natural mortality rate (dotted vertical line) using the completed tagging study (Hearn et al. 1987) approach.', out.width="90%"}
 
 rm(list=ls()) # Clear Environment
 set.seed(12345) # Ensure that book will have a reasonable result
@@ -422,15 +427,16 @@ Hearn <- function() {
 
 # Simulation code for Hearn completed tagging study
 n.tagged <- 100
-Periods <- 20 # Set to high value to ensure that end of study is observed
-F.true <- 0.4
+Periods <- 40 
+# Set to high value to ensure that end of study is observed
+F.true <- runif(n=(Periods-1), min=0.3, max=0.5)
 M.true <- 0.2
 S.true <- exp(-F.true - M.true)
 u.true <- F.true * (1-S.true) / (F.true + M.true)
 
 TagsAtRisk <- array(data=NA, dim=Periods)
 TagsAtRisk[1] <- n.tagged
-TagFates <- array(data=NA, dim=Periods) # Returns by period
+TagFates <- array(data=NA, dim=(Periods-1)) # Returns by period
 
 for (j in 2:Periods){
   TagsAtRisk[j] <- rbinom(n=1, size=TagsAtRisk[j-1], prob=S.true)
@@ -438,8 +444,7 @@ for (j in 2:Periods){
                                      -TagsAtRisk[j]),(F.true/(F.true+M.true))) 
   # Random realization: fishing deaths
 } #j
-TagFates[Periods] <- rbinom(n=1, size=(TagsAtRisk[Periods-1]
-                                       -TagsAtRisk[Periods]),(F.true/(F.true+M.true)))
+
 t.Completed <- max(which(TagFates[]>0))
 # Locate period when study completed (last return)
 NatDeaths <- n.tagged - sum(TagFates)
@@ -470,10 +475,10 @@ Hearn_jags <-
 # Look at posterior distribution versus true value
 hist(Hearn_jags$BUGSoutput$sims.list$M.est, 
      xlab="Estimated natural mortality rate", main="")
-abline(v=M.true, col="red")
+abline(v=M.true,  lty=3, lwd=3)
 ```
 
-Estimates of F are reliable in the first few years but uncertainty increases dramatically towards the end of the completed study. This makes sense because the estimates of tags at risk are further and further from the known initial tagged population. There would likely be some improvement from simplifying the model to estimate only an average F rather than period-specific estimates, given that the true simulated F values vary stochastically around a fixed value.
+Estimated fishing mortality rates\index{instantaneous fishing mortality rate} for the first few periods are moderately accurate, especially for larger tag releases. Estimates near the end of the completed study are typically high with wide credible intervals\index{credible interval}. There would likely be some improvement from simplifying the model to estimate only an average annual fishing mortality rate\index{instantaneous fishing mortality rate} rather than period-specific estimates.
 
 ## Multi-year tagging study {#BrownieFandM}
 
@@ -525,7 +530,7 @@ RandRet <- array(data=NA, dim=c(Periods, Periods+1))
 
 ```
 
-The analysis is again similar to Section \@ref(BrownieSurvival) except that now we now have a multinomial distribution\index{multinomial distribution} (Section \@ref(Multinomial)) with three possible fates (survival, harvest, natural death). Following Section 9.6 of @kéry.schaub_2011, we use three gamma-distributed\index{gamma distribution} (Section \@ref(GammaDist)) parameters that are scaled by their sum, thus ensuring that they sum to 1. The parameters of interest (u, v, S) are calculated functions of the "a" parameters, which are used internally but not themselves of interest. 
+The analysis is again similar to Section \@ref(BrownieSurvival) except that now we now have a multinomial distribution\index{multinomial distribution} (Section \@ref(Multinomial)) with three possible fates (survival, harvest, natural death). Following Section 9.6 of @kéry.schaub_2012, we use three gamma-distributed\index{gamma distribution} (Section \@ref(GammaDist)) parameters that are scaled by their sum, thus ensuring that the rescaled values sum to 1. The parameters of interest (u, v, S) are calculated functions of the "a" parameters, which are used internally but not themselves of interest. 
 
 ```{r eval=FALSE}
 # Load necessary library packages
@@ -546,7 +551,7 @@ library(R2jags)
      S.est[i] <- a[i,1]/sum(a[i,]) # Probability of survival
      u.est[i] <- a[i,2]/sum(a[i,]) # Probability of harvest
      v.est[i] <- a[i,3]/sum(a[i,]) # Probability of natural death
-     # v.est[3] could also be obtained as 1-S.est[3]-u.est[3]
+     # v.est[i] could also be obtained as 1-S.est[i]-u.est[i]
   } #i
 
 # Cell probabilities
@@ -556,7 +561,7 @@ library(R2jags)
       p.est[i,j] <- prod(S.est[i:(j-1)])*lam.est*u.est[j]
       } #j
     p.est[i,Periods+1] <- 1 - sum(p.est[i, i:Periods])
-    # p.est[i,Periods+1] = Prob of not being seen again
+    # Probability of not being seen again
     } #i
   for (i in 1:Periods) {
   RandRet[i,i:(Periods+1)] ~ dmulti(p.est[i,i:(Periods+1)], 
@@ -580,9 +585,7 @@ library(R2jags)
   model.file <- 'TagReturn.txt'
 
   # Parameters monitored
-  jags.params <- c(#"lam.est",
-                   "u.est", "v.est")
-  #, "S.est")
+  jags.params <- c("u.est", "v.est")
 
    # Call JAGS from R
   jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
@@ -593,7 +596,7 @@ library(R2jags)
 
 ```
 
-We provide arbitrary starting values for the "a" parameters by rescaling uniform (0,1) random variates. Using a large release on each occasion (1000), our estimates are generally close to the true values except that v.est[3] is imprecise and typically overestimated. It is the most difficult time-dependent parameter to estimate. We get direct information (from returned tags) about the final exploitation rate\index{exploitation rate} but there is much uncertainty about whether fish not seen were still at risk or were natural deaths. This is especially true for the final release because most fish are still at large (examine the TagFate and RandRet matrices). Note that this differs from a completed tagging study (Section \@ref(Hearn)), where the study continues until no live fish remain.
+We provide arbitrary starting values for the "a" parameters by rescaling uniform (0,1) random variates. Using a large release on each occasion (1000), our estimates are generally close to the true values except that v.est[3] is imprecise and typically overestimated. It is the most difficult time-dependent parameter to estimate. We get direct information (from returned tags) about the final exploitation rate\index{exploitation rate} but there is much uncertainty about whether fish not seen are still at risk or are natural deaths. This is especially true for the final release because most fish are still at large (examine the TagFate and RandRet matrices). Note that this differs from a completed tagging study (Section \@ref(Hearn)), where the study continues until no live fish remain.
 
 The analysis can be extended to include estimation of the tag-reporting rate. We use the simplest approach of a binomial\index{binomial distribution} experiment using planted tags\index{planted tags} [@hearn.etal_2003]. The fraction of planted tags\index{planted tags} that is returned is a direct estimate of the tag-reporting rate\index{tag-reporting rate}. The only change required in the simulation code is to replace the assignment lam.true <- 1.0 with the following three lines:
 
@@ -624,7 +627,7 @@ library(R2jags)
      S.est[i] <- a[i,1]/sum(a[i,]) # Probability of survival
      u.est[i] <- a[i,2]/sum(a[i,]) # Probability of harvest
      v.est[i] <- a[i,3]/sum(a[i,]) # Probability of natural death
-     # v.est[3] could also be obtained as 1-S.est[i]-u.est[i]
+     # v.est[i] could also be obtained as 1-S.est[i]-u.est[i]
   } #i
 
 # Cell probabilities
@@ -662,7 +665,6 @@ library(R2jags)
 
   # Parameters monitored
   jags.params <- c("lam.est", "u.est", "v.est")
-  #, "S.est")
 
    # Call JAGS from R
   jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
@@ -674,10 +676,10 @@ library(R2jags)
 
 The auxiliary planted tag experiment requires only a few changes in the JAGS code. We provide an uninformative prior distribution\index{uninformative prior distribution} for the now estimated parameter lam.est, and pass in the number of planted tags and returns. We let JAGS generate an initial value for lam.est. The additional likelihood\index{likelihood} component describes the binomial\index{binomial distribution} experiment. Convergence\index{convergence} may be slower for this version of the code, so the number of MCMC\index{Markov Chain Monte Carlo (MCMC)} iterations was increased to 10,000.
 
-```{r BrowniePlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimated posterior distributions for exploitation rate in period 2 at tag reporting rates of 0.9 (left) and 0.5 (right), using a multi-year tagging study with planted tags. The true exploitation rate for period 2 is shown as a vertical red line.', fig.show="hold", out.width="50%"}
+```{r BrowniePlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimated posterior distributions for exploitation rate in period 2 at tag reporting rates of 0.9 (top) and 0.5 (bottom), using a multi-year tagging study with planted tags. The true exploitation rate for period 2 is shown as a dotted vertical line.', fig.show="hold", fig.height=3, out.width="90%"}
 
 rm(list=ls()) # Clear Environment
-par(mar = c(4, 4, 1, .1))
+par(mar = c(4, 4, 1, 2))
 set.seed(12345) # Ensure that book will have a reasonable result
 
 BrownieFit <- function() {
@@ -849,12 +851,12 @@ x.bounds <- range(Brownie_jags$BUGSoutput$sims.list$u.est[,2],
                   Brownie2_jags$BUGSoutput$sims.list$u.est[,2])
 hist(Brownie_jags$BUGSoutput$sims.list$u.est[,2], xlim=x.bounds,
      xlab="Estimated exploitation rate, period 2", main="")
-abline(v=u.true[2], col="red")
+abline(v=u.true[2],  lty=3, lwd=3)
 
 # Posterior distribution, 0.5 reporting rate
 hist(Brownie2_jags$BUGSoutput$sims.list$u.est[,2], xlim=x.bounds,
      xlab="Estimated exploitation rate, period 2", main="")
-abline(v=u.true[2], col="red")
+abline(v=u.true[2],  lty=3, lwd=3)
 ```
 
 Estimates have similar precision to the original example if the reporting rate is high (Figure \@ref(fig:BrowniePlot)). Precision is reduced at lower reporting rates because of the reduced sample size of returned tags and uncertainty about lambda.
@@ -911,16 +913,16 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-Our dcat example has a y vector with five observations in the range of 1 to 3. The categories can be of any sort; for example, age or species code for individual fish. The model parameters of interest are calculated variables representing the probabilities of the three categories. The probabilities sum to 1, so as in Section \@ref(BrownieFandM), we calculate them using an "a" vector with an uninformative gamma prior distribution\index{gamma distribution}. (A Dirichlet distribution\index{Dirichlet distribution} can also be used as an uninformative prior distribution\index{uninformative prior distribution} for probabilities that must sum to 1 [@mccarthy_2007].) For the purposes of this section, the p vector could represent probabilities of a live detection, harvest, or not being detected. The MCMC\index{Markov Chain Monte Carlo (MCMC)} process adjusts the p estimates to achieve the best possible match between model predictions and the observations (y vector). For simplicity, we let JAGS provide the initial values for the a vector. The estimates have wide credible intervals because of the small sample size.
+Our dcat example has a y vector with five observations in the range of 1 to 3. The categories can be of any sort; for example, age or species code for individual fish. The model parameters of interest are calculated variables representing the probabilities of the three categories. The probabilities sum to 1, so as in Section \@ref(BrownieFandM), we calculate them using an "a" vector with an uninformative gamma prior distribution\index{gamma distribution}. (A Dirichlet distribution\index{Dirichlet distribution} can also be used as an uninformative prior distribution\index{uninformative prior distribution} for probabilities that must sum to 1 [@mccarthy_2007].) For the purposes of this section, the p vector could represent probabilities of survival\index{survival rate}, harvest\index{harvest rate}, or natural death\index{natural death rate}. The MCMC\index{Markov Chain Monte Carlo (MCMC)} process adjusts the p estimates to achieve the best possible match between model predictions and the observations (y vector). For simplicity, we let JAGS provide the initial values for the "a" vector. The estimates have wide credible intervals because of the small sample size.
 
-Returning to the telemetry\index{telemetry} example, we begin with simulation code, using arbitrary values for the number of occasions and sample size. Varying the patterns for rates of exploitation and natural death is helpful in judging the model's ability to detect moderate time variation. This is a multistate model\index{multistate model} [@kéry.schaub_2011], with a matrix (PSI.STATE) describing the various true states and the probabilities for transitioning between states over time. The three rows represent true states alive, harvest, and natural death. A fish that is alive (row 1) can remain alive (probability S.true), be harvested (probability u.true), or become a natural mortality (probability v.true). A harvested fish (row 2) remains in that state with probability 1, as does a natural death (row 3). Note that the third matrix dimension for PSI.STATE is time, as the rates are time-dependent.
+Returning to the telemetry\index{telemetry} example, we begin with simulation code, using arbitrary values for the number of occasions and sample size. Varying the patterns for rates of exploitation and natural death is helpful in judging the model's ability to detect moderate time variation. This is a multistate model\index{multistate model} [@kéry.schaub_2012], with a matrix (PSI.STATE) describing the various true states and the probabilities for transitioning between states over time. The three rows represent true states alive, harvest, and natural death. A fish that is alive (row 1) can remain alive (probability S.true), be harvested (probability u.true), or become a natural mortality (probability v.true). A harvested fish (row 2) remains in that state with probability 1, as does a natural death (row 3). Note that the third matrix dimension for PSI.STATE is time, as the rates are time-dependent.
 
 The observation matrix (PSI.OBS) has a similar structure. Rows are true states, columns are observed states, and the third dimension is time. There are three possible observed states: detected alive, harvested, and not detected. A live fish (row 1) can either be detected or not, with probabilities p[t] and 1-p[t]. A harvested fish (row 2) is assumed to be always detected (100% tag-reporting rate\index{tag-reporting rate}), and a natural death (row 3) is never detected.
 
 The function for generating the simulated capture-history\index{capture history} matrix (simul.ms) is complex, but key features are as follows. All fish are assumed to be tagged (transmitters and external tags) at time 1. Next we loop over occasions and use a multinomial\index{multinomial distribution} trial to determine the true state transition between time t-1 and t (i.e., a live fish at time t-1 can remain alive, be harvested, or transition to natural death). To better understand the multinomial trial, try a simpler example in the Console. For example, <code>rmultinom(n=1, size=1, prob=c(0.7, 0.25, 0.05))</code> is a single trial (n=1) for one individual (size=1), with three states at the specified probabilities. The function returns a matrix with a 1 in a randomly determined row. The <code>which()</code> function locates the "1" and returns the row index (= fish's state). This example could represent probabilities that a live fish at time t-1 survives (0.7), is harvested (0.25), or is a natural death (0.05). Returning to the code, a second multinomial\index{multinomial distribution} trial based on the fish's true state draws a random observed outcome (e.g., a live fish is either detected or missed).
 
 ```{r eval=FALSE}
-# Code modified from Kery and Schaub 2012, Section 9.5
+# Code modified from Kéry and Schaub 2012, Section 9.5
 
 rm(list=ls()) # Clear Environment
 
@@ -928,7 +930,7 @@ rm(list=ls()) # Clear Environment
 # Define probabilities as well as number of occasions, 
 # states, observations and released individuals
 n.occasions <- 5
-n.tagged <- 100  # Simplify from Kery's version, 
+n.tagged <- 100  # Simplify from Kéry's version, 
                  # only an initial release, and no spatial states
 
 u.true <- c(0.2, 0.1, 0.3, 0.2)
@@ -963,9 +965,7 @@ PSI.OBS <- array(NA, dim=c(n.states, n.obs, n.occasions))
       } #t
 
 # Define function to simulate multistate capture-recapture data
-simul.ms <- function(PSI.STATE, PSI.OBS, n.tagged, n.occasions, 
-                     unobservable = NA){
-   # Unobservable: number of state that is unobservable
+simul.ms <- function(PSI.STATE, PSI.OBS, n.tagged, n.occasions){
    CH <- CH.TRUE <- matrix(NA, ncol = n.occasions, nrow = n.tagged)
    CH[,1] <- CH.TRUE[,1] <- 1 # All releases at t=1
    for (i in 1:n.tagged){
@@ -1050,7 +1050,7 @@ for (t in 1:(n.occasions-1)) {
     for (t in 2:n.occasions){
     # State process: draw state at time t given state at time t-1
     z[i,t] ~ dcat(ps[z[i,(t-1)], (t-1),])
-    # Observation process: draw obs state given true state at time t
+    # Observation process: obs state given true state at time t
     y[i,t] ~ dcat(po[z[i,t], t,])
     } #t
     } #i
@@ -1058,7 +1058,7 @@ for (t in 1:(n.occasions-1)) {
     ",fill = TRUE)
 sink()
 
-# Generate initial values for z. Modified from Kery code for
+# Generate initial values for z. Modified from Kéry code for
 # JAGS inits, age-specific example 9.5.3
 z.init <- function(ch) {
   # State 1=Obs 1 (alive) State 2=Obs 2 (fishing death). 
@@ -1105,9 +1105,9 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-The parameters for rates of survival\index{survival rate}, exploitation\index{exploitation rate} and natural death\index{natural death rate} use the same approach as in the above dcat example. The "a" matrix is estimated internally using a vague gamma prior distribution\index{gamma distribution}, then the three fractions estimate the probabilities of the three possible true states (survival\index{survival rate}, harvest\index{exploitation rate}, natural death\index{natural death rate}), which sum to 1. The latent true states (z matrix) are estimated in the likelihood\index{likelihood} section of the code. The dcat (categorical distribution\index{categorical distribution}) is used to draw the true state at time t given state at time t-1, as well as the observation at each time given the true state.
+The parameters for rates of survival\index{survival rate}, exploitation\index{exploitation rate} and natural death\index{natural death rate} use the same approach as in the above dcat example. The "a" matrix is estimated internally using a vague gamma prior distribution\index{gamma distribution}, then the three fractions estimate the probabilities of the three possible true states (survival\index{survival rate}, harvest\index{exploitation rate}, natural death\index{natural death rate}), which sum to 1. The latent true states (z matrix) are estimated in the likelihood\index{likelihood} section of the code. The dcat (categorical distribution\index{categorical distribution}) is used to draw the true state at time t given state at time t-1, as well as the observation at each time given the inferred true state.
 
-One difficult part of fitting this model is obtaining initial values for the latent true states. JAGS will refuse to update model parameters if initial values are inconsistent with the observations [(link)](https://www.vogelwarte.ch/de/projekte/publikationen/bpa/code-for-running-bpa-using-jags). The function used here <code>z.init()</code> initializes all unknown true states to be "alive" unless a harvest occurs. This works because fish not detected could either be alive or a natural death, so "alive" is a valid initial value. Individuals that are ultimately harvested are known to be alive up to the period prior to harvest. It can be instructive to compare the matrices containing true and observed states with the initial values. For example, initial values can be saved by entering z.test <- z.init(y) in the Console. Entering sim$CH.TRUE[1:5,] and CH[1:5,] in the Console will display true and observed states for the first five individuals for comparison to z.test.
+One difficult part of fitting this model is obtaining initial values for the latent true states. JAGS will refuse to update model parameters if initial values are inconsistent with the [observations](https://www.vogelwarte.ch/de/projekte/publikationen/bpa/code-for-running-bpa-using-jags). The function used here <code>z.init()</code> initializes all unknown true states to be "alive" unless a harvest occurs. This works because fish not detected could either be alive or a natural death, so "alive" is a valid initial value. Individuals that are ultimately harvested are known to be alive up to the period prior to harvest. It can be instructive to compare the matrices containing true and observed states with the initial values. For example, initial values can be saved by entering z.test <- z.init(y) in the Console. Entering sim$CH.TRUE[1:5,] and CH[1:5,] in the Console will display true and observed states for the first five individuals for comparison to z.test.
 
 Results for the chosen simulation settings are moderately reliable. There are many parameters, as the model estimates true latent states as well as the probabilities for survival\index{survival rate}, harvest\index{harvest rate} and natural death\index{natural death rate}. It seems to consistently detect the increase in harvest rate\index{harvest rate} in period 3. Uncertainty increases toward the end of the study, especially for probabilities of detection and natural death. This makes sense because fish not detected on the final occasion could either be alive or a natural death.
 

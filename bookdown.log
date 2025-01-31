@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.12.10)  22 DEC 2024 12:26
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.12.10)  31 JAN 2025 14:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1134,46 +1134,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 [5]
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
-[6
-
-]
+[6]
 Underfull \vbox (badness 10000) detected at line 210
  []
 
@@ -1230,6 +1191,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
 
 [7
+
 
 ])
 \tf@lof=\write6
@@ -1662,13 +1624,15 @@ File: bookdown_files/figure-latex/NB-vary-k-1.pdf Graphic file (type pdf)
 File: bookdown_files/figure-latex/NB-vary-k-2.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/NB-vary-k-2.pdf>
 
-Overfull \hbox (2.21812pt too wide) in paragraph at lines 596--596
-[][] [] 
+Underfull \hbox (badness 10000) in paragraph at lines 598--598
+[][]
  []
 
 
 
 [17]
+
+[18]
 File: bookdown_files/figure-latex/Beta-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/Beta-1.pdf>
 File: bookdown_files/figure-latex/Beta-2.pdf Graphic file (type pdf)
@@ -1676,22 +1640,22 @@ File: bookdown_files/figure-latex/Beta-2.pdf Graphic file (type pdf)
 File: bookdown_files/figure-latex/Beta-3.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/Beta-3.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
+Underfull \hbox (badness 10000) in paragraph at lines 631--631
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
+Underfull \hbox (badness 10000) in paragraph at lines 631--631
 []
  []
 
 
 
-[18]
-
 [19]
 
 [20]
+
+[21]
 File: bookdown_files/figure-latex/Lognormal-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/Lognormal-1.pdf>
 File: bookdown_files/figure-latex/Gamma-1.pdf Graphic file (type pdf)
@@ -1699,101 +1663,99 @@ File: bookdown_files/figure-latex/Gamma-1.pdf Graphic file (type pdf)
 File: bookdown_files/figure-latex/Gamma-2.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/Gamma-2.pdf>
 
-Overfull \hbox (2.22672pt too wide) in paragraph at lines 705--705
-[][] [] 
+Underfull \hbox (badness 10000) in paragraph at lines 707--707
+[][]
  []
 
 
-
-[21]
 
 [22]
-Underfull \hbox (badness 10000) detected at line 734
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 734
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 736
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 736
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 738
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 738
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 740
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 740
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 742
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 742
-[][][]
- []
-
-
 
 [23]
+Underfull \hbox (badness 10000) detected at line 736
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 736
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 738
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 738
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 740
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 740
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 742
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 742
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 744
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 744
+[][][]
+ []
+
+
 
 [24]
-Underfull \vbox (badness 10000) detected at line 746
+Underfull \vbox (badness 10000) detected at line 748
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 746
+Overfull \hbox (336.25pt too wide) detected at line 748
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 746
+Underfull \vbox (badness 10000) detected at line 748
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 746
+Overfull \hbox (336.25pt too wide) detected at line 748
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 746
+Underfull \vbox (badness 10000) detected at line 748
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 746
+Overfull \hbox (336.25pt too wide) detected at line 748
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 746
+Underfull \vbox (badness 10000) detected at line 748
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 746
+Overfull \hbox (336.25pt too wide) detected at line 748
 []
  []
 
@@ -1815,6 +1777,11 @@ File: bookdown_files/figure-latex/Bootstrap-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/Bootstrap-1.pdf>
 File: bookdown_files/figure-latex/Bootstrap-2.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/Bootstrap-2.pdf>
+
+Underfull \hbox (badness 10000) in paragraph at lines 814--814
+[][]
+ []
+
 
 
 [27]
@@ -1845,11 +1812,11 @@ File: bookdown_files/figure-latex/BayesMR-1.pdf Graphic file (type pdf)
 [38]
 
 [39]
+
+[40]
 File: bookdown_files/figure-latex/TracePlots-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/TracePlots-1.pdf>
 
-
-[40]
 
 [41]
 
@@ -1858,16 +1825,16 @@ File: bookdown_files/figure-latex/TracePlots-1.pdf Graphic file (type pdf)
 [43]
 
 [44]
+Underfull \vbox (badness 10000) detected at line 1279
+ []
+
+
+Overfull \vbox (0.20007pt too high) detected at line 1279
+ []
+
+
 
 [45]
-Underfull \vbox (badness 10000) detected at line 1334
- []
-
-
-Overfull \vbox (0.74408pt too high) detected at line 1334
- []
-
-
 
 [46]
 
@@ -1881,104 +1848,147 @@ File: bookdown_files/figure-latex/PPC-1.pdf Graphic file (type pdf)
 [49]
 
 [50]
-Underfull \vbox (badness 10000) detected at line 1481
+Underfull \vbox (badness 10000) detected at line 1489
  []
 
 
-Overfull \vbox (0.45607pt too high) detected at line 1481
+Underfull \vbox (badness 10000) detected at line 1489
  []
 
 
 
 [51]
-Underfull \hbox (badness 10000) detected at line 1493
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1493
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1495
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1495
-[][][]
- []
-
-
 
 [52]
-Underfull \hbox (badness 10000) detected at line 1497
+Underfull \hbox (badness 10000) detected at line 1501
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1497
+Underfull \hbox (badness 10000) detected at line 1501
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1503
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1503
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1505
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1505
 [][][]
  []
 
 
 
 [53]
-Underfull \hbox (badness 10000) detected at line 1553
+Underfull \hbox (badness 10000) detected at line 1561
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1553
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1555
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1555
+Underfull \hbox (badness 10000) detected at line 1561
 [][][]
  []
 
 
 
 [54]
-Underfull \vbox (badness 10000) detected at line 1559
+Underfull \hbox (badness 10000) detected at line 1563
+ [][]
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1559
+Underfull \hbox (badness 10000) detected at line 1563
+[][][]
+ []
+
+
+
+[55]
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1559
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1559
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1559
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1559
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1559
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
+[]
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1559
+Underfull \hbox (badness 10000) has occurred while \output is active
+ [][][][] 
+ []
+
+[56
+
+]
+Underfull \vbox (badness 10000) detected at line 1567
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1567
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1567
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1567
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1567
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1567
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1567
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1567
 []
  []
 
@@ -1990,29 +2000,19 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[55
-
+[57
 
 ]
-
-[56]
-
-[57]
 
 [58]
 
 [59]
-File: bookdown_files/figure-latex/PopEst-covary-1.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/PopEst-covary-1.pdf>
-
 
 [60]
 
 [61]
-Underfull \hbox (badness 1789) in paragraph at lines 1748--1749
-[]\TU/lmr/m/n/10 It is instructive to compare the default distribution (N.true=20 and
- []
-
+File: bookdown_files/figure-latex/PopEst-covary-1.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/PopEst-covary-1.pdf>
 
 
 [62]
@@ -2020,45 +2020,49 @@ Underfull \hbox (badness 1789) in paragraph at lines 1748--1749
 [63]
 
 [64]
+
+[65]
+
+[66]
 File: bookdown_files/figure-latex/NmixPlot-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/NmixPlot-1.pdf>
 
 
-[65]
-Underfull \hbox (badness 10000) detected at line 1872
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1872
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1874
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1874
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1876
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1876
-[][][]
- []
-
-
-
-[66]
-
 [67]
+Underfull \hbox (badness 10000) detected at line 1863
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1863
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1865
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1865
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1867
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1867
+[][][]
+ []
+
+
+
+[68]
+
+[69]
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2097,41 +2101,41 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[68
+[70
 
 ]
-Underfull \vbox (badness 10000) detected at line 1880
+Underfull \vbox (badness 10000) detected at line 1871
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1880
+Overfull \hbox (336.25pt too wide) detected at line 1871
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1880
+Underfull \vbox (badness 10000) detected at line 1871
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1880
+Overfull \hbox (336.25pt too wide) detected at line 1871
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1880
+Underfull \vbox (badness 10000) detected at line 1871
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1880
+Overfull \hbox (336.25pt too wide) detected at line 1871
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1880
+Underfull \vbox (badness 10000) detected at line 1871
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1880
+Overfull \hbox (336.25pt too wide) detected at line 1871
 []
  []
 
@@ -2143,84 +2147,64 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[69
+[71
 
 ]
 
-[70]
-Underfull \vbox (badness 10000) detected at line 1971
- []
-
-
-Overfull \vbox (0.48807pt too high) detected at line 1971
- []
-
-
-
-[71]
-
 [72]
+Underfull \vbox (badness 10000) detected at line 1962
+ []
+
+
+Overfull \vbox (0.48807pt too high) detected at line 1962
+ []
+
+
 
 [73]
 
 [74]
-Underfull \vbox (badness 10000) detected at line 2124
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2124
- []
-
-
 
 [75]
 
 [76]
-Underfull \vbox (badness 10000) detected at line 2243
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2243
- []
-
-
 
 [77]
-Underfull \vbox (badness 10000) detected at line 2243
- []
-
-
-Overfull \vbox (0.83208pt too high) detected at line 2243
- []
-
-
 
 [78]
 
 [79]
+Underfull \vbox (badness 10000) detected at line 2236
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2236
+ []
+
+
 
 [80]
 
 [81]
 
 [82]
+
+[83]
+Underfull \vbox (badness 10000) detected at line 2352
+ []
+
+
+Overfull \vbox (0.56007pt too high) detected at line 2352
+ []
+
+
+
+[84]
 File: bookdown_files/figure-latex/CohortPlot-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/CohortPlot-1.pdf>
 
 
-[83]
-
-[84]
-
 [85]
-Underfull \vbox (badness 10000) detected at line 2476
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2476
- []
-
-
 
 [86]
 
@@ -2233,118 +2217,96 @@ Underfull \vbox (badness 10000) detected at line 2476
 [90]
 
 [91]
-File: bookdown_files/figure-latex/TagRetPlot-1.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/TagRetPlot-1.pdf>
-File: bookdown_files/figure-latex/TagRetPlot-2.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/TagRetPlot-2.pdf>
-
-Underfull \hbox (badness 10000) detected at line 2626
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 2626
-[][][]
- []
-
-
 
 [92]
-Underfull \hbox (badness 10000) detected at line 2628
- [][]
+Underfull \vbox (badness 10000) detected at line 2603
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2628
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 2630
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 2630
-[][][]
+Overfull \vbox (0.40007pt too high) detected at line 2603
  []
 
 
 
 [93]
+File: bookdown_files/figure-latex/TagRetPlot-1.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/TagRetPlot-1.pdf>
+File: bookdown_files/figure-latex/TagRetPlot-2.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/TagRetPlot-2.pdf>
+
+Underfull \hbox (badness 10000) in paragraph at lines 2616--2616
+[][]
+ []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[94]
+Underfull \hbox (badness 10000) detected at line 2627
+ [][]
+ []
 
 
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
+Underfull \hbox (badness 10000) detected at line 2627
+[][][]
+ []
+
+
+
+[95]
+Underfull \hbox (badness 10000) detected at line 2629
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 2629
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 2631
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 2631
+[][][]
+ []
+
+
+
+[96]
+Underfull \vbox (badness 10000) detected at line 2635
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 2635
 []
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 10000) detected at line 2635
+ []
 
 
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
+Overfull \hbox (336.25pt too wide) detected at line 2635
 []
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 10000) detected at line 2635
+ []
 
 
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
+Overfull \hbox (336.25pt too wide) detected at line 2635
 []
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
+Underfull \vbox (badness 10000) detected at line 2635
  []
 
 
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
-[94
-
-]
-Underfull \vbox (badness 10000) detected at line 2634
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 2634
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2634
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 2634
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2634
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 2634
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2634
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 2634
+Overfull \hbox (336.25pt too wide) detected at line 2635
 []
  []
 
@@ -2356,186 +2318,254 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[95
+[97
+
 
 ]
 
-[96]
-
-[97]
-
 [98]
-Underfull \vbox (badness 10000) detected at line 2824
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2824
- []
-
-
 
 [99]
 
 [100]
-File: bookdown_files/figure-latex/InfPriorPlot-1.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/InfPriorPlot-1.pdf>
+Underfull \vbox (badness 10000) detected at line 2827
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2827
+ []
+
 
 
 [101]
 
 [102]
+File: bookdown_files/figure-latex/InfPriorPlot-1.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/InfPriorPlot-1.pdf>
+
 
 [103]
 
 [104]
 
 [105]
-File: bookdown_files/figure-latex/HearnPlot-1.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/HearnPlot-1.pdf>
-
 
 [106]
 
 [107]
+File: bookdown_files/figure-latex/HearnPlot-1.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/HearnPlot-1.pdf>
+
 
 [108]
 
 [109]
 
 [110]
+Underfull \vbox (badness 10000) detected at line 3076
+ []
+
+
+Overfull \vbox (0.43208pt too high) detected at line 3076
+ []
+
+
 
 [111]
+
+[112]
+Underfull \vbox (badness 10000) detected at line 3158
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 3158
+ []
+
+
+
+[113]
 File: bookdown_files/figure-latex/BrowniePlot-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/BrowniePlot-1.pdf>
 File: bookdown_files/figure-latex/BrowniePlot-2.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/BrowniePlot-2.pdf>
 
-Overfull \hbox (2.22119pt too wide) in paragraph at lines 3160--3160
-[][] [] 
+Underfull \hbox (badness 10000) in paragraph at lines 3163--3163
+[][]
  []
 
 
 
-[112]
-
-[113]
-
 [114]
+Underfull \vbox (badness 10000) detected at line 3221
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 3221
+ []
+
+
 
 [115]
 
 [116]
-Underfull \vbox (badness 10000) detected at line 3416
- []
-
-
-Overfull \vbox (0.56007pt too high) detected at line 3416
- []
-
-
 
 [117]
-Underfull \vbox (badness 10000) detected at line 3416
+Underfull \vbox (badness 10000) detected at line 3299
  []
 
 
-Underfull \vbox (badness 10000) detected at line 3416
+Underfull \vbox (badness 10000) detected at line 3299
  []
 
 
 
 [118]
-Underfull \hbox (badness 10000) in paragraph at lines 3420--3420
-[][][][][]$[][][][][] [] [] [] [][][] [] [][][][][][][][][][] [] [][] [] [][] [] [][][][][][][][] [] [][][][][][][][][][][][][] [] [][][] [] [][][][] [][] [][][] [][] [][][][][][][] [][] [][][] [][]
- []
-
-
 
 [119]
-Underfull \hbox (badness 10000) detected at line 3432
- [][]
+Underfull \vbox (badness 10000) detected at line 3417
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3432
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3434
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3434
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3436
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3436
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3438
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3438
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3440
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3440
-[][][]
+Overfull \vbox (0.40007pt too high) detected at line 3417
  []
 
 
 
 [120]
-Underfull \vbox (badness 10000) detected at line 3444
+
+[121]
+Underfull \hbox (badness 10000) in paragraph at lines 3421--3421
+[][][][][]$[][][][][] [] [] [] [][][] [] [][][][][][][][][][] [] [][] [] [][] [] [][][][][][][][] [] [][][][][][][][][][][][][] [] [][][] [] [][][][] [][] [][][] [][] [][][][][][][] [][] [][][] [][]
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3444
+Underfull \hbox (badness 10000) detected at line 3433
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3433
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3435
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3435
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3437
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3437
+[][][]
+ []
+
+
+
+[122]
+Underfull \hbox (badness 10000) detected at line 3439
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3439
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3441
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3441
+[][][]
+ []
+
+
+
+[123]
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 3444
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3444
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 3444
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3444
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 3444
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
+[]
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3444
+Underfull \hbox (badness 10000) has occurred while \output is active
+ [][][][] 
+ []
+
+[124
+
+]
+Underfull \vbox (badness 10000) detected at line 3445
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 3445
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 3445
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 3445
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 3445
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 3445
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 3445
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 3445
 []
  []
 
@@ -2547,18 +2577,9 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[121
-
+[125
 
 ]
-
-[122]
-
-[123]
-
-[124]
-
-[125]
 
 [126]
 
@@ -2569,146 +2590,115 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [129]
 
 [130]
-Underfull \vbox (badness 10000) detected at line 3770
- []
-
-
-Overfull \vbox (0.77608pt too high) detected at line 3770
- []
-
-
 
 [131]
-File: bookdown_files/figure-latex/LnWtPlot-1.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/LnWtPlot-1.pdf>
-
-Underfull \hbox (badness 10000) detected at line 3799
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3799
-[][][]
- []
-
-
 
 [132]
-Underfull \hbox (badness 10000) detected at line 3801
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3801
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3803
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3803
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3805
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3805
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3807
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 3807
-[][][]
- []
-
-
 
 [133]
 
+[134]
+Underfull \vbox (badness 10000) detected at line 3773
+ []
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Underfull \vbox (badness 10000) detected at line 3773
+ []
 
 
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
+
+[135]
+File: bookdown_files/figure-latex/LnWtPlot-1.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/LnWtPlot-1.pdf>
+
+Underfull \hbox (badness 10000) detected at line 3802
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3802
+[][][]
+ []
+
+
+
+[136]
+Underfull \hbox (badness 10000) detected at line 3804
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3804
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3806
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3806
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3808
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3808
+[][][]
+ []
+
+
+
+[137]
+Underfull \hbox (badness 10000) detected at line 3810
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 3810
+[][][]
+ []
+
+
+
+[138]
+Underfull \vbox (badness 10000) detected at line 3814
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 3814
 []
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 10000) detected at line 3814
+ []
 
 
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
+Overfull \hbox (336.25pt too wide) detected at line 3814
 []
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 10000) detected at line 3814
+ []
 
 
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
+Overfull \hbox (336.25pt too wide) detected at line 3814
 []
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
+Underfull \vbox (badness 10000) detected at line 3814
  []
 
 
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
-[134
-
-]
-Underfull \vbox (badness 10000) detected at line 3811
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 3811
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 3811
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 3811
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 3811
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 3811
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 3811
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 3811
+Overfull \hbox (336.25pt too wide) detected at line 3814
 []
  []
 
@@ -2720,90 +2710,95 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[135
+[139
+
 
 ]
 
-[136]
-Underfull \vbox (badness 10000) detected at line 3912
- []
-
-
-Overfull \vbox (0.49608pt too high) detected at line 3912
- []
-
-
-
-[137]
-
-[138]
-
-[139]
-
 [140]
-File: bookdown_files/figure-latex/SRRPlot-1.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/SRRPlot-1.pdf>
+Underfull \vbox (badness 10000) detected at line 3916
+ []
+
+
+Overfull \vbox (0.49608pt too high) detected at line 3916
+ []
+
 
 
 [141]
 
 [142]
-Underfull \hbox (badness 10000) detected at line 4065
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 4065
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 4067
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 4067
-[][][]
- []
-
-
 
 [143]
 
 [144]
-Underfull \vbox (badness 10000) detected at line 4071
+File: bookdown_files/figure-latex/SRRPlot-1.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/SRRPlot-1.pdf>
+
+
+[145]
+Overfull \vbox (1.11469pt too high) detected at line 4062
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4071
+
+[146]
+Underfull \hbox (badness 10000) detected at line 4072
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 4072
+[][][]
+ []
+
+
+
+[147]
+Underfull \hbox (badness 10000) detected at line 4074
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 4074
+[][][]
+ []
+
+
+
+[148]
+Underfull \vbox (badness 10000) detected at line 4078
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 4078
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4071
+Underfull \vbox (badness 10000) detected at line 4078
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4071
+Overfull \hbox (336.25pt too wide) detected at line 4078
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4071
+Underfull \vbox (badness 10000) detected at line 4078
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4071
+Overfull \hbox (336.25pt too wide) detected at line 4078
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4071
+Underfull \vbox (badness 10000) detected at line 4078
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4071
+Overfull \hbox (336.25pt too wide) detected at line 4078
 []
  []
 
@@ -2815,134 +2810,148 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[145
+[149
 
 
 ]
 
-[146]
-
-[147]
-Underfull \vbox (badness 10000) detected at line 4236
- []
-
-
-Overfull \vbox (0.52008pt too high) detected at line 4236
- []
-
-
-
-[148]
-Underfull \vbox (badness 10000) detected at line 4236
- []
-
-
-Overfull \vbox (0.74408pt too high) detected at line 4236
- []
-
-
-
-[149]
-File: bookdown_files/figure-latex/TwoAgePlot-1.pdf Graphic file (type pdf)
-<use bookdown_files/figure-latex/TwoAgePlot-1.pdf>
-
-
 [150]
 
 [151]
-Underfull \vbox (badness 10000) detected at line 4343
+Underfull \vbox (badness 10000) detected at line 4243
  []
 
 
-Overfull \vbox (0.59207pt too high) detected at line 4343
+Underfull \vbox (badness 10000) detected at line 4243
  []
 
 
 
 [152]
+Underfull \vbox (badness 10000) detected at line 4243
+ []
+
+
+Overfull \vbox (0.56007pt too high) detected at line 4243
+ []
+
+
 
 [153]
+File: bookdown_files/figure-latex/TwoAgePlot-1.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/TwoAgePlot-1.pdf>
+File: bookdown_files/figure-latex/TwoAgePlot-2.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/TwoAgePlot-2.pdf>
+File: bookdown_files/figure-latex/TwoAgePlot-3.pdf Graphic file (type pdf)
+<use bookdown_files/figure-latex/TwoAgePlot-3.pdf>
+
+Underfull \hbox (badness 10000) in paragraph at lines 4248--4248
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4248--4248
+[]
+ []
+
+
 
 [154]
-Underfull \vbox (badness 10000) detected at line 4479
- []
-
-
-Overfull \vbox (0.48807pt too high) detected at line 4479
- []
-
-
 
 [155]
-Underfull \vbox (badness 10000) detected at line 4479
- []
-
-
-Underfull \vbox (badness 10000) detected at line 4479
- []
-
-
 
 [156]
+Underfull \vbox (badness 10000) detected at line 4351
+ []
+
+
+Overfull \vbox (0.77608pt too high) detected at line 4351
+ []
+
+
+
+[157]
+
+[158]
+Underfull \vbox (badness 10000) detected at line 4487
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 4487
+ []
+
+
+
+[159]
+Underfull \vbox (badness 10000) detected at line 4487
+ []
+
+
+Overfull \vbox (0.52008pt too high) detected at line 4487
+ []
+
+
+
+[160]
 File: bookdown_files/figure-latex/CAGEANPlot-1.pdf Graphic file (type pdf)
 <use bookdown_files/figure-latex/CAGEANPlot-1.pdf>
 
 
-[157]
-Underfull \hbox (badness 10000) detected at line 4498
+[161]
+Underfull \hbox (badness 10000) detected at line 4505
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4498
+Underfull \hbox (badness 10000) detected at line 4505
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4510
+Underfull \hbox (badness 10000) detected at line 4507
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4510
+Underfull \hbox (badness 10000) detected at line 4507
 [][][]
  []
 
 
 
-[158]
-Underfull \vbox (badness 10000) detected at line 4514
+[162]
+Underfull \vbox (badness 10000) detected at line 4511
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4514
+Overfull \hbox (336.25pt too wide) detected at line 4511
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4514
+Underfull \vbox (badness 10000) detected at line 4511
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4514
+Overfull \hbox (336.25pt too wide) detected at line 4511
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4514
+Underfull \vbox (badness 10000) detected at line 4511
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4514
+Overfull \hbox (336.25pt too wide) detected at line 4511
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4514
+Underfull \vbox (badness 10000) detected at line 4511
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4514
+Overfull \hbox (336.25pt too wide) detected at line 4511
 []
  []
 
@@ -2954,165 +2963,14 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[159
-
-
-]
-
-[160]
-Underfull \vbox (badness 10000) detected at line 4533
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 4533
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 4533
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 4533
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 4533
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 4533
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 4533
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 4533
-[]
- []
-
-Appendix A.
-(./bookdown.bbl
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
-[161
-
-
-
-]
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
-[162
-
-]
-Underfull \vbox (badness 10000) detected at line 1
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1
-[]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1
-[]
- []
-
-
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
 [163
+
 
 ]
 
 [164]
-Missing character: There is no ^^96 (U+0096) in font [lmroman10-regular]:mapping=tex-text;!
-
 
 [165]
-
-[166]
-
-[167]
-
-[168])
-
-[169]
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -3151,9 +3009,181 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[170
+[166
 
-] (./bookdown.ind
+]
+Underfull \vbox (badness 10000) detected at line 4534
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 4534
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 4534
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 4534
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 4534
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 4534
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 4534
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 4534
+[]
+ []
+
+Appendix A.
+
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+ [][][][] 
+ []
+
+[167
+
+
+]
+
+[168]
+
+[169]
+
+[170]
+
+[171]
+
+[172]
+
+[173]
+Underfull \vbox (badness 10000) detected at line 4822
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 4822
+ []
+
+
+
+[174]
+
+[175]
+Underfull \vbox (badness 10000) detected at line 4936
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 4936
+ []
+
+
+
+[176]
+Underfull \vbox (badness 10000) detected at line 4936
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 4936
+ []
+
+
+
+[177]
+
+[178]
+Underfull \vbox (badness 10000) detected at line 5026
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5026
+ []
+
+
+
+[179] (./bookdown.bbl
+
+[180]
+Underfull \vbox (badness 10000) detected at line 1
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 1
+[]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1
+[]
+ []
+
+
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+ [][][][] 
+ []
+
+[181
+
+
+]
+
+[182]
+Missing character: There is no ^^96 (U+0096) in font [lmroman10-regular]:mapping=tex-text;!
+
+
+[183]
+
+[184]
+
+[185]
+
+[186]
+
+[187])
+
+[188] (./bookdown.ind
 Underfull \hbox (badness 10000) detected at line 1
 []
  []
@@ -3167,18 +3197,19 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[171
+[189
+
 
 
 ]
 
 
 
-[172]
+[190]
 
 
 
-[173
+[191
 
 ])
 
@@ -3192,12 +3223,12 @@ L3 programming layer <2024-11-02>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 21002 strings out of 475964
- 395279 string characters out of 5776026
- 946481 words of memory out of 5000000
- 43479 multiletter control sequences out of 15000+600000
+ 21066 strings out of 475964
+ 397153 string characters out of 5776026
+ 950235 words of memory out of 5000000
+ 43541 multiletter control sequences out of 15000+600000
  563767 words of font info for 109 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 90i,8n,119p,2198b,596s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,8n,119p,2196b,622s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on bookdown.pdf (187 pages).
+Output written on bookdown.pdf (205 pages).

@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-12-22" />
+<meta name="date" content="2025-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="PopModels.html"/>
-<link rel="next" href="title-placeholder.html"/>
+<link rel="next" href="real-data-examples.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -144,9 +144,9 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="Abundance.html"><a href="Abundance.html"><i class="fa fa-check"></i><b>5</b> Abundance</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
-<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#mark-recapture"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
-<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#binomial-mixture"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
+<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#Removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
+<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#MarkRecap"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
+<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#NMix"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
 <li class="chapter" data-level="5.4" data-path="Abundance.html"><a href="Abundance.html#exercises-2"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="Survival.html"><a href="Survival.html"><i class="fa fa-check"></i><b>6</b> Survival</a>
@@ -195,7 +195,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="FinalThoughts.html"><a href="FinalThoughts.html"><i class="fa fa-check"></i><b>11</b> Final Thoughts</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
+<li class="chapter" data-level="A" data-path="real-data-examples.html"><a href="real-data-examples.html"><i class="fa fa-check"></i><b>A</b> Real-data examples</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="real-data-examples.html"><a href="real-data-examples.html#RemovalRealData"><i class="fa fa-check"></i><b>A.1</b> Abundance: Removal</a></li>
+<li class="chapter" data-level="A.2" data-path="real-data-examples.html"><a href="real-data-examples.html#MarkRecapRealData"><i class="fa fa-check"></i><b>A.2</b> Abundance: Mark-recapture</a></li>
+<li class="chapter" data-level="A.3" data-path="real-data-examples.html"><a href="real-data-examples.html#AgeCompRealData"><i class="fa fa-check"></i><b>A.3</b> Survival: Age-composition</a></li>
+<li class="chapter" data-level="A.4" data-path="real-data-examples.html"><a href="real-data-examples.html#BrownieSurvivalRealData"><i class="fa fa-check"></i><b>A.4</b> Survival: Tag-based</a></li>
+<li class="chapter" data-level="A.5" data-path="real-data-examples.html"><a href="real-data-examples.html#vonBertRealData"><i class="fa fa-check"></i><b>A.5</b> Growth: age-length</a></li>
+<li class="chapter" data-level="A.6" data-path="real-data-examples.html"><a href="real-data-examples.html#Recruit-FitRealData"><i class="fa fa-check"></i><b>A.6</b> Recruitment: Beverton-Holt curve</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
@@ -219,10 +227,12 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="FinalThoughts" class="section level1 hasAnchor" number="11">
 <h1><span class="header-section-number">Chapter 11</span> Final Thoughts<a href="FinalThoughts.html#FinalThoughts" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>If you made it this far, a few themes should be apparent. The first is the important role of simulation in planning and conducting field research. Even writing the code to simulate a field study forces one to think about the design and parameters such as sample size that are under the investigator’s control. Once the combined code for simulation and analysis is working, runs under different settings can show what is required to obtain useful results, at least for the simulated (ideal) case. The simulations and models used in this book can also be extended to include additional sources of error, such as ageing error or tag loss. This planning approach will also require some thought about what <em>is</em> a useful result, for example, a tolerable credible interval width or mean relative error. Upfront simulation and planning improves the odds of a successful field study, or perhaps prevents a waste of time and money conducting a study that would not be address management needs.</p>
-<p>Another theme has been the value of JAGS in constructing and fitting fisheries models. In my experience, BUGS-family code has been a valuable teaching tool, helping students visualize the models and how parameter estimates are obtained. Writing and running JAGS code is vastly superior to a black-box analysis from a learning perspective. From a research perspective, JAGS code can be tailored to the specific characteristics of a field study. Examples in this book hopefully have illustrated how auxiliary studies can be folded into a Bayesian analysis to improve parameter estimates. JAGS software is still popular and being actively developed but there are a number of options for Bayesian analysis <span class="citation">(<a href="#ref-strumbelj.etal_2024">Štrumbelj et al. 2024</a>)</span>. A new book by <span class="citation">Kéry and Kellner (<a href="#ref-kery.kellner_2024">2024</a>)</span> on Bayesian model fitting using JAGS, Nimble, and Stan, should be a good resource for exploring the strengths and weaknesses of those software packages. In any case, experience with JAGS should provide a strong foundation for future fisheries work, even if Bayesian analyses transition to next-generation software.</p>
-<p>This is intended to be an introductory text, so some important topics were not covered or only mentioned in passing. The binomial-mixture model (Section <a href="#Binomial-mixture"><strong>??</strong></a> is a simple example of a hierarchical model, but the approach is much broader. Hierarchical modeling can be used to separate the observation process from the underlying ecological process (latent state) that is of primary interest <span class="citation">(<a href="#ref-royle.dorazio_2008">Royle and Dorazio 2008</a>)</span>. For example, <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2011">2011</a>)</span> illustrate this approach in a hierarchical population model for ibex (<em>Capra ibex</em>). Annual counts include both process error and observation error so a model that separates the two error sources provides more biologically relevant estimates of population parameters <span class="citation">(<a href="#ref-kéry.schaub_2011">Kéry and Schaub 2011</a>)</span>. Recent publications using Bayesian hierarchical models seem to be predominately based on terrestrial studies but the concepts and analytical methods are entirely transferrable to fisheries systems.</p>
-<p>One of the typical responsibilities of a fishery biologist is to make recommendations or decisions in the face of uncertainty. The focus for this book has been on estimating population parameters, including measures of uncertainty. The next step, and one not addressed in this book, is to use the population parameters to explore management options. For example, a harvest model might be used to explore the potential benefits of harvest regulation. The harvest model will depend on information about growth (Chapter <a href="Growth.html#Growth">8</a>, fishing and natural mortality (Chapter <a href="Mortality.html#Mortality">7</a>, and possibly recruitment (Chapter <a href="Recruit.html#Recruit">9</a>. The harvest model could be constructed within an IPM (Chapter <a href="PopModels.html#PopModels">10</a>, so that the uncertainty associated with the various population parameters would not be lost <span class="citation">(e.g., <a href="#ref-doll.etal_2021">Doll et al. 2021</a>)</span>. For a commercial fishery, the harvest model would typically be in terms of weight, corresponding to how income is derived. The model could be used to examine the potential gains and losses from management options such as a quota or seasonal closure. For a recreational fishery, a harvest model might focus on numbers (catch rate) rather than weight, or on the proportion of fish within “memorable” and “trophy” size ranges <span class="citation">(<a href="#ref-doll.etal_2021">Doll et al. 2021</a>)</span>. Management for a recreational fishery is more likely to use creel and size regulations and could, for example, compare the benefits of various minimum and slot size limits.</p>
+<p>If you made it this far, a few themes should be apparent. The first is the important role of simulation in planning and conducting field research. Even writing the code to simulate a field study forces one to think about the design and parameters such as sample size that are under the investigator’s control. Once the combined code for simulation and analysis is working, runs under different settings can show what is required to obtain useful results, at least for the simulated (ideal) case. The simulations and models used in this book can also be extended to include additional sources of error, such as ageing error or non-reporting or shedding of tags. This planning approach will also require some thought about what <em>is</em> a useful result, for example, a tolerable credible interval width or relative error (<span class="math inline">\(\frac{\hat{\delta}-\delta}{\delta}\)</span>). Upfront simulation and planning improves the odds of a successful field study, or perhaps prevents a waste of time and money conducting a study that would not be address management needs.</p>
+<p>Another theme has been the value of JAGS in constructing and fitting fisheries models. In my experience, BUGS-family code is a valuable teaching tool, helping students visualize the models and how parameter estimates are obtained. Writing and running JAGS code is vastly superior to a black-box analysis from a learning perspective. From a research perspective, JAGS code can be tailored to the specific characteristics of a field study. Examples in this book hopefully have illustrated how auxiliary studies can be folded into a Bayesian analysis to improve parameter estimates. JAGS software is still popular and being actively developed but there are now a number of options for Bayesian analysis <span class="citation">(<a href="#ref-strumbelj.etal_2024">Štrumbelj et al. 2024</a>)</span>. A new book by <span class="citation">Kéry and Kellner (<a href="#ref-kery.kellner_2024">2024</a>)</span> on Bayesian model fitting using JAGS, Nimble, and Stan should be a good resource for exploring the strengths and weaknesses of those software packages. In any case, experience with JAGS should provide a strong foundation for future fisheries modeling, even if Bayesian analyses transition to next-generation software.</p>
+<p>A third theme is the importance of learning by doing. Ideally, this includes not only writing code for simulation and analysis but also carrying out the field work that builds experience and ecological intuition. Within the scope of this book, learning by doing means running and modifying code in order to understand fully how each analysis works. JAGS and especially R code can sometimes be cryptic, so I have encouraged running sections of code or even parts of a line of code in order to gain understanding. One of the best things about recent books on Bayesian analysis is the routine inclusion of code. Seeing, running and modifying the code is a great help in understanding how these models work.</p>
+<p>This is intended to be an introductory text, so some important topics were not covered or only mentioned in passing. The binomial-mixture model (Section <a href="Abundance.html#NMix">5.3</a>) is a simple example of a hierarchical model, but the approach is much broader. Hierarchical modeling can be used to separate the observation process from the underlying ecological process (latent state) that is of primary interest <span class="citation">(<a href="#ref-royle.dorazio_2008">Royle and Dorazio 2008</a>)</span>. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2012">2012</a>)</span> illustrate this approach in a hierarchical population model for ibex (<em>Capra ibex</em>). Annual counts include both process error and observation error so a model that separates the two error sources provides more biologically relevant estimates of population parameters <span class="citation">(<a href="#ref-kéry.schaub_2012">Kéry and Schaub 2012</a>)</span>. Recent publications using Bayesian hierarchical models have often been terrestrial studies <span class="citation">(e.g., <a href="#ref-johnson.etal_2010">Johnson et al. 2010</a>)</span> but the concepts and analytical methods are entirely transferrable to fisheries systems.</p>
+<p>I have also not included some traditional fisheries models, such as the biomass dynamic or surplus production models that have been widely used for fish stock assessment <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span>. These models have been popular because they are simple, require limited data, and provide an estimate of maximum sustainable yield. Early versions often assumed equilibrium conditions that were rarely met <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span>. Recent versions using non-equilibrium models <span class="citation">(<a href="#ref-meyer.millar_1999">Meyer and Millar 1999</a>; <a href="#ref-winker.etal_2018">Winker, Carvalho, and Kapur 2018</a>)</span> illustrate the potential of a Bayesian analysis, including a state-space formulation for sorting out observation and process error and use of informative priors.</p>
+<p>Another general fisheries topic not covered is yield or harvest modeling. We have focused on estimating population parameters, so the logical next step would be to use those parameter estimates to explore management options. For example, a yield model might be used to explore the potential benefits of regulation. The yield model would use information about fishing and natural mortality (Chapter <a href="Mortality.html#Mortality">7</a>), growth (Chapter <a href="Growth.html#Growth">8</a>), and possibly recruitment (Chapter <a href="Recruit.html#Recruit">9</a>). The yield model could be constructed within an IPM (Chapter <a href="PopModels.html#PopModels">10</a>), so that the uncertainty associated with the various population parameters would not be lost. For a commercial fishery, the yield model would typically be in terms of weight, corresponding to how income is derived. The model could be used to examine the potential gains and losses from management options such as a quota or seasonal closure. For a recreational fishery, a yield model might focus on numbers (catch rate) rather than weight, or on the proportion of fish within “memorable” and “trophy” size ranges. Management for a recreational fishery is more likely to use creel and size regulations than quotas and could, for example, compare the benefits of various minimum and slot size limits. A recent article by <span class="citation">Doll et al. (<a href="#ref-doll.etal_2021">2021</a>)</span> perfectly illustrates these concepts using a Bayesian IPM fitted with JAGS.</p>
 <p><span class="citation">Kéry (<a href="#ref-kéry_2010">2010</a>)</span> closed his book with a prediction that, for many readers, WinBUGS will have “changed forever the way in which you think about, and conduct, statistical modeling.” WinBUGS certainly started that process for me, followed by other BUGS-family variants including JAGS. It will be interesting to see the future contributions of Bayesian software packages to fisheries science and management.</p>
 
 </div>
@@ -232,22 +242,34 @@ div.csl-indent {
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-doll.etal_2021" class="csl-entry">
-Doll, Jason C., Chris J. Wood, David W. Goodfred, and Jacob M. Rash. 2021. <span>“Incorporating <span>Batch Mark</span>–<span>Recapture Data</span> into an <span>Integrated Population Model</span> of <span>Brown Trout</span>.”</span> <em>North American Journal of Fisheries Management</em> 41 (5): 1390–1407. <a href="https://doi.org/10.1002/nafm.10650">https://doi.org/10.1002/nafm.10650</a>.
+Doll, Jason C., Chris J. Wood, David W. Goodfred, and Jacob M. Rash. 2021. <span>“Incorporating Batch Mark–Recapture Data into an Integrated Population Model of Brown Trout.”</span> <em>North American Journal of Fisheries Management</em> 41 (5): 1390–1407. <a href="https://doi.org/10.1002/nafm.10650">https://doi.org/10.1002/nafm.10650</a>.
+</div>
+<div id="ref-hilborn.walters_1992" class="csl-entry">
+Hilborn, Ray, and Carl J. Walters. 1992. <em>Quantitative <span>Fisheries Stock Assessment</span></em>. Boston, MA: Springer US. <a href="https://doi.org/10.1007/978-1-4615-3598-0">https://doi.org/10.1007/978-1-4615-3598-0</a>.
+</div>
+<div id="ref-johnson.etal_2010" class="csl-entry">
+Johnson, Heather E., L. Scott Mills, John D. Wehausen, and Thomas R. Stephenson. 2010. <span>“Combining Ground Count, Telemetry, and Mark–Resight Data to Infer Population Dynamics in an Endangered Species.”</span> <em>Journal of Applied Ecology</em> 47 (5): 1083–93. <a href="https://doi.org/10.1111/j.1365-2664.2010.01846.x">https://doi.org/10.1111/j.1365-2664.2010.01846.x</a>.
 </div>
 <div id="ref-kéry_2010" class="csl-entry">
 Kéry, Marc. 2010. <em>Introduction to <span>WinBUGS</span> for <span>Ecologists</span>: <span>Bayesian</span> Approach to Regression, <span>ANOVA</span>, Mixed Models and Related Analyses</em>. 1st ed. Amsterdam: Academic Press.
 </div>
 <div id="ref-kery.kellner_2024" class="csl-entry">
-Kéry, Marc, and Kenneth Kellner. 2024. <em>Applied <span>Statistical Modelling</span> for <span>Ecologists</span></em>. 1st ed.
+Kéry, Marc, and Kenneth Kellner. 2024. <em>Applied <span>Statistical Modelling</span> for <span>Ecologists</span></em>. 1st ed. Amsterdam: Elsevier.
 </div>
-<div id="ref-kéry.schaub_2011" class="csl-entry">
-Kéry, Marc, and Michael Schaub. 2011. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st ed. Amsterdam: Academic Press.
+<div id="ref-kéry.schaub_2012" class="csl-entry">
+Kéry, Marc, and Michael Schaub. 2012. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st ed. Amsterdam: Academic Press.
+</div>
+<div id="ref-meyer.millar_1999" class="csl-entry">
+Meyer, Renate, and Russell B. Millar. 1999. <span>“<span>BUGS</span> in <span>Bayesian</span> Stock Assessments.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 56 (6): 1078–87.
 </div>
 <div id="ref-royle.dorazio_2008" class="csl-entry">
 Royle, J. Andrew, and Robert M. Dorazio. 2008. <em>Hierarchical Modeling and Inference in Ecology: <span>The</span> Analysis of Data from Populations, Metapopulations and Communities</em>. 1st ed. Amsterdam: Academic Press.
 </div>
 <div id="ref-strumbelj.etal_2024" class="csl-entry">
-Štrumbelj, Erik, Alexandre Bouchard-Côté, Jukka Corander, Andrew Gelman, Håvard Rue, Lawrence Murray, Henri Pesonen, Martyn Plummer, and Aki Vehtari. 2024. <span>“Past, <span>Present</span> and <span>Future</span> of <span>Software</span> for <span>Bayesian Inference</span>.”</span> <em>Statistical Science</em> 39 (1): 46–61. <a href="https://doi.org/10.1214/23-STS907">https://doi.org/10.1214/23-STS907</a>.
+Štrumbelj, Erik, Alexandre Bouchard-Côté, Jukka Corander, Andrew Gelman, Håvard Rue, Lawrence Murray, Henri Pesonen, Martyn Plummer, and Aki Vehtari. 2024. <span>“Past, Present and Future of Software for <span>Bayesian</span> Inference.”</span> <em>Statistical Science</em> 39 (1): 46–61. <a href="https://doi.org/10.1214/23-STS907">https://doi.org/10.1214/23-STS907</a>.
+</div>
+<div id="ref-winker.etal_2018" class="csl-entry">
+Winker, Henning, Felipe Carvalho, and Maia Kapur. 2018. <span>“<span>JABBA</span>: <span>Just Another Bayesian Biomass Assessment</span>.”</span> <em>Fisheries Research</em> 204 (August): 275–88. <a href="https://doi.org/10.1016/j.fishres.2018.03.010">https://doi.org/10.1016/j.fishres.2018.03.010</a>.
 </div>
 </div>
             </section>
@@ -256,7 +278,7 @@ Royle, J. Andrew, and Robert M. Dorazio. 2008. <em>Hierarchical Modeling and Inf
         </div>
       </div>
 <a href="PopModels.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="title-placeholder.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="real-data-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -310,6 +332,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

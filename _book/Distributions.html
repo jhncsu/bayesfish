@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2024-12-21" />
+<meta name="date" content="2025-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -208,9 +208,9 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="Abundance.html"><a href="Abundance.html"><i class="fa fa-check"></i><b>5</b> Abundance</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
-<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#mark-recapture"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
-<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#binomial-mixture"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
+<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#Removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
+<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#MarkRecap"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
+<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#NMix"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
 <li class="chapter" data-level="5.4" data-path="Abundance.html"><a href="Abundance.html#exercises-2"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="Survival.html"><a href="Survival.html"><i class="fa fa-check"></i><b>6</b> Survival</a>
@@ -257,8 +257,17 @@ div.csl-indent {
 <li class="chapter" data-level="10.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>10.2</b> Full age-structured model</a></li>
 <li class="chapter" data-level="10.3" data-path="PopModels.html"><a href="PopModels.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="FinalThoughts.html"><a href="FinalThoughts.html"><i class="fa fa-check"></i><b>11</b> Final Thoughts</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="title-placeholder.html"><a href="title-placeholder.html"><i class="fa fa-check"></i><b>A</b> Title Placeholder</a></li>
+<li class="chapter" data-level="A" data-path="real-data-examples.html"><a href="real-data-examples.html"><i class="fa fa-check"></i><b>A</b> Real-data examples</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="real-data-examples.html"><a href="real-data-examples.html#RemovalRealData"><i class="fa fa-check"></i><b>A.1</b> Abundance: Removal</a></li>
+<li class="chapter" data-level="A.2" data-path="real-data-examples.html"><a href="real-data-examples.html#MarkRecapRealData"><i class="fa fa-check"></i><b>A.2</b> Abundance: Mark-recapture</a></li>
+<li class="chapter" data-level="A.3" data-path="real-data-examples.html"><a href="real-data-examples.html#AgeCompRealData"><i class="fa fa-check"></i><b>A.3</b> Survival: Age-composition</a></li>
+<li class="chapter" data-level="A.4" data-path="real-data-examples.html"><a href="real-data-examples.html#BrownieSurvivalRealData"><i class="fa fa-check"></i><b>A.4</b> Survival: Tag-based</a></li>
+<li class="chapter" data-level="A.5" data-path="real-data-examples.html"><a href="real-data-examples.html#vonBertRealData"><i class="fa fa-check"></i><b>A.5</b> Growth: age-length</a></li>
+<li class="chapter" data-level="A.6" data-path="real-data-examples.html"><a href="real-data-examples.html#Recruit-FitRealData"><i class="fa fa-check"></i><b>A.6</b> Recruitment: Beverton-Holt curve</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
@@ -348,7 +357,7 @@ FIGURE 3.1: Summary bar plot of coin tosses.
 <span id="cb6-7"><a href="Distributions.html#cb6-7" tabindex="-1"></a>Clubs</span>
 <span id="cb6-8"><a href="Distributions.html#cb6-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
 <span id="cb6-9"><a href="Distributions.html#cb6-9" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span></code></pre></div>
-<p>Each of the thirty observations now represents a trial size of 5 (in total, a simulation equivalent to 150 Bernoulli trials). Only part of the Clubs vector is visible in the Environment window but we can put Clubs as a line of code to print the whole vector in the Console. We again summarize the counts and plot the results using the <code>barplot()</code> function. Run this block of code multiple times to get some insight into the variability of the simulated system. For example, how often do you observe 0 or 5 Clubs? Which outcome(s) occurs most often (mode) and how frequently does the mode change?</p>
+<p>Each of the thirty observations now represents a trial size of 5 (in total, a simulation equivalent to 150 Bernoulli trials). Only part of the Clubs vector is visible in the Environment window but we can put Clubs as a line of code to print the whole vector in the Console. We again summarize the counts and plot the results using the <code>barplot()</code> function. Run this block of code multiple times to get some insight into the variability of the simulated system. For example, how often do you observe 0 or 5 Clubs? Which outcome occurs most often (mode) and how frequently does the mode change?</p>
 <p>We would expect to observe very few trials with 5 successes, because the probability is quite low (0.25<sup>5</sup>=0.001). We can calculate it in the Console, by entering the expression 0.25^5. There is a higher probability of 0 successes (0.24), which can be calculated as 0.75^5 or (1-p)<sup>5</sup>, because 1-p is the probability of failure (not getting a club). It is more involved to calculate the probabilities of 1-4 successes because they can be obtained multiple ways (e.g., 1 success can be obtained five ways (10000, 01000, 00100, 00010, 00001). We could calculate those probabilities using the binomial probability distribution: <span class="math inline">\(f(k) = {n \choose k} p^{k} (1-p)^{n-k}\)</span>, where k is the number of successes in a trial of size n. R code for this calculation uses the <code>choose()</code> function; for example, <code>choose(Trial.size,0) * p^0 * (1-p)^5</code> calculates the probability of 0 clubs in five draws. We could get an approximate (“brute force”) estimate of the probabilities by increasing N.trials to a large value (say 10,000) and dividing the Counts vector by N.trials to estimate at the proportion of trials resulting in 0, 1,…5 successes:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="Distributions.html#cb7-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
 <span id="cb7-2"><a href="Distributions.html#cb7-2" tabindex="-1"></a></span>
@@ -360,7 +369,7 @@ FIGURE 3.1: Summary bar plot of coin tosses.
 <span id="cb7-8"><a href="Distributions.html#cb7-8" tabindex="-1"></a>Counts <span class="ot">&lt;-</span> <span class="fu">table</span>(Clubs)</span>
 <span id="cb7-9"><a href="Distributions.html#cb7-9" tabindex="-1"></a><span class="fu">barplot</span>(Counts)</span>
 <span id="cb7-10"><a href="Distributions.html#cb7-10" tabindex="-1"></a>Counts<span class="sc">/</span>N.trials <span class="co"># Vector division - probabilities of 0-5 Clubs</span></span></code></pre></div>
-<p>Note that we used a pound sign to turn off (“comment out”) the line for printing the Clubs vector to the Console, and print to the Console the estimated probabilities. Dividing the Counts vector by a constant produces a vector of estimated probabilities. The mode of our simulated distribution is in agreement with the expected value (trial size * p), as are the estimated probabilities for 0 and 5 clubs.</p>
+<p>Note that we use a pound sign to turn off (“comment out”) the line for printing the Clubs vector to the Console, and print to the Console the estimated probabilities. Dividing the Counts vector by a constant produces a vector of estimated probabilities. The mode of our simulated distribution is in agreement with the expected value (trial size * p), as are the estimated probabilities for 0 and 5 clubs.</p>
 </div>
 <div id="Multinomial" class="section level3 hasAnchor" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> Multinomial<a href="Distributions.html#Multinomial" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -371,9 +380,11 @@ FIGURE 3.1: Summary bar plot of coin tosses.
 <span id="cb8-3"><a href="Distributions.html#cb8-3" tabindex="-1"></a>x <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>)  <span class="co"># Generated using die, equal cell probabilities</span></span>
 <span id="cb8-4"><a href="Distributions.html#cb8-4" tabindex="-1"></a>SampleSize <span class="ot">&lt;-</span> <span class="fu">sum</span>(x)</span>
 <span id="cb8-5"><a href="Distributions.html#cb8-5" tabindex="-1"></a><span class="fu">barplot</span>(x)</span></code></pre></div>
-<p>Here R calculates the sample size (SampleSize), even though we know in this instance that there were 10 rolls. The <code>barplot()</code> function generates the plot but without any labels is not very appealing. We can dress it up a bit by adding some options (Figure <a href="Distributions.html#fig:dieRoll">3.2</a>). We first create a vector with values 1-6 to serve as x-axis labels (<code>seq()</code> function, from 1 to 6 by 1). Then we use the names.arg option to add the labels, and add x and y axis titles using xlab and ylab respectively.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="Distributions.html#cb9-1" tabindex="-1"></a>x.labels <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">6</span>, <span class="at">by=</span><span class="dv">1</span>)  <span class="co"># x axis labels for plotting</span></span>
-<span id="cb9-2"><a href="Distributions.html#cb9-2" tabindex="-1"></a><span class="fu">barplot</span>(x, <span class="at">names.arg=</span>x.labels, <span class="at">xlab=</span><span class="st">&quot;Die side&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of rolls&quot;</span>)</span></code></pre></div>
+<p>Here R calculates the sample size (SampleSize), even though we know in this instance that there were 10 rolls. The <code>barplot()</code> function generates the plot but without any labels is not very appealing. We can dress it up a bit by adding some options (Figure <a href="Distributions.html#fig:dieRoll">3.2</a>). We first create a vector with values 1-6 to serve as x-axis labels (<code>seq()</code> function, from 1 to 6 by 1). The <code>barplot()</code> function uses the names.arg option to add the labels, with axis titles added using xlab and ylab. The final option <code>yaxt=“n”</code> suppresses the y-axis. Normally the default plotting options are fine, but adding the y axis as a separate step with the <code>axis()</code> function allows us to use integer labels (given that the number of rolls will only be a whole number). The <code>axis()</code> arguments specify that the axis is added to the left side of the plot (side=2) and provide the vector of tick-mark positions. One general note about plotting is that only base R plots are used in this book. They are sufficient for our purposes, but fancier plots can be produced using graphical packages such as <strong>lattice</strong> and <strong>ggplot2</strong>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="Distributions.html#cb9-1" tabindex="-1"></a>x.labels <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="dv">6</span>, <span class="at">by=</span><span class="dv">1</span>) <span class="co"># x axis labels for plotting</span></span>
+<span id="cb9-2"><a href="Distributions.html#cb9-2" tabindex="-1"></a><span class="fu">barplot</span>(x, <span class="at">names.arg=</span>x.labels, <span class="at">xlab=</span><span class="st">&quot;Die side&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of rolls&quot;</span>,</span>
+<span id="cb9-3"><a href="Distributions.html#cb9-3" tabindex="-1"></a>        <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb9-4"><a href="Distributions.html#cb9-4" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">3</span>, <span class="at">by=</span><span class="dv">1</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:dieRoll"></span>
 <img src="bookdown_files/figure-html/dieRoll-1.png" alt="Summary bar plot of die rolls." width="90%" />
 <p class="caption">
@@ -402,7 +413,7 @@ FIGURE 3.2: Summary bar plot of die rolls.
 </div>
 <div id="PoissonDist" class="section level3 hasAnchor" number="3.1.4">
 <h3><span class="header-section-number">3.1.4</span> Poisson<a href="Distributions.html#PoissonDist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Like the Bernoulli, binomial, and multinomial distributions, the Poisson and negative binomial distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two) whereas the Poisson and negative binomial distributions do not. The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually <span class="math inline">\(\lambda\)</span>, which represents the mean and variance of the distribution. Fisheries examples of a Poisson distribution could be the number of fish per day moving upstream via a fish ladder, or the number caught per trawl tow.</p>
+<p>Like the Bernoulli, binomial, and multinomial distributions, the Poisson and negative binomial distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two) whereas the Poisson and negative binomial distributions do not. The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually <span class="math inline">\(\lambda\)</span>, which represents the mean and variance of the distribution. Fisheries examples of a Poisson distribution could be the number of fish per hour moving upstream via a fish ladder, or the number caught per trawl tow.</p>
 <p>Our simulation uses an arbitrary value for <span class="math inline">\(\lambda\)</span>. The <code>rpois()</code> function has two arguments: sample size (n) and lambda, representing the mean and variance of the distribution.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="Distributions.html#cb11-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
 <span id="cb11-2"><a href="Distributions.html#cb11-2" tabindex="-1"></a></span>
@@ -446,9 +457,9 @@ FIGURE 3.2: Summary bar plot of die rolls.
 <span id="cb13-12"><a href="Distributions.html#cb13-12" tabindex="-1"></a><span class="fu">var</span>(Count)</span></code></pre></div>
 <p>This distribution has the same mean as in the Poisson example but tends to have a longer tail (occasional large counts). Rerun the code using different values for k; for example, Figure <a href="Distributions.html#fig:NB-vary-k">3.3</a> uses a sample size of 200 to compare results for k=1 and k=10, each with <span class="math inline">\(\mu\)</span>=4.</p>
 <div class="figure"><span style="display:block;" id="fig:NB-vary-k"></span>
-<img src="bookdown_files/figure-html/NB-vary-k-1.png" alt="Negative binomial frequency distributions for mu=4 and k=1 (left) or 10 (right)." width="50%" /><img src="bookdown_files/figure-html/NB-vary-k-2.png" alt="Negative binomial frequency distributions for mu=4 and k=1 (left) or 10 (right)." width="50%" />
+<img src="bookdown_files/figure-html/NB-vary-k-1.png" alt="Negative binomial frequency distributions for mu=4 and k=1 (top) or 10 (bottom)." width="90%" /><img src="bookdown_files/figure-html/NB-vary-k-2.png" alt="Negative binomial frequency distributions for mu=4 and k=1 (top) or 10 (bottom)." width="90%" />
 <p class="caption">
-FIGURE 3.3: Negative binomial frequency distributions for mu=4 and k=1 (left) or 10 (right).
+FIGURE 3.3: Negative binomial frequency distributions for mu=4 and k=1 (top) or 10 (bottom).
 </p>
 </div>
 </div>
@@ -465,7 +476,7 @@ FIGURE 3.3: Negative binomial frequency distributions for mu=4 and k=1 (left) or
 <span id="cb14-4"><a href="Distributions.html#cb14-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span>Reps)<span class="co"># Default range of 0-1. Can specify using min, max</span></span>
 <span id="cb14-5"><a href="Distributions.html#cb14-5" tabindex="-1"></a><span class="fu">hist</span>(p, <span class="at">breaks=</span><span class="dv">5</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>Try running the code several times and note the variation in pattern from one simulation run to the next. I use the breaks=5 option in the <code>hist()</code> function so that the histogram bin intervals are stable among runs. Specifying a null character string for “main=” prevents the plot from including a main title. Next, increase the sample size and note the increased smoothness of the observed distribution. What would be the expected mean of the distribution? Estimate the mean and compare the observed and expected value among runs.</p>
-<p>As noted above, the <code>runif()</code> function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval; for example, <code>runif(n=Reps, min=0.3, max=0.4)</code>. The <code>runif()</code> function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.</p>
+<p>As noted above, the <code>runif()</code> function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval, for example, <code>runif(n=Reps, min=0.3, max=0.4)</code>. The <code>runif()</code> function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.</p>
 </div>
 <div id="BetaDist" class="section level3 hasAnchor" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Beta<a href="Distributions.html#BetaDist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -484,7 +495,7 @@ FIGURE 3.4: Histograms for 200 random draws from a beta distribution, with alpha
 <span id="cb15-5"><a href="Distributions.html#cb15-5" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb15-6"><a href="Distributions.html#cb15-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="at">n=</span>Reps, <span class="at">shape1=</span>alpha, <span class="at">shape2=</span>beta)</span>
 <span id="cb15-7"><a href="Distributions.html#cb15-7" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Probability&quot;</span>)</span></code></pre></div>
-<p>After running the above code multiple times, try a beta(8, 4) distribution. These parameter values could result from a pilot study with seven successes in ten trials (<span class="math inline">\(\alpha\)</span>=7+1, <span class="math inline">\(\beta\)</span>=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a fisheries situation where probabilities would be expected to be close to 0 or close to 1?</p>
+<p>After running the above code multiple times, try a beta(8, 4) distribution. These parameter values could result from a pilot study with seven successes in ten trials (<span class="math inline">\(\alpha\)</span>=7+1, <span class="math inline">\(\beta\)</span>=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a fisheries situation where probabilities would be expected to be close to 0 or 1?</p>
 </div>
 <div id="NormalDist" class="section level3 hasAnchor" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Normal<a href="Distributions.html#NormalDist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -499,7 +510,7 @@ FIGURE 3.4: Histograms for 200 random draws from a beta distribution, with alpha
 </div>
 <div id="LognormalDist" class="section level3 hasAnchor" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Lognormal<a href="Distributions.html#LognormalDist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The lognormal distribution (bounds 0, <span class="math inline">\(\infty\)</span>) is useful in ecological settings because it excludes negative values and allows for a long upper tail. A classic fisheries example of a lognormal distribution is annual recruitment for marine fish species (number of young entering the population). Most years result in low recruitment but there are occasional extreme values when environmental conditions are right.</p>
+<p>The lognormal distribution (bounds 0, <span class="math inline">\(\infty\)</span>) is useful in ecological settings because it excludes negative values and allows for a long upper tail. A classic fisheries example of a lognormal distribution is annual recruitment for marine fish species <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span>. Most years result in low recruitment but there are occasional extreme values when environmental conditions are right.</p>
 <p>We begin with simulation code:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="Distributions.html#cb17-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
 <span id="cb17-2"><a href="Distributions.html#cb17-2" tabindex="-1"></a></span>
@@ -510,16 +521,16 @@ FIGURE 3.4: Histograms for 200 random draws from a beta distribution, with alpha
 <span id="cb17-7"><a href="Distributions.html#cb17-7" tabindex="-1"></a></span>
 <span id="cb17-8"><a href="Distributions.html#cb17-8" tabindex="-1"></a><span class="fu">hist</span>(y, <span class="at">main=</span><span class="st">&quot;Lognormal distribution&quot;</span>)</span>
 <span id="cb17-9"><a href="Distributions.html#cb17-9" tabindex="-1"></a>Exp.mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(ln.m<span class="sc">+</span>(ln.v<span class="sc">/</span><span class="dv">2</span>)) <span class="co"># Arithmetic scale expected mean</span></span>
-<span id="cb17-10"><a href="Distributions.html#cb17-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>Exp.mean, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb17-10"><a href="Distributions.html#cb17-10" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>Exp.mean, <span class="at">lty=</span><span class="dv">3</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span>
 <span id="cb17-11"><a href="Distributions.html#cb17-11" tabindex="-1"></a>Exp.var <span class="ot">&lt;-</span> (<span class="fu">exp</span>(<span class="dv">2</span><span class="sc">*</span>ln.m<span class="sc">+</span>ln.v))<span class="sc">*</span>(<span class="fu">exp</span>(ln.v)<span class="sc">-</span><span class="dv">1</span>) </span>
 <span id="cb17-12"><a href="Distributions.html#cb17-12" tabindex="-1"></a>  <span class="co"># Arithmetic scale expected variance</span></span>
 <span id="cb17-13"><a href="Distributions.html#cb17-13" tabindex="-1"></a><span class="fu">mean</span>(y)</span>
 <span id="cb17-14"><a href="Distributions.html#cb17-14" tabindex="-1"></a><span class="fu">var</span>(y)</span></code></pre></div>
-<p>The <code>rlnorm()</code> function generates random lognormal values, using an arbitrarily chosen mean and standard deviation specified in natural log-scale. Those values can be used to calculate the expected mean and variance in arithmetic scale. The <code>abline()</code> function adds to the histogram a vertical (v=) line for the expected arithmetic-scale mean (Figure <a href="Distributions.html#fig:Lognormal">3.5</a>). The line color is specified as col=“red”; other options including line weight and pattern can be found in the Help window. Compare the estimates of arithmetic-scale mean and variance for your (relatively large) sample of lognormal random variates to the expected values (visible in the Environment window).</p>
+<p>The <code>rlnorm()</code> function generates random lognormal values, using an arbitrarily chosen mean and standard deviation specified in natural log-scale. Those values can be used to calculate the expected mean and variance in arithmetic scale. The <code>abline()</code> function adds to the histogram a vertical (v=) line for the expected arithmetic-scale mean (Figure <a href="Distributions.html#fig:Lognormal">3.5</a>). The line type is specified as dotted (lty=3) and weight 3 (lwd=3); other options including line color can be found in the Help window. Compare the estimates of arithmetic-scale mean and variance for your (relatively large) sample of lognormal random variates to the expected values (visible in the Environment window).</p>
 <div class="figure"><span style="display:block;" id="fig:Lognormal"></span>
-<img src="bookdown_files/figure-html/Lognormal-1.png" alt="Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Red vertical line denotes expected mean." width="90%" />
+<img src="bookdown_files/figure-html/Lognormal-1.png" alt="Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Dotted vertical line denotes expected mean." width="90%" />
 <p class="caption">
-FIGURE 3.5: Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Red vertical line denotes expected mean.
+FIGURE 3.5: Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Dotted vertical line denotes expected mean.
 </p>
 </div>
 </div>
@@ -527,9 +538,9 @@ FIGURE 3.5: Histogram for 200 lognormally-distributed values, with ln-scale mean
 <h3><span class="header-section-number">3.2.5</span> Gamma<a href="Distributions.html#GammaDist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The gamma distribution is similar to the lognormal in that has a lower bound of 0 and an upper bound of <span class="math inline">\(\infty\)</span>. Thus it also excludes negative values and allows for a long upper tail. This distribution is often used to simulate waiting times (how long until some number of events has occurred, based on a specified average time between events). We consider it here simply because it can take on a variety of shapes depending on its parameters <span class="citation">(<a href="#ref-bolker2008">Bolker 2008</a>)</span>. Figure <a href="Distributions.html#fig:Gamma">3.6</a> shows sample distributions for shape parameter <span class="math inline">\(\alpha\)</span>=3 and scale or spread parameter <span class="math inline">\(\beta\)</span>=1 and 3.</p>
 <div class="figure"><span style="display:block;" id="fig:Gamma"></span>
-<img src="bookdown_files/figure-html/Gamma-1.png" alt="Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (left) and 3 (right)." width="50%" /><img src="bookdown_files/figure-html/Gamma-2.png" alt="Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (left) and 3 (right)." width="50%" />
+<img src="bookdown_files/figure-html/Gamma-1.png" alt="Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (top) and 3 (bottom)." width="90%" /><img src="bookdown_files/figure-html/Gamma-2.png" alt="Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (top) and 3 (bottom)." width="90%" />
 <p class="caption">
-FIGURE 3.6: Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 (left) and 3 (right).
+FIGURE 3.6: Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 (top) and 3 (bottom).
 </p>
 </div>
 <p>We simulate draws from a gamma distribution using the <code>rgamma()</code> function, with arbitrary values for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>:</p>
@@ -563,6 +574,9 @@ FIGURE 3.6: Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-bolker2008" class="csl-entry">
 Bolker, Benjamin M. 2008. <em>Ecological <span>Models</span> and <span>Data</span> in <span>R</span></em>. 1st ed. Princeton, New Jersey: Princeton University Press.
+</div>
+<div id="ref-hilborn.walters_1992" class="csl-entry">
+Hilborn, Ray, and Carl J. Walters. 1992. <em>Quantitative <span>Fisheries Stock Assessment</span></em>. Boston, MA: Springer US. <a href="https://doi.org/10.1007/978-1-4615-3598-0">https://doi.org/10.1007/978-1-4615-3598-0</a>.
 </div>
 <div id="ref-law.kelton_1982" class="csl-entry">
 Law, Averill M., and W. David Kelton. 1982. <em>Simulation <span>Modeling</span> and <span>Analysis</span></em>. New York, NY: McGraw-Hill.

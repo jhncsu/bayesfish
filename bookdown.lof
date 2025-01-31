@@ -3,31 +3,31 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Summary bar plot of coin tosses.}}{9}{figure.caption.6}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Summary bar plot of die rolls.}}{14}{figure.caption.7}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Negative binomial frequency distributions for mu=4 and k=1 (left) or 10 (right).}}{17}{figure.caption.8}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Histograms for 200 random draws from a beta distribution, with alpha=1 and beta=0.5 (top), 1 (middle), and 5 (bottom).}}{19}{figure.caption.9}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Red vertical line denotes expected mean.}}{22}{figure.caption.10}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 (left) and 3 (right).}}{22}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Negative binomial frequency distributions for mu=4 and k=1 (top) or 10 (bottom).}}{18}{figure.caption.8}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Histograms for 200 random draws from a beta distribution, with alpha=1 and beta=0.5 (top), 1 (middle), and 5 (bottom).}}{20}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Dotted vertical line denotes expected mean.}}{22}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Histogram for 200 gamma-distributed values, with alpha=3 and beta=1 (top) and 3 (bottom).}}{23}{figure.caption.11}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Frequency distributions for number of recaptured fish (left) and estimated population size (right), based on a simulated mark-recapture study using a binomial distribution for the number of recaptures.}}{27}{figure.caption.12}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Estimated posterior distribution for population size from a two-sample mark-recapture study with a capture probability of 0.2; red line indicates true value.}}{34}{figure.caption.13}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Frequency distributions for number of recaptured fish (top) and estimated population size (bottom), based on a simulated mark-recapture study using a binomial distribution for the number of recaptures.}}{28}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Estimated posterior distribution for population size from a two-sample mark-recapture study with a capture probability of 0.2; dotted vertical line indicates true value.}}{34}{figure.caption.13}%
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Trace and density plots for the two-sample mark-recapture model, using methods contained in the coda package.}}{41}{figure.caption.14}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Bayesian p-value for fitting a Poisson model to simulated data from a negative binomial distribution with different values for overdispersion parameter k but fixed mean=7.}}{48}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Bayesian p-value for fitting a Poisson model to simulated data from a negative binomial distribution with different values for overdispersion parameter k but fixed mean=7. Twenty replicate simulations were done for each value of k.}}{49}{figure.caption.15}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Estimated posterior distributions for marked fraction and population size and bivariate plot from two-sample mark-recapture study.}}{61}{figure.caption.16}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Estimated posterior distribution for total population size (summed over sites) and true total (red vertical line) based on binomial-mixture study.}}{65}{figure.caption.17}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Estimated posterior distributions for marked fraction and population size and bivariate plot of posterior samples from two-sample mark-recapture study.}}{63}{figure.caption.16}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Estimated posterior distribution for total population size (summed over sites) and true total (dotted vertical line) based on binomial-mixture study.}}{67}{figure.caption.17}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Example run showing true (blue) and estimated (black) annual survival rate from a cohort-based analysis of survey catch-at-age data.}}{83}{figure.caption.18}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Example of estimated posterior distributions for survival and tag-recovery rates from 3-year tag-return study with annual releases of 1000 tagged fish. Red vertical lines indicate true values.}}{92}{figure.caption.19}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Example run showing true (dotted, open) and estimated (solid, filled) annual survival rate from a cohort-based analysis of survey catch-at-age data.}}{86}{figure.caption.18}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Example of estimated posterior distributions for survival and tag-recovery rates from 3-year tag-return study with annual releases of 1000 tagged fish. Dotted vertical lines indicate true values.}}{95}{figure.caption.19}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Prior and posterior distributions for estimated exploitation rate, using uninformative (upper) and informative (lower) priors. The full study sample size is 100 tagged fish; the pilot study (lower panel) has a sample size of 20. The true exploitation rate is shown as a vertical red line.}}{102}{figure.caption.20}%
-\contentsline {figure}{\numberline {7.2}{\ignorespaces Example of estimated posterior distribution and true natural mortality rate (vertical red line) using the completed tagging study (Hearn et al. 1987) approach.}}{106}{figure.caption.21}%
-\contentsline {figure}{\numberline {7.3}{\ignorespaces Estimated posterior distributions for exploitation rate in period 2 at tag reporting rates of 0.9 (left) and 0.5 (right), using a multi-year tagging study with planted tags. The true exploitation rate for period 2 is shown as a vertical red line.}}{112}{figure.caption.22}%
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Prior and posterior distributions for estimated exploitation rate, using uninformative (upper) and informative (lower) priors. The full study sample size is 100 tagged fish; the pilot study (lower panel) has a sample size of 20. The true exploitation rate is shown as a dotted vertical line.}}{103}{figure.caption.20}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Example of estimated posterior distribution and true natural mortality rate (dotted vertical line) using the completed tagging study (Hearn et al. 1987) approach.}}{108}{figure.caption.21}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Estimated posterior distributions for exploitation rate in period 2 at tag reporting rates of 0.9 (top) and 0.5 (bottom), using a multi-year tagging study with planted tags. The true exploitation rate for period 2 is shown as a dotted vertical line.}}{115}{figure.caption.22}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {8.1}{\ignorespaces Example trace and density plots for length-weight relationship, based on 5000 updates.}}{133}{figure.caption.23}%
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Example trace and density plots for length-weight relationship, based on 5000 updates.}}{137}{figure.caption.23}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {9.1}{\ignorespaces Example of fitted Beverton-Holt curve relating indices of spawning stock and recruitment.}}{141}{figure.caption.24}%
+\contentsline {figure}{\numberline {9.1}{\ignorespaces Example of fitted Beverton-Holt curve relating indices of spawning stock and recruitment.}}{146}{figure.caption.24}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {10.1}{\ignorespaces Estimates of annual survival (left), recruitment (center), and total population size (right) from a two-age integrated population model fitted to capture-recapture and telemetry data. True values are shown in blue; capture-recapture point estimates (right) are in red.}}{150}{figure.caption.25}%
-\contentsline {figure}{\numberline {10.2}{\ignorespaces Estimates of fishing mortality (left) and total abundance (right) from a stock assessment model fitted to fishery and survey catch-at-age matrices. True values and model estimates are shown in blue and black respectively. ***CHANGE PRODUCTION RUN TO 200K updates}}{157}{figure.caption.26}%
+\contentsline {figure}{\numberline {10.1}{\ignorespaces Estimates of annual survival (top), recruitment (middle), and total population size (bottom) from a two-age integrated population model fitted to capture-recapture and telemetry data. True values are shown with dotted lines; capture-recapture point estimates (bottom) are shown with a dashed line and open squares.}}{155}{figure.caption.25}%
+\contentsline {figure}{\numberline {10.2}{\ignorespaces Estimates of fishing mortality (left) and total abundance (right) from a stock assessment model fitted to fishery and survey catch-at-age matrices. True values and model estimates are shown as dotted and solid lines respectively.}}{162}{figure.caption.26}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

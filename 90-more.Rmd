@@ -1,7 +1,481 @@
 \cleardoublepage 
 
 # (APPENDIX) Appendix {-}
+# Real-data examples
 
-# Title Placeholder
+The purpose of this appendix is to show, for a subset of models, the process of model fitting to real values rather than simulated data. Removing the simulation code generally shortens and simplifies the examples. I have included brief comments regarding necessary code modifications. Reported point estimates are medians, which provide a better measure of central tendency when posterior distributions are skewed [@kruschke_2021].
 
-If there is anything to put in an appendix, it would go here.
+## Abundance: Removal {#RemovalRealData}
+
+The removal method (Section \@ref(Removal)) is used to estimate abundance in a closed study area, based on a sequence of catches. @otis.etal_1978 provided an example for whitefish (*Coregonus clupeaformis*) in Shakespeare Island Lake, based on gill netting for seven successive weeks [original data from @ricker_1958]. No changes were needed in the R or JAGS code other than replacing the simulation code with the the vector of observed catches and changing the number of removal samples.
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Removal study - whitefish (Ricker 1958)
+Catch <- c(25, 26, 15, 13, 12, 13, 5)
+N.removals <- length(Catch) # Number of removals
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code for fitting model
+sink("RemovalModel.txt")
+cat("
+model{
+
+# Priors
+ CapProb.est ~ dunif(0,1)
+ N.est ~ dunif(TotalCatch, 2000)
+
+ N.remaining[1] <- trunc(N.est)
+ for(j in 1:N.removals){
+      Catch[j]~dbin(CapProb.est, N.remaining[j]) # jth removal
+      N.remaining[j+1] <- N.remaining[j]-Catch[j]
+  } #j
+
+}
+      ",fill=TRUE)
+sink()
+
+# Bundle data
+TotalCatch <- sum(Catch[])
+jags.data <- list("Catch", "N.removals", "TotalCatch")
+
+
+# Initial values
+jags.inits <- function(){ list(CapProb.est=runif(1, min=0, max=1),
+                               N.est=runif(n=1, min=TotalCatch,
+                                           max=2000))}
+
+model.file <- 'RemovalModel.txt'
+
+# Parameters monitored
+jags.params <- c("N.est", "CapProb.est")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin = 1, n.iter = 40000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+```
+
+The analysis by @otis.etal_1978 using program CAPTURE indicated that a constant capture probability\index{capture probability} model was appropriate. Their estimate ($\hat{N}$=138.07) was similar to the median estimate I obtained using Bayesian methods (144.4). Their symmetrical 95% confidence interval (109-167) was more narrow than the 95% credible interval\index{credible interval} I obtained using Bayesian methods (121.8-225.3), due to the right-skew of the posterior distribution\index{posterior distribution} for N.est (e.g., try `hist(jagsfit$BUGSoutput$sims.list$N.est)`).
+
+## Abundance: Mark-recapture {#MarkRecapRealData}
+
+@ogle_2016 analyzed a two-sample mark-recapture experiment\index{mark-recapture} for walleye larger than 304 mm (*Sander vitreus*). No changes in the R or JAGS code were required other than replacing the Section \@ref(MarkRecap) simulation code with observed values.
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Ogle (2016)
+# Wisconsin Department of Natural Resources
+# Mark-recapture walleye > 304 mm
+n1 <- 2555 # First sample (Marked)
+n2 <- 274 # Second sample
+m2 <- 92 # Marked fish in second sample
+
+# Load necessary library packages
+library(rjags)   # Package for fitting JAGS models from within R
+library(R2jags)  # Package for fitting JAGS models. Requires rjags
+
+# JAGS code
+sink("TwoSampleCR.txt")
+cat("
+    model {
+
+    # Priors
+    MarkedFraction ~ dunif(0, 1)
+
+    # Calculated value
+    N.hat <- n1 /MarkedFraction
+
+    # Likelihood
+    # Binomial distribution for observed recaptures
+    m2 ~ dbin(MarkedFraction, n2)
+    }
+
+    ",fill = TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("n1", "n2", "m2")
+
+# Initial values.
+jags.inits <- function(){ list(MarkedFraction=runif(1, min=0, max=1))}
+
+model.file <- 'TwoSampleCR.txt'
+
+# Parameters monitored
+jags.params <- c("N.hat", "MarkedFraction")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, inits=jags.inits, jags.params,
+                n.chains = 3, n.thin = 1, n.iter = 2000,
+                n.burnin = 1000, model.file)
+print(jagsfit, digits=3)
+plot(jagsfit)
+```
+
+Results using Bayesian methods (N.est median=7569.6, 95% credible interval\index{credible interval} 6515.7-9015.2) were similar to estimates provided by @ogle_2016 using the @chapman1951 estimator ($\hat{N}$=7557, 95% confidence interval 6454-8973).
+
+## Survival: Age-composition {#AgeCompRealData}
+
+Section \@ref(AgeComp) showed an approach for estimating survival\index{survival rate} using age composition\index{age composition} data. Here I illustrate a different approach: a Bayesian version of a traditional catch curve analysis\index{catch curve analysis}. @quinn.deriso_1999 provided a catch curve analysis for Pacific halibut in the northeastern Pacific Ocean, using fishery catch data for the 1960 year class between ages 10 and 20 (i.e., tracking a single cohort across multiple years).
+
+Unlike the approach in Section \@ref(AgeComp), a traditional catch curve analysis\index{catch curve analysis} uses ln-transformed catches, for the following reason. The equation for population size at time t (Section \@ref(Hearn)) is $N_t = N_0 * exp(-Z*t)$. Multiplying both sides by a time-independent exploitation rate $\mu$ produces $\mu*N_t = \mu*N_0 * exp(-Z*t)$ or $C_t = \mu*N_0 * exp(-Z*t)$ [@quinn.deriso_1999]. Log-transforming that equation produces $ln(C_t) = ln(\mu * N_0) -Z*t$, which is a linear regression equation with intercept $ln(\mu*N_0)$ and slope -Z\index{instantaneous total mortality rate}. Fitting the model to log-transformed catches implies that the catch data are considered to be lognormally distributed\index{lognormal distribution} [@quinn.deriso_1999].
+
+The Bayesian code uses coded ages 1-10 rather than true ages 10-20 and fits the linear regression model using the <code>dnorm()</code> function for the likelihood. Estimated survival is obtained as $exp(-Z)$ and as always the MCMC process provides a complete characterization of that calculated parameter.
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Estimating survival using fishery catch data
+# Pacific halibut, ages 10-20 (1960 year class)
+# Quinn and Deriso 1999
+
+Catch <- c(179187, 122785, 89241, 58111, 26682, 23339,
+           14668, 10050, 5866, 3121, 4837)
+lnC <- log(Catch) # ln-transform to fit traditional catch curve
+Age <- 10:20 # True ages for plotting
+MaxCode <- length(Catch)
+CodedAge <- 1:MaxCode # Coded ages for fitting model
+
+#-----------------------------------------------
+# Fit ln-scale model
+# Load necessary library packages
+library(rjags)
+library(R2jags)
+
+# JAGS code
+sink("CatchCurve.txt")
+cat("
+model{
+    # Priors
+    Z.est ~ dunif(0, 2) # Instantaneous total mortality rate
+    lnC.intercept ~ dunif(0, 20)
+    Var.est ~ dunif(0, 20)
+    tau <- 1/Var.est # Precision
+    sd.est <- sqrt(Var.est)
+    S.est <- exp(-Z.est)
+
+    # Likelihood
+    for (a in 1:MaxCode){
+      lnC.hat[a] <- lnC.intercept - (Z.est*a)
+      lnC[a] ~ dnorm(lnC.hat[a], tau)
+    } # a
+}
+    ",fill=TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("lnC", "MaxCode")
+
+# Initial values
+jags.inits <- function(){ list(Z.est=runif(n=1, min=0, max=2),
+                               lnC.intercept=runif(n=1, min=0, max=20),
+                               Var.est=runif(n=1, min=0, max=20))}
+
+model.file <- 'CatchCurve.txt'
+
+# Parameters monitored
+jags.params <- c("S.est", "Z.est", "lnC.intercept", 
+                 "sd.est", "lnC.hat")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 4000, n.burnin=2000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+
+y.bounds <- range(lnC, jagsfit$BUGSout$median$lnC.hat)
+plot(Age, lnC, ylim=y.bounds, xlab="Age", ylab="ln-Catch")
+points(Age, jagsfit$BUGSout$median$lnC.hat, type="l", col="red")
+```
+
+@quinn.deriso_1999 reported an estimated Z of 0.409 with a 95% confidence interval of 0.359-0.459; our Bayesian median estimate was 0.412, with 95% credible interval\index{credible interval} of 0.353-0.469. @quinn.deriso_1999 estimated survival to be 0.664, with 95% confidence interval of 0.632-0.698. The Bayesian median estimate was 0.663, with 95% credible interval 0.626-0.703. This is yet another example where Bayesian results using uninformative priors\index{uninformative prior distribution} are very similar to frequentist results. The last three lines of R code show the ln-transformed catches and fitted curve. The plot is essentially identical to that shown by @quinn.deriso_1999. The ln-transformed catches are well described by the fitted curve, suggesting that the assumptions of a catch curve analysis\index{catch curve analysis} are reasonable for the period of analysis.
+
+## Survival: Tag-based {#BrownieSurvivalRealData}
+
+Section \@ref(BrownieSurvival) showed an approach for estimating survival rate\index{survival rate} using a multi-period tag-return\index{tag-return} study. Here I have replaced the simulation code with a male wood duck (*Aix sponsa*) band-recovery matrix [Table 2.2, @brownie.etal1985]. The band recovery values are entered as a vector, then transformed using an upper diagonal matrix using the <code>matrix()</code> function. Variables were renamed to be more consistent with the band-recovery experiment. The main change to the R code was that banded wood ducks were released for three years (1964-1966) but bands were recovered for five years (1964-1968). This required separate variables for the number of release (RelYears) and recovery years (RecYears), unlike the 3X3 example from Section \@ref(BrownieSurvival). @brownie.etal1985 fitted a model with time-dependent survival and tag-recovery rates but here I estimated time-independent survival and tag-recovery rates for consistency with Section \@ref(BrownieSurvival). The only changes required for the JAGS code were because of the different number of years for release and recovery.
+
+```{r eval=FALSE}
+rm(list=ls()) # Clear Environment
+
+# Recovered bands of adult male wood ducks
+# Brownie et al. (1985)
+
+RelYears <- 3 # 1964-1966 # Release years
+RecYears <- 5 # 1964-1968 # Recovery years
+R <- c(1603, 1595, 1157) # Releases by year
+Recoveries <- c(127, 44, 37, 40, 17, NA, NA, 62, 76,
+                44, 28, NA, NA, NA, 82, 61, 24, NA)
+# Convert vector of band recoveries into upper diagonal
+# matrix, NA added for final column for bands not seen again
+Rec.Mat <- matrix(Recoveries,nrow = RelYears,ncol = (RecYears+1),
+                  byrow=TRUE)
+# Placeholder NA - replace by number of bands not seen again
+for (y in 1:RelYears){
+  Rec.Mat[y,RecYears+1] <- R[y]-sum(Rec.Mat[y,y:RecYears])
+} #y
+                  
+# Load necessary library packages
+library(rjags)
+library(R2jags)
+
+# Specify model in JAGS
+sink("TagReturn.txt")
+cat("
+model {
+  # Priors
+  S.est ~ dunif(0,1) # Time-independent survival rate
+  r.est ~ dunif(0,1) # Time-independent tag-recovery rate
+
+  # Calculated value
+  A.est <- 1-S.est # Rate of mortality
+
+# Cell probabilities
+for (i in 1:RelYears) {
+   p.est[i,i] <- r.est
+   for (j in (i+1):RecYears) {
+      p.est[i,j] <- p.est[i,(j-1)] * S.est
+      } #j
+    p.est[i,RecYears+1] <- 1 - sum(p.est[i, i:RecYears])
+    # Last column is prob of not being seen again
+    } #i
+
+# Likelihood
+  for (i in 1:RelYears) {
+    Rec.Mat[i,i:(RecYears+1)] ~ dmulti(p.est[i,i:(RecYears+1)], R[i])
+    }#i
+ } # model
+
+",fill=TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("Rec.Mat", "RelYears", "RecYears", "R")
+
+S.init <- runif(1,min=0,max=1)
+r.init <- 1-S.init  # Initialize r relative to S
+
+# Initial values
+jags.inits <- function(){list(S.est = S.init, r.est=r.init)}
+
+model.file <- 'TagReturn.txt'
+
+# Parameters monitored
+jags.params <- c("S.est", "r.est")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 4000, n.burnin=2000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+```
+The estimates from the Bayesian analysis (median survival 0.66, 95% credible interval 0.62-0.71; median tag-recovery rate 0.06, 95% credible interval 0.06-0.07) were very similar to maximum-likelihood estimates (mean survival 0.64, 95% confidence interval 0.56-0.71; mean tag-recovery rate 0.06, 95% confidence interval 0.05-0.07) reported by @brownie.etal1985.
+
+## Growth: age-length {#vonBertRealData}
+
+This example data set for fitting a von Bertalanffy growth\index{von Bertalanffy growth} curve is for rougheye rockfish (*Sebastes aleutianus*). The original study was by @nelson.quinnii_1987; @quinn.deriso_1999 fitted the model using nonlinear least squares.
+
+Using real rather than simulated data usually results in simpler code, but here, the values provided by @quinn.deriso_1999 were age-specific sample sizes, averages, and standard deviations. A curve could be fitted to age-specific averages but that gives equal weight to each age, whereas age-specific sample sizes actually varied widely (range from 1 to 31). To approximate the original data set of individual fish age and length observations, I looped over the sample size by age and generated "observed" values using the <code>rnorm()</code> function. Working with individual observations retains the variation in the original length data set. Note that the "observed" data set will vary from run to run so it is helpful to run the code multiple times. The JAGS code was unchanged from the example in Section \@ref(vonBert).
+
+```{r eval=FALSE}
+# Fitting von Bertalanffy curve
+# Rougheye rockfish
+# Nelson, B., and T. J. Quinn II. 1987. Population parameters for
+# rougheye rockfish (Sebastes aleutianus). Proc. Int. Rockfish
+# Symp., Alaska Sea Grant Rep. 87-2:209-228.
+rm(list=ls()) # Clear Environment
+
+AgeClass <- c(2:38, 40:47, 49, 50, 52:68, 70, 72,75, 77, 80, 82, 85, 95)
+ave.Len <- c(18, 14.5, 17.9, 20.6, 21.9, 23.4, 25.2, 27.2, 29.6, 30.7,
+             32.4, 33, 32.8, 35, 36.3, 37.2, 36.2, 38.8, 37.7, 40.6,
+             40.9, 38.9, 40, 41.9, 42.7, 42.6, 45.5, 40.9, 44.6,
+             46.6, 44.9, 47.2, 48.3, 45.4, 48.8, 46.5, 46.5, 47.9,
+             49.3, 48, 49, 50, 51.3, 52, 48.9, 48.7, 48.6, 51.5, 52,
+             50, 52.7, 59, 52, 50, 50, 51, 50, 52, 50, 59, 55, 52.5, 50,
+             54, 59.5, 51, 51, 60, 74, 49, 57, 60.5)
+sd.Len <- c(NA, 4.9, 2.2, 2.1, 2.1, 2.3, 2.5, 2, 3, 2.9, 3.7, 2.3,
+            2.9, 4.1, 2.4, 5.1, 4.4, 1.8, 5.4, 3.1, 4.3, 4.6, 2.4,
+            3.9, 5.5, 6.4, 4, 4.6, 4.4, 3.6, 6.3, 4.6, 5.1, 4.5,
+            3.4, 4, 2.5, 4.9, 2.5, 2.1, 2.0, 2.2, 5.9, NA, 2.7,
+            2.5, 2.8, 0.7, 11.4, NA, 8, NA, 3.9, NA, NA, 1.4, NA,
+            1, NA, 9.9, 1.4, 2.1, 0, 1, 13.4, 1.4, NA, 12.7, NA,
+            NA, NA, 16.3)
+n.AgeClass <- c(1,6,19,31,27,20,11,19,12,13,12,4,8,11,7,12,10,5,9,7,14,
+                14,13,15,15,9,8,8,13,11,9,9,16,13,10,14,4,8,3,7,3,7,10,
+                1,9,3,7,2,4,1,3,1,5,1,1,4,1,3,1,2,2,2,2,1,2,2,1,2,1,1,
+                1,2)
+N.AgeLen <- sum(n.AgeClass[])
+Len <- array(data=NA, dim=N.AgeLen)
+Age <- array(data=NA, dim=N.AgeLen)
+fish <- 1 # Counter for individual fish
+for (a in 1:length(AgeClass)){
+  if (n.AgeClass[a]==1) {
+    Age[fish] <- AgeClass[a]
+    Len[fish] <- ave.Len[a]
+    fish <- fish+1
+  } else
+    for (j in 1:n.AgeClass[a]){
+      Age[fish] <- AgeClass[a]
+      Len[fish] <- rnorm(n=1, mean=ave.Len[a], sd=sd.Len[a])
+      fish <- fish+1
+    } #j
+} #a
+
+# Load necessary library packages
+library(rjags)
+library(R2jags)
+
+# JAGS code
+sink("GrowthCurve.txt")
+cat("
+model{
+
+# Priors
+
+ L_inf.est ~ dunif(0, 200)
+ k.est ~ dunif(0, 2)
+ t0.est ~ dunif(-5, 5)
+ Var_L.est ~ dunif(0,100)   # Variability in length at age
+
+# Calculated value
+ tau.est <- 1/Var_L.est
+
+# Likelihood
+ for (i in 1:N.AgeLen) {
+    Len_hat[i] <- L_inf.est*(1-exp(-k.est*(Age[i]-t0.est)))
+    Len[i] ~ dnorm(Len_hat[i], tau.est)
+ } #i
+}
+    ",fill=TRUE)
+sink()
+
+# Bundle data
+jags.data <- list("N.AgeLen", "Age", "Len")
+
+# Initial values
+jags.inits <- function(){list(L_inf.est=runif(n=1, min=0, max=max(Len)),
+                              k.est=runif(n=1, min=0, max=2),
+                              t0.est=runif(n=1, min=-5, max=5),
+                              Var_L.est=runif(n=1, min=0, max=100))}
+
+model.file <- 'GrowthCurve.txt'
+
+# Parameters monitored
+jags.params <- c("L_inf.est", "k.est", "t0.est", "Var_L.est")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 10000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+
+Len_hat <- array(data=NA, dim=N.AgeLen)
+for (a in 1:N.AgeLen){
+  Len_hat[a] <- jagsfit$BUGSoutput$median$L_inf.est*(1-
+                    exp(-jagsfit$BUGSout$median$k.est
+                    *(Age[a]-jagsfit$BUGSout$median$t0.est)))
+  } #a
+plot(Age, Len, xlab="Age", ylab="Length (cm)")
+points(Age, Len_hat, type="l", col="red")
+```
+
+Bayesian median estimates from one run ($L_\infty$=53.761, $k$=0.052, $t_0$=-4.470) were in reasonable agreement with the least-squares estimates reported by @quinn.deriso_1999: $L_\infty$=54.9, $k$=0.0441, and $t_0$=-4.53. The estimated variance of points about the fitted line (Var_L.est=17.910) was similar to the residual mean square reported by @quinn.deriso_1999 (17.13), suggesting that the simulation approach used here was effective in restoring the variability in individual age:length observations.
+
+## Recruitment: Beverton-Holt curve {#Recruit-FitRealData}
+
+Section \@ref(Recruit-Fit) used a complex age-structured simulation model to produce spawning stock and recruitment values. It is much simpler to use a real data set, as illustrated here for North Sea plaice [@ricker1975]. Spawning stock and recruitment values are paired in @ricker1975, so no time lag between indices is needed. The only changes from the R and JAGS code used in Section \@ref(Recruit-Fit) were to replace the simulation code with fixed values, remove the time lag in indices, and to use Ricker's notation for spawning stock (P) and recruitment (R).
+
+```{r eval=FALSE}
+# Fitting Beverton-Holt stock-recruitment curve
+# North Sea plaice. Ricker 1975 Table 11.8
+# Units arbitrary
+
+# Adult stock biomass (P)
+P <- c(9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 12, 12, 18, 18, 19, 20,
+       21, 21, 26, 32, 35, 45, 54, 70, 82, 88)
+R <- c(13, 20, 45, 13, 13, 20, 21, 26, 11, 12, 8, 15, 7, 10, 17,
+       16, 11, 15, 16, 33, 10, 23, 13, 13, 12, 24)
+
+# Load necessary library packages
+library(rjags)
+library(R2jags)
+
+sink("StockRecruit.txt")
+cat("
+model {
+# Model parameters: Beverton-Holt alpha and beta, 
+# ln-scale variance for fitted curve
+
+# Priors
+ BH_alpha.est ~ dunif(0, 10)
+ BH_beta.est ~ dunif(0, 10)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
+
+# Likelihood
+    for(y in 1:Y) {
+      lnR_hat[y] <- log(1/(BH_alpha.est+BH_beta.est/P[y]))
+      R[y] ~ dlnorm(lnR_hat[y],tau)
+      R_hat[y] <- exp(lnR_hat[y])
+      } #y
+}
+    ",fill=TRUE)
+sink()
+
+# Bundle data
+Y <- length(P)
+jags.data <- list("Y", "P", "R")
+
+# Initial values
+y <- R[1:Y]
+x <- P[1:Y]
+nls_init <- nls(y ~ 1/(BH_a_start+BH_b_start/x),
+                start = list(BH_a_start = 0.001, BH_b_start = 0.001),
+                algorithm="port", 
+                lower=c(1E-6, 0), upper=c(1000,1000))
+#summary(nls_init)
+nls_save <- coef(nls_init)
+#y_hat <- 1/(nls_save[1]+nls_save[2]/x)
+#plot(x,y)
+#points(x,y_hat, col="red", type="l")
+
+jags.inits <- function(){ list(BH_alpha.est=nls_save[1],
+                               BH_beta.est=nls_save[2],
+                               V_rec.est=runif(n=1, min=0, max=10))}
+
+model.file <- 'StockRecruit.txt'
+
+# Parameters monitored
+jags.params <- c("BH_alpha.est", "BH_beta.est", "V_rec.est",
+                 "R_hat")
+
+# Call JAGS from R
+jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
+                n.chains = 3, n.thin=1, n.iter = 10000,
+                model.file)
+print(jagsfit)
+plot(jagsfit)
+
+df.xy <- data.frame(P[1:Y], R[1:Y],
+                    jagsfit$BUGSoutput$median$R_hat)
+df.xy <- df.xy[order(df.xy[,1]),]  # Sort by survey index for plotting
+y.bounds <- range(R[1:Y],jagsfit$BUGSoutput$median$R_hat)
+
+plot(df.xy[,1],df.xy[,2], ylab="Recruitment index",
+     xlab="Spawning Stock Index", ylim=y.bounds) #c(min.y, max.y))
+points(df.xy[,1], df.xy[,3], type="l")
+```
+
+Bayesian estimates of $\alpha$ (median=0.060, 95% credible interval 0.042-0.075) and $\beta$ (0.091, 95% CrI 0.003-0.368) were similar to estimates (0.06312; 0.1606) provided by @ricker1975.
+
+

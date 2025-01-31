@@ -12,59 +12,65 @@
 \contentsline {subsection}{\numberline {3.1.5}Negative binomial}{16}{subsection.3.1.5}%
 \contentsline {section}{\numberline {3.2}Continuous}{17}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Uniform}{17}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Beta}{18}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Normal}{20}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.2}Beta}{19}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Normal}{19}{subsection.3.2.3}%
 \contentsline {subsection}{\numberline {3.2.4}Lognormal}{21}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Gamma}{21}{subsection.3.2.5}%
-\contentsline {section}{\numberline {3.3}Exercises}{23}{section.3.3}%
+\contentsline {subsection}{\numberline {3.2.5}Gamma}{22}{subsection.3.2.5}%
+\contentsline {section}{\numberline {3.3}Exercises}{24}{section.3.3}%
 \contentsline {chapter}{\numberline {4}Model Fitting}{25}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Introduction}{25}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Using simulation}{26}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Using Bayesian methods}{28}{section.4.3}%
+\contentsline {section}{\numberline {4.3}Using Bayesian methods}{27}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Example: mark-recapture}{30}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Debugging code}{36}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Judging convergence}{39}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}What is a likelihood?}{40}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.3}Judging convergence}{40}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}What is a likelihood?}{42}{subsection.4.3.4}%
 \contentsline {subsection}{\numberline {4.3.5}Deviance as a measure of model fit}{43}{subsection.4.3.5}%
 \contentsline {subsection}{\numberline {4.3.6}Model checking}{44}{subsection.4.3.6}%
 \contentsline {subsection}{\numberline {4.3.7}Model selection}{49}{subsection.4.3.7}%
-\contentsline {section}{\numberline {4.4}Exercises}{52}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Abundance}{55}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Removal}{55}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Mark-recapture}{58}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Binomial-mixture}{60}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Exercises}{66}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Survival}{69}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Age-composition}{69}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Accounting For Gear Selectivity}{73}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Cohort model}{79}{subsection.6.1.2}%
-\contentsline {section}{\numberline {6.2}Telemetry-based}{83}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Tag-based}{87}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Exercises}{93}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Mortality Components}{95}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Exploitation rate}{95}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Informative prior distribution}{97}{subsection.7.1.1}%
-\contentsline {section}{\numberline {7.2}Completed tagging study}{101}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Multi-year tagging study}{106}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Telemetry-based}{112}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Exercises}{120}{section.7.5}%
-\contentsline {chapter}{\numberline {8}Growth}{121}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Growth in length}{121}{section.8.1}%
-\contentsline {subsection}{\numberline {8.1.1}Age-length}{122}{subsection.8.1.1}%
-\contentsline {subsection}{\numberline {8.1.2}Using tagging data}{125}{subsection.8.1.2}%
-\contentsline {section}{\numberline {8.2}Growth in weight}{129}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Exercises}{132}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Recruitment}{135}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Fitting a stock-recruitment curve}{136}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Does spawning stock size affect recruitment?}{142}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Exercises}{143}{section.9.3}%
-\contentsline {chapter}{\numberline {10}Integrated Population Models}{145}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Two-age model}{145}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Full age-structured model}{151}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Exercises}{158}{section.10.3}%
-\contentsline {chapter}{\numberline {11}Final Thoughts}{159}{chapter.11}%
-\contentsline {chapter}{Appendix}{161}{chapter.11}%
-\contentsline {chapter}{\numberline {A}Title Placeholder}{161}{appendix.A}%
-\contentsline {fm}{Bibliography}{163}{appendix*.27}%
-\contentsline {chapter}{Index}{171}{appendix*.27}%
-\contentsline {section}{}{171}{appendix*.27}%
+\contentsline {section}{\numberline {4.4}Exercises}{53}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Abundance}{57}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Removal}{57}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Mark-recapture}{61}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Binomial-mixture}{63}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Exercises}{68}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Survival}{71}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Age-composition}{71}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Accounting For Gear Selectivity}{75}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Cohort model}{82}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Telemetry-based}{85}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Tag-based}{90}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Exercises}{96}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Mortality Components}{97}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Exploitation rate}{97}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Informative prior distribution}{99}{subsection.7.1.1}%
+\contentsline {section}{\numberline {7.2}Completed tagging study}{104}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Multi-year tagging study}{109}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Telemetry-based}{114}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Exercises}{122}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Growth}{125}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Growth in length}{125}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Age-length}{126}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Using tagging data}{129}{subsection.8.1.2}%
+\contentsline {section}{\numberline {8.2}Growth in weight}{133}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Exercises}{137}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Recruitment}{139}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Fitting a stock-recruitment curve}{140}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Does spawning stock size affect recruitment?}{145}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Exercises}{147}{section.9.3}%
+\contentsline {chapter}{\numberline {10}Integrated Population Models}{149}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Two-age model}{149}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Full age-structured model}{154}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Exercises}{162}{section.10.3}%
+\contentsline {chapter}{\numberline {11}Final Thoughts}{163}{chapter.11}%
+\contentsline {chapter}{Appendix}{167}{chapter.11}%
+\contentsline {chapter}{\numberline {A}Real-data examples}{167}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Abundance: Removal}{167}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Abundance: Mark-recapture}{169}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Survival: Age-composition}{170}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Survival: Tag-based}{173}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Growth: age-length}{175}{section.A.5}%
+\contentsline {section}{\numberline {A.6}Recruitment: Beverton-Holt curve}{178}{section.A.6}%
+\contentsline {fm}{Bibliography}{181}{appendix*.27}%
+\contentsline {chapter}{Index}{189}{appendix*.27}%
+\contentsline {section}{}{189}{appendix*.27}%

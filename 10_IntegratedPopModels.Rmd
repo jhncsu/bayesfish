@@ -1,6 +1,6 @@
 # Integrated Population Models {#PopModels}
 
-The field and analytical methods discussed thus far have addressed population rates one at a time (e.g., estimating abundance or survival). An improved approach would be to design a complementary set of field studies that provides a complete picture of population dynamics. For example, @conn.etal_2008 used harvest and tag recovery data to fit an integrated population model\index{integrated population model (IPM)} (IPM\index{IPM|see{integrated population model}}) for black bear (*Ursus americanus*). Their model provided estimates that were more precise and biologically realistic than point estimates using capture-recapture\index{capture-recapture} data alone.  @kéry.schaub_2011 developed an avian IPM\index{integrated population model (IPM)} using adult population counts, nest surveys, and capture-recapture data on survival.  We begin here with a somewhat simpler approach, a two-age model (ages 1 and 2+) using capture-recapture and telemetry data, then examine a full age-structured model as typically used in fish stock assessment\index{stock assessment} (Section \@ref(CAGEAN)).
+The field and analytical methods discussed thus far have addressed population rates one at a time (e.g., estimating abundance or survival). An improved approach would be to design a complementary set of field studies that provides a complete picture of population dynamics. For example, @conn.etal_2008 used harvest and tag recovery data to fit an integrated population model\index{integrated population model (IPM)} (IPM\index{IPM|see{integrated population model}}) for black bear (*Ursus americanus*). Their model provided estimates that were more precise and biologically realistic than point estimates using capture-recapture\index{capture-recapture} data alone.  @kéry.schaub_2012 developed an avian IPM\index{integrated population model (IPM)} using adult population counts, nest surveys, and capture-recapture data on survival.  We begin here with a somewhat simpler approach, a two-age model (ages 1 and 2+) using capture-recapture and telemetry data, then examine a full age-structured model as typically used in fish stock assessment\index{stock assessment} (Section \@ref(CAGEAN)).
 
 ## Two-age model {#TwoAge}
 This example shows how two independent field studies (capture-recapture\index{capture-recapture} estimates of abundance and telemetry\index{telemetry} information on survival) can be combined to make inferences about population dynamics. The cost of this approach in time and money is higher than a basic relative-abundance survey, but it provides insights about population dynamics (recruitment and survival) that would not be possible with relative abundance data alone. The cost could be justified for a subset of cases; for example, a population at low abundance or one supporting an important fishery. We begin with the simulation model:
@@ -17,7 +17,8 @@ AnnualS <- runif(n=(Y-1), min=LowS, max=HighS)
 
 MeanR <- 400 # Arbitrary mean annual recruitment
 N.r <- array(data=NA, dim=Y)
-SD_rec <- 0.25 # Low level of lognormal error in recruitment
+V_rec <- 0.1 # Log-scale recruitment variance
+SD_rec <- sqrt(V_rec)
 N.r <- trunc(MeanR * rlnorm(n=Y, 0, SD_rec))
 N.a <- array(data=NA, dim=Y)
 N.a[1] <- N.r[1] + rpois(n=1, lambda=MeanR) 
@@ -52,7 +53,7 @@ We model absolute population size, and assume that fish age 1 and older have the
 
 i.e., incoming recruitment\index{recruitment} plus surviving adults.
 
-Model parameters are estimated using simulated data from two field studies that are assumed to be independent and would provide information on abundance and survival\index{survival rate}. The first data source is a two-sample (closed) capture-recapture\index{capture-recapture} estimate, assumed to be done at the start of each year. The capture probability\index{capture probability}, used to generate the two binomally-distributed\index{binomial distribution} samples, is set at a relatively high default value to obtain better recruitment estimates. The number of recaptures is also binomally distributed\index{binomial distribution}, using the observed marked fraction (on average equal to the capture probability\index{capture probability}). The second data source is a telemetry\index{telemetry} study that provides annual information on the number of surviving telemetered fish. For example, fixed receivers might be used to detect migratory fish that return annually to a spawning area. We arbitrarily assume that 20 telemetered fish are released each year. For simplicity, transmitters are assumed to last for the duration of the study. Examine the TelTags matrix to see how the annual releases maintain a good sample size.
+The next sections of code provide simulated data from two field studies that are assumed to be independent and would provide information on abundance and survival\index{survival rate}. The first data source is a two-sample (closed) capture-recapture\index{capture-recapture} estimate, assumed to be done at the start of each year. The capture probability\index{capture probability}, used to generate the two binomally-distributed\index{binomial distribution} samples, is set at a relatively high default value to obtain better recruitment estimates. The number of recaptures is also binomally distributed\index{binomial distribution}, using the observed marked fraction (on average equal to the capture probability\index{capture probability}). The second data source is a telemetry\index{telemetry} study that provides annual information on the number of surviving telemetered fish. For example, fixed receivers might be used to detect migratory fish that return annually to a spawning area. We arbitrarily assume that 20 telemetered fish are released each year. For simplicity, transmitters are assumed to last for the duration of the study. Examine the TelTags matrix to see how the annual releases maintain a good sample size.
 
 A hierarchical\index{hierarchical model} structure is used to estimate annual recruitment\index{recruitment}. The overall ln-scale mean and precision are estimated using uninformative priors\index{uninformative prior distribution}. Annual recruitment\index{recruitment} estimates for years 2-Y are drawn from a lognormal distribution using the shared ln-scale mean and precision. (Recruitment\index{recruitment} in year 1 is used in the simulation but is not estimated because the population projection equation is only used in years 2-Y.) A uniform 0-1 prior is used for annual survival\index{survival rate}.
 
@@ -73,8 +74,8 @@ model {
 # Priors
 
  Mean_lnR.est ~ dnorm(0, 1E-6)  # Recruitment uses ln-scale parameter
- SD_rec.est ~ dunif(0, 10)
- tau <- pow(SD_rec.est, -2)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
  for(y in 1:(Y-1)) {
     N.r.est[y] ~ dlnorm(Mean_lnR.est,tau)
      # Hierarchical structure for recruitment
@@ -120,7 +121,7 @@ jags.inits <- function(){ list(N.r.est= rlnorm(n=(Y-1), meanlog=10,
 model.file <- 'IPM.txt'
 
 # Parameters monitored
-jags.params <- c("AnnualS.est", "N.a.est", "N.r.est", "SD_rec.est")
+jags.params <- c("AnnualS.est", "N.a.est", "N.r.est", "V_rec.est")
 
 # Call JAGS from R
 jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
@@ -132,49 +133,48 @@ plot(jagsfit)
 # Code for plots comparing true values and model estimates
 par(mfrow = c(1, 3))
 plot(seq(1:(Y-1)), 
-     jagsfit$BUGSoutput$mean$AnnualS.est, ylab="Annual Survival", 
+     jagsfit$BUGSoutput$median$AnnualS.est, ylab="Annual Survival", 
      xlab="Year", type="b", pch=19, 
-     ylim=range(AnnualS,jagsfit$BUGSoutput$mean$AnnualS.est))
-     points(AnnualS, col="blue", type="b", pch=17)
-     
-     plot(seq(1:(Y-1)), 
-          jagsfit$BUGSoutput$mean$N.r.est, 
-          ylab="Annual recruitment (years 2-Y)", xlab="",
-          type="b", pch=19, 
-          ylim=range(N.r,jagsfit$BUGSoutput$mean$N.r.est))
-     points(N.r[2:Y], col="blue", type="b", pch=17)
-     par(xpd=TRUE) # Turn off clipping to put legend above plot
-     legend("top",
-            legend = c("Est", "True"), col = c("black", "blue"),
-            pch = c(19,17), text.col = "black",  horiz = T , 
-            inset = c(0, -0.15))
-     par(xpd=FALSE)
-     
-     MR_N.hat <- (n1+1)*(n2+1)/(m2+1) -1 # Chapman mod. in case m2=0
-     plot(seq(1:Y), jagsfit$BUGSoutput$mean$N.a.est, 
-          ylab="Pop size (includes new recruits)", xlab="Year",
-          type="b", pch=19, 
-          ylim=c(min(N.a,jagsfit$BUGSoutput$mean$N.a.est,MR_N.hat),
-                 max(N.a,jagsfit$BUGSoutput$mean$N.a.est,MR_N.hat)))
-     points(N.a, col="blue", type="b", pch=17) # True adult pop size
-     points(MR_N.hat, col='red', type="b") # Point estimates
+     ylim=range(AnnualS,jagsfit$BUGSoutput$median$AnnualS.est))
+points(AnnualS, lty=3, type="b", pch=17)
+
+plot(seq(1:(Y-1)), 
+     jagsfit$BUGSoutput$median$N.r.est, 
+     ylab="Annual recruitment (years 2-Y)", xlab="",
+     type="b", pch=19, 
+     ylim=range(N.r[2:Y],jagsfit$BUGSoutput$median$N.r.est))
+points(N.r[2:Y], lty=3, type="b", pch=17)
+par(xpd=TRUE) # Turn off clipping to put legend above plot
+legend("top",
+       legend = c("Est", "True"), lty = c(1, 3),
+       pch = c(19,17), text.col = "black",  horiz = T , 
+       inset = c(0, -0.15))
+par(xpd=FALSE)
+
+MR_N.hat <- (n1+1)*(n2+1)/(m2+1) -1 # Chapman mod. in case m2=0
+plot(seq(1:Y), jagsfit$BUGSoutput$median$N.a.est, 
+     ylab="Pop size (includes new recruits)", xlab="Year",
+     type="b", pch=19, 
+     ylim=range(N.a,jagsfit$BUGSoutput$median$N.a.est,MR_N.hat))
+points(N.a, lty=3, type="b", pch=17) # True adult pop size
+points(MR_N.hat, lty=2, pch=0, type="b") # Point estimates
 ```
 
-Results for the default case show that total population size and annual survival\index{survival rate} tend to be reliably estimated (Figure \@ref(fig:TwoAgePlot)). Especially at lower capture probabilities\index{capture probability}, the capture-recapture\index{capture-recapture} point estimates (red line) tend to be more variable than the population estimates obtained from the integrated model (black line). Annual recruitment\index{recruitment} tends to be less well estimated than total population size or survival rate\index{survival rate}. There is no direct information on recruitment\index{recruitment}, so the model makes indirect inferences from total abundance (new age-1 recruits plus 2+ survivors) and telemetry\index{telemetry} information on survival rate\index{survival rate}.
+Results for the default case show that total population size and annual survival\index{survival rate} tend to be reliably estimated (Figure \@ref(fig:TwoAgePlot)). Especially at lower capture probabilities\index{capture probability}, the capture-recapture\index{capture-recapture} point estimates (dashed line, open squares) tend to be more variable than the population estimates obtained from the integrated model (solid line). Annual recruitment\index{recruitment} tends to be less well estimated than total population size or survival rate\index{survival rate}. There is no direct information about recruitment\index{recruitment}, so the model makes indirect inferences from total abundance (new age-1 recruits plus 2+ survivors) and telemetry\index{telemetry} information on survival rate\index{survival rate}.
 
-```{r TwoAgePlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimates of annual survival (left), recruitment (center), and total population size (right) from a two-age integrated population model fitted to capture-recapture and telemetry data. True values are shown in blue; capture-recapture point estimates (right) are in red.', out.width="90%"}
+```{r TwoAgePlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimates of annual survival (top), recruitment (middle), and total population size (bottom) from a two-age integrated population model fitted to capture-recapture and telemetry data. True values are shown with dotted lines; capture-recapture point estimates (bottom) are shown with a dashed line and open squares.', fig.show="hold", fig.height=3, out.width="90%"}
 
 rm(list=ls()) # Clear Environment
-set.seed(11111) # Ensure that book will have a reasonable result
-par(mar = c(4, 4, 1, .1))
+set.seed(234567) # Ensure that book will have a reasonable result
+par(mar = c(4, 4, 3, 2))
 
 TwoAge <- function() {
 # Priors
 
  Mean_lnR.est ~ dnorm(0, 1E-6)
    # Recruitment uses ln-scale parameter
- SD_rec.est ~ dunif(0, 10)
- tau <- pow(SD_rec.est, -2)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
  for(y in 1:(Y-1)) {
     N.r.est[y] ~ dlnorm(Mean_lnR.est,tau)
      # Hierarchical structure for recruitment
@@ -215,7 +215,8 @@ AnnualS <- runif(n=(Y-1), min=LowS, max=HighS)
 
 MeanR <- 400 # Arbitrary mean annual recruitment
 N.r <- array(data=NA, dim=Y)
-SD_rec <- 0.25 # Low level of lognormal error in recruitment
+V_rec <- 0.1 # Log-scale recruitment variance
+SD_rec <- sqrt(V_rec)
 N.r <- trunc(MeanR * rlnorm(n=Y, 0, SD_rec))
 N.a <- array(data=NA, dim=Y)
 N.a[1] <- N.r[1] + rpois(n=1, lambda=MeanR) # Arbitrary year-1 population size
@@ -258,44 +259,48 @@ TwoAge_jags <-
     data = jags.data, inits=jags.inits,
     n.chains = 3, n.thin = 1, n.iter = 40000,
     model.file = TwoAge,
-    parameters.to.save = c("AnnualS.est", "N.a.est", "N.r.est", "SD_rec.est")
+    parameters.to.save = c("AnnualS.est", "N.a.est", "N.r.est", "V_rec.est")
   )
 
 # Code for plots comparing true values and model estimates
-par(mfrow = c(1, 3))
 plot(seq(1:(Y-1)), 
-     TwoAge_jags$BUGSoutput$mean$AnnualS.est, ylab="Annual Survival", xlab="Year",
-     type="b", pch=19, ylim=c(min(AnnualS,
-                                  TwoAge_jags$BUGSoutput$mean$AnnualS.est),
-                              max(AnnualS,TwoAge_jags$BUGSoutput$mean$AnnualS.est)))
-points(AnnualS, col="blue", type="b", pch=17)
+     TwoAge_jags$BUGSoutput$mean$AnnualS.est, ylab="Annual Survival", 
+     xlab="Year", type="b", pch=19, 
+     ylim=range(AnnualS,TwoAge_jags$BUGSoutput$mean$AnnualS.est))
+points(AnnualS, lty=3, type="b", pch=17)
+
+par(xpd=TRUE) # Turn off clipping to put legend above plot
+legend("top",
+       legend = c("Est", "True"), lty = c(1, 3),
+       pch = c(19,17), text.col = "black",  horiz = T , 
+       inset = c(0, -0.3))
+par(xpd=FALSE)
 
 plot(seq(1:(Y-1)), 
-     TwoAge_jags$BUGSoutput$mean$N.r.est, ylab="Annual recruitment (years 2-Y)", xlab="",
-     type="b", pch=19, ylim=c(min(N.r,
-                                  TwoAge_jags$BUGSoutput$mean$N.r.est),
-                              max(N.r,TwoAge_jags$BUGSoutput$mean$N.r.est)))
-points(N.r[2:Y], col="blue", type="b", pch=17)
+     TwoAge_jags$BUGSoutput$mean$N.r.est, 
+     ylab="Annual recruitment (years 2-Y)", xlab="",
+     type="b", pch=19, 
+     ylim=range(N.r[2:Y],TwoAge_jags$BUGSoutput$mean$N.r.est))
+points(N.r[2:Y], lty=3, type="b", pch=17)
 
-MR_N.hat <- (n1+1)*(n2+1)/(m2+1) -1 # Chapman modification in case m2=0
+MR_N.hat <- (n1+1)*(n2+1)/(m2+1) -1 # Chapman mod. in case m2=0
 plot(seq(1:Y), TwoAge_jags$BUGSoutput$mean$N.a.est, 
      ylab="Pop size (includes new recruits)", xlab="Year",
      type="b", pch=19, 
-     ylim=c(min(N.a,TwoAge_jags$BUGSoutput$mean$N.a.est,MR_N.hat),
-            max(N.a,TwoAge_jags$BUGSoutput$mean$N.a.est,MR_N.hat)))
-points(N.a, col="blue", type="b", pch=17) # True adult pop size
-points(MR_N.hat, col='red', type="b") # Capture-recapture point estimates
+     ylim=range(N.a,TwoAge_jags$BUGSoutput$mean$N.a.est,MR_N.hat))
+points(N.a, lty=3, type="b", pch=17) # True adult pop size
+points(MR_N.hat, lty=2, pch=0, type="b") # Point estimates
 ```
 
 After doing multiple runs with the default settings, try varying the capture probability\index{capture probability} for the capture-recapture\index{capture-recapture} study and the annual release of fish with transmitters. As expected, a higher capture probability\index{capture probability} improves the estimates of total population size, and more transmitters improve the annual survival estimates\index{survival rate}.
 
 ## Full age-structured model {#CAGEAN}
 
-Another type of IPM\index{integrated population model (IPM)} is a fish stock assessment\index{stock assessment} that typically uses catch by age and year to estimate population size and fishing mortality rate [@schaub.etal_2024]. Fish stock assessment models share many characteristics with IPMs\index{integrated population model (IPM)} developed for terrestrial species, but typically have a much greater spatial scale and are more focused on harvest regulation [@schaub.etal_2024]. These models serve as the foundation for much of marine fishery management, as well as in freshwater fisheries where sufficient data are available [e.g., @fielder.bence_2014]. Catch data are a valuable source of information because they reflect absolute abundance. Summing the catches from a cohort (year class) across years (along a diagonal in the catch-at-age matrix) provides a conservative estimate of the initial abundance of that cohort. Early versions of catch-at-age analysis\index{catch-at-age analysis} (VPA\index{virtual population analysis (VPA)}; cohort analysis\index{cohort analysis}) were simple upward adjustments of the summed catches in order to account for natural mortality [@ricker1975]. Current catch-at-age analyses have a statistical foundation using either maximum-likelihood or Bayesian estimation [@maunder.punt_2013]. Catch data alone are insufficient to obtain reliable results, so current assessments integrate fishery catch data with axuiliary information from the fishery (e.g., annual level of fishing effort) or surveys [@deriso.etal_1985; @maunder.punt_2013; @schaub.etal_2024]. Our example will use JAGS to fit a relatively simple age-structured stock assessment model, but we note that most current assessments are done using flexible and powerful off-the-shelf software such as AD Model Builder or Stock Synthesis [@fournier.etal_2012; @methot.wetzell_2013].
+Another type of IPM\index{integrated population model (IPM)} is a fish stock assessment\index{stock assessment} that typically uses catch by age and year to estimate population size and fishing mortality rate [@millar.meyer2000; @schaub.etal_2024]. Fish stock assessment models share many characteristics with IPMs\index{integrated population model (IPM)} developed for terrestrial species, but typically have a much greater spatial scale and are more focused on harvest regulation [@schaub.etal_2024]. These models serve as the foundation for much of marine fishery management, as well as in freshwater fisheries where sufficient data are available [e.g., @fielder.bence_2014]. Catch data are a valuable source of information because they reflect absolute abundance. Summing the catches from a cohort (year class) across years (along a diagonal in the catch-at-age matrix) provides a conservative estimate of the initial abundance of that cohort. Early versions of catch-at-age analysis\index{catch-at-age analysis} (VPA\index{virtual population analysis (VPA)}; cohort analysis\index{cohort analysis}) were simple upward adjustments of the summed catches in order to account for natural mortality [@ricker1975]. Current catch-at-age analyses\index{catch-at-age analysis} have a statistical foundation using either maximum-likelihood or Bayesian estimation [@maunder.punt_2013]. Catch data alone are insufficient to obtain reliable results, so current assessments integrate fishery catch data with axuiliary information from the fishery (e.g., annual level of fishing effort) or surveys [@deriso.etal_1985; @maunder.punt_2013; @schaub.etal_2024]. Our example will use JAGS to fit a relatively simple age-structured stock assessment model, but we note that most current assessments are done using flexible and powerful software such as AD Model Builder or Stock Synthesis [@fournier.etal_2012; @methot.wetzell_2013].
 
 We assume a single fishery with gear selectivity\index{gear selectivity} that is constant over time. Our auxiliary data are survey catches by age and year, with a survey selectivity pattern that is also constant over time. The default selectivity pattern for the survey provides information mostly on younger ages whereas the fishery primarily exploits older fish. Thus a combined analysis is able to make better inferences than either data set alone. Essentially the goal of the analysis is to find the population estimates that are most consistent with the observed catches and auxiliary data.
 
-The simulation code builds on that used in the cohort-specific catch-curve analysis\index{catch curve analysis} (\@ref(Cohort)) and recruitment\index{recruitment} (\@ref(Recruit)) sections. The number of ages is arbitrary but should be sufficient to characterize the selectivity patterns for the fishery and survey.  Annual instantaneous fishing mortality rate\index{instantaneous fishing mortality rate} varies randomly between user-set lower and upper bounds. The instantaneous natural mortality rate\index{instantaneous natural mortality rate} can be difficult to estimate internally [@quinn.deriso_1999; @schaub.etal_2024], so here it is fixed in the simulation and the fitted model [e.g., using external information such as longevity: @lorenzen1996; @then.etal_2015].
+The simulation code builds on that used in the cohort-specific catch-curve analysis\index{catch curve analysis} (\@ref(Cohort)) and recruitment\index{recruitment} (\@ref(Recruit)) sections. The number of ages is arbitrary but should be sufficient to characterize the selectivity patterns for the fishery and survey.  Annual instantaneous fishing mortality rate\index{instantaneous fishing mortality rate} varies randomly between user-set bounds. The instantaneous natural mortality rate\index{instantaneous natural mortality rate} can be difficult to estimate internally [@quinn.deriso_1999; @schaub.etal_2024], so here it is fixed in the simulation and the fitted model [e.g., using external information such as longevity: @lorenzen1996; @then.etal_2015].
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -336,7 +341,8 @@ S_a <- exp(-Z_a)
 
 MeanR <- 1E5 # Arbitrary mean initial cohort size
 N <- array(data=NA, dim=c(A, Y))
-SD_rec <- 0.25 # Low level of lognormal error in recruitment
+V_rec <- 0.1 # Log-scale recruitment variance
+SD_rec <- sqrt(V_rec)
 N[1,] <- trunc(MeanR * rlnorm(n=Y, 0, SD_rec)) 
 # Starting size of each cohort at first age
 for (a in 2:A){
@@ -398,14 +404,14 @@ sink("CatchAge.txt")
 cat("
 model {
 # Model parameters: AnnualF[1:Y], k and a_50 for fishery and survey, 
-survey q, Mean recruitment, SD, and annual deviations years 1:Y,
+# survey q, Mean recruitment, SD, and annual deviations years 1:Y,
 # initial numbers ages 2:A for year 1
 
  Mean_lnR.est ~ dnorm(0, 1E-6)
    # Recruitment uses ln-scale parameter
  MeanR.est <- exp(Mean_lnR.est)
- SD_rec.est ~ dunif(0, 10)
- tau <- pow(SD_rec.est, -2)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
  for(y in 1:Y) {
     Recruit.est[y] ~ dlnorm(Mean_lnR.est,tau)
      # Hierarchical structure for recruitment
@@ -476,7 +482,7 @@ jags.inits <- function(){ list(Mean_lnR.est=rlnorm(n=1, meanlog=10,
                                                   sdlog=1),
                                Survey_q.est=rgamma(n=1, shape=1, 
                                                    scale=1),
-                               SD_rec.est=runif(n=1, min=0, max=10),
+                               V_rec.est=runif(n=1, min=0, max=10),
                                AnnualF.est=runif(n=Y, min=0, max=2))}
 
 model.file <- 'CatchAge.txt'
@@ -484,7 +490,7 @@ model.file <- 'CatchAge.txt'
 # Parameters monitored
 jags.params <- c("AnnualF.est", "Recruit.est", "Initial.est",
                  "SelF.est", "Survey_q.est", "MeanR.est",
-                 "SD_rec.est", "SelS.est", "N.est.total")
+                 "V_rec.est", "SelS.est", "N.est.total")
 
 # Call JAGS from R
 jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
@@ -494,35 +500,35 @@ print(jagsfit)
 plot(jagsfit)
 
 par(mfrow = c(1, 2))
-plot(seq(1:Y), jagsfit$BUGSoutput$mean$AnnualF.est, ylab="Annual F", 
+plot(seq(1:Y), jagsfit$BUGSoutput$median$AnnualF.est, ylab="Annual F", 
      xlab="Year", type="b", pch=19, 
-     ylim=range(AnnualF,jagsfit$BUGSoutput$mean$AnnualF.est))
-points(AnnualF, col="blue", type="b")
+     ylim=range(AnnualF,jagsfit$BUGSoutput$median$AnnualF.est))
+points(AnnualF, lty=3, type="b")
 
 N.total <- array(data=NA, dim=Y)
 for (y in 1:Y){
   N.total[y] <- sum(N[,y])
 }
-plot(seq(1:Y), jagsfit$BUGSoutput$mean$N.est.total, ylab="Total N", 
+plot(seq(1:Y), jagsfit$BUGSoutput$median$N.est.total, ylab="Total N", 
      xlab="Year", type="b", pch=19, 
-     ylim=range(N.total,jagsfit$BUGSoutput$mean$N.est.total))
+     ylim=range(N.total,jagsfit$BUGSoutput$median$N.est.total))
 
-points(N.total[], col="blue", type="b")
+points(N.total[], lty=3, type="b")
 
-plot(seq(1:A), jagsfit$BUGSoutput$mean$SelF.est, 
+plot(seq(1:A), jagsfit$BUGSoutput$median$SelF.est, 
      ylab="Fishery selectivity", xlab="Age", type="b", pch=19, 
      ylim=c(0,1))
-points(SelF, col="blue", type="b")
+points(SelF, lty=3, type="b")
 
-plot(seq(1:A), jagsfit$BUGSoutput$mean$SelS.est,
+plot(seq(1:A), jagsfit$BUGSoutput$median$SelS.est,
      ylab="Survey selectivity", xlab="Age", type="b", pch=19, 
      ylim=c(0,1))
-points(SelS, col="blue", type="b")
+points(SelS, lty=3, type="b")
 ```
 
 Convergence\index{convergence} (Rhat\index{Rhat} < 1.1) for this model requires a very large number of updates (and considerable time). Thinning\index{thinning} is used to reduce the storage required. The plots following the JAGS code show that there is typically close agreement between the true and estimated values (Figure \@ref(fig:CAGEANPlot)). It is essential to keep in mind that this analysis is being done with an assumed rate of natural mortality\index{natural mortality}. The results of such an analysis, including credible intervals\index{credible interval}, are conditional on the assumed value. In this case, natural mortality\index{natural mortality} is fixed at the correct value, so these results show the best case in terms of accuracy and precision.
 
-```{r CAGEANPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimates of fishing mortality (left) and total abundance (right) from a stock assessment model fitted to fishery and survey catch-at-age matrices. True values and model estimates are shown in blue and black respectively. ***CHANGE PRODUCTION RUN TO 200K updates', out.width="90%"}
+```{r CAGEANPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Estimates of fishing mortality (left) and total abundance (right) from a stock assessment model fitted to fishery and survey catch-at-age matrices. True values and model estimates are shown as dotted and solid lines respectively.', out.width="90%"}
 
 rm(list=ls()) # Clear Environment
 set.seed(12345) # Ensure that book will have a reasonable result
@@ -532,8 +538,8 @@ CAGEAN <- function() {
  Mean_lnR.est ~ dnorm(0, 1E-6)
    # Recruitment uses ln-scale parameter
  MeanR.est <- exp(Mean_lnR.est)
- SD_rec.est ~ dunif(0, 10)
- tau <- pow(SD_rec.est, -2)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
  for(y in 1:Y) {
     Recruit.est[y] ~ dlnorm(Mean_lnR.est,tau)
      # Hierarchical structure for recruitment
@@ -624,7 +630,8 @@ S_a <- exp(-Z_a)
 
 MeanR <- 1E5 # Arbitrary mean initial cohort size
 N <- array(data=NA, dim=c(A, Y))
-SD_rec <- 0.25 # Low level of lognormal error in recruitment
+V_rec <- 0.1 # Log-scale recruitment variance
+SD_rec <- sqrt(V_rec)
 N[1,] <- trunc(MeanR * rlnorm(n=Y, 0, SD_rec)) 
 # Starting size of each cohort at first age
 for (a in 2:A){
@@ -686,18 +693,18 @@ jags.inits <- function(){ list(Mean_lnR.est=rlnorm(n=1, meanlog=10, sdlog=1),
                                Recruit.est=rlnorm(n=Y, meanlog=10, sdlog=1),
                                Initial.est=rlnorm(n=(A-1), meanlog=10, sdlog=1),
                                Survey_q.est=rgamma(n=1, shape=1, scale=1),
-                               SD_rec.est=runif(n=1, min=0, max=10),
+                               V_rec.est=runif(n=1, min=0, max=10),
                                AnnualF.est=runif(n=Y, min=0, max=2))}
 
 # Fit the model
 CAGEAN_jags <- 
   jags(
     data = jags.data, inits=jags.inits,
-    n.chains = 3, n.thin = 10, n.iter = 20000,
+    n.chains = 3, n.thin = 10, n.iter = 200000,
     model.file = CAGEAN,
     parameters.to.save = c("AnnualF.est", "Recruit.est", "Initial.est",
                  "SelF.est", "Survey_q.est", "MeanR.est",
-                 "SD_rec.est", "SelS.est", "N.est.total")
+                 "V_rec.est", "SelS.est", "N.est.total")
   )
 
 # Code for plots comparing true values and model estimates
@@ -705,7 +712,7 @@ par(mfrow = c(1, 2))
 plot(seq(1:Y), CAGEAN_jags$BUGSoutput$mean$AnnualF.est, ylab="Annual F", xlab="Year",
      type="b", pch=19, ylim=c(min(AnnualF,CAGEAN_jags$BUGSoutput$mean$AnnualF.est),
                               max(AnnualF,CAGEAN_jags$BUGSoutput$mean$AnnualF.est)))
-points(AnnualF, col="blue", type="b")
+points(AnnualF, lty=3, type="b")
 
 N.total <- array(data=NA, dim=Y)
 for (y in 1:Y){
@@ -714,20 +721,16 @@ for (y in 1:Y){
 plot(seq(1:Y), CAGEAN_jags$BUGSoutput$mean$N.est.total, ylab="Total N", xlab="Year",
      type="b", pch=19, ylim=c(min(N.total,CAGEAN_jags$BUGSoutput$mean$N.est.total),
                               max(N.total,CAGEAN_jags$BUGSoutput$mean$N.est.total)))
-points(N.total[], col="blue", type="b")
+points(N.total[], lty=3, type="b")
 
 ```
 
-The results of a catch-at-age analysis can be used to explore factors regulating population dynamics. Recruitment in this simulation was assumed to vary about a fixed mean, but in an analysis of real data, recruitment could be compared to spawning stock size (estimated from each year's population vector) or environmental factors.
+Recruitment in this simulation was assumed to vary about a fixed mean, but the model could be extended to include a relationship between spawning stock and recruitment\index{recruitment}, as in Section \@ref(Recruit-Fit). The analytical approach could then be modified to estimate the spawning stock-recruitment parameters internally [@brooks.deroba_2015].
 
 When experimenting with alternative simulation settings, approximate estimates can be obtained using fewer updates (e.g., 20,000). Rhat\index{Rhat} values will typically exceed 1.1 but the estimates should show reasonable agreement with the true values. Final estimates can then be obtained using a sufficiently large value for the number of updates.
 
 ## Exercises
 
-1.  For the two-age model (Section \@ref(TwoAge)), compare true and estimated total abundance using absolute relative errors
-
-  abs((y-y.hat)/y) 
-
-for five trials using capture probabilities\index{capture probability} of 0.1, 0.2, and 0.3. Would you recommend a field trial using a capture probability\index{capture probability} of 0.1?
+1.  For the two-age model (Section \@ref(TwoAge)), compare true and estimated total abundance using absolute relative errors (<code>abs((y-y.hat)/y)</code>) for five trials using capture probabilities\index{capture probability} of 0.1, 0.2, and 0.3. Would you recommend a field trial using a capture probability\index{capture probability} of 0.1?
 
 2. For the stock assessment model (Section \@ref(CAGEAN)), set the number of updates at a modest level (e.g., 20,000) and compare the level of convergence\index{convergence} when fishing mortality is consistently low (e.g., 0.0-0.1) or high (1.0-1.1). Why is there a difference in how readily convergence is achieved for the two cases?

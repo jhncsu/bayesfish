@@ -1,6 +1,6 @@
 # Growth {#Growth}
 
-Growth is a basic aspect of a fish's life history, but it is also an important process for managing fish populations. For example, a minimum size limit for harvest might be used to increase the proportion of fish surviving to the size (and age) of sexual maturity. Another consideration in developing a harvest strategy is finding a balance between the growth rate (increasing size of each individual in a cohort) and the loss rate due to natural mortality\index{natural mortality} (reducing the number of individuals in a cohort).
+Growth is a basic aspect of a fish's life history, but it is also an important process to consider in managing fish populations. For example, a minimum size limit for harvest might be used to increase the proportion of fish surviving to the size (and age) of sexual maturity. Another consideration in developing a harvest strategy is finding a balance between the growth rate (increasing size of each individual in a cohort) and the loss rate due to natural mortality\index{natural mortality} (reducing the number of individuals in a cohort).
 
 There are typically two aspects to growth modeling: age versus length and length versus weight. With those two equations, it is possible to predict the length or weight at any age, and to examine harvest strategies using minimum size or slot (legal harvest between lower and upper limits) regulations. The focus in commercial marine fisheries is typically on weight because income from commercial fishing is a function of weight of the catch. Length gets more emphasis in freshwater fisheries management because anglers are not selling their catches (and trophy designations are generally length-based). 
 
@@ -8,10 +8,10 @@ There are typically two aspects to growth modeling: age versus length and length
 
 The relationship between age and length for adult fish usually is a curve of decreasing slope; that is, growth gradually slows with age as individuals approach some average maximum size. The equation most often used for age and length is the von Bertalanffy growth\index{von Bertalanffy growth} function: $L_t=L_\infty*(1-e^{-k*(t-t_0)})$. This equation for size at time t has three parameters: the asymptotic size or average maximum length ($L_\infty$), growth rate ($k$), and time (age) at length of 0 ($t_0$). The last parameter is a theoretical one rather than something that is observed. It can take on positive or negative values, and can be thought of as an extrapolation from sizes at older ages.
 
-In the following sections, we fit von Bertalanffy growth\index{von Bertalanffy growth} curves using two sources of data: paired age-length observations from a laboratory examination of otoliths or other hard parts that form annual marks [@campana2001]; or a tagging study.  
+In the following sections, we fit von Bertalanffy growth\index{von Bertalanffy growth} curves using two sources of data: paired age-length observations from a laboratory examination of otoliths or other hard parts that form annual marks [@campana2001], or a tagging study.  
 
 ### Age-length  {#Otolith}
-Age:length observations may come from a survey or from sampling a fishery. Some mis-ageing invariably occurs when interpreting otoliths or other hard parts [@campana2001], but for simplicity we assume that the ages are determined without error. We further assume that fish are not sampled randomly but are instead a systematic sample by age. This ensures that the data set includes less common ages (sizes), particularly older fish.
+Age:length observations may come from a survey or from sampling a fishery. Some mis-ageing invariably occurs when interpreting otoliths or other hard parts [@campana2001], but for simplicity I assume that the ages are determined without error. I further assume that fish are not sampled randomly but are instead a systematic sample by age. This ensures that the data set includes less common ages (sizes), particularly older fish.
 
 The first step in fitting the model is to generate a simulated age:length data set.
 
@@ -32,7 +32,7 @@ Len <- rnorm(n=N.AgeLen,L_inf*(1-exp(-k*(Age-t_0))), sd=sqrt(Var_L))
 
 plot(Age, Len, xlab="Age", ylab="Length (cm)")
 ```
-The parameter values and other simulation settings provide a reasonable sample size and well-defined growth pattern and asymptote. The latter characteristic is critical in obtaining reliable results. For real data sets, it is always worthwhile to look at the shape of the scatter plot of length versus age. Data sets with few young fish or lacking a well-defined asymptote may result in poor estimates. Our simulation uses integer ages but fractional (real-valued) ages could be used if there was good information about the timing of spawning and formation of annual marks on hard parts. Using fractional ages would be more important for short-lived species. The model fitting process is the same whether using integer or fractional ages.
+The parameter values and other simulation settings provide a reasonable sample size and well-defined growth pattern and asymptote. The latter characteristic is critical in obtaining reliable results. For real data sets, it is always worthwhile to look at the shape of the scatter plot of length versus age. Data sets with few young fish or lacking a well-defined asymptote will often result in poor estimates. Our simulation uses integer ages but fractional (real-valued) ages could be used if there was good information about the timing of spawning and formation of annual marks on hard parts. Using fractional ages would be more important for short-lived species. The model fitting process is the same whether using integer or fractional ages.
 
 We assume an additive error\index{additive error} term; i.e., variability in length at age is constant. Whether an additive or multiplicative error\index{multiplicative error} term is appropriate can often be seen by examining a scatter plot of length versus age. A multiplicative error\index{multiplicative error} term would be called for if points have greater spread for older fish.
 
@@ -89,12 +89,14 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-Convergence\index{convergence} is generally rapid and the estimates from simulated data are reliable. Try varying some of the simulation settings and parameter values to see how the model performs under different conditions. For example, note how the growth curve changes as you try different values for the von Bertalanffy growth\index{von Bertalanffy growth} parameters and the variance about the curve. (One caution is to ensure that the assumed additive error\index{additive error} term does not produce negative length values. If that occurs, one solution would be to switch to a multiplicative error\index{multiplicative error} term, using a lognormal\index{lognormal distribution} rather than a normal distribution\index{normal distribution} (see Section \@ref(LnWgt).)  Another setting to vary is the maximum age. A low value, as might occur if the population was heavily exploited, can make it difficult to estimate $L_\infty$. A Bayesian approach for dealing with limited data is the use of informative prior distributions [@doll.jacquemin_2018]. This curve is particularly well suited to use of informative priors\index{informative prior distribution}, given the wealth of published information about fish growth and von Bertalanffy\index{von Bertalanffy growth} parameters.
+Convergence\index{convergence} is generally rapid and the estimates from simulated data are reliable. Try varying some of the simulation settings and parameter values to see how the model performs under different conditions. For example, note how the growth curve changes as you try different values for the von Bertalanffy growth\index{von Bertalanffy growth} parameters and the variance about the curve. (One caution is to ensure that the assumed additive error\index{additive error} term does not produce negative length values. If that occurs, one solution would be to switch to a multiplicative error\index{multiplicative error} term, using a lognormal\index{lognormal distribution} rather than a normal distribution\index{normal distribution} (see Section \@ref(LnWgt).)  Another setting to vary is the maximum age. A low value, as might occur if the population was heavily exploited, can make it difficult to estimate $L_\infty$. A Bayesian approach for dealing with limited data is to use an informative prior distributions [@doll.jacquemin_2018]. This curve is particularly well suited to use of informative priors\index{informative prior distribution}, given the wealth of published information about fish growth and von Bertalanffy\index{von Bertalanffy growth} parameters.
 
 The uniform prior distributions\index{prior distribution} chosen for this example were intended to be uninformative, and additional testing with large sample sizes showed no apparent bias. @lemoine_2019 argues against using priors\index{prior distribution} with fixed limits, and instead recommends using an unbounded, positive-only distribution. Trying multiple priors\index{prior distribution} is a practical way to establish that the results are robust to the particular distributions chosen. For example, similar results were obtained when using a vague lognormal\index{lognormal distribution} prior (e.g., <code>dlnorm(0,1E-6))</code> with initial values from <code>rlnorm(n=1, meanlog=0, sdlog=0.5)</code>) for $L_\infty$, $k$, and Var_L, which are restricted to positive values. A vague normal distribution (e.g., <code>dnorm(0,1E-6))</code>, with initial values from <code>rnorm(n=1, mean=0, sd=1)</code>) was used for $t_0$, which can take on positive or negative values. Note that the model structure can affect whether a prior distribution\index{prior distribution} is uninformative [@mccarthy_2007]. For example, the uniform prior for Var_L will not be flat when transformed to calculate precision (tau). In general, a prior distribution chosen to be uninformative will not be for transformed parameters. One way of examining this issue for the growth model would be to fit the model using a prior for tau (so that Var_L is the calculated value). Test runs with large sample sizes showed similar results for the original model and when a vague uniform prior was used for tau.
 
+A real-data example [@quinn.deriso_1999] of fitting a von Bertalanffy growth\index{von Bertalanffy growth} curve to age and length data for rougheye rockfish (*Sebastes aleutianus*) is included as Appendix \@ref(vonBertRealData).
+
 ### Using tagging data {#GrowthInc}
-Growth information can also be obtained from a tagging study [@wang.etal1995; @zhang.etal2009; @scherrer.etal2021]. Fish seen on two or more occasions provide information on growth as a function of size at initial capture, time-at-large (interval between tagging and a subsequent recapture) and the growth increment. This approach differs from using age and length data because age at tagging is not known. However, it can be made compatible with a traditional age:length analysis by estimating relative age (true age - $t_0$) of all individuals as additional parameters [@wang.etal1995; @zhang.etal2009; @scherrer.etal2021]. This allows growth to be modeled as a function of age rather than size. Flexible versions of these models can allow for separate growth parameters ($L_\infty$, k) for each individual. Here we fit a simpler model (Model 4 of @scherrer.etal2021) with all individuals sharing $L_\infty$ and k. It is straightforward to modify the code to allow for either or both parameters to vary among individuals [@scherrer.etal2021].
+Growth information can also be obtained from a tagging study [@wang.etal1995; @zhang.etal2009; @scherrer.etal2021]. Fish seen on two or more occasions provide information on growth as a function of size at initial capture, time-at-large (interval between tagging and a subsequent recapture) and the growth increment. This approach differs from using age and length data because age at tagging is not known. However, it can be made compatible with a traditional age:length analysis by estimating relative age (true age - $t_0$) of all individuals as additional parameters [@wang.etal1995; @zhang.etal2009; @scherrer.etal2021]. This allows growth to be modeled as a function of age rather than size. Flexible versions of these models can allow for separate growth parameters ($L_\infty$, k) for each individual. Here we fit a simpler model [Model 4 of @scherrer.etal2021] with all individuals sharing $L_\infty$ and k. It is straightforward to modify the code to allow for either or both parameters to vary among individuals [@scherrer.etal2021].
 
 One important practical question is how to obtain length data when fish are encountered after tagging.  Using lengths from fishers provides the greatest sample size but runs the risk of substantial measurement error or outright bias, if an angler "estimates" the length. Length data obtained by biologists limits the sample size but ensures data quality, and could be obtained through field survey sampling or fishery monitoring by creel clerks or at-sea observers. In order for our results to apply to the whole population, we also assume that growth is the same for tagged and untagged fish. The model allows for measurement error and other sources of variability (e.g., environmental, genetic) that cause individual fish lengths to vary about the fitted curve. A constant additive error\index{additive error} is assumed here but the model could be modified to allow for a multiplicative error\index{multiplicative error} term. We begin with simulation code for generating the observations:
 
@@ -214,9 +216,9 @@ It is straightforward to carry out a combined analysis using age:length and tagg
 ## Growth in weight {#LnWgt}
 The length-weight relationship\index{length-weight relationship} for fish is typically nonlinear: $W=a*L^b$. The 'a' parameter is a scaling coefficient and varies depending on the units chosen for measuring length and weight (e.g., cm vs mm or kg vs g). The 'b' parameter is close to 3 for most fishes, because weight is a three-dimensional value, increasing approximately as a cube of length.
 
-The length-weight relationship\index{length-weight relationship} is useful for several reasons. Length can be measured more quickly and accurately than weight, especially on the water. Fortunately, there tends to be a very strong relationship between length and weight, so it is often advantageous to measure length and predict weight. In addition, the length-weight relationship\index{length-weight relationship} provides information about fish condition (shape). Fish in poor condition may be overcrowded (e.g., in a pond or aquaculture setting) or lacking in suitable forage.
+The length-weight relationship\index{length-weight relationship} is useful for several reasons. It provides information about fish condition (shape). Fish in poor condition may be overcrowded (e.g., in a pond or aquaculture setting) or lacking in suitable forage. A practical reason for developing a length-weight relationship\index{length-weight relationship} is that length can be measured more quickly and accurately than weight, especially on the water. Fortunately, there tends to be a very strong relationship between length and weight, so it is often advantageous to measure length and predict weight.
 
-We begin with simulation code, using an arbitrary range of 20 to 80 for length (e.g., measured in cm). For our example, the scaling parameter 'a' will be around 1E-6, so we instead work with the ln-scale value (-12). The model can be fitted using either 'a' or the ln-scale transformed parameter. Any assumed value around 3 is fine for the 'b' parameter. A multiplicative error\index{multiplicative error} term is assumed, as variability in weight typically increases as a function of length (@hayes.brodziack1997).
+We begin with simulation code, using an arbitrary range of 20 to 80 for length (e.g., measured in cm). For our example, the scaling parameter 'a' will be around 1E-6, so we instead work with the ln-scale value (-12). The model can be fitted using either 'a' or the ln-scale transformed parameter. Any assumed value around 3 is fine for the 'b' parameter. A multiplicative error\index{multiplicative error} term is assumed, as variability in weight typically increases as a function of length [@hayes.brodziack1997].
 
 ```{r eval=FALSE}
 # Fitting length:weight relationship to simulated data
@@ -259,7 +261,7 @@ model{
  ln_L_W_a.est ~ dunif(-20, 20)
  L_W_b.est ~ dunif(1, 4)
  W_Var.est ~ dunif(0,0.5)   
-   # Multiplicative error. Variability around ln-scale line
+   # Multiplicative error. Ln-scale variability
 
 # Calculated value
  precision <- 1/W_Var.est
@@ -305,9 +307,9 @@ par(mar=c(1,1,1,1)) # Avoid error for "figure margins too large"
 plot(jagsfit.mcmc) # Trace and density plots
 autocorr.diag(jagsfit.mcmc)
 ```
-With 5,000 MCMC\index{Markov Chain Monte Carlo (MCMC)} iterations, the estimates are generally close to the true values but in some runs Rhat is inflated. Plotting the sequence of MCMC\index{Markov Chain Monte Carlo (MCMC)} estimates for ln-scale 'a' versus 'b' makes clear the extremely high correlation between the two parameters. A numerical estimate of the correlation (~0.99) is obtained in the Console window by using the <code>cor()</code> function.
+With 5,000 MCMC\index{Markov Chain Monte Carlo (MCMC)} iterations, the estimates are generally close to the true values but in some runs Rhat values are inflated. Plotting the sequence of MCMC\index{Markov Chain Monte Carlo (MCMC)} estimates for ln-scale 'a' versus 'b' makes clear the extremely high correlation between the two parameters. A numerical estimate of the correlation (~0.99) is obtained in the Console window by using the <code>cor()</code> function.
 
-The trace plots show poor mixing for the 'a' and 'b' parameters and sometimes bimodality in the density plots, indicating that many additional updates are needed (Figure \@ref(fig:LnWtPlot)). Compare this result to a longer run using 50,000 updates. The trace plots for 'a' and 'b' now have a much better appearance and we have good low estimates for Rhat\index{Rhat}. The autocorrelations can be reduced by thinning\index{thinning} (e.g., try n.thin=10), which improves the appearance of trace plot and reduces the memory required.
+The trace plots show poor mixing for the 'a' and 'b' parameters and sometimes more than one mode in the density plots, indicating that many additional updates are needed (Figure \@ref(fig:LnWtPlot)). Compare this result to a longer run using 50,000 updates. The trace plots for 'a' and 'b' now have a much better appearance and we have good low estimates for Rhat\index{Rhat}. The autocorrelations\index{autocorrelation} can be reduced by thinning\index{thinning} (e.g., try n.thin=10), which also reduces the memory required.
 
 ```{r LnWtPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example trace and density plots for length-weight relationship, based on 5000 updates.', out.width="90%"}
 
@@ -367,7 +369,7 @@ LnWt_jags <-
   )
 
 jagsfit.mcmc <- as.mcmc(LnWt_jags) # Creates an MCMC object for plotting
-plot(jagsfit.mcmc) # Trace and density plots
+plot(jagsfit.mcmc, col=gray.colors(n=3, start=0, end=0.7)) # Trace and density plots
 ```
 
 It can be helpful to add code for displaying the length-weight observations and the fitted curve. The <code>as.numeric()</code> function converts each array (of length 1) to a scalar for use in generating the fitted curve, which is added to the plot using the points function.
@@ -375,10 +377,10 @@ It can be helpful to add code for displaying the length-weight observations and 
 ```{r eval=FALSE}
 par(mar=c(5.1, 4.1, 4.1, 2.1)) # Restore default margins
 plot(Len, Wgt, xlab="Length (cm)", ylab="Weight (kg)")
-par_a <- exp(as.numeric(jagsfit$BUGSoutput$mean$ln_L_W_a.est))
-par_b <- as.numeric(jagsfit$BUGSoutput$mean$L_W_b.est)
+par_a <- exp(as.numeric(jagsfit$BUGSoutput$median$ln_L_W_a.est))
+par_b <- as.numeric(jagsfit$BUGSoutput$median$L_W_b.est)
 Wgt_hat <- par_a*(Len^par_b)
-points(Len, Wgt_hat, type="l", col="red")
+points(Len, Wgt_hat, type="l", lty=1)
 ```
 
 

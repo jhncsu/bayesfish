@@ -4,13 +4,13 @@ Growth, mortality, and recruitment\index{recruitment} are the three fundamental 
 
 What happens between spawning and recruitment\index{recruitment} is of interest to the fish ecologist and the fishery manager. Typical factors affecting recruitment\index{recruitment} or year-class strength include environmental conditions, prey availability, and predation. It may seem obvious to assume that spawning stock size affects recruitment\index{recruitment}, but it is not always easy to detect such a relationship [@hilborn.walters_1992]. The relationship may not be evident if there is little contrast\index{contrast} in spawning stock size, high variability in recruitment, too short a time series, or low precision for estimates of spawning stock or recruitment. Characterizing the strength of the relationship can provide valuable guidance to the fishery manager. For example, management will need to be more restrictive in cases where recruitment drops consistently as spawning stock declines. If recruitment appears to be relatively stable over a wide range of spawning stock sizes, a more aggressive harvest policy may be possible. The risk in any case is of fishing the stock down to a point where recruitment declines sharply. This is termed recruitment overfishing\index{recruitment overfishing}, and it can be very difficult to rebuild a population after that occurs.
 
-The process of recruitment\index{recruitment} starts with eggs, but egg production is difficult to estimate directly so it is common to use spawning stock biomass ($B_S$) as a proxy. One of the most commonly used curves relating spawning stock size and recruitment is the Beverton-Holt equation\index{Beverton-Holt equation}: 
+The process of recruitment\index{recruitment} starts with eggs for most fishes, but egg production is difficult to estimate directly so it is common to use spawning stock biomass ($B_S$) as a proxy. One of the most commonly used curves relating spawning stock size and recruitment is the Beverton-Holt model\index{Beverton-Holt model} [@beverton.holt_1993]: 
 
 $R=1/(\alpha +\beta/B_S)$
 
 This curve approaches zero as $B_S$ approaches zero and approaches 1/$\alpha$ as $B_S$ approaches infinity. It is often a good descriptor of observed stock-recruitment data in that recruitment\index{recruitment} is low when spawning stock size is close to zero but appears to be without trend at higher spawning stock sizes.
 
-The best way to explore the behavior of the Beverton-Holt equation\index{Beverton-Holt equation} is to try different values for the two parameters:
+The best way to explore the behavior of the Beverton-Holt model\index{Beverton-Holt model} is to try different values for the two parameters:
 
 ```{r eval=FALSE}
 SpBio <- seq(from=10, to=200, by=5)
@@ -20,11 +20,11 @@ R <- 1/(a+b/SpBio)
 plot(SpBio, R)
 ```
 
-In this example code, spawning stock biomass is generated with the <code>seq()</code> (sequence) function over a wide but arbitrary range. The Beverton-Holt parameters are also arbitrary but are chosen to allow for gradually increasing recruitment\index{recruitment} toward an asymptote of 1000 (1/a). Experiment with different parameter values to find a set that would maintain an asymptote of 1000 but would produce a steeper curve (near the origin), with about 90% of asymptotic recruitment at a spawning stock level of 100.
+In this example code, spawning stock biomass is generated with the <code>seq()</code> (sequence) function over a wide but arbitrary range. The Beverton-Holt\index{Beverton-Holt model} parameters are also arbitrary but are chosen to allow for gradually increasing recruitment\index{recruitment} toward an asymptote of 1000 (1/a). Experiment with different parameter values to find a set that would maintain an asymptote of 1000 but would produce a steeper curve (near the origin), with about 90% of asymptotic recruitment at a spawning stock level of 100.
 
 ## Fitting a stock-recruitment curve {#Recruit-Fit}
 
-We begin by fitting a Beverton-Holt\index{Beverton-Holt equation} model to simulated stock-recruitment data from a full age-structured model. First, we choose the structure of the population matrix (number of ages and years). Next, we choose arbitrary annual fishing mortality rates. By starting the population at a high level and fishing intensively, we ensure that there is sufficient contrast\index{contrast} [@hilborn.walters_1992] in spawning stock size to be able to detect the underlying relationship.  Age-specific fishing mortality rates\index{instantaneous fishing mortality rate} are obtained by defining the fishery gear selectivity\index{gear selectivity} pattern. We use a logistic curve and arbitrarily choose parameters so that 50% selectivity\index{gear selectivity} occurs at age two. (It is useful to plot the selectivity\index{gear selectivity} curve (code commented out) while varying the two selectivity parameters.) Obtaining year- and age- specific fishing mortality rates\index{instantaneous fishing mortality rate} as a product of a year-specific measure of fishing intensity and an age-specific vulnerability to fishing is sometimes referred to as a "separable" model.
+Our simulation will use a full age-structured model to produce the spawning stock and recruitment observations for fitting a Beverton-Holt\index{Beverton-Holt model} model. First, we choose the structure of the population matrix (number of ages and years). Next, we choose arbitrary annual fishing mortality rates. By starting the population at a high level and fishing intensively, we ensure that there is sufficient contrast\index{contrast} [@hilborn.walters_1992] in spawning stock size to be able to detect the underlying relationship.  Age-specific fishing mortality rates\index{instantaneous fishing mortality rate} are obtained by defining the fishery gear selectivity\index{gear selectivity} pattern. We use a logistic curve and arbitrarily choose parameters so that 50% selectivity\index{gear selectivity} occurs at age two. (It is useful to plot the selectivity\index{gear selectivity} curve (code commented out) while varying the two selectivity parameters.) Obtaining year- and age- specific fishing mortality rates\index{instantaneous fishing mortality rate} as a product of a year-specific measure of fishing intensity and an age-specific vulnerability to fishing is sometimes referred to as a "separable" model.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -61,7 +61,8 @@ N <- array(data=NA, dim=c(A, Y))
 
 BH_alpha <- 1/1E5 # Beverton-Holt asymptotic recruitment
 BH_beta <- 0.1 # Arbitrary
-SD_rec <- 0.25 # Low level of lognormal error in recruitment
+V_rec <- 0.1 # Log-scale recruitment variance
+SD_rec <- sqrt(V_rec)
 
 # Set up year-1 vector based on asymptotic recruitment
 # and year-1 survival
@@ -80,7 +81,7 @@ for (y in 2:Y){
   N[1,y] <- trunc(1/(BH_alpha+BH_beta/SpBio[y-1])
                   *rlnorm(n=1, 0, SD_rec))
   for (a in 2:A){
-    N[a,y] <- rbinom(1, N[(a-1), (y-1)], S_a[(a-1),(y-1)])
+    N[a,y] <- rbinom(1, N[(a-1),(y-1)], S_a[(a-1),(y-1)])
   } #a
 } #y
 #plot(SpBio,N[1,2:Y], ylab="Recruits", xlab="Spawning stock biomass")
@@ -96,11 +97,11 @@ Survey_R <- c(NA,rlnorm(n=(Y-1), meanlog=Exp_ln_R, sdlog=SD_survey))
 #plot(N[1,], Survey_R)
 ```
 
-The next section of code generates the population matrix. The Beverton-Holt parameters are arbitrarily chosen and can be varied to explore different shapes for the curve. Next, we generate the population vector for year one, using approximate equilibrium values. Expected recruitment is set equal to the curve's asymptote, with a lognormal\index{lognormal distribution} (Section \@ref(LognormalDist)) error term used to add random variation, as might be due to environmental conditions. The lognormal distribution\index{lognormal distribution} is well suited to recruitment data because of the potential for occasional extreme values [@hilborn.walters_1992]. The chosen standard deviation (0.25) is on the lower end of variation in recruitment [@hightower.grossman_1985]. The rest of the year-1 vector is obtained from age-1 recruitment using year-1 mortality rates ($N_{a,1}=S_{a-1,1}*N_{a-1,1}$). The <code>rbinom()</code> function introduces stochastic variation in survival. Starting (age-1) population size is truncated because the binomial\index{binomial distribution} function requires a whole number for the size of the experiment.
+The next section of code generates the population matrix. The Beverton-Holt\index{Beverton-Holt model} parameters are arbitrarily chosen and can be varied to explore different shapes for the curve. Next, we generate the population vector for year one, using approximate equilibrium values. Expected recruitment is set equal to the curve's asymptote, with a lognormal\index{lognormal distribution} (Section \@ref(LognormalDist)) variance (default 0.1) to add random variation as might be due to environmental conditions. The lognormal distribution\index{lognormal distribution} is well suited to recruitment data because of the potential for occasional extreme values [@hilborn.walters_1992]. The rest of the year-1 vector is obtained from age-1 recruitment using year-1 mortality rates ($N_{a,1}=S_{a-1,1}*N_{a-1,1}$). The <code>rbinom()</code> function introduces stochastic variation in survival. Starting (age-1) population size is truncated because the binomial\index{binomial distribution} function requires a whole number for the size of the experiment.
 
-The population vector for the remaining years can be filled in once the year-1 vector is determined. For example, recruitment\index{recruitment} in year 2 depends on spawning stock biomass in year 1. The age-specific vectors for maturity schedule and weight-at-age are arbitrary. Numbers of fish age 2 and older are obtained as survivors from the prior year's vector; i.e., $N_{a,y}=S_{a-1,y-1}*N_{a-1,y-1}$, with random variation in survival from a binomial distribution\index{binomial distribution}.  The final step is to obtain survey observations for recruitment\index{recruitment} and spawning stock biomass. The random survey values are drawn from a lognormal distribution\index{lognormal distribution}, using an arbitrary catchability coefficient and ln-scale standard deviation for error. The survey values are referred to as indices but could be estimates of the absolute magnitude of recruitment\index{recruitment} and spawning stock size. There is not a recruitment\index{recruitment} survey value for year 1 because the simulated recruitment\index{recruitment} was not based on spawning stock size.
+The population vector for the remaining years can be filled in once the year-1 vector is determined. For example, recruitment\index{recruitment} in year 2 depends on spawning stock biomass in year 1. The age-specific vectors for maturity schedule and weight-at-age are arbitrary. Numbers of fish age 2 and older are obtained as survivors from the prior year's vector; i.e., $N_{a,y}=S_{a-1,y-1}*N_{a-1,y-1}$, with random variation in survival from a binomial distribution\index{binomial distribution}.  The final step is to obtain survey observations for recruitment\index{recruitment} and spawning stock biomass. The random survey values are drawn from a lognormal distribution\index{lognormal distribution}, using an arbitrary catchability coefficient and ln-scale standard deviation for error. (There is not a recruitment\index{recruitment} survey value for year 1 because the simulated recruitment\index{recruitment} was not based on spawning stock size.) The survey values are referred to as indices but could be estimates of the absolute magnitude of recruitment\index{recruitment} and spawning stock size. Estimates of absolute recruitment and spawning stock size are typically obtained from a stock assessment model, similar to the catch-at-age analysis illustrated in Section \@ref(CAGEAN). @brooks.deroba_2015 recommend including the stock-recruitment relationship as an integral part of the catch-at-age analysis\index{catch-at-age analysis} to avoid some issues with treating the stock assessment results as data.
 
-The JAGS code uses uninformative prior distributions\index{uninformative prior distribution} for the two Beverton-Holt parameters and the lognormal\index{lognormal distribution} error term. Expected recruitment is predicted on ln-scale in order to match the assumed lognormal\index{lognormal distribution} error. The recruitment\index{recruitment} index is predicted (R_hat) for use in plotting (see below).
+The JAGS code uses uninformative prior distributions\index{uninformative prior distribution} for the two Beverton-Holt\index{Beverton-Holt model} parameters and the lognormal\index{lognormal distribution} error term. Note that the JAGS function <code>dlnorm()</code> uses the inverse of the variance whereas the R function for generating lognormal random variates <code>rlnorm()</code> uses the standard deviation. Expected recruitment is predicted on ln-scale in order to match the assumed lognormal\index{lognormal distribution} error. The recruitment\index{recruitment} index is predicted (R_hat) for use in plotting (see below) and the DIC score\index{Deviance Information Criterion (DIC)} is saved for use in Section \@ref(Recruit-DIC).
 
 ```{r eval=FALSE}
 # Load necessary library packages
@@ -110,13 +111,14 @@ library(R2jags)
 sink("StockRecruit.txt")
 cat("
 model {
-# Model parameters: Beverton-Holt alpha and beta, SD for fitted curve
+# Model parameters: Beverton-Holt alpha and beta, 
+# ln-scale variance for fitted curve
 
 # Priors
  BH_alpha.est ~ dunif(0, 10)
  BH_beta.est ~ dunif(0, 10)
- SD_rec.est ~ dunif(0, 10)
- tau <- pow(SD_rec.est, -2)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
 
 # Likelihood
     for(y in 2:Y) {
@@ -146,12 +148,12 @@ nls_save <- coef(nls_init)
 
 jags.inits <- function(){ list(BH_alpha.est=nls_save[1],
                                BH_beta.est=nls_save[2],
-                               SD_rec.est=runif(n=1, min=0, max=0.75))}
+                               V_rec.est=runif(n=1, min=0, max=10))}
 
 model.file <- 'StockRecruit.txt'
 
 # Parameters monitored
-jags.params <- c("BH_alpha.est", "BH_beta.est", "SD_rec.est",
+jags.params <- c("BH_alpha.est", "BH_beta.est", "V_rec.est",
                  "R_hat")
 
 # Call JAGS from R
@@ -164,20 +166,22 @@ plot(jagsfit)
 BH.DIC <- jagsfit$BUGSoutput$DIC # Used in next section
 
 df.xy <- data.frame(Survey_B[1:(Y-1)], Survey_R[2:Y],
-                    jagsfit$BUGSoutput$mean$R_hat)
+                    jagsfit$BUGSoutput$median$R_hat)
 df.xy <- df.xy[order(df.xy[,1]),]  # Sort by survey index for plotting
-y.bounds <- range(Survey_R[2:Y],jagsfit$BUGSoutput$mean$R_hat)
+y.bounds <- range(Survey_R[2:Y],jagsfit$BUGSoutput$median$R_hat)
 
 plot(df.xy[,1],df.xy[,2], ylab="Recruitment index",
      xlab="Spawning Stock Index", ylim=y.bounds) #c(min.y, max.y))
-points(df.xy[,1], df.xy[,3], type="l", col="red")
+points(df.xy[,1], df.xy[,3], type="l")
 ```
 
-Randomly chosen starting values for the two Beverton-Holt parameters sometimes caused JAGS to crash, so <code>nls()</code>, the R function for nonlinear least-squares, was used to generate good initial values. When unconstrained, <code>nls()</code> occasionally produced a negative estimate of the first parameter (1/asymptotic recruitment), so the "port" algorithm was used to allow bounds to be specified.  The <code>nls()</code> code illustrates the compactness of using R functions, compared to a Bayesian analysis, but also the "black box" nature of the analysis.
+Randomly chosen starting values for the two Beverton-Holt\index{Beverton-Holt model} parameters sometimes caused JAGS to crash, so <code>nls()</code>, the R function for nonlinear least-squares, was used to generate good initial values. When unconstrained, <code>nls()</code> occasionally produced a negative estimate of the first parameter (1/asymptotic recruitment), so the "port" algorithm was used to allow bounds to be specified.  The <code>nls()</code> code illustrates the compactness of using R functions, compared to a Bayesian analysis, but also the "black box" nature of the analysis.
 
-The JAGS results tend to be reliable for the default settings. The plotted estimates of the recruitment\index{recruitment} indices capture the decrease due to declining spawning stock size. Estimates of the Beverton-Holt alpha parameter are typically close to 0.01 (BH_alpha/Survey_q), because we fit the curve to a recruitment index (true recruitment * Survey_q) rather than to absolute levels. Estimates of the Beverton-Holt beta parameter tend to be close to the true value. Estimates of the standard deviation for variation about the curve tend to be higher than the true value of 0.25, because the points vary due not only to true recruitment variation but also variation due to survey sampling.
+The JAGS results tend to be reliable for the default settings. The plotted estimates of the recruitment\index{recruitment} indices capture the decrease due to declining spawning stock size. Estimates of the Beverton-Holt\index{Beverton-Holt model} alpha parameter are typically close to 0.01 (BH_alpha/Survey_q), because we fit the curve to a recruitment index (true recruitment * Survey_q) rather than to absolute levels. Estimates of the Beverton-Holt\index{Beverton-Holt model} beta parameter tend to be close to the true value. Estimates of the ln-scale variance about the curve tend to be higher than the true value because the points vary due not only to true recruitment variation but also variation due to survey sampling.
 
 As always, it is very helpful to view the points and fitted curve (Figure \@ref(fig:SRRPlot)). We use a data frame\index{data frame} to sort the spawning stock, recruitment\index{recruitment}, and predicted recruitment indicies, in order to have a smooth fitted curve (i.e., continuously increasing spawning stock values). (A data frame\index{data frame} is a collection of variables, similar to a spreadsheet. Columns have the same number of observations but can be of different types.) Try multiple runs to see how variation in recruitment\index{recruitment} affects the pattern of points and fitted curve.
+
+A real-data example of fitting a Beverton-Holt curve to data for North sea plaice is included as Appendix \@ref(Recruit-FitRealData).
 
 ```{r SRRPlot, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Example of fitted Beverton-Holt curve relating indices of spawning stock and recruitment.', out.width="90%"}
 
@@ -189,8 +193,8 @@ SRR <- function() {
 # Priors
  BH_alpha.est ~ dunif(0, 10)
  BH_beta.est ~ dunif(0, 10)
- SD_rec.est ~ dunif(0, 10)
- tau <- pow(SD_rec.est, -2)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
 
 # Likelihood
     for(y in 2:Y) {
@@ -231,7 +235,8 @@ N <- array(data=NA, dim=c(A, Y))
 
 BH_alpha <- 1/1E5 # Parameter defining Beverton-Holt asymptotic recruitment
 BH_beta <- 0.1 # Arbitrary
-SD_rec <- 0.25 # Low level of lognormal error in recruitment
+V_rec <- 0.1 # Log-scale recruitment variance
+SD_rec <- sqrt(V_rec)
 
 # Set up year-1 vector based on asymptotic recruitment and year-1 survival rates
 Mat <- c(0, 0, 0.2, 0.4, 0.8, 1, 1, 1, 1, 1) 
@@ -282,7 +287,7 @@ nls_save <- coef(nls_init)
 
 jags.inits <- function(){ list(BH_alpha.est=nls_save[1],
                                BH_beta.est=nls_save[2],
-                               SD_rec.est=runif(n=1, min=0, max=0.75))}
+                               V_rec.est=runif(n=1, min=0, max=0.75))}
 
 # Fit the model
 SRR_jags <- 
@@ -290,7 +295,7 @@ SRR_jags <-
     data = jags.data, inits=jags.inits,
     n.chains = 3, n.thin = 1, n.iter = 10000,
     model.file = SRR,
-    parameters.to.save = c("BH_alpha.est", "BH_beta.est", "SD_rec.est","R_hat")
+    parameters.to.save = c("BH_alpha.est", "BH_beta.est", "V_rec.est","R_hat")
   )
 
 y.bounds <- range(Survey_R[2:Y],SRR_jags$BUGSoutput$mean$R_hat)
@@ -300,12 +305,12 @@ df.xy <- df.xy[order(df.xy[,1]),]  # Sort by survey index for plotting
 
 plot(df.xy[,1],df.xy[,2], ylab="Recruitment index",
      xlab="Spawning Stock Index", ylim=y.bounds)
-points(df.xy[,1], df.xy[,3], type="l", col="red")
+points(df.xy[,1], df.xy[,3], type="l")
 ```
 
 ## Does spawning stock size affect recruitment?  {#Recruit-DIC}
 
-Section \@ref(Recruit-Fit) illustrated the process of model fitting but did not answer the question of whether there is a detectable relationship between the spawning stock and recruitment\index{recruitment} indices. To address that question, we return to the approach shown in Section \@ref(Model-selection); i.e., comparing DIC\index{Deviance Information Criterion (DIC)} scores for candidate models. Here the two candidates are the full Beverton-Holt model and a reduced model with constant recruitment\index{recruitment}.
+Section \@ref(Recruit-Fit) illustrated the process of model fitting but did not answer the question of whether there is a detectable relationship between the spawning stock and recruitment\index{recruitment} indices. To address that question, we return to the approach shown in Section \@ref(Model-selection), i.e., comparing DIC\index{Deviance Information Criterion (DIC)} scores for candidate models. Here the two candidates are the full Beverton-Holt model\index{Beverton-Holt model} and a reduced model with constant recruitment\index{recruitment}.
 
 We append JAGS code for the constant recruitment\index{recruitment} case at the end of the previous code so that both models are applied to the same spawning stock and recruitment\index{recruitment} data. Convergence\index{convergence} is extremely rapid for this simpler case. The difference in DIC\index{Deviance Information Criterion (DIC)} scores between the full (Beverton-Holt) and reduced (constant recruitment\index{recruitment}) models is printed to the Console, but it is also useful to compare pD\index{pD}, deviance\index{deviance}, and DIC\index{Deviance Information Criterion (DIC)} scores.
 
@@ -320,8 +325,8 @@ model {
 
 # Priors
  BH_alpha.est ~ dunif(0, 10)
- SD_rec.est ~ dunif(0, 10)
- tau <- pow(SD_rec.est, -2)
+ V_rec.est ~ dunif(0, 10)
+ tau <- 1/V_rec.est
 
 # Likelihood
     for(y in 2:Y) {
@@ -337,12 +342,12 @@ sink()
 jags.data <- list("Y", "Survey_R")
 
 jags.inits <- function(){ list(BH_alpha.est=nls_save[1],
-                               SD_rec.est=runif(n=1, min=0, max=0.75))}
+                               V_rec.est=runif(n=1, min=0, max=10))}
 
 model.file <- 'StockRecruit.txt'
 
 # Parameters monitored
-jags.params <- c("BH_alpha.est", "SD_rec.est", "R_hat")
+jags.params <- c("BH_alpha.est", "V_rec.est", "R_hat")
 
 # Call JAGS from R
 jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
@@ -354,7 +359,7 @@ ConstR.DIC <- jagsfit$BUGSoutput$DIC
 ConstR.DIC - BH.DIC
 ```
 
-With the default settings, the DIC\index{Deviance Information Criterion (DIC)} score is typically higher (indicating a poorer fit) for the constant recruitment model. Next, try varying some of the simulation settings. The pattern for annual fishing mortality could be altered to produce less of a decline over time in spawning stock (less contrast\index{contrast}). Higher levels of recruitment variation are not uncommon [e.g., 0.5-0.75; @hightower.grossman_1985], and will make the relationship harder to detect. For a lognormal variance of 0.5 or 0.75, the DIC\index{Deviance Information Criterion (DIC)} score may actually be lower for the constant recruitment model because of a smaller penalty for model complexity (smaller estimate of pD\index{pD}). Other potential settings to vary include the length of the time series and the precision of the survey data. Be sure to look back at the scatter plot and fitted Beverton-Holt curve, to get a sense of how the constant recruitment model would compare.
+With the default settings, the DIC\index{Deviance Information Criterion (DIC)} score is typically higher (indicating a poorer fit) for the constant recruitment model. Next, try varying some of the simulation settings. The pattern for annual fishing mortality could be altered to produce less of a decline over time in spawning stock (less contrast\index{contrast}). Higher levels of recruitment variation will make the relationship harder to detect, and the DIC\index{Deviance Information Criterion (DIC)} score may actually be lower for the constant recruitment model because of a smaller penalty for model complexity (smaller estimate of pD\index{pD}). Other potential settings to vary include the length of the time series and the precision of the survey data. Be sure to look back at the scatter plot and fitted Beverton-Holt curve, to get a sense of how the constant recruitment model would compare.
 
 ## Exercises
 

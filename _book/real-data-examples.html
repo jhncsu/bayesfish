@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A Real-data examples | A Bayesian Introduction to Fish Population Analysis</title>
+  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A Real-data examples | A Bayesian Introduction to Fish Population Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Real-data examples | A Bayesian Introduction to Fish Population Analysis" />
+  
+  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
+  
+
+<meta name="author" content="Joseph E. Hightower" />
+
+
+<meta name="date" content="2025-01-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="FinalThoughts.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian fish population analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> A Brief Introduction to R and RStudio</a></li>
+<li class="chapter" data-level="3" data-path="Distributions.html"><a href="Distributions.html"><i class="fa fa-check"></i><b>3</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Distributions.html"><a href="Distributions.html#Discrete"><i class="fa fa-check"></i><b>3.1</b> Discrete</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#Bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
+<li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
+<li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#PoissonDist"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#NegBinom"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Distributions.html"><a href="Distributions.html#Uniform"><i class="fa fa-check"></i><b>3.2.1</b> Uniform</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Distributions.html"><a href="Distributions.html#BetaDist"><i class="fa fa-check"></i><b>3.2.2</b> Beta</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Distributions.html"><a href="Distributions.html#NormalDist"><i class="fa fa-check"></i><b>3.2.3</b> Normal</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Distributions.html"><a href="Distributions.html#LognormalDist"><i class="fa fa-check"></i><b>3.2.4</b> Lognormal</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Distributions.html"><a href="Distributions.html#GammaDist"><i class="fa fa-check"></i><b>3.2.5</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Distributions.html"><a href="Distributions.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Model-fit.html"><a href="Model-fit.html"><i class="fa fa-check"></i><b>4</b> Model Fitting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-fit.html"><a href="Model-fit.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="Model-fit.html"><a href="Model-fit.html#Model-fit-sim"><i class="fa fa-check"></i><b>4.2</b> Using simulation</a></li>
+<li class="chapter" data-level="4.3" data-path="Model-fit.html"><a href="Model-fit.html#JAGS-model-fit"><i class="fa fa-check"></i><b>4.3</b> Using Bayesian methods</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#FirstExampleBayesian"><i class="fa fa-check"></i><b>4.3.1</b> Example: mark-recapture</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.2</b> Debugging code</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.3</b> Judging convergence</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.4</b> What is a likelihood?</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.5</b> Deviance as a measure of model fit</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.6</b> Model checking</a></li>
+<li class="chapter" data-level="4.3.7" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.7</b> Model selection</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-fit.html"><a href="Model-fit.html#exercises-1"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Abundance.html"><a href="Abundance.html"><i class="fa fa-check"></i><b>5</b> Abundance</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#Removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
+<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#MarkRecap"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
+<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#NMix"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
+<li class="chapter" data-level="5.4" data-path="Abundance.html"><a href="Abundance.html#exercises-2"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Survival.html"><a href="Survival.html"><i class="fa fa-check"></i><b>6</b> Survival</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Survival.html"><a href="Survival.html#AgeComp"><i class="fa fa-check"></i><b>6.1</b> Age-composition</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="Survival.html"><a href="Survival.html#CC_Selectivity"><i class="fa fa-check"></i><b>6.1.1</b> Accounting For Gear Selectivity</a></li>
+<li class="chapter" data-level="6.1.2" data-path="Survival.html"><a href="Survival.html#Cohort"><i class="fa fa-check"></i><b>6.1.2</b> Cohort model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="Survival.html"><a href="Survival.html#TelemetryBased"><i class="fa fa-check"></i><b>6.2</b> Telemetry-based</a></li>
+<li class="chapter" data-level="6.3" data-path="Survival.html"><a href="Survival.html#BrownieSurvival"><i class="fa fa-check"></i><b>6.3</b> Tag-based</a></li>
+<li class="chapter" data-level="6.4" data-path="Survival.html"><a href="Survival.html#exercises-3"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Mortality.html"><a href="Mortality.html#InformativePriors"><i class="fa fa-check"></i><b>7.1.1</b> Informative prior distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
+<li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
+<li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry-based</a></li>
+<li class="chapter" data-level="7.5" data-path="Mortality.html"><a href="Mortality.html#exercises-4"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Growth.html"><a href="Growth.html"><i class="fa fa-check"></i><b>8</b> Growth</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Growth.html"><a href="Growth.html#vonBert"><i class="fa fa-check"></i><b>8.1</b> Growth in length</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Growth.html"><a href="Growth.html#Otolith"><i class="fa fa-check"></i><b>8.1.1</b> Age-length</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Growth.html"><a href="Growth.html#GrowthInc"><i class="fa fa-check"></i><b>8.1.2</b> Using tagging data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Growth.html"><a href="Growth.html#LnWgt"><i class="fa fa-check"></i><b>8.2</b> Growth in weight</a></li>
+<li class="chapter" data-level="8.3" data-path="Growth.html"><a href="Growth.html#exercises-5"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Recruit.html"><a href="Recruit.html"><i class="fa fa-check"></i><b>9</b> Recruitment</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Recruit.html"><a href="Recruit.html#Recruit-Fit"><i class="fa fa-check"></i><b>9.1</b> Fitting a stock-recruitment curve</a></li>
+<li class="chapter" data-level="9.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>9.2</b> Does spawning stock size affect recruitment?</a></li>
+<li class="chapter" data-level="9.3" data-path="Recruit.html"><a href="Recruit.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>10</b> Integrated Population Models</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>10.1</b> Two-age model</a></li>
+<li class="chapter" data-level="10.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>10.2</b> Full age-structured model</a></li>
+<li class="chapter" data-level="10.3" data-path="PopModels.html"><a href="PopModels.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="FinalThoughts.html"><a href="FinalThoughts.html"><i class="fa fa-check"></i><b>11</b> Final Thoughts</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="real-data-examples.html"><a href="real-data-examples.html"><i class="fa fa-check"></i><b>A</b> Real-data examples</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="real-data-examples.html"><a href="real-data-examples.html#RemovalRealData"><i class="fa fa-check"></i><b>A.1</b> Abundance: Removal</a></li>
+<li class="chapter" data-level="A.2" data-path="real-data-examples.html"><a href="real-data-examples.html#MarkRecapRealData"><i class="fa fa-check"></i><b>A.2</b> Abundance: Mark-recapture</a></li>
+<li class="chapter" data-level="A.3" data-path="real-data-examples.html"><a href="real-data-examples.html#AgeCompRealData"><i class="fa fa-check"></i><b>A.3</b> Survival: Age-composition</a></li>
+<li class="chapter" data-level="A.4" data-path="real-data-examples.html"><a href="real-data-examples.html#BrownieSurvivalRealData"><i class="fa fa-check"></i><b>A.4</b> Survival: Tag-based</a></li>
+<li class="chapter" data-level="A.5" data-path="real-data-examples.html"><a href="real-data-examples.html#vonBertRealData"><i class="fa fa-check"></i><b>A.5</b> Growth: age-length</a></li>
+<li class="chapter" data-level="A.6" data-path="real-data-examples.html"><a href="real-data-examples.html#Recruit-FitRealData"><i class="fa fa-check"></i><b>A.6</b> Recruitment: Beverton-Holt curve</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Introduction to Fish Population Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="real-data-examples" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">A</span> Real-data examples<a href="real-data-examples.html#real-data-examples" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The purpose of this appendix is to show, for a subset of models, the process of model fitting to real values rather than simulated data. Removing the simulation code generally shortens and simplifies the examples. I have included brief comments regarding necessary code modifications. Reported point estimates are medians, which provide a better measure of central tendency when posterior distributions are skewed <span class="citation">(<a href="#ref-kruschke_2021">Kruschke 2021</a>)</span>.</p>
+<div id="RemovalRealData" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">A.1</span> Abundance: Removal<a href="real-data-examples.html#RemovalRealData" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The removal method (Section <a href="Abundance.html#Removal">5.1</a>) is used to estimate abundance in a closed study area, based on a sequence of catches. <span class="citation">Otis et al. (<a href="#ref-otis.etal_1978">1978</a>)</span> provided an example for whitefish (<em>Coregonus clupeaformis</em>) in Shakespeare Island Lake, based on gill netting for seven successive weeks <span class="citation">(original data from <a href="#ref-ricker_1958">Ricker 1958</a>)</span>. No changes were needed in the R or JAGS code other than replacing the simulation code with the the vector of observed catches and changing the number of removal samples.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="real-data-examples.html#cb1-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb1-2"><a href="real-data-examples.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="real-data-examples.html#cb1-3" tabindex="-1"></a><span class="co"># Removal study - whitefish (Ricker 1958)</span></span>
+<span id="cb1-4"><a href="real-data-examples.html#cb1-4" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">26</span>, <span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">5</span>)</span>
+<span id="cb1-5"><a href="real-data-examples.html#cb1-5" tabindex="-1"></a>N.removals <span class="ot">&lt;-</span> <span class="fu">length</span>(Catch) <span class="co"># Number of removals</span></span>
+<span id="cb1-6"><a href="real-data-examples.html#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="real-data-examples.html#cb1-7" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb1-8"><a href="real-data-examples.html#cb1-8" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb1-9"><a href="real-data-examples.html#cb1-9" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb1-10"><a href="real-data-examples.html#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="real-data-examples.html#cb1-11" tabindex="-1"></a><span class="co"># JAGS code for fitting model</span></span>
+<span id="cb1-12"><a href="real-data-examples.html#cb1-12" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;RemovalModel.txt&quot;</span>)</span>
+<span id="cb1-13"><a href="real-data-examples.html#cb1-13" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb1-14"><a href="real-data-examples.html#cb1-14" tabindex="-1"></a><span class="st">model{</span></span>
+<span id="cb1-15"><a href="real-data-examples.html#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="real-data-examples.html#cb1-16" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb1-17"><a href="real-data-examples.html#cb1-17" tabindex="-1"></a><span class="st"> CapProb.est ~ dunif(0,1)</span></span>
+<span id="cb1-18"><a href="real-data-examples.html#cb1-18" tabindex="-1"></a><span class="st"> N.est ~ dunif(TotalCatch, 2000)</span></span>
+<span id="cb1-19"><a href="real-data-examples.html#cb1-19" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="real-data-examples.html#cb1-20" tabindex="-1"></a><span class="st"> N.remaining[1] &lt;- trunc(N.est)</span></span>
+<span id="cb1-21"><a href="real-data-examples.html#cb1-21" tabindex="-1"></a><span class="st"> for(j in 1:N.removals){</span></span>
+<span id="cb1-22"><a href="real-data-examples.html#cb1-22" tabindex="-1"></a><span class="st">      Catch[j]~dbin(CapProb.est, N.remaining[j]) # jth removal</span></span>
+<span id="cb1-23"><a href="real-data-examples.html#cb1-23" tabindex="-1"></a><span class="st">      N.remaining[j+1] &lt;- N.remaining[j]-Catch[j]</span></span>
+<span id="cb1-24"><a href="real-data-examples.html#cb1-24" tabindex="-1"></a><span class="st">  } #j</span></span>
+<span id="cb1-25"><a href="real-data-examples.html#cb1-25" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="real-data-examples.html#cb1-26" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb1-27"><a href="real-data-examples.html#cb1-27" tabindex="-1"></a><span class="st">      &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-28"><a href="real-data-examples.html#cb1-28" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb1-29"><a href="real-data-examples.html#cb1-29" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="real-data-examples.html#cb1-30" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb1-31"><a href="real-data-examples.html#cb1-31" tabindex="-1"></a>TotalCatch <span class="ot">&lt;-</span> <span class="fu">sum</span>(Catch[])</span>
+<span id="cb1-32"><a href="real-data-examples.html#cb1-32" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Catch&quot;</span>, <span class="st">&quot;N.removals&quot;</span>, <span class="st">&quot;TotalCatch&quot;</span>)</span>
+<span id="cb1-33"><a href="real-data-examples.html#cb1-33" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="real-data-examples.html#cb1-34" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="real-data-examples.html#cb1-35" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb1-36"><a href="real-data-examples.html#cb1-36" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">CapProb.est=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>),</span>
+<span id="cb1-37"><a href="real-data-examples.html#cb1-37" tabindex="-1"></a>                               <span class="at">N.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span>TotalCatch,</span>
+<span id="cb1-38"><a href="real-data-examples.html#cb1-38" tabindex="-1"></a>                                           <span class="at">max=</span><span class="dv">2000</span>))}</span>
+<span id="cb1-39"><a href="real-data-examples.html#cb1-39" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="real-data-examples.html#cb1-40" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;RemovalModel.txt&#39;</span></span>
+<span id="cb1-41"><a href="real-data-examples.html#cb1-41" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="real-data-examples.html#cb1-42" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb1-43"><a href="real-data-examples.html#cb1-43" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;N.est&quot;</span>, <span class="st">&quot;CapProb.est&quot;</span>)</span>
+<span id="cb1-44"><a href="real-data-examples.html#cb1-44" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="real-data-examples.html#cb1-45" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb1-46"><a href="real-data-examples.html#cb1-46" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb1-47"><a href="real-data-examples.html#cb1-47" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">40000</span>,</span>
+<span id="cb1-48"><a href="real-data-examples.html#cb1-48" tabindex="-1"></a>                model.file)</span>
+<span id="cb1-49"><a href="real-data-examples.html#cb1-49" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb1-50"><a href="real-data-examples.html#cb1-50" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>The analysis by <span class="citation">Otis et al. (<a href="#ref-otis.etal_1978">1978</a>)</span> using program CAPTURE indicated that a constant capture probability model was appropriate. Their estimate (<span class="math inline">\(\hat{N}\)</span>=138.07) was similar to the median estimate I obtained using Bayesian methods (144.4). Their symmetrical 95% confidence interval (109-167) was more narrow than the 95% credible interval I obtained using Bayesian methods (121.8-225.3), due to the right-skew of the posterior distribution for N.est (e.g., try <code>hist(jagsfit$BUGSoutput$sims.list$N.est)</code>).</p>
+</div>
+<div id="MarkRecapRealData" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">A.2</span> Abundance: Mark-recapture<a href="real-data-examples.html#MarkRecapRealData" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="citation">Ogle (<a href="#ref-ogle_2016">2016</a>)</span> analyzed a two-sample mark-recapture experiment for walleye larger than 304 mm (<em>Sander vitreus</em>). No changes in the R or JAGS code were required other than replacing the Section <a href="Abundance.html#MarkRecap">5.2</a> simulation code with observed values.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="real-data-examples.html#cb2-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb2-2"><a href="real-data-examples.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="real-data-examples.html#cb2-3" tabindex="-1"></a><span class="co"># Ogle (2016)</span></span>
+<span id="cb2-4"><a href="real-data-examples.html#cb2-4" tabindex="-1"></a><span class="co"># Wisconsin Department of Natural Resources</span></span>
+<span id="cb2-5"><a href="real-data-examples.html#cb2-5" tabindex="-1"></a><span class="co"># Mark-recapture walleye &gt; 304 mm</span></span>
+<span id="cb2-6"><a href="real-data-examples.html#cb2-6" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">2555</span> <span class="co"># First sample (Marked)</span></span>
+<span id="cb2-7"><a href="real-data-examples.html#cb2-7" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">274</span> <span class="co"># Second sample</span></span>
+<span id="cb2-8"><a href="real-data-examples.html#cb2-8" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="dv">92</span> <span class="co"># Marked fish in second sample</span></span>
+<span id="cb2-9"><a href="real-data-examples.html#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="real-data-examples.html#cb2-10" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb2-11"><a href="real-data-examples.html#cb2-11" tabindex="-1"></a><span class="fu">library</span>(rjags)   <span class="co"># Package for fitting JAGS models from within R</span></span>
+<span id="cb2-12"><a href="real-data-examples.html#cb2-12" tabindex="-1"></a><span class="fu">library</span>(R2jags)  <span class="co"># Package for fitting JAGS models. Requires rjags</span></span>
+<span id="cb2-13"><a href="real-data-examples.html#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="real-data-examples.html#cb2-14" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb2-15"><a href="real-data-examples.html#cb2-15" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;TwoSampleCR.txt&quot;</span>)</span>
+<span id="cb2-16"><a href="real-data-examples.html#cb2-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb2-17"><a href="real-data-examples.html#cb2-17" tabindex="-1"></a><span class="st">    model {</span></span>
+<span id="cb2-18"><a href="real-data-examples.html#cb2-18" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="real-data-examples.html#cb2-19" tabindex="-1"></a><span class="st">    # Priors</span></span>
+<span id="cb2-20"><a href="real-data-examples.html#cb2-20" tabindex="-1"></a><span class="st">    MarkedFraction ~ dunif(0, 1)</span></span>
+<span id="cb2-21"><a href="real-data-examples.html#cb2-21" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="real-data-examples.html#cb2-22" tabindex="-1"></a><span class="st">    # Calculated value</span></span>
+<span id="cb2-23"><a href="real-data-examples.html#cb2-23" tabindex="-1"></a><span class="st">    N.hat &lt;- n1 /MarkedFraction</span></span>
+<span id="cb2-24"><a href="real-data-examples.html#cb2-24" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="real-data-examples.html#cb2-25" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb2-26"><a href="real-data-examples.html#cb2-26" tabindex="-1"></a><span class="st">    # Binomial distribution for observed recaptures</span></span>
+<span id="cb2-27"><a href="real-data-examples.html#cb2-27" tabindex="-1"></a><span class="st">    m2 ~ dbin(MarkedFraction, n2)</span></span>
+<span id="cb2-28"><a href="real-data-examples.html#cb2-28" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb2-29"><a href="real-data-examples.html#cb2-29" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="real-data-examples.html#cb2-30" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-31"><a href="real-data-examples.html#cb2-31" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb2-32"><a href="real-data-examples.html#cb2-32" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="real-data-examples.html#cb2-33" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb2-34"><a href="real-data-examples.html#cb2-34" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;n1&quot;</span>, <span class="st">&quot;n2&quot;</span>, <span class="st">&quot;m2&quot;</span>)</span>
+<span id="cb2-35"><a href="real-data-examples.html#cb2-35" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="real-data-examples.html#cb2-36" tabindex="-1"></a><span class="co"># Initial values.</span></span>
+<span id="cb2-37"><a href="real-data-examples.html#cb2-37" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">MarkedFraction=</span><span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">1</span>))}</span>
+<span id="cb2-38"><a href="real-data-examples.html#cb2-38" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="real-data-examples.html#cb2-39" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;TwoSampleCR.txt&#39;</span></span>
+<span id="cb2-40"><a href="real-data-examples.html#cb2-40" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="real-data-examples.html#cb2-41" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb2-42"><a href="real-data-examples.html#cb2-42" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;N.hat&quot;</span>, <span class="st">&quot;MarkedFraction&quot;</span>)</span>
+<span id="cb2-43"><a href="real-data-examples.html#cb2-43" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="real-data-examples.html#cb2-44" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb2-45"><a href="real-data-examples.html#cb2-45" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, <span class="at">inits=</span>jags.inits, jags.params,</span>
+<span id="cb2-46"><a href="real-data-examples.html#cb2-46" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin =</span> <span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">2000</span>,</span>
+<span id="cb2-47"><a href="real-data-examples.html#cb2-47" tabindex="-1"></a>                <span class="at">n.burnin =</span> <span class="dv">1000</span>, model.file)</span>
+<span id="cb2-48"><a href="real-data-examples.html#cb2-48" tabindex="-1"></a><span class="fu">print</span>(jagsfit, <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb2-49"><a href="real-data-examples.html#cb2-49" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>Results using Bayesian methods (N.est median=7569.6, 95% credible interval 6515.7-9015.2) were similar to estimates provided by <span class="citation">Ogle (<a href="#ref-ogle_2016">2016</a>)</span> using the <span class="citation">Chapman (<a href="#ref-chapman1951">1951</a>)</span> estimator (<span class="math inline">\(\hat{N}\)</span>=7557, 95% confidence interval 6454-8973).</p>
+</div>
+<div id="AgeCompRealData" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">A.3</span> Survival: Age-composition<a href="real-data-examples.html#AgeCompRealData" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Section <a href="Survival.html#AgeComp">6.1</a> showed an approach for estimating survival using age composition data. Here I illustrate a different approach: a Bayesian version of a traditional catch curve analysis. <span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span> provided a catch curve analysis for Pacific halibut in the northeastern Pacific Ocean, using fishery catch data for the 1960 year class between ages 10 and 20 (i.e., tracking a single cohort across multiple years).</p>
+<p>Unlike the approach in Section <a href="Survival.html#AgeComp">6.1</a>, a traditional catch curve analysis uses ln-transformed catches, for the following reason. The equation for population size at time t (Section <a href="Mortality.html#Hearn">7.2</a>) is <span class="math inline">\(N_t = N_0 * exp(-Z*t)\)</span>. Multiplying both sides by a time-independent exploitation rate <span class="math inline">\(\mu\)</span> produces <span class="math inline">\(\mu*N_t = \mu*N_0 * exp(-Z*t)\)</span> or <span class="math inline">\(C_t = \mu*N_0 * exp(-Z*t)\)</span> <span class="citation">(<a href="#ref-quinn.deriso_1999">Quinn and Deriso 1999</a>)</span>. Log-transforming that equation produces <span class="math inline">\(ln(C_t) = ln(\mu * N_0) -Z*t\)</span>, which is a linear regression equation with intercept <span class="math inline">\(ln(\mu*N_0)\)</span> and slope -Z. Fitting the model to log-transformed catches implies that the catch data are considered to be lognormally distributed <span class="citation">(<a href="#ref-quinn.deriso_1999">Quinn and Deriso 1999</a>)</span>.</p>
+<p>The Bayesian code uses coded ages 1-10 rather than true ages 10-20 and fits the linear regression model using the <code>dnorm()</code> function for the likelihood. Estimated survival is obtained as <span class="math inline">\(exp(-Z)\)</span> and as always the MCMC process provides a complete characterization of that calculated parameter.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="real-data-examples.html#cb3-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb3-2"><a href="real-data-examples.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="real-data-examples.html#cb3-3" tabindex="-1"></a><span class="co"># Estimating survival using fishery catch data</span></span>
+<span id="cb3-4"><a href="real-data-examples.html#cb3-4" tabindex="-1"></a><span class="co"># Pacific halibut, ages 10-20 (1960 year class)</span></span>
+<span id="cb3-5"><a href="real-data-examples.html#cb3-5" tabindex="-1"></a><span class="co"># Quinn and Deriso 1999</span></span>
+<span id="cb3-6"><a href="real-data-examples.html#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="real-data-examples.html#cb3-7" tabindex="-1"></a>Catch <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">179187</span>, <span class="dv">122785</span>, <span class="dv">89241</span>, <span class="dv">58111</span>, <span class="dv">26682</span>, <span class="dv">23339</span>,</span>
+<span id="cb3-8"><a href="real-data-examples.html#cb3-8" tabindex="-1"></a>           <span class="dv">14668</span>, <span class="dv">10050</span>, <span class="dv">5866</span>, <span class="dv">3121</span>, <span class="dv">4837</span>)</span>
+<span id="cb3-9"><a href="real-data-examples.html#cb3-9" tabindex="-1"></a>lnC <span class="ot">&lt;-</span> <span class="fu">log</span>(Catch) <span class="co"># ln-transform to fit traditional catch curve</span></span>
+<span id="cb3-10"><a href="real-data-examples.html#cb3-10" tabindex="-1"></a>Age <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">20</span> <span class="co"># True ages for plotting</span></span>
+<span id="cb3-11"><a href="real-data-examples.html#cb3-11" tabindex="-1"></a>MaxCode <span class="ot">&lt;-</span> <span class="fu">length</span>(Catch)</span>
+<span id="cb3-12"><a href="real-data-examples.html#cb3-12" tabindex="-1"></a>CodedAge <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>MaxCode <span class="co"># Coded ages for fitting model</span></span>
+<span id="cb3-13"><a href="real-data-examples.html#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="real-data-examples.html#cb3-14" tabindex="-1"></a><span class="co">#-----------------------------------------------</span></span>
+<span id="cb3-15"><a href="real-data-examples.html#cb3-15" tabindex="-1"></a><span class="co"># Fit ln-scale model</span></span>
+<span id="cb3-16"><a href="real-data-examples.html#cb3-16" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb3-17"><a href="real-data-examples.html#cb3-17" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb3-18"><a href="real-data-examples.html#cb3-18" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb3-19"><a href="real-data-examples.html#cb3-19" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="real-data-examples.html#cb3-20" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb3-21"><a href="real-data-examples.html#cb3-21" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;CatchCurve.txt&quot;</span>)</span>
+<span id="cb3-22"><a href="real-data-examples.html#cb3-22" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb3-23"><a href="real-data-examples.html#cb3-23" tabindex="-1"></a><span class="st">model{</span></span>
+<span id="cb3-24"><a href="real-data-examples.html#cb3-24" tabindex="-1"></a><span class="st">    # Priors</span></span>
+<span id="cb3-25"><a href="real-data-examples.html#cb3-25" tabindex="-1"></a><span class="st">    Z.est ~ dunif(0, 2) # Instantaneous total mortality rate</span></span>
+<span id="cb3-26"><a href="real-data-examples.html#cb3-26" tabindex="-1"></a><span class="st">    lnC.intercept ~ dunif(0, 20)</span></span>
+<span id="cb3-27"><a href="real-data-examples.html#cb3-27" tabindex="-1"></a><span class="st">    Var.est ~ dunif(0, 20)</span></span>
+<span id="cb3-28"><a href="real-data-examples.html#cb3-28" tabindex="-1"></a><span class="st">    tau &lt;- 1/Var.est # Precision</span></span>
+<span id="cb3-29"><a href="real-data-examples.html#cb3-29" tabindex="-1"></a><span class="st">    sd.est &lt;- sqrt(Var.est)</span></span>
+<span id="cb3-30"><a href="real-data-examples.html#cb3-30" tabindex="-1"></a><span class="st">    S.est &lt;- exp(-Z.est)</span></span>
+<span id="cb3-31"><a href="real-data-examples.html#cb3-31" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="real-data-examples.html#cb3-32" tabindex="-1"></a><span class="st">    # Likelihood</span></span>
+<span id="cb3-33"><a href="real-data-examples.html#cb3-33" tabindex="-1"></a><span class="st">    for (a in 1:MaxCode){</span></span>
+<span id="cb3-34"><a href="real-data-examples.html#cb3-34" tabindex="-1"></a><span class="st">      lnC.hat[a] &lt;- lnC.intercept - (Z.est*a)</span></span>
+<span id="cb3-35"><a href="real-data-examples.html#cb3-35" tabindex="-1"></a><span class="st">      lnC[a] ~ dnorm(lnC.hat[a], tau)</span></span>
+<span id="cb3-36"><a href="real-data-examples.html#cb3-36" tabindex="-1"></a><span class="st">    } # a</span></span>
+<span id="cb3-37"><a href="real-data-examples.html#cb3-37" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb3-38"><a href="real-data-examples.html#cb3-38" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb3-39"><a href="real-data-examples.html#cb3-39" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb3-40"><a href="real-data-examples.html#cb3-40" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="real-data-examples.html#cb3-41" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb3-42"><a href="real-data-examples.html#cb3-42" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;lnC&quot;</span>, <span class="st">&quot;MaxCode&quot;</span>)</span>
+<span id="cb3-43"><a href="real-data-examples.html#cb3-43" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="real-data-examples.html#cb3-44" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb3-45"><a href="real-data-examples.html#cb3-45" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">Z.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">2</span>),</span>
+<span id="cb3-46"><a href="real-data-examples.html#cb3-46" tabindex="-1"></a>                               <span class="at">lnC.intercept=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">20</span>),</span>
+<span id="cb3-47"><a href="real-data-examples.html#cb3-47" tabindex="-1"></a>                               <span class="at">Var.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">20</span>))}</span>
+<span id="cb3-48"><a href="real-data-examples.html#cb3-48" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="real-data-examples.html#cb3-49" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;CatchCurve.txt&#39;</span></span>
+<span id="cb3-50"><a href="real-data-examples.html#cb3-50" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="real-data-examples.html#cb3-51" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb3-52"><a href="real-data-examples.html#cb3-52" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;S.est&quot;</span>, <span class="st">&quot;Z.est&quot;</span>, <span class="st">&quot;lnC.intercept&quot;</span>, </span>
+<span id="cb3-53"><a href="real-data-examples.html#cb3-53" tabindex="-1"></a>                 <span class="st">&quot;sd.est&quot;</span>, <span class="st">&quot;lnC.hat&quot;</span>)</span>
+<span id="cb3-54"><a href="real-data-examples.html#cb3-54" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="real-data-examples.html#cb3-55" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb3-56"><a href="real-data-examples.html#cb3-56" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb3-57"><a href="real-data-examples.html#cb3-57" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
+<span id="cb3-58"><a href="real-data-examples.html#cb3-58" tabindex="-1"></a>                model.file)</span>
+<span id="cb3-59"><a href="real-data-examples.html#cb3-59" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb3-60"><a href="real-data-examples.html#cb3-60" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb3-61"><a href="real-data-examples.html#cb3-61" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="real-data-examples.html#cb3-62" tabindex="-1"></a>y.bounds <span class="ot">&lt;-</span> <span class="fu">range</span>(lnC, jagsfit<span class="sc">$</span>BUGSout<span class="sc">$</span>median<span class="sc">$</span>lnC.hat)</span>
+<span id="cb3-63"><a href="real-data-examples.html#cb3-63" tabindex="-1"></a><span class="fu">plot</span>(Age, lnC, <span class="at">ylim=</span>y.bounds, <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;ln-Catch&quot;</span>)</span>
+<span id="cb3-64"><a href="real-data-examples.html#cb3-64" tabindex="-1"></a><span class="fu">points</span>(Age, jagsfit<span class="sc">$</span>BUGSout<span class="sc">$</span>median<span class="sc">$</span>lnC.hat, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span> reported an estimated Z of 0.409 with a 95% confidence interval of 0.359-0.459; our Bayesian median estimate was 0.412, with 95% credible interval of 0.353-0.469. <span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span> estimated survival to be 0.664, with 95% confidence interval of 0.632-0.698. The Bayesian median estimate was 0.663, with 95% credible interval 0.626-0.703. This is yet another example where Bayesian results using uninformative priors are very similar to frequentist results. The last three lines of R code show the ln-transformed catches and fitted curve. The plot is essentially identical to that shown by <span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span>. The ln-transformed catches are well described by the fitted curve, suggesting that the assumptions of a catch curve analysis are reasonable for the period of analysis.</p>
+</div>
+<div id="BrownieSurvivalRealData" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">A.4</span> Survival: Tag-based<a href="real-data-examples.html#BrownieSurvivalRealData" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Section <a href="Survival.html#BrownieSurvival">6.3</a> showed an approach for estimating survival rate using a multi-period tag-return study. Here I have replaced the simulation code with a male wood duck (<em>Aix sponsa</em>) band-recovery matrix <span class="citation">(Table 2.2, <a href="#ref-brownie.etal1985">Brownie et al. 1985</a>)</span>. The band recovery values are entered as a vector, then transformed using an upper diagonal matrix using the <code>matrix()</code> function. Variables were renamed to be more consistent with the band-recovery experiment. The main change to the R code was that banded wood ducks were released for three years (1964-1966) but bands were recovered for five years (1964-1968). This required separate variables for the number of release (RelYears) and recovery years (RecYears), unlike the 3X3 example from Section <a href="Survival.html#BrownieSurvival">6.3</a>. <span class="citation">Brownie et al. (<a href="#ref-brownie.etal1985">1985</a>)</span> fitted a model with time-dependent survival and tag-recovery rates but here I estimated time-independent survival and tag-recovery rates for consistency with Section <a href="Survival.html#BrownieSurvival">6.3</a>. The only changes required for the JAGS code were because of the different number of years for release and recovery.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="real-data-examples.html#cb4-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb4-2"><a href="real-data-examples.html#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="real-data-examples.html#cb4-3" tabindex="-1"></a><span class="co"># Recovered bands of adult male wood ducks</span></span>
+<span id="cb4-4"><a href="real-data-examples.html#cb4-4" tabindex="-1"></a><span class="co"># Brownie et al. (1985)</span></span>
+<span id="cb4-5"><a href="real-data-examples.html#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="real-data-examples.html#cb4-6" tabindex="-1"></a>RelYears <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># 1964-1966 # Release years</span></span>
+<span id="cb4-7"><a href="real-data-examples.html#cb4-7" tabindex="-1"></a>RecYears <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># 1964-1968 # Recovery years</span></span>
+<span id="cb4-8"><a href="real-data-examples.html#cb4-8" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1603</span>, <span class="dv">1595</span>, <span class="dv">1157</span>) <span class="co"># Releases by year</span></span>
+<span id="cb4-9"><a href="real-data-examples.html#cb4-9" tabindex="-1"></a>Recoveries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">127</span>, <span class="dv">44</span>, <span class="dv">37</span>, <span class="dv">40</span>, <span class="dv">17</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">62</span>, <span class="dv">76</span>,</span>
+<span id="cb4-10"><a href="real-data-examples.html#cb4-10" tabindex="-1"></a>                <span class="dv">44</span>, <span class="dv">28</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">82</span>, <span class="dv">61</span>, <span class="dv">24</span>, <span class="cn">NA</span>)</span>
+<span id="cb4-11"><a href="real-data-examples.html#cb4-11" tabindex="-1"></a><span class="co"># Convert vector of band recoveries into upper diagonal</span></span>
+<span id="cb4-12"><a href="real-data-examples.html#cb4-12" tabindex="-1"></a><span class="co"># matrix, NA added for final column for bands not seen again</span></span>
+<span id="cb4-13"><a href="real-data-examples.html#cb4-13" tabindex="-1"></a>Rec.Mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(Recoveries,<span class="at">nrow =</span> RelYears,<span class="at">ncol =</span> (RecYears<span class="sc">+</span><span class="dv">1</span>),</span>
+<span id="cb4-14"><a href="real-data-examples.html#cb4-14" tabindex="-1"></a>                  <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb4-15"><a href="real-data-examples.html#cb4-15" tabindex="-1"></a><span class="co"># Placeholder NA - replace by number of bands not seen again</span></span>
+<span id="cb4-16"><a href="real-data-examples.html#cb4-16" tabindex="-1"></a><span class="cf">for</span> (y <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>RelYears){</span>
+<span id="cb4-17"><a href="real-data-examples.html#cb4-17" tabindex="-1"></a>  Rec.Mat[y,RecYears<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> R[y]<span class="sc">-</span><span class="fu">sum</span>(Rec.Mat[y,y<span class="sc">:</span>RecYears])</span>
+<span id="cb4-18"><a href="real-data-examples.html#cb4-18" tabindex="-1"></a>} <span class="co">#y</span></span>
+<span id="cb4-19"><a href="real-data-examples.html#cb4-19" tabindex="-1"></a>                  </span>
+<span id="cb4-20"><a href="real-data-examples.html#cb4-20" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb4-21"><a href="real-data-examples.html#cb4-21" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb4-22"><a href="real-data-examples.html#cb4-22" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb4-23"><a href="real-data-examples.html#cb4-23" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="real-data-examples.html#cb4-24" tabindex="-1"></a><span class="co"># Specify model in JAGS</span></span>
+<span id="cb4-25"><a href="real-data-examples.html#cb4-25" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;TagReturn.txt&quot;</span>)</span>
+<span id="cb4-26"><a href="real-data-examples.html#cb4-26" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb4-27"><a href="real-data-examples.html#cb4-27" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb4-28"><a href="real-data-examples.html#cb4-28" tabindex="-1"></a><span class="st">  # Priors</span></span>
+<span id="cb4-29"><a href="real-data-examples.html#cb4-29" tabindex="-1"></a><span class="st">  S.est ~ dunif(0,1) # Time-independent survival rate</span></span>
+<span id="cb4-30"><a href="real-data-examples.html#cb4-30" tabindex="-1"></a><span class="st">  r.est ~ dunif(0,1) # Time-independent tag-recovery rate</span></span>
+<span id="cb4-31"><a href="real-data-examples.html#cb4-31" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="real-data-examples.html#cb4-32" tabindex="-1"></a><span class="st">  # Calculated value</span></span>
+<span id="cb4-33"><a href="real-data-examples.html#cb4-33" tabindex="-1"></a><span class="st">  A.est &lt;- 1-S.est # Rate of mortality</span></span>
+<span id="cb4-34"><a href="real-data-examples.html#cb4-34" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="real-data-examples.html#cb4-35" tabindex="-1"></a><span class="st"># Cell probabilities</span></span>
+<span id="cb4-36"><a href="real-data-examples.html#cb4-36" tabindex="-1"></a><span class="st">for (i in 1:RelYears) {</span></span>
+<span id="cb4-37"><a href="real-data-examples.html#cb4-37" tabindex="-1"></a><span class="st">   p.est[i,i] &lt;- r.est</span></span>
+<span id="cb4-38"><a href="real-data-examples.html#cb4-38" tabindex="-1"></a><span class="st">   for (j in (i+1):RecYears) {</span></span>
+<span id="cb4-39"><a href="real-data-examples.html#cb4-39" tabindex="-1"></a><span class="st">      p.est[i,j] &lt;- p.est[i,(j-1)] * S.est</span></span>
+<span id="cb4-40"><a href="real-data-examples.html#cb4-40" tabindex="-1"></a><span class="st">      } #j</span></span>
+<span id="cb4-41"><a href="real-data-examples.html#cb4-41" tabindex="-1"></a><span class="st">    p.est[i,RecYears+1] &lt;- 1 - sum(p.est[i, i:RecYears])</span></span>
+<span id="cb4-42"><a href="real-data-examples.html#cb4-42" tabindex="-1"></a><span class="st">    # Last column is prob of not being seen again</span></span>
+<span id="cb4-43"><a href="real-data-examples.html#cb4-43" tabindex="-1"></a><span class="st">    } #i</span></span>
+<span id="cb4-44"><a href="real-data-examples.html#cb4-44" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="real-data-examples.html#cb4-45" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb4-46"><a href="real-data-examples.html#cb4-46" tabindex="-1"></a><span class="st">  for (i in 1:RelYears) {</span></span>
+<span id="cb4-47"><a href="real-data-examples.html#cb4-47" tabindex="-1"></a><span class="st">    Rec.Mat[i,i:(RecYears+1)] ~ dmulti(p.est[i,i:(RecYears+1)], R[i])</span></span>
+<span id="cb4-48"><a href="real-data-examples.html#cb4-48" tabindex="-1"></a><span class="st">    }#i</span></span>
+<span id="cb4-49"><a href="real-data-examples.html#cb4-49" tabindex="-1"></a><span class="st"> } # model</span></span>
+<span id="cb4-50"><a href="real-data-examples.html#cb4-50" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="real-data-examples.html#cb4-51" tabindex="-1"></a><span class="st">&quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb4-52"><a href="real-data-examples.html#cb4-52" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb4-53"><a href="real-data-examples.html#cb4-53" tabindex="-1"></a></span>
+<span id="cb4-54"><a href="real-data-examples.html#cb4-54" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb4-55"><a href="real-data-examples.html#cb4-55" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Rec.Mat&quot;</span>, <span class="st">&quot;RelYears&quot;</span>, <span class="st">&quot;RecYears&quot;</span>, <span class="st">&quot;R&quot;</span>)</span>
+<span id="cb4-56"><a href="real-data-examples.html#cb4-56" tabindex="-1"></a></span>
+<span id="cb4-57"><a href="real-data-examples.html#cb4-57" tabindex="-1"></a>S.init <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>,<span class="at">min=</span><span class="dv">0</span>,<span class="at">max=</span><span class="dv">1</span>)</span>
+<span id="cb4-58"><a href="real-data-examples.html#cb4-58" tabindex="-1"></a>r.init <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span>S.init  <span class="co"># Initialize r relative to S</span></span>
+<span id="cb4-59"><a href="real-data-examples.html#cb4-59" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="real-data-examples.html#cb4-60" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb4-61"><a href="real-data-examples.html#cb4-61" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">S.est =</span> S.init, <span class="at">r.est=</span>r.init)}</span>
+<span id="cb4-62"><a href="real-data-examples.html#cb4-62" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="real-data-examples.html#cb4-63" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;TagReturn.txt&#39;</span></span>
+<span id="cb4-64"><a href="real-data-examples.html#cb4-64" tabindex="-1"></a></span>
+<span id="cb4-65"><a href="real-data-examples.html#cb4-65" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb4-66"><a href="real-data-examples.html#cb4-66" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;S.est&quot;</span>, <span class="st">&quot;r.est&quot;</span>)</span>
+<span id="cb4-67"><a href="real-data-examples.html#cb4-67" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="real-data-examples.html#cb4-68" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb4-69"><a href="real-data-examples.html#cb4-69" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb4-70"><a href="real-data-examples.html#cb4-70" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">4000</span>, <span class="at">n.burnin=</span><span class="dv">2000</span>,</span>
+<span id="cb4-71"><a href="real-data-examples.html#cb4-71" tabindex="-1"></a>                model.file)</span>
+<span id="cb4-72"><a href="real-data-examples.html#cb4-72" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb4-73"><a href="real-data-examples.html#cb4-73" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span></code></pre></div>
+<p>The estimates from the Bayesian analysis (median survival 0.66, 95% credible interval 0.62-0.71; median tag-recovery rate 0.06, 95% credible interval 0.06-0.07) were very similar to maximum-likelihood estimates (mean survival 0.64, 95% confidence interval 0.56-0.71; mean tag-recovery rate 0.06, 95% confidence interval 0.05-0.07) reported by <span class="citation">Brownie et al. (<a href="#ref-brownie.etal1985">1985</a>)</span>.</p>
+</div>
+<div id="vonBertRealData" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">A.5</span> Growth: age-length<a href="real-data-examples.html#vonBertRealData" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This example data set for fitting a von Bertalanffy growth curve is for rougheye rockfish (<em>Sebastes aleutianus</em>). The original study was by <span class="citation">Nelson and Quinn II (<a href="#ref-nelson.quinnii_1987">1987</a>)</span>; <span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span> fitted the model using nonlinear least squares.</p>
+<p>Using real rather than simulated data usually results in simpler code, but here, the values provided by <span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span> were age-specific sample sizes, averages, and standard deviations. A curve could be fitted to age-specific averages but that gives equal weight to each age, whereas age-specific sample sizes actually varied widely (range from 1 to 31). To approximate the original data set of individual fish age and length observations, I looped over the sample size by age and generated “observed” values using the <code>rnorm()</code> function. Working with individual observations retains the variation in the original length data set. Note that the “observed” data set will vary from run to run so it is helpful to run the code multiple times. The JAGS code was unchanged from the example in Section <a href="Growth.html#vonBert">8.1</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="real-data-examples.html#cb5-1" tabindex="-1"></a><span class="co"># Fitting von Bertalanffy curve</span></span>
+<span id="cb5-2"><a href="real-data-examples.html#cb5-2" tabindex="-1"></a><span class="co"># Rougheye rockfish</span></span>
+<span id="cb5-3"><a href="real-data-examples.html#cb5-3" tabindex="-1"></a><span class="co"># Nelson, B., and T. J. Quinn II. 1987. Population parameters for</span></span>
+<span id="cb5-4"><a href="real-data-examples.html#cb5-4" tabindex="-1"></a><span class="co"># rougheye rockfish (Sebastes aleutianus). Proc. Int. Rockfish</span></span>
+<span id="cb5-5"><a href="real-data-examples.html#cb5-5" tabindex="-1"></a><span class="co"># Symp., Alaska Sea Grant Rep. 87-2:209-228.</span></span>
+<span id="cb5-6"><a href="real-data-examples.html#cb5-6" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Clear Environment</span></span>
+<span id="cb5-7"><a href="real-data-examples.html#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="real-data-examples.html#cb5-8" tabindex="-1"></a>AgeClass <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">38</span>, <span class="dv">40</span><span class="sc">:</span><span class="dv">47</span>, <span class="dv">49</span>, <span class="dv">50</span>, <span class="dv">52</span><span class="sc">:</span><span class="dv">68</span>, <span class="dv">70</span>, <span class="dv">72</span>,<span class="dv">75</span>, <span class="dv">77</span>, <span class="dv">80</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">95</span>)</span>
+<span id="cb5-9"><a href="real-data-examples.html#cb5-9" tabindex="-1"></a>ave.Len <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="fl">14.5</span>, <span class="fl">17.9</span>, <span class="fl">20.6</span>, <span class="fl">21.9</span>, <span class="fl">23.4</span>, <span class="fl">25.2</span>, <span class="fl">27.2</span>, <span class="fl">29.6</span>, <span class="fl">30.7</span>,</span>
+<span id="cb5-10"><a href="real-data-examples.html#cb5-10" tabindex="-1"></a>             <span class="fl">32.4</span>, <span class="dv">33</span>, <span class="fl">32.8</span>, <span class="dv">35</span>, <span class="fl">36.3</span>, <span class="fl">37.2</span>, <span class="fl">36.2</span>, <span class="fl">38.8</span>, <span class="fl">37.7</span>, <span class="fl">40.6</span>,</span>
+<span id="cb5-11"><a href="real-data-examples.html#cb5-11" tabindex="-1"></a>             <span class="fl">40.9</span>, <span class="fl">38.9</span>, <span class="dv">40</span>, <span class="fl">41.9</span>, <span class="fl">42.7</span>, <span class="fl">42.6</span>, <span class="fl">45.5</span>, <span class="fl">40.9</span>, <span class="fl">44.6</span>,</span>
+<span id="cb5-12"><a href="real-data-examples.html#cb5-12" tabindex="-1"></a>             <span class="fl">46.6</span>, <span class="fl">44.9</span>, <span class="fl">47.2</span>, <span class="fl">48.3</span>, <span class="fl">45.4</span>, <span class="fl">48.8</span>, <span class="fl">46.5</span>, <span class="fl">46.5</span>, <span class="fl">47.9</span>,</span>
+<span id="cb5-13"><a href="real-data-examples.html#cb5-13" tabindex="-1"></a>             <span class="fl">49.3</span>, <span class="dv">48</span>, <span class="dv">49</span>, <span class="dv">50</span>, <span class="fl">51.3</span>, <span class="dv">52</span>, <span class="fl">48.9</span>, <span class="fl">48.7</span>, <span class="fl">48.6</span>, <span class="fl">51.5</span>, <span class="dv">52</span>,</span>
+<span id="cb5-14"><a href="real-data-examples.html#cb5-14" tabindex="-1"></a>             <span class="dv">50</span>, <span class="fl">52.7</span>, <span class="dv">59</span>, <span class="dv">52</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">51</span>, <span class="dv">50</span>, <span class="dv">52</span>, <span class="dv">50</span>, <span class="dv">59</span>, <span class="dv">55</span>, <span class="fl">52.5</span>, <span class="dv">50</span>,</span>
+<span id="cb5-15"><a href="real-data-examples.html#cb5-15" tabindex="-1"></a>             <span class="dv">54</span>, <span class="fl">59.5</span>, <span class="dv">51</span>, <span class="dv">51</span>, <span class="dv">60</span>, <span class="dv">74</span>, <span class="dv">49</span>, <span class="dv">57</span>, <span class="fl">60.5</span>)</span>
+<span id="cb5-16"><a href="real-data-examples.html#cb5-16" tabindex="-1"></a>sd.Len <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fl">4.9</span>, <span class="fl">2.2</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>, <span class="fl">2.3</span>, <span class="fl">2.5</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="fl">2.9</span>, <span class="fl">3.7</span>, <span class="fl">2.3</span>,</span>
+<span id="cb5-17"><a href="real-data-examples.html#cb5-17" tabindex="-1"></a>            <span class="fl">2.9</span>, <span class="fl">4.1</span>, <span class="fl">2.4</span>, <span class="fl">5.1</span>, <span class="fl">4.4</span>, <span class="fl">1.8</span>, <span class="fl">5.4</span>, <span class="fl">3.1</span>, <span class="fl">4.3</span>, <span class="fl">4.6</span>, <span class="fl">2.4</span>,</span>
+<span id="cb5-18"><a href="real-data-examples.html#cb5-18" tabindex="-1"></a>            <span class="fl">3.9</span>, <span class="fl">5.5</span>, <span class="fl">6.4</span>, <span class="dv">4</span>, <span class="fl">4.6</span>, <span class="fl">4.4</span>, <span class="fl">3.6</span>, <span class="fl">6.3</span>, <span class="fl">4.6</span>, <span class="fl">5.1</span>, <span class="fl">4.5</span>,</span>
+<span id="cb5-19"><a href="real-data-examples.html#cb5-19" tabindex="-1"></a>            <span class="fl">3.4</span>, <span class="dv">4</span>, <span class="fl">2.5</span>, <span class="fl">4.9</span>, <span class="fl">2.5</span>, <span class="fl">2.1</span>, <span class="fl">2.0</span>, <span class="fl">2.2</span>, <span class="fl">5.9</span>, <span class="cn">NA</span>, <span class="fl">2.7</span>,</span>
+<span id="cb5-20"><a href="real-data-examples.html#cb5-20" tabindex="-1"></a>            <span class="fl">2.5</span>, <span class="fl">2.8</span>, <span class="fl">0.7</span>, <span class="fl">11.4</span>, <span class="cn">NA</span>, <span class="dv">8</span>, <span class="cn">NA</span>, <span class="fl">3.9</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1.4</span>, <span class="cn">NA</span>,</span>
+<span id="cb5-21"><a href="real-data-examples.html#cb5-21" tabindex="-1"></a>            <span class="dv">1</span>, <span class="cn">NA</span>, <span class="fl">9.9</span>, <span class="fl">1.4</span>, <span class="fl">2.1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">13.4</span>, <span class="fl">1.4</span>, <span class="cn">NA</span>, <span class="fl">12.7</span>, <span class="cn">NA</span>,</span>
+<span id="cb5-22"><a href="real-data-examples.html#cb5-22" tabindex="-1"></a>            <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">16.3</span>)</span>
+<span id="cb5-23"><a href="real-data-examples.html#cb5-23" tabindex="-1"></a>n.AgeClass <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">19</span>,<span class="dv">31</span>,<span class="dv">27</span>,<span class="dv">20</span>,<span class="dv">11</span>,<span class="dv">19</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">12</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">11</span>,<span class="dv">7</span>,<span class="dv">12</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">14</span>,</span>
+<span id="cb5-24"><a href="real-data-examples.html#cb5-24" tabindex="-1"></a>                <span class="dv">14</span>,<span class="dv">13</span>,<span class="dv">15</span>,<span class="dv">15</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">13</span>,<span class="dv">11</span>,<span class="dv">9</span>,<span class="dv">9</span>,<span class="dv">16</span>,<span class="dv">13</span>,<span class="dv">10</span>,<span class="dv">14</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">10</span>,</span>
+<span id="cb5-25"><a href="real-data-examples.html#cb5-25" tabindex="-1"></a>                <span class="dv">1</span>,<span class="dv">9</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb5-26"><a href="real-data-examples.html#cb5-26" tabindex="-1"></a>                <span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb5-27"><a href="real-data-examples.html#cb5-27" tabindex="-1"></a>N.AgeLen <span class="ot">&lt;-</span> <span class="fu">sum</span>(n.AgeClass[])</span>
+<span id="cb5-28"><a href="real-data-examples.html#cb5-28" tabindex="-1"></a>Len <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>N.AgeLen)</span>
+<span id="cb5-29"><a href="real-data-examples.html#cb5-29" tabindex="-1"></a>Age <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>N.AgeLen)</span>
+<span id="cb5-30"><a href="real-data-examples.html#cb5-30" tabindex="-1"></a>fish <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Counter for individual fish</span></span>
+<span id="cb5-31"><a href="real-data-examples.html#cb5-31" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(AgeClass)){</span>
+<span id="cb5-32"><a href="real-data-examples.html#cb5-32" tabindex="-1"></a>  <span class="cf">if</span> (n.AgeClass[a]<span class="sc">==</span><span class="dv">1</span>) {</span>
+<span id="cb5-33"><a href="real-data-examples.html#cb5-33" tabindex="-1"></a>    Age[fish] <span class="ot">&lt;-</span> AgeClass[a]</span>
+<span id="cb5-34"><a href="real-data-examples.html#cb5-34" tabindex="-1"></a>    Len[fish] <span class="ot">&lt;-</span> ave.Len[a]</span>
+<span id="cb5-35"><a href="real-data-examples.html#cb5-35" tabindex="-1"></a>    fish <span class="ot">&lt;-</span> fish<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb5-36"><a href="real-data-examples.html#cb5-36" tabindex="-1"></a>  } <span class="cf">else</span></span>
+<span id="cb5-37"><a href="real-data-examples.html#cb5-37" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n.AgeClass[a]){</span>
+<span id="cb5-38"><a href="real-data-examples.html#cb5-38" tabindex="-1"></a>      Age[fish] <span class="ot">&lt;-</span> AgeClass[a]</span>
+<span id="cb5-39"><a href="real-data-examples.html#cb5-39" tabindex="-1"></a>      Len[fish] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">mean=</span>ave.Len[a], <span class="at">sd=</span>sd.Len[a])</span>
+<span id="cb5-40"><a href="real-data-examples.html#cb5-40" tabindex="-1"></a>      fish <span class="ot">&lt;-</span> fish<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb5-41"><a href="real-data-examples.html#cb5-41" tabindex="-1"></a>    } <span class="co">#j</span></span>
+<span id="cb5-42"><a href="real-data-examples.html#cb5-42" tabindex="-1"></a>} <span class="co">#a</span></span>
+<span id="cb5-43"><a href="real-data-examples.html#cb5-43" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="real-data-examples.html#cb5-44" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb5-45"><a href="real-data-examples.html#cb5-45" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb5-46"><a href="real-data-examples.html#cb5-46" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb5-47"><a href="real-data-examples.html#cb5-47" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="real-data-examples.html#cb5-48" tabindex="-1"></a><span class="co"># JAGS code</span></span>
+<span id="cb5-49"><a href="real-data-examples.html#cb5-49" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;GrowthCurve.txt&quot;</span>)</span>
+<span id="cb5-50"><a href="real-data-examples.html#cb5-50" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb5-51"><a href="real-data-examples.html#cb5-51" tabindex="-1"></a><span class="st">model{</span></span>
+<span id="cb5-52"><a href="real-data-examples.html#cb5-52" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="real-data-examples.html#cb5-53" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb5-54"><a href="real-data-examples.html#cb5-54" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="real-data-examples.html#cb5-55" tabindex="-1"></a><span class="st"> L_inf.est ~ dunif(0, 200)</span></span>
+<span id="cb5-56"><a href="real-data-examples.html#cb5-56" tabindex="-1"></a><span class="st"> k.est ~ dunif(0, 2)</span></span>
+<span id="cb5-57"><a href="real-data-examples.html#cb5-57" tabindex="-1"></a><span class="st"> t0.est ~ dunif(-5, 5)</span></span>
+<span id="cb5-58"><a href="real-data-examples.html#cb5-58" tabindex="-1"></a><span class="st"> Var_L.est ~ dunif(0,100)   # Variability in length at age</span></span>
+<span id="cb5-59"><a href="real-data-examples.html#cb5-59" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="real-data-examples.html#cb5-60" tabindex="-1"></a><span class="st"># Calculated value</span></span>
+<span id="cb5-61"><a href="real-data-examples.html#cb5-61" tabindex="-1"></a><span class="st"> tau.est &lt;- 1/Var_L.est</span></span>
+<span id="cb5-62"><a href="real-data-examples.html#cb5-62" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="real-data-examples.html#cb5-63" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb5-64"><a href="real-data-examples.html#cb5-64" tabindex="-1"></a><span class="st"> for (i in 1:N.AgeLen) {</span></span>
+<span id="cb5-65"><a href="real-data-examples.html#cb5-65" tabindex="-1"></a><span class="st">    Len_hat[i] &lt;- L_inf.est*(1-exp(-k.est*(Age[i]-t0.est)))</span></span>
+<span id="cb5-66"><a href="real-data-examples.html#cb5-66" tabindex="-1"></a><span class="st">    Len[i] ~ dnorm(Len_hat[i], tau.est)</span></span>
+<span id="cb5-67"><a href="real-data-examples.html#cb5-67" tabindex="-1"></a><span class="st"> } #i</span></span>
+<span id="cb5-68"><a href="real-data-examples.html#cb5-68" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb5-69"><a href="real-data-examples.html#cb5-69" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb5-70"><a href="real-data-examples.html#cb5-70" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb5-71"><a href="real-data-examples.html#cb5-71" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="real-data-examples.html#cb5-72" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb5-73"><a href="real-data-examples.html#cb5-73" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;N.AgeLen&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Len&quot;</span>)</span>
+<span id="cb5-74"><a href="real-data-examples.html#cb5-74" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="real-data-examples.html#cb5-75" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb5-76"><a href="real-data-examples.html#cb5-76" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){<span class="fu">list</span>(<span class="at">L_inf.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="fu">max</span>(Len)),</span>
+<span id="cb5-77"><a href="real-data-examples.html#cb5-77" tabindex="-1"></a>                              <span class="at">k.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">2</span>),</span>
+<span id="cb5-78"><a href="real-data-examples.html#cb5-78" tabindex="-1"></a>                              <span class="at">t0.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="sc">-</span><span class="dv">5</span>, <span class="at">max=</span><span class="dv">5</span>),</span>
+<span id="cb5-79"><a href="real-data-examples.html#cb5-79" tabindex="-1"></a>                              <span class="at">Var_L.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">100</span>))}</span>
+<span id="cb5-80"><a href="real-data-examples.html#cb5-80" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="real-data-examples.html#cb5-81" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;GrowthCurve.txt&#39;</span></span>
+<span id="cb5-82"><a href="real-data-examples.html#cb5-82" tabindex="-1"></a></span>
+<span id="cb5-83"><a href="real-data-examples.html#cb5-83" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb5-84"><a href="real-data-examples.html#cb5-84" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;L_inf.est&quot;</span>, <span class="st">&quot;k.est&quot;</span>, <span class="st">&quot;t0.est&quot;</span>, <span class="st">&quot;Var_L.est&quot;</span>)</span>
+<span id="cb5-85"><a href="real-data-examples.html#cb5-85" tabindex="-1"></a></span>
+<span id="cb5-86"><a href="real-data-examples.html#cb5-86" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb5-87"><a href="real-data-examples.html#cb5-87" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb5-88"><a href="real-data-examples.html#cb5-88" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb5-89"><a href="real-data-examples.html#cb5-89" tabindex="-1"></a>                model.file)</span>
+<span id="cb5-90"><a href="real-data-examples.html#cb5-90" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb5-91"><a href="real-data-examples.html#cb5-91" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb5-92"><a href="real-data-examples.html#cb5-92" tabindex="-1"></a></span>
+<span id="cb5-93"><a href="real-data-examples.html#cb5-93" tabindex="-1"></a>Len_hat <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">dim=</span>N.AgeLen)</span>
+<span id="cb5-94"><a href="real-data-examples.html#cb5-94" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N.AgeLen){</span>
+<span id="cb5-95"><a href="real-data-examples.html#cb5-95" tabindex="-1"></a>  Len_hat[a] <span class="ot">&lt;-</span> jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>median<span class="sc">$</span>L_inf.est<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span></span>
+<span id="cb5-96"><a href="real-data-examples.html#cb5-96" tabindex="-1"></a>                    <span class="fu">exp</span>(<span class="sc">-</span>jagsfit<span class="sc">$</span>BUGSout<span class="sc">$</span>median<span class="sc">$</span>k.est</span>
+<span id="cb5-97"><a href="real-data-examples.html#cb5-97" tabindex="-1"></a>                    <span class="sc">*</span>(Age[a]<span class="sc">-</span>jagsfit<span class="sc">$</span>BUGSout<span class="sc">$</span>median<span class="sc">$</span>t0.est)))</span>
+<span id="cb5-98"><a href="real-data-examples.html#cb5-98" tabindex="-1"></a>  } <span class="co">#a</span></span>
+<span id="cb5-99"><a href="real-data-examples.html#cb5-99" tabindex="-1"></a><span class="fu">plot</span>(Age, Len, <span class="at">xlab=</span><span class="st">&quot;Age&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Length (cm)&quot;</span>)</span>
+<span id="cb5-100"><a href="real-data-examples.html#cb5-100" tabindex="-1"></a><span class="fu">points</span>(Age, Len_hat, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p>Bayesian median estimates from one run (<span class="math inline">\(L_\infty\)</span>=53.761, <span class="math inline">\(k\)</span>=0.052, <span class="math inline">\(t_0\)</span>=-4.470) were in reasonable agreement with the least-squares estimates reported by <span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span>: <span class="math inline">\(L_\infty\)</span>=54.9, <span class="math inline">\(k\)</span>=0.0441, and <span class="math inline">\(t_0\)</span>=-4.53. The estimated variance of points about the fitted line (Var_L.est=17.910) was similar to the residual mean square reported by <span class="citation">Quinn and Deriso (<a href="#ref-quinn.deriso_1999">1999</a>)</span> (17.13), suggesting that the simulation approach used here was effective in restoring the variability in individual age:length observations.</p>
+</div>
+<div id="Recruit-FitRealData" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">A.6</span> Recruitment: Beverton-Holt curve<a href="real-data-examples.html#Recruit-FitRealData" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Section <a href="Recruit.html#Recruit-Fit">9.1</a> used a complex age-structured simulation model to produce spawning stock and recruitment values. It is much simpler to use a real data set, as illustrated here for North Sea plaice <span class="citation">(<a href="#ref-ricker1975">Ricker 1975</a>)</span>. Spawning stock and recruitment values are paired in <span class="citation">Ricker (<a href="#ref-ricker1975">1975</a>)</span>, so no time lag between indices is needed. The only changes from the R and JAGS code used in Section <a href="Recruit.html#Recruit-Fit">9.1</a> were to replace the simulation code with fixed values, remove the time lag in indices, and to use Ricker’s notation for spawning stock (P) and recruitment (R).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="real-data-examples.html#cb6-1" tabindex="-1"></a><span class="co"># Fitting Beverton-Holt stock-recruitment curve</span></span>
+<span id="cb6-2"><a href="real-data-examples.html#cb6-2" tabindex="-1"></a><span class="co"># North Sea plaice. Ricker 1975 Table 11.8</span></span>
+<span id="cb6-3"><a href="real-data-examples.html#cb6-3" tabindex="-1"></a><span class="co"># Units arbitrary</span></span>
+<span id="cb6-4"><a href="real-data-examples.html#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="real-data-examples.html#cb6-5" tabindex="-1"></a><span class="co"># Adult stock biomass (P)</span></span>
+<span id="cb6-6"><a href="real-data-examples.html#cb6-6" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">9</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">19</span>, <span class="dv">20</span>,</span>
+<span id="cb6-7"><a href="real-data-examples.html#cb6-7" tabindex="-1"></a>       <span class="dv">21</span>, <span class="dv">21</span>, <span class="dv">26</span>, <span class="dv">32</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">54</span>, <span class="dv">70</span>, <span class="dv">82</span>, <span class="dv">88</span>)</span>
+<span id="cb6-8"><a href="real-data-examples.html#cb6-8" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">13</span>, <span class="dv">20</span>, <span class="dv">45</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">20</span>, <span class="dv">21</span>, <span class="dv">26</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">17</span>,</span>
+<span id="cb6-9"><a href="real-data-examples.html#cb6-9" tabindex="-1"></a>       <span class="dv">16</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">33</span>, <span class="dv">10</span>, <span class="dv">23</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">12</span>, <span class="dv">24</span>)</span>
+<span id="cb6-10"><a href="real-data-examples.html#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="real-data-examples.html#cb6-11" tabindex="-1"></a><span class="co"># Load necessary library packages</span></span>
+<span id="cb6-12"><a href="real-data-examples.html#cb6-12" tabindex="-1"></a><span class="fu">library</span>(rjags)</span>
+<span id="cb6-13"><a href="real-data-examples.html#cb6-13" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb6-14"><a href="real-data-examples.html#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="real-data-examples.html#cb6-15" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;StockRecruit.txt&quot;</span>)</span>
+<span id="cb6-16"><a href="real-data-examples.html#cb6-16" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span></span>
+<span id="cb6-17"><a href="real-data-examples.html#cb6-17" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb6-18"><a href="real-data-examples.html#cb6-18" tabindex="-1"></a><span class="st"># Model parameters: Beverton-Holt alpha and beta, </span></span>
+<span id="cb6-19"><a href="real-data-examples.html#cb6-19" tabindex="-1"></a><span class="st"># ln-scale variance for fitted curve</span></span>
+<span id="cb6-20"><a href="real-data-examples.html#cb6-20" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="real-data-examples.html#cb6-21" tabindex="-1"></a><span class="st"># Priors</span></span>
+<span id="cb6-22"><a href="real-data-examples.html#cb6-22" tabindex="-1"></a><span class="st"> BH_alpha.est ~ dunif(0, 10)</span></span>
+<span id="cb6-23"><a href="real-data-examples.html#cb6-23" tabindex="-1"></a><span class="st"> BH_beta.est ~ dunif(0, 10)</span></span>
+<span id="cb6-24"><a href="real-data-examples.html#cb6-24" tabindex="-1"></a><span class="st"> V_rec.est ~ dunif(0, 10)</span></span>
+<span id="cb6-25"><a href="real-data-examples.html#cb6-25" tabindex="-1"></a><span class="st"> tau &lt;- 1/V_rec.est</span></span>
+<span id="cb6-26"><a href="real-data-examples.html#cb6-26" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="real-data-examples.html#cb6-27" tabindex="-1"></a><span class="st"># Likelihood</span></span>
+<span id="cb6-28"><a href="real-data-examples.html#cb6-28" tabindex="-1"></a><span class="st">    for(y in 1:Y) {</span></span>
+<span id="cb6-29"><a href="real-data-examples.html#cb6-29" tabindex="-1"></a><span class="st">      lnR_hat[y] &lt;- log(1/(BH_alpha.est+BH_beta.est/P[y]))</span></span>
+<span id="cb6-30"><a href="real-data-examples.html#cb6-30" tabindex="-1"></a><span class="st">      R[y] ~ dlnorm(lnR_hat[y],tau)</span></span>
+<span id="cb6-31"><a href="real-data-examples.html#cb6-31" tabindex="-1"></a><span class="st">      R_hat[y] &lt;- exp(lnR_hat[y])</span></span>
+<span id="cb6-32"><a href="real-data-examples.html#cb6-32" tabindex="-1"></a><span class="st">      } #y</span></span>
+<span id="cb6-33"><a href="real-data-examples.html#cb6-33" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb6-34"><a href="real-data-examples.html#cb6-34" tabindex="-1"></a><span class="st">    &quot;</span>,<span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb6-35"><a href="real-data-examples.html#cb6-35" tabindex="-1"></a><span class="fu">sink</span>()</span>
+<span id="cb6-36"><a href="real-data-examples.html#cb6-36" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="real-data-examples.html#cb6-37" tabindex="-1"></a><span class="co"># Bundle data</span></span>
+<span id="cb6-38"><a href="real-data-examples.html#cb6-38" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">length</span>(P)</span>
+<span id="cb6-39"><a href="real-data-examples.html#cb6-39" tabindex="-1"></a>jags.data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">&quot;Y&quot;</span>, <span class="st">&quot;P&quot;</span>, <span class="st">&quot;R&quot;</span>)</span>
+<span id="cb6-40"><a href="real-data-examples.html#cb6-40" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="real-data-examples.html#cb6-41" tabindex="-1"></a><span class="co"># Initial values</span></span>
+<span id="cb6-42"><a href="real-data-examples.html#cb6-42" tabindex="-1"></a>y <span class="ot">&lt;-</span> R[<span class="dv">1</span><span class="sc">:</span>Y]</span>
+<span id="cb6-43"><a href="real-data-examples.html#cb6-43" tabindex="-1"></a>x <span class="ot">&lt;-</span> P[<span class="dv">1</span><span class="sc">:</span>Y]</span>
+<span id="cb6-44"><a href="real-data-examples.html#cb6-44" tabindex="-1"></a>nls_init <span class="ot">&lt;-</span> <span class="fu">nls</span>(y <span class="sc">~</span> <span class="dv">1</span><span class="sc">/</span>(BH_a_start<span class="sc">+</span>BH_b_start<span class="sc">/</span>x),</span>
+<span id="cb6-45"><a href="real-data-examples.html#cb6-45" tabindex="-1"></a>                <span class="at">start =</span> <span class="fu">list</span>(<span class="at">BH_a_start =</span> <span class="fl">0.001</span>, <span class="at">BH_b_start =</span> <span class="fl">0.001</span>),</span>
+<span id="cb6-46"><a href="real-data-examples.html#cb6-46" tabindex="-1"></a>                <span class="at">algorithm=</span><span class="st">&quot;port&quot;</span>, </span>
+<span id="cb6-47"><a href="real-data-examples.html#cb6-47" tabindex="-1"></a>                <span class="at">lower=</span><span class="fu">c</span>(<span class="fl">1E-6</span>, <span class="dv">0</span>), <span class="at">upper=</span><span class="fu">c</span>(<span class="dv">1000</span>,<span class="dv">1000</span>))</span>
+<span id="cb6-48"><a href="real-data-examples.html#cb6-48" tabindex="-1"></a><span class="co">#summary(nls_init)</span></span>
+<span id="cb6-49"><a href="real-data-examples.html#cb6-49" tabindex="-1"></a>nls_save <span class="ot">&lt;-</span> <span class="fu">coef</span>(nls_init)</span>
+<span id="cb6-50"><a href="real-data-examples.html#cb6-50" tabindex="-1"></a><span class="co">#y_hat &lt;- 1/(nls_save[1]+nls_save[2]/x)</span></span>
+<span id="cb6-51"><a href="real-data-examples.html#cb6-51" tabindex="-1"></a><span class="co">#plot(x,y)</span></span>
+<span id="cb6-52"><a href="real-data-examples.html#cb6-52" tabindex="-1"></a><span class="co">#points(x,y_hat, col=&quot;red&quot;, type=&quot;l&quot;)</span></span>
+<span id="cb6-53"><a href="real-data-examples.html#cb6-53" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="real-data-examples.html#cb6-54" tabindex="-1"></a>jags.inits <span class="ot">&lt;-</span> <span class="cf">function</span>(){ <span class="fu">list</span>(<span class="at">BH_alpha.est=</span>nls_save[<span class="dv">1</span>],</span>
+<span id="cb6-55"><a href="real-data-examples.html#cb6-55" tabindex="-1"></a>                               <span class="at">BH_beta.est=</span>nls_save[<span class="dv">2</span>],</span>
+<span id="cb6-56"><a href="real-data-examples.html#cb6-56" tabindex="-1"></a>                               <span class="at">V_rec.est=</span><span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">10</span>))}</span>
+<span id="cb6-57"><a href="real-data-examples.html#cb6-57" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="real-data-examples.html#cb6-58" tabindex="-1"></a>model.file <span class="ot">&lt;-</span> <span class="st">&#39;StockRecruit.txt&#39;</span></span>
+<span id="cb6-59"><a href="real-data-examples.html#cb6-59" tabindex="-1"></a></span>
+<span id="cb6-60"><a href="real-data-examples.html#cb6-60" tabindex="-1"></a><span class="co"># Parameters monitored</span></span>
+<span id="cb6-61"><a href="real-data-examples.html#cb6-61" tabindex="-1"></a>jags.params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BH_alpha.est&quot;</span>, <span class="st">&quot;BH_beta.est&quot;</span>, <span class="st">&quot;V_rec.est&quot;</span>,</span>
+<span id="cb6-62"><a href="real-data-examples.html#cb6-62" tabindex="-1"></a>                 <span class="st">&quot;R_hat&quot;</span>)</span>
+<span id="cb6-63"><a href="real-data-examples.html#cb6-63" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="real-data-examples.html#cb6-64" tabindex="-1"></a><span class="co"># Call JAGS from R</span></span>
+<span id="cb6-65"><a href="real-data-examples.html#cb6-65" tabindex="-1"></a>jagsfit <span class="ot">&lt;-</span> <span class="fu">jags</span>(<span class="at">data=</span>jags.data, jags.params, <span class="at">inits=</span>jags.inits,</span>
+<span id="cb6-66"><a href="real-data-examples.html#cb6-66" tabindex="-1"></a>                <span class="at">n.chains =</span> <span class="dv">3</span>, <span class="at">n.thin=</span><span class="dv">1</span>, <span class="at">n.iter =</span> <span class="dv">10000</span>,</span>
+<span id="cb6-67"><a href="real-data-examples.html#cb6-67" tabindex="-1"></a>                model.file)</span>
+<span id="cb6-68"><a href="real-data-examples.html#cb6-68" tabindex="-1"></a><span class="fu">print</span>(jagsfit)</span>
+<span id="cb6-69"><a href="real-data-examples.html#cb6-69" tabindex="-1"></a><span class="fu">plot</span>(jagsfit)</span>
+<span id="cb6-70"><a href="real-data-examples.html#cb6-70" tabindex="-1"></a></span>
+<span id="cb6-71"><a href="real-data-examples.html#cb6-71" tabindex="-1"></a>df.xy <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(P[<span class="dv">1</span><span class="sc">:</span>Y], R[<span class="dv">1</span><span class="sc">:</span>Y],</span>
+<span id="cb6-72"><a href="real-data-examples.html#cb6-72" tabindex="-1"></a>                    jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>median<span class="sc">$</span>R_hat)</span>
+<span id="cb6-73"><a href="real-data-examples.html#cb6-73" tabindex="-1"></a>df.xy <span class="ot">&lt;-</span> df.xy[<span class="fu">order</span>(df.xy[,<span class="dv">1</span>]),]  <span class="co"># Sort by survey index for plotting</span></span>
+<span id="cb6-74"><a href="real-data-examples.html#cb6-74" tabindex="-1"></a>y.bounds <span class="ot">&lt;-</span> <span class="fu">range</span>(R[<span class="dv">1</span><span class="sc">:</span>Y],jagsfit<span class="sc">$</span>BUGSoutput<span class="sc">$</span>median<span class="sc">$</span>R_hat)</span>
+<span id="cb6-75"><a href="real-data-examples.html#cb6-75" tabindex="-1"></a></span>
+<span id="cb6-76"><a href="real-data-examples.html#cb6-76" tabindex="-1"></a><span class="fu">plot</span>(df.xy[,<span class="dv">1</span>],df.xy[,<span class="dv">2</span>], <span class="at">ylab=</span><span class="st">&quot;Recruitment index&quot;</span>,</span>
+<span id="cb6-77"><a href="real-data-examples.html#cb6-77" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Spawning Stock Index&quot;</span>, <span class="at">ylim=</span>y.bounds) <span class="co">#c(min.y, max.y))</span></span>
+<span id="cb6-78"><a href="real-data-examples.html#cb6-78" tabindex="-1"></a><span class="fu">points</span>(df.xy[,<span class="dv">1</span>], df.xy[,<span class="dv">3</span>], <span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p>Bayesian estimates of <span class="math inline">\(\alpha\)</span> (median=0.060, 95% credible interval 0.042-0.075) and <span class="math inline">\(\beta\)</span> (0.091, 95% CrI 0.003-0.368) were similar to estimates (0.06312; 0.1606) provided by <span class="citation">Ricker (<a href="#ref-ricker1975">1975</a>)</span>.</p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-brownie.etal1985" class="csl-entry">
+Brownie, Cavell, D. R. Anderson, K. P. Burnham, and D. S. Robson. 1985. <span>“Statistical Inference from Band Recovery Data: A Handbook.”</span> Federal {{Government Series}} 156. <em>Statistical Inference from Band Recovery Data: A Handbook</em>. Washington, D.C.: <span>U.S. Fish and Wildlife</span>.
+</div>
+<div id="ref-chapman1951" class="csl-entry">
+Chapman, D. G. 1951. <em>Some Properties of the Hypergeometric Distribution with Applications to Zoological Sample Censuses</em>. University of California Press.
+</div>
+<div id="ref-kruschke_2021" class="csl-entry">
+Kruschke, John K. 2021. <span>“Bayesian <span>Analysis Reporting Guidelines</span>.”</span> <em>Nature Human Behaviour</em> 5 (10): 1282–91. <a href="https://doi.org/10.1038/s41562-021-01177-7">https://doi.org/10.1038/s41562-021-01177-7</a>.
+</div>
+<div id="ref-nelson.quinnii_1987" class="csl-entry">
+Nelson, B., and T. J. Quinn II. 1987. <span>“Population Parameters for Rougheye Rockfish (<span>Sebastes</span> Aleutianus).”</span> <em>Proceedings of the International Rockfish Symposium</em>.
+</div>
+<div id="ref-ogle_2016" class="csl-entry">
+Ogle, Derek H. 2016. <em>Introductory <span>Fisheries Analyses</span> with <span>R</span></em>. 1st edition. Boca Raton, Florida: CRC Press.
+</div>
+<div id="ref-otis.etal_1978" class="csl-entry">
+Otis, David L., Kenneth P. Burnham, Gary C. White, and David R. Anderson. 1978. <span>“Statistical <span>Inference</span> from <span>Capture Data</span> on <span>Closed Animal Populations</span>.”</span> <em>Wildlife Monographs</em>, no. 62: 3–135. <a href="https://www.jstor.org/stable/3830650">https://www.jstor.org/stable/3830650</a>.
+</div>
+<div id="ref-quinn.deriso_1999" class="csl-entry">
+Quinn, Terrance J., and Richard B. Deriso. 1999. <em>Quantitative <span>Fish Dynamics</span></em>. Oxford: Oxford University Press.
+</div>
+<div id="ref-ricker_1958" class="csl-entry">
+Ricker, William Edwin. 1958. <em>Handbook of Computations for Biological Statistics of Fish Populations</em>. 119. Ottawa: Fisheries Research Board of Canada.
+</div>
+<div id="ref-ricker1975" class="csl-entry">
+———. 1975. <em>Computation and Interpretation of Biological Statistics of Fish Populations</em>. 191. Ottawa: <span>Dept. of Fisheries and Oceans : Minister of Supply and Services Canada</span>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="FinalThoughts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/90-more.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

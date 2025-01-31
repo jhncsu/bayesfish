@@ -98,7 +98,7 @@ Counts <- table(Clubs)
 barplot(Counts)
 ```
 
-Each of the thirty observations now represents a trial size of 5 (in total, a simulation equivalent to 150 Bernoulli\index{Bernoulli distribution} trials). Only part of the Clubs vector is visible in the Environment window but we can put Clubs as a line of code to print the whole vector in the Console. We again summarize the counts and plot the results using the `barplot()` function. Run this block of code multiple times to get some insight into the variability of the simulated system. For example, how often do you observe 0 or 5 Clubs? Which outcome(s) occurs most often (mode) and how frequently does the mode change?
+Each of the thirty observations now represents a trial size of 5 (in total, a simulation equivalent to 150 Bernoulli\index{Bernoulli distribution} trials). Only part of the Clubs vector is visible in the Environment window but we can put Clubs as a line of code to print the whole vector in the Console. We again summarize the counts and plot the results using the `barplot()` function. Run this block of code multiple times to get some insight into the variability of the simulated system. For example, how often do you observe 0 or 5 Clubs? Which outcome occurs most often (mode) and how frequently does the mode change?
 
 We would expect to observe very few trials with 5 successes, because the probability is quite low (0.25^5^=0.001). We can calculate it in the Console, by entering the expression 0.25^5. There is a higher probability of 0 successes (0.24), which can be calculated as 0.75^5 or (1-p)^5^, because 1-p is the probability of failure (not getting a club). It is more involved to calculate the probabilities of 1-4 successes because they can be obtained multiple ways (e.g., 1 success can be obtained five ways (10000, 01000, 00100, 00010, 00001). We could calculate those probabilities using the binomial probability distribution\index{binomial distribution}: $f(k) = {n \choose k} p^{k} (1-p)^{n-k}$, where k is the number of successes in a trial of size n. R code for this calculation uses the `choose()` function; for example, `choose(Trial.size,0) * p^0 * (1-p)^5` calculates the probability of 0 clubs in five draws. We could get an approximate ("brute force") estimate of the probabilities by increasing N.trials to a large value (say 10,000) and dividing the Counts vector by N.trials to estimate at the proportion of trials resulting in 0, 1,...5 successes:
 
@@ -115,7 +115,7 @@ barplot(Counts)
 Counts/N.trials # Vector division - probabilities of 0-5 Clubs
 ```
 
-Note that we used a pound sign to turn off ("comment out") the line for printing the Clubs vector to the Console, and print to the Console the estimated probabilities. Dividing the Counts vector by a constant produces a vector of estimated probabilities. The mode of our simulated distribution is in agreement with the expected value (trial size * p), as are the estimated probabilities for 0 and 5 clubs.
+Note that we use a pound sign to turn off ("comment out") the line for printing the Clubs vector to the Console, and print to the Console the estimated probabilities. Dividing the Counts vector by a constant produces a vector of estimated probabilities. The mode of our simulated distribution is in agreement with the expected value (trial size * p), as are the estimated probabilities for 0 and 5 clubs.
 
 ### Multinomial {#Multinomial}
 
@@ -131,19 +131,26 @@ SampleSize <- sum(x)
 barplot(x)
 ```
 
-Here R calculates the sample size (SampleSize), even though we know in this instance that there were 10 rolls. The `barplot()` function generates the plot but without any labels is not very appealing. We can dress it up a bit by adding some options (Figure \@ref(fig:dieRoll)). We first create a vector with values 1-6 to serve as x-axis labels (`seq()` function, from 1 to 6 by 1). Then we use the names.arg option to add the labels, and add x and y axis titles using xlab and ylab respectively.
+Here R calculates the sample size (SampleSize), even though we know in this instance that there were 10 rolls. The `barplot()` function generates the plot but without any labels is not very appealing. We can dress it up a bit by adding some options (Figure \@ref(fig:dieRoll)). We first create a vector with values 1-6 to serve as x-axis labels (`seq()` function, from 1 to 6 by 1). The <code>barplot()</code> function uses the names.arg option to add the labels, with axis titles added using xlab and ylab. The final option <code>yaxt="n"</code> suppresses the y-axis. Normally the default plotting options are fine, but adding the y axis as a separate step with the <code>axis()</code> function allows us to use integer labels (given that the number of rolls will only be a whole number). The <code>axis()</code> arguments specify that the axis is added to the left side of the plot (side=2) and provide the vector of tick-mark positions. One general note about plotting is that only base R plots are used in this book. They are sufficient for our purposes, but fancier plots can be produced using graphical packages such as **lattice** and **ggplot2**.
 
-```{r echo=FALSE}
+```{r eval=FALSE}
+x.labels <- seq(from=1, to=6, by=1) # x axis labels for plotting
+barplot(x, names.arg=x.labels, xlab="Die side", ylab="Number of rolls",
+        yaxt="n")
+axis(side=2, at=seq(from=0, to=3, by=1))
+```
+
+```{r dieRoll, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Summary bar plot of die rolls.', out.width='90%'}
 rm(list=ls()) # Clear Environment
+par(mar = c(4, 4, 1, 2))
 
 x <-c(2,3,3,0,2,0)  # Generated using die, equal cell probabilities
 SampleSize <- sum(x)
 par(mar = c(4, 4, 1, .1))
-```
+x.labels <- seq(from=1, to=6, by=1) # x axis labels for plotting
+barplot(x, names.arg=x.labels, xlab="Die side", ylab="Number of rolls", yaxt="n")
+axis(side=2, at=seq(from=0, to=3, by=1))
 
-```{r dieRoll, fig.cap='Summary bar plot of die rolls.', out.width='90%'}
-x.labels <- seq(from=1, to=6, by=1)  # x axis labels for plotting
-barplot(x, names.arg=x.labels, xlab="Die side", ylab="Number of rolls")
 ```
 
 We can simulate a multinomial distribution\index{multinomial distribution} as follows:
@@ -173,7 +180,7 @@ Run the code beginning with the `x <- rmultinom()` line several times to see how
 
 ### Poisson  {#PoissonDist}
 
-Like the Bernoulli, binomial, and multinomial distributions, the Poisson\index{Poisson distribution} and negative binomial\index{negative binomial distribution} distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two) whereas the Poisson and negative binomial distributions do not. The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually $\lambda$, which represents the mean and variance of the distribution. Fisheries examples of a Poisson distribution could be the number of fish per day moving upstream via a fish ladder, or the number caught per trawl tow. 
+Like the Bernoulli, binomial, and multinomial distributions, the Poisson\index{Poisson distribution} and negative binomial\index{negative binomial distribution} distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two) whereas the Poisson and negative binomial distributions do not. The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually $\lambda$, which represents the mean and variance of the distribution. Fisheries examples of a Poisson distribution could be the number of fish per hour moving upstream via a fish ladder, or the number caught per trawl tow. 
 
 Our simulation uses an arbitrary value for $\lambda$. The <code>rpois()</code> function has two arguments: sample size (n) and lambda, representing the mean and variance of the distribution.
 
@@ -232,7 +239,7 @@ var(Count)
 
 This distribution has the same mean as in the Poisson example but tends to have a longer tail (occasional large counts). Rerun the code using different values for k; for example, Figure \@ref(fig:NB-vary-k) uses a sample size of 200 to compare results for k=1 and k=10, each with $\mu$=4.
 
-```{r NB-vary-k, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Negative binomial frequency distributions for mu=4 and k=1 (left) or 10 (right).',fig.show="hold", out.width="50%"}
+```{r NB-vary-k, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Negative binomial frequency distributions for mu=4 and k=1 (top) or 10 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
 rm(list=ls()) # Clear Environment
 
 set.seed(11111) # Ensure that book will have a reasonable result
@@ -240,14 +247,18 @@ par(mar = c(4, 4, 1, .1))
 N <- 200
 mu <- 4
 k=1
-Count <- rnbinom(n=N, mu=mu, size=k)
-Freq <- table(factor(Count, levels = 0:max(Count)))
-barplot(Freq, main="", xlab="Count", ylab="Frequency")
-
+Count1 <- rnbinom(n=N, mu=mu, size=k)
 k=10 # Reduce degree of overdispersion
-Count <- rnbinom(n=N, mu=mu, size=k)
-Freq <- table(factor(Count, levels = 0:max(Count)))
-barplot(Freq, main="", xlab="Count", ylab="Frequency")
+Count10 <- rnbinom(n=N, mu=mu, size=k)
+
+UpperBound <- max(Count1, Count10)
+
+Freq1 <- table(factor(Count1, levels = 0:UpperBound))
+Freq10 <- table(factor(Count10, levels = 0:UpperBound))
+
+x.bounds <- range(Freq1, Freq10)
+barplot(Freq1, main="", xlab="Count", ylab="Frequency", xlim=x.bounds)
+barplot(Freq10, main="", xlab="Count", ylab="Frequency", xlim=x.bounds)
 ```
 
 ## Continuous {#Continuous}
@@ -267,10 +278,10 @@ hist(p, breaks=5, main="")
 ```
 Try running the code several times and note the variation in pattern from one simulation run to the next. I use the breaks=5 option in the `hist()` function so that the histogram bin intervals are stable among runs. Specifying a null character string for "main=" prevents the plot from including a main title. Next, increase the sample size and note the increased smoothness of the observed distribution. What would be the expected mean of the distribution? Estimate the mean and compare the observed and expected value among runs. 
 
-As noted above, the `runif()` function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate\index{exploitation rate} (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval; for example, `runif(n=Reps, min=0.3, max=0.4)`. The `runif()` function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.
+As noted above, the `runif()` function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate\index{exploitation rate} (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval, for example, `runif(n=Reps, min=0.3, max=0.4)`. The `runif()` function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.
 
 ### Beta  {#BetaDist}
-The beta distribution\index{beta distribution} has a lower bound of 0 and an upper bound of 1, so it is useful for modeling parameters with those bounds (i.e., probabilities). A fisheries model might use a beta distribution to simulate variation in a survival rate\index{survival rate} or the probability of a tag being returned. The uniform distribution\index{uniform distribution} (Section \@ref(Uniform)) can also be used for probabilities, but only for the case where all values are equally likely. The beta distribution is more flexible and can not only be flat but also u-shaped, bell-shaped, or left- or right-skewed. Figure \@ref(fig:Beta) shows sample distributions for shape parameters $\alpha$=1 and $\beta$=0.5, 1, and 5.
+The beta distribution\index{beta distribution} has a lower bound of 0 and an upper bound of 1, so it is useful for modeling parameters with those bounds (i.e., probabilities). A fisheries model might use a beta distribution\index{beta distribution} to simulate variation in a survival rate\index{survival rate} or the probability of a tag being returned. The uniform distribution\index{uniform distribution} (Section \@ref(Uniform)) can also be used for probabilities, but only for the case where all values are equally likely. The beta distribution\index{beta distribution} is more flexible and can not only be flat but also u-shaped, bell-shaped, or left- or right-skewed. Figure \@ref(fig:Beta) shows sample distributions for shape parameters $\alpha$=1 and $\beta$=0.5, 1, and 5.
 
 ```{r, Beta, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Histograms for 200 random draws from a beta distribution, with alpha=1 and beta=0.5  (top), 1 (middle), and 5 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
 
@@ -291,7 +302,7 @@ hist(x, main="", xlab="Probability")
 
 ```
 
-We simulate draws from a beta distribution using the `rbeta()` function. Starting with $\alpha$ and $\beta$ set to 1 would be appropriate for a situation where all probabilities are equally likely:
+We simulate draws from a beta distribution\index{beta distribution} using the `rbeta()` function. Starting with $\alpha$ and $\beta$ set to 1 would be appropriate for a situation where all probabilities are equally likely:
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -303,7 +314,7 @@ x <- rbeta(n=Reps, shape1=alpha, shape2=beta)
 hist(x, main="", xlab="Probability")
 ```
 
-After running the above code multiple times, try a beta(8, 4) distribution. These parameter values could result from a pilot study with seven successes in ten trials ($\alpha$=7+1, $\beta$=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a fisheries situation where probabilities would be expected to be close to 0 or close to 1?
+After running the above code multiple times, try a beta(8, 4) distribution\index{beta distribution}. These parameter values could result from a pilot study with seven successes in ten trials ($\alpha$=7+1, $\beta$=3+1). This shifts the distribution toward a mode of 0.7, which is the observed proportion of successes in ten trials. Try other arbitrary values for the two parameters to vary the shape of the distribution. Can you think of a fisheries situation where probabilities would be expected to be close to 0 or 1?
 
 ### Normal  {#NormalDist}
 The normal distribution\index{normal distribution} is the well-known bell curve from traditional statistics courses. The distribution is unbounded (bounds -$\infty$, $\infty$). The shape of the distribution is determined by the mean (location) and standard deviation (spread). A fisheries example might be a simulation where size-at-age varied among individuals according to a normal distribution.
@@ -321,7 +332,7 @@ hist(Len, main="")
 Run the code a few times to look at the variation in shape and bounds at a relatively small sample size. Next, increase the sample size and determine through trial and error the smallest sample size that provides a relatively smooth bell-curve shape.  Estimate the mean and standard deviation (function `sd()`) and compare the observed and true values.
 
 ### Lognormal {#LognormalDist}
-The lognormal distribution\index{lognormal distribution} (bounds 0, $\infty$) is useful in ecological settings because it excludes negative values and allows for a long upper tail.  A classic fisheries example of a lognormal distribution is annual recruitment\index{recruitment} for marine fish species (number of young entering the population). Most years result in low recruitment but there are occasional extreme values when environmental conditions are right.
+The lognormal distribution\index{lognormal distribution} (bounds 0, $\infty$) is useful in ecological settings because it excludes negative values and allows for a long upper tail.  A classic fisheries example of a lognormal distribution is annual recruitment\index{recruitment} for marine fish species [@hilborn.walters_1992]. Most years result in low recruitment but there are occasional extreme values when environmental conditions are right.
 
 We begin with simulation code:
 ```{r eval=FALSE}
@@ -334,16 +345,16 @@ y <- rlnorm(n=Reps, mean=ln.m, sd=sqrt(ln.v))
 
 hist(y, main="Lognormal distribution")
 Exp.mean <- exp(ln.m+(ln.v/2)) # Arithmetic scale expected mean
-abline(v=Exp.mean, col="red")
+abline(v=Exp.mean, lty=3, lwd=3)
 Exp.var <- (exp(2*ln.m+ln.v))*(exp(ln.v)-1) 
   # Arithmetic scale expected variance
 mean(y)
 var(y)
 ```
 
-The `rlnorm()` function generates random lognormal values, using an arbitrarily chosen mean and standard deviation specified in natural log-scale. Those values can be used to calculate the expected mean and variance in arithmetic scale. The `abline()` function adds to the histogram a vertical (v=) line for the expected arithmetic-scale mean (Figure \@ref(fig:Lognormal)). The line color is specified as col="red"; other options including line weight and pattern can be found in the Help window. Compare the estimates of arithmetic-scale mean and variance for your (relatively large) sample of lognormal random variates to the expected values (visible in the Environment window).
+The `rlnorm()` function generates random lognormal values, using an arbitrarily chosen mean and standard deviation specified in natural log-scale. Those values can be used to calculate the expected mean and variance in arithmetic scale. The `abline()` function adds to the histogram a vertical (v=) line for the expected arithmetic-scale mean (Figure \@ref(fig:Lognormal)). The line type is specified as dotted (lty=3) and weight 3 (lwd=3); other options including line color can be found in the Help window. Compare the estimates of arithmetic-scale mean and variance for your (relatively large) sample of lognormal random variates to the expected values (visible in the Environment window).
 
-```{r Lognormal, fig.cap='Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Red vertical line denotes expected mean.', out.width='90%'}
+```{r Lognormal, fig.cap='Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Dotted vertical line denotes expected mean.', out.width='90%'}
 #| echo: false
 rm(list=ls()) # Clear Environment
 par(mar = c(4, 4, 1, .1))
@@ -356,16 +367,17 @@ y <- rlnorm(n=Reps, mean=ln.m, sd=sqrt(ln.v))
 
 hist(y, main="")
 Exp.mean <- exp(ln.m+(ln.v/2)) # Calculate arithmetic scale expected mean
-abline(v=Exp.mean, col="red")
+abline(v=Exp.mean, lty=3, lwd=3)
 ```
 
 ### Gamma {#GammaDist}
 The gamma distribution\index{gamma distribution} is similar to the lognormal in that has a lower bound of 0 and an upper bound of $\infty$. Thus it also excludes negative values and allows for a long upper tail. This distribution is often used to simulate waiting times (how long until some number of events has occurred, based on a specified average time between events). We consider it here simply because it can take on a variety of shapes depending on its parameters [@bolker2008]. Figure \@ref(fig:Gamma) shows sample distributions for shape parameter $\alpha$=3 and scale or spread parameter $\beta$=1 and 3.
 
-```{r, Gamma, fig.cap='Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (left) and 3 (right).',fig.show="hold", out.width="50%"}
+```{r, Gamma, fig.cap='Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (top) and 3 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
 #| echo: false
 rm(list=ls()) # Clear Environment
-par(mar = c(4, 4, 1, .1))
+set.seed(12345) # Ensure that book will have a reasonable result
+par(mar = c(4, 4, 1, 2))
 
 Reps <- 200 # Replicate draws from a gamma distribution
 alpha <- 3 # Shape parameter, > 0
