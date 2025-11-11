@@ -8,7 +8,7 @@ In this chapter, we will examine some of the more common and important statistic
 
 ### Bernoulli {#Bernoulli}
 
-The most basic discrete distribution is the Bernoulli\index{Bernoulli distribution}. There are only two outcomes, often referred to as success and failure. The classic example of a Bernoulli distribution is a coin toss, where “heads” might be considered success and “tails” failure. This distribution has a single parameter p, representing the probability of success. Its complement (1-p) is the probability of failure. Searching a lake for a fish with a radio transmitter is a fisheries example of a Bernoulli\index{Bernoulli distribution} trial, where p represents the probability of detecting the fish’s signal (success). Other biological examples are whether a fish with a transmitter is dead or alive and whether or not a study site is occupied.
+The most basic discrete distribution is the Bernoulli\index{Bernoulli distribution}. There are only two outcomes, often referred to as success and failure. The classic example of a Bernoulli distribution is a coin toss, where “heads” might be considered success and “tails” failure. This distribution has a single parameter, p, representing the probability of success. Its complement (1-p) is the probability of failure. Searching a lake for a fish with a radio transmitter is a fisheries example of a Bernoulli\index{Bernoulli distribution} trial, where p represents the probability of detecting the fish’s signal (success). Other biological examples are whether a fish with a transmitter is dead or alive and whether or not a study site is occupied.
 
 Let’s begin with R code for a hands-on example, where a coin was tossed ten times. It is convenient in R to use 0 for tails and 1 for heads:
 
@@ -17,7 +17,7 @@ y <- c(0,0,1,0,0,1,0,0,0,1)  # Coin toss observations, 0=tails
 N.obs <- length(y) # R function to count number of observations
 ```
 
-As usual, you should paste the code into an RStudio script window. You can select both lines and click the Run icon in order to run both at once. The first line assigns the vector of 0s and 1s to the variable y. The next line uses the `length()` function to count the number of observations in the vector y. We could have used the code N.obs <- 10 but there are two related reasons not to do so. First, hard-coding a constant for sample size means that we would need to remember to change that line if the y vector was later updated with a different number of observations. Second, you should never do anything manually that computer code can do for you. Letting R count the observations means that you will never miscount, and your code will still work correctly if you change the y vector and end up with a different sample size.
+As usual, you should paste the code into an RStudio script window. You can select both lines and click the Run icon in order to run both at once. The first line assigns the vector of 0s and 1s to the variable y. The next line uses the `length()` function to count the number of observations in the vector y. We could have used the code N.obs <- 10, but there are two related reasons not to do so. First, hard-coding a constant for sample size means that we would need to remember to change that line if the y vector was later updated with a different number of observations. Second, you should never do anything manually that computer code can do for you. Letting R count the observations means that you will never miscount, and your code will still work correctly if you change the y vector and end up with a different sample size.
 
 Another critical step in data analysis is to plot the data whenever possible, in order to look for patterns. Here, plotting the sequence of 0s and 1s is not that useful. A better summary plot is to examine the total number of 0s and 1s. We can use the `table()` function, which returns a vector with the number of 0s and 1s in the y vector (see Environment window). The `barplot()` function plots the two counts (Figure \@ref(fig:coinToss)):
 
@@ -25,7 +25,7 @@ Another critical step in data analysis is to plot the data whenever possible, in
 par(mar = c(4, 4, 1, .1))
 ```
 
-```{r coinToss, fig.cap='Summary bar plot of coin tosses.', out.width='90%'}
+```{r coinToss, fig.cap='Summary barplot of coin tosses.', out.width='90%'}
 Counts <- table(y)  # Summary table of 0 vs 1
 barplot(Counts)
 ```
@@ -70,7 +70,7 @@ The binomial distribution\index{binomial distribution} is simply the combined to
 
 One fisheries example of a binomially-distributed process would be the number of recaptures in a two-sample mark-recapture\index{mark-recapture} study. In that case, the number of fish in the second sample is the size of the trial, and fraction of the population that is marked is the probability p. Another fisheries example would be the number of tag returns in a study to estimate the exploitation rate\index{exploitation rate} (rate of harvest). The number of tagged fish is the size of the trial and the exploitation rate is p. A telemetry study to estimate fish survival rate\index{survival rate} is a third example. The initial number of fish with transmitters is the size of the trial. The survival rate is p and the number of survivors at the start of the next period is binomially distributed.
 
-Let's start with a physical example of drawing five playing cards (with replacement) and recording the number of clubs. The probability of success in this case (drawing a club) is 0.25 and there are six possible outcomes (0-5 clubs). The expected number of clubs is 1.25 (trial size * p).
+Let's start with a physical example of drawing five playing cards (with replacement) and recording the number of clubs. The probability of success in this case (drawing a club) is 0.25, and there are six possible outcomes (0-5 clubs). The expected number of clubs is 1.25 (trial size * p).
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -82,7 +82,7 @@ barplot(Counts)
 barplot(Counts, xlab="Number of clubs")
 ```
 
-Again we let R count the number of trials (6 in this case) and use the `table()` function to summarize the outcomes. Our sample size is small and the plot only shows the three observed outcomes. The plot can be made more understandable (especially by someone else) by adding a plot option (xlab) to label the x axis. Doing more than one plot within the RStudio environment produces a sequence of plots which you can view by using the blue left and right arrows in the Plot window. Practice modifying the above code by adding a label for the y axis (e.g., "Frequency"). You can find the full list of bar plot options by entering "barplot" in the search box in the RStudio help window (or simply type ?barplot) in the Console).
+Again we let R count the number of trials (6 in this case) and use the `table()` function to summarize the outcomes. Our sample size is small, and the plot only shows the three observed outcomes. The plot can be made more understandable (especially by someone else) by adding a plot option (xlab) to label the x-axis. Doing more than one plot within the RStudio environment produces a sequence of plots which you can view by using the blue left and right arrows in the Plot window. Practice modifying the above code by adding a label for the y-axis (e.g., "Frequency"). You can find the full list of barplot options by entering "barplot" in the search box in the RStudio help window (or simply type ?barplot in the Console).
 
 We can alleviate our small sample size issue by turning to a simulation version. We again use the `rbinom()` function from the Bernoulli example, but now size is greater than 1:
 
@@ -98,9 +98,9 @@ Counts <- table(Clubs)
 barplot(Counts)
 ```
 
-Each of the thirty observations now represents a trial size of 5 (in total, a simulation equivalent to 150 Bernoulli\index{Bernoulli distribution} trials). Only part of the Clubs vector is visible in the Environment window but we can put Clubs as a line of code to print the whole vector in the Console. We again summarize the counts and plot the results using the `barplot()` function. Run this block of code multiple times to get some insight into the variability of the simulated system. For example, how often do you observe 0 or 5 Clubs? Which outcome occurs most often (mode) and how frequently does the mode change?
+Each of the 30 observations now represents a trial size of 5 (in total, a simulation equivalent to 150 Bernoulli\index{Bernoulli distribution} trials). Only part of the Clubs vector is visible in the Environment window, but we can put Clubs as a line of code to print the whole vector in the Console. We again summarize the counts and plot the results using the `barplot()` function. Run this block of code multiple times to get some insight into the variability of the simulated system. For example, how often do you observe 0 or 5 Clubs? Which outcome occurs most often (mode) and how frequently does the mode change?
 
-We would expect to observe very few trials with 5 successes, because the probability is quite low (0.25^5^=0.001). We can calculate it in the Console, by entering the expression 0.25^5. There is a higher probability of 0 successes (0.24), which can be calculated as 0.75^5 or (1-p)^5^, because 1-p is the probability of failure (not getting a club). It is more involved to calculate the probabilities of 1-4 successes because they can be obtained multiple ways (e.g., 1 success can be obtained five ways (10000, 01000, 00100, 00010, 00001). We could calculate those probabilities using the binomial probability distribution\index{binomial distribution}: $f(k) = {n \choose k} p^{k} (1-p)^{n-k}$, where k is the number of successes in a trial of size n. R code for this calculation uses the `choose()` function; for example, `choose(Trial.size,0) * p^0 * (1-p)^5` calculates the probability of 0 clubs in five draws. We could get an approximate ("brute force") estimate of the probabilities by increasing N.trials to a large value (say 10,000) and dividing the Counts vector by N.trials to estimate at the proportion of trials resulting in 0, 1,...5 successes:
+We would expect to observe very few trials with 5 successes, because the probability is quite low (0.25^5^=0.001). We can calculate it in the Console, by entering the expression 0.25^5. There is a higher probability of 0 successes (0.24), which can be calculated as 0.75^5 or (1-p)^5^, because 1-p is the probability of failure (not getting a club). It is more involved to calculate the probabilities of 1-4 successes, because they can be obtained multiple ways (e.g., 1 success can be obtained five ways: 10000, 01000, 00100, 00010, 00001). We could calculate those probabilities using the binomial probability distribution\index{binomial distribution}: $f(k) = {n \choose k} p^{k} (1-p)^{n-k}$, where k is the number of successes in a trial of size n. R code for this calculation uses the `choose()` function; for example, `choose(Trial.size,0) * p^0 * (1-p)^5` calculates the probability of 0 clubs in five draws. We could get an approximate ("brute-force") estimate of the probabilities by increasing N.trials to a large value (say 10,000) and dividing the Counts vector by N.trials to estimate the proportion of trials resulting in 0, 1,...5 successes:
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -119,7 +119,7 @@ Note that we use a pound sign to turn off ("comment out") the line for printing 
 
 ### Multinomial {#Multinomial}
 
-The Bernoulli and binomial distributions return a single value: success or failure for the Bernoulli and the number of successes (out of a specified trial size) for the binomial. The multinomial distribution\index{multinomial distribution} extends that to a vector of results. A classic physical example would be to roll a die several times and record how many rolls were a 1, 2, ..., 6. A fisheries example would be to collect a sample of fish and determine how many were age 1, 2,... The focus in that example is on estimating the age distribution, or proportions of fish by age. An age distribution contains valuable information about the rates of survival\index{survival rate} and recruitment\index{recruitment} (year-class strength). Another fisheries example would be to collect a sample of fish (e.g., from electrofishing or a trawl) and determine the number caught by species. Species composition can be an important indicator of the ecological health of a study site (e.g., if there is a high relative abundance of species considered tolerant of poor water quality).
+The Bernoulli and binomial distributions return a single value: success or failure for the Bernoulli and the number of successes (out of a specified trial size) for the binomial. The multinomial distribution\index{multinomial distribution} extends that to a vector of results. A classic physical example would be to roll a die several times and record how many rolls were a 1, 2, ..., 6. A fisheries example would be to collect a sample of fish and determine the number of fish by age. The focus in that example is on estimating the age distribution, or proportions of fish by age. An age distribution contains valuable information about the rates of survival\index{survival rate} and recruitment\index{recruitment} (year-class strength). Another fisheries example would be to collect a sample of fish (e.g., from electrofishing or a trawl) and determine the number caught by species. Species composition can be an important indicator of the ecological health of a study site (e.g., if there is a high relative abundance of species considered tolerant of poor water quality).
 
 Let’s begin with a hands-on example. I roll a die ten times, and record as a vector the number of times I get a 1, 2, ..., 6:
 
@@ -131,14 +131,16 @@ SampleSize <- sum(x)
 barplot(x)
 ```
 
-Here R calculates the sample size (SampleSize), even though we know in this instance that there were 10 rolls. The `barplot()` function generates the plot but without any labels is not very appealing. We can dress it up a bit by adding some options (Figure \@ref(fig:dieRoll)). We first create a vector with values 1-6 to serve as x-axis labels (`seq()` function, from 1 to 6 by 1). The <code>barplot()</code> function uses the names.arg option to add the labels, with axis titles added using xlab and ylab. The final option <code>yaxt="n"</code> suppresses the y-axis. Normally the default plotting options are fine, but adding the y axis as a separate step with the <code>axis()</code> function allows us to use integer labels (given that the number of rolls will only be a whole number). The <code>axis()</code> arguments specify that the axis is added to the left side of the plot (side=2) and provide the vector of tick-mark positions. One general note about plotting is that only base R plots are used in this book. They are sufficient for our purposes, but fancier plots can be produced using graphical packages such as **lattice** and **ggplot2**.
+Here R calculates the sample size (SampleSize), even though we know in this instance that there were ten rolls. The `barplot()` function generates the plot, but without any labels it is not very appealing. We can dress it up a bit by adding some options (Figure \@ref(fig:dieRoll)). We first create a vector with values 1-6 to serve as x-axis labels (`seq()` function, from 1 to 6 by 1). The <code>barplot()</code> function uses the names.arg option to add the labels, with axis titles added using xlab and ylab. The final option <code>yaxt="n"</code> suppresses the y-axis. Normally the default plotting options are fine, but adding the y-axis as a separate step with the <code>axis()</code> function allows us to use integer labels (given that the number of rolls will only be a whole number). The <code>axis()</code> arguments specify that the axis is added to the left side of the plot (side=2) and provide the vector of tick-mark positions. One general note about plotting is that only base R plots are used in this book. They are sufficient for our purposes, but fancier plots can be produced using graphical packages such as **lattice** and **ggplot2**.
 
 ```{r eval=FALSE}
-x.labels <- seq(from=1, to=6, by=1) # x axis labels for plotting
+x.labels <- seq(from=1, to=6, by=1) # x-axis labels for plotting
 barplot(x, names.arg=x.labels, xlab="Die side", ylab="Number of rolls",
         yaxt="n")
 axis(side=2, at=seq(from=0, to=3, by=1))
 ```
+
+\pagebreak
 
 ```{r dieRoll, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Summary bar plot of die rolls.', out.width='90%'}
 rm(list=ls()) # Clear Environment
@@ -174,13 +176,13 @@ age.vec <- seq(1,6, by=1)
 barplot(x.vec, names.arg=age.vec, xlab="Age", ylab="Number of fish")
 ```
 
-In this simulation, the age proportions (TrueP) are arbitrarily chosen (but could be based on field data). Run statements one-by-one to see how each line of code works. Note that the `rmultinom()` function returns a matrix with six rows and one column (n determines how many columns are returned). Rather than a column, we want a row vector, with the number of fish by age in successive columns. We use the `t()` (transpose) function to transpose the matrix and the `as.vector()` function to convert the matrix (with one row) into a row vector. We could have done this transformation in two steps but instead have nested the two functions. That results in more compact code but it is always a fine option to do the steps separately for greater clarity.
+In this simulation, the age proportions (TrueP) are arbitrarily chosen (but could be based on field data). Run statements one-by-one to see how each line of code works. Note that the `rmultinom()` function returns a matrix with six rows and one column (n determines how many columns are returned). Rather than a column, we want a row vector, with the number of fish by age in successive columns. We use the `t()` (transpose) function to transpose the matrix and the `as.vector()` function to convert the matrix (with one row) into a row vector. We could have done this transformation in two steps but instead have nested the two functions. That results in more compact code, but it is always a fine option to do the steps separately for greater clarity.
 
 Run the code beginning with the `x <- rmultinom()` line several times to see how much the age distribution varies from one random sample to the next. The underlying age proportions are fixed, but the counts vary quite a bit for this small sample size.  This is an example of how simulation is helpful in gaining experience and intuition in judging pure sampling variation versus a real biological result (e.g., good or bad year-class strength).
 
 ### Poisson  {#PoissonDist}
 
-Like the Bernoulli, binomial, and multinomial distributions, the Poisson\index{Poisson distribution} and negative binomial\index{negative binomial distribution} distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two) whereas the Poisson and negative binomial distributions do not. The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually $\lambda$, which represents the mean and variance of the distribution. Fisheries examples of a Poisson distribution could be the number of fish per hour moving upstream via a fish ladder, or the number caught per trawl tow. 
+Like the Bernoulli, binomial, and multinomial distributions, the Poisson\index{Poisson distribution} and negative binomial\index{negative binomial distribution} distributions are used for counts (non-negative whole numbers). The first three cases have an upper bound (1 for the Bernoulli, trial size for the next two), whereas the Poisson and negative binomial distributions do not. The Poisson is simpler than the negative binomial in that it is described by a single parameter, usually $\lambda$, which represents the mean and variance of the distribution. Fisheries examples of a Poisson distribution could be the number of fish per hour moving upstream via a fish ladder, or the number caught per trawl tow. 
 
 Our simulation uses an arbitrary value for $\lambda$. The <code>rpois()</code> function has two arguments: sample size (n) and lambda, representing the mean and variance of the distribution.
 
@@ -216,11 +218,11 @@ mean(Count)
 var(Count)
 ```
 
-Now the `table()` function operates on counts transformed into factors (categories or levels) by the `factor()` function. The <code>levels=</code> argument forces <code>factor()</code> to use a range of levels from 0 to <code>max(Count)</code>, in order to include levels with a frequency of zero. Try the following partial code in the Console to see the levels ("0", "1", etc) created by the `factor()` function: <code>factor(Count, levels = 0:max(Count))</code>.
+Now the `table()` function operates on counts transformed into factors (categories or levels) by the `factor()` function. The <code>levels=</code> argument forces <code>factor()</code> to use a range of levels from 0 to <code>max(Count)</code>, in order to include levels with a frequency of zero. Try the following partial code in the Console to see the levels ("0", "1", etc.) created by the `factor()` function: <code>factor(Count, levels = 0:max(Count))</code>.
 
 ### Negative binomial {#NegBinom}
 
-As noted above, the negative binomial\index{negative binomial distribution} distribution is used in similar situations to the Poisson\index{Poisson distribution} except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution [@bolker2008; @link.barker_2010]. The R function for generating negative binomial random variates (`rnbinom()`) can be parameterized in different ways; here I use the "ecological" parameterization recommended by @bolker2008. This uses the mean (termed $\mu$) but not the variance, instead using an overdispersion\index{overdispersion} parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean [@bolker2008]. The distribution approximates a Poisson when k is large (e.g., >10*$\mu$). The code includes calculation of the variance as a function of mu and k [@bolker2008]. Alternatively the mean and variance (V) can be specified and used to solve for k: $k = \mu^2/(V-\mu)$. Note that overdispersion\index{overdispersion} implies that the variance is greater than the mean, so that the denominator is greater than zero.
+As noted above, the negative binomial\index{negative binomial distribution} distribution is used in similar situations to the Poisson\index{Poisson distribution}, except that it has two parameters and is therefore more flexible. This is particularly helpful for ecological data, where counts are often more variable than would be expected under a Poisson distribution [@bolker2008; @link.barker_2010]. The R function for generating negative binomial random variates (`rnbinom()`) can be parameterized in different ways; here I use the "ecological" parameterization recommended by @bolker2008. This uses the mean (termed $\mu$) but not the variance, instead using an overdispersion\index{overdispersion} parameter k. Lower values of k result in a more heterogeneous distribution, and in ecological settings, k is often less than the mean [@bolker2008]. The distribution approximates a Poisson when k is large (e.g., >10*$\mu$). The code includes calculation of the variance as a function of mu and k [@bolker2008]. Alternatively, the mean and variance (V) can be specified and used to solve for k: $k = \mu^2/(V-\mu)$. Note that overdispersion\index{overdispersion} implies that the variance is greater than the mean, so that the denominator is greater than zero.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -276,14 +278,14 @@ Reps <- 30 # Replicate draws from a uniform distribution
 p <- runif(n=Reps)# Default range of 0-1. Can specify using min, max
 hist(p, breaks=5, main="")
 ```
-Try running the code several times and note the variation in pattern from one simulation run to the next. I use the breaks=5 option in the `hist()` function so that the histogram bin intervals are stable among runs. Specifying a null character string for "main=" prevents the plot from including a main title. Next, increase the sample size and note the increased smoothness of the observed distribution. What would be the expected mean of the distribution? Estimate the mean and compare the observed and expected value among runs. 
+Try running the code several times and note the variation in pattern from one simulation run to the next. I use the breaks=5 option in the `hist()` function, so that the histogram bin intervals are stable among runs. Specifying a null character string for "main=" prevents the plot from including a main title. Next, increase the sample size and note the increased smoothness of the observed distribution. What would be the expected mean of the distribution? Estimate the mean and compare the observed and expected value among runs. 
 
 As noted above, the `runif()` function allows for a uniform distribution using any lower and upper bounds. For example, we might simulate uncertainty about an exploitation rate\index{exploitation rate} (fraction of the population that is harvested) by allowing randomly drawn values in a specified interval, for example, `runif(n=Reps, min=0.3, max=0.4)`. The `runif()` function is not constrained to positive values; for example, it could be used with bounds -0.5 and 0.5 to simulate uncertainty about a parameter that is close to 0 but can be positive or negative. The chapters that follow will include many examples where a uniform distribution is relevant for fisheries modeling.
 
 ### Beta  {#BetaDist}
 The beta distribution\index{beta distribution} has a lower bound of 0 and an upper bound of 1, so it is useful for modeling parameters with those bounds (i.e., probabilities). A fisheries model might use a beta distribution\index{beta distribution} to simulate variation in a survival rate\index{survival rate} or the probability of a tag being returned. The uniform distribution\index{uniform distribution} (Section \@ref(Uniform)) can also be used for probabilities, but only for the case where all values are equally likely. The beta distribution\index{beta distribution} is more flexible and can not only be flat but also u-shaped, bell-shaped, or left- or right-skewed. Figure \@ref(fig:Beta) shows sample distributions for shape parameters $\alpha$=1 and $\beta$=0.5, 1, and 5.
 
-```{r, Beta, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Histograms for 200 random draws from a beta distribution, with alpha=1 and beta=0.5  (top), 1 (middle), and 5 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
+```{r, Beta, echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide', fig.cap='Histograms for 200 random draws from a beta distribution, with $\\alpha$=1 and $\\beta$=0.5  (top), 1 (middle), and 5 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
 
 rm(list=ls()) # Clear Environment
 par(mar = c(4, 4, 1, .1))
@@ -332,7 +334,7 @@ hist(Len, main="")
 Run the code a few times to look at the variation in shape and bounds at a relatively small sample size. Next, increase the sample size and determine through trial and error the smallest sample size that provides a relatively smooth bell-curve shape.  Estimate the mean and standard deviation (function `sd()`) and compare the observed and true values.
 
 ### Lognormal {#LognormalDist}
-The lognormal distribution\index{lognormal distribution} (bounds 0, $\infty$) is useful in ecological settings because it excludes negative values and allows for a long upper tail.  A classic fisheries example of a lognormal distribution is annual recruitment\index{recruitment} for marine fish species [@hilborn.walters_1992]. Most years result in low recruitment but there are occasional extreme values when environmental conditions are right.
+The lognormal distribution\index{lognormal distribution} (bounds 0, $\infty$) is useful in ecological settings, because it excludes negative values and allows for a long upper tail.  A classic fisheries example of a lognormal distribution is annual recruitment\index{recruitment} for marine fish species [@hilborn.walters_1992]. Most years result in low recruitment, but there are occasional extreme values when environmental conditions are right.
 
 We begin with simulation code:
 ```{r eval=FALSE}
@@ -354,7 +356,7 @@ var(y)
 
 The `rlnorm()` function generates random lognormal values, using an arbitrarily chosen mean and standard deviation specified in natural log-scale. Those values can be used to calculate the expected mean and variance in arithmetic scale. The `abline()` function adds to the histogram a vertical (v=) line for the expected arithmetic-scale mean (Figure \@ref(fig:Lognormal)). The line type is specified as dotted (lty=3) and weight 3 (lwd=3); other options including line color can be found in the Help window. Compare the estimates of arithmetic-scale mean and variance for your (relatively large) sample of lognormal random variates to the expected values (visible in the Environment window).
 
-```{r Lognormal, fig.cap='Histogram for 200 lognormally-distributed values, with ln-scale mean of 0 and variance of 0.5. Dotted vertical line denotes expected mean.', out.width='90%'}
+```{r Lognormal, fig.cap='Histogram for 200 lognormally distributed values, with ln-scale mean of 0 and variance of 0.5. Dotted vertical line denotes expected mean.', out.width='90%'}
 #| echo: false
 rm(list=ls()) # Clear Environment
 par(mar = c(4, 4, 1, .1))
@@ -371,9 +373,9 @@ abline(v=Exp.mean, lty=3, lwd=3)
 ```
 
 ### Gamma {#GammaDist}
-The gamma distribution\index{gamma distribution} is similar to the lognormal in that has a lower bound of 0 and an upper bound of $\infty$. Thus it also excludes negative values and allows for a long upper tail. This distribution is often used to simulate waiting times (how long until some number of events has occurred, based on a specified average time between events). We consider it here simply because it can take on a variety of shapes depending on its parameters [@bolker2008]. Figure \@ref(fig:Gamma) shows sample distributions for shape parameter $\alpha$=3 and scale or spread parameter $\beta$=1 and 3.
+The gamma distribution\index{gamma distribution} is similar to the lognormal in that it has a lower bound of 0 and an upper bound of $\infty$. Thus it also excludes negative values and allows for a long upper tail. This distribution is often used to simulate waiting times (how long until some number of events has occurred, based on a specified average time between events). We consider it here simply because it can take on a variety of shapes depending on its parameters [@bolker2008]. Figure \@ref(fig:Gamma) shows sample distributions for shape parameter $\alpha$=3 and scale or spread parameter $\beta$=1 and 3.
 
-```{r, Gamma, fig.cap='Histogram for 200 gamma-distributed values, with alpha=3 and beta=1  (top) and 3 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
+```{r, Gamma, fig.cap='Histogram for 200 gamma-distributed values, with $\\alpha$=3 and $\\beta$=1  (top) and 3 (bottom).',fig.show="hold", fig.height=3, out.width="90%"}
 #| echo: false
 rm(list=ls()) # Clear Environment
 set.seed(12345) # Ensure that book will have a reasonable result
@@ -411,12 +413,12 @@ A sample size of 200 replicates produces a relatively smooth pattern for the dis
 
 ## Exercises
 
-1. Use a physical process (i.e., not simulated) to generate twenty Bernoulli observations with probability of success 0.25.  Include in your code comments describing how you obtained the data. Produce a summary plot of the total number of 0s and 1s. How does your observed number of successes compare to what you would expect?
+1. Use a physical process (i.e., not simulated) to generate 20 Bernoulli observations with probability of success 0.25.  Include in your code comments describing how you obtained the data. Produce a summary plot of the total number of 0s and 1s. How does your observed number of successes compare to what you would expect?
 
 2. Use a physical process to generate ten binomially distributed observations, with a trial size of at least four. What is the probability of success and the expected number of successes per trial? Produce a histogram showing the frequencies for different numbers of success per trial.
 
-3. Use a physical process to generate 10 multinomial trials with at least three possible outcomes. Describe in your code comments the physical process for obtaining the data and include a plot of the frequencies. How do the frequencies compare to what you would expect?
+3. Use a physical process to generate ten multinomial trials with at least three possible outcomes. Describe in your code comments the physical process for obtaining the data and include a plot of the frequencies. How do the frequencies compare to what you would expect?
 
 4. Assume that the following vector contains trawl catches: y=c(7, 5, 1, 5, 0, 3, 8, 2, 14, 5, 0, 6, 9, 1, 2, 2, 1, 1, 0, 9, 2, 2, 4, 11, 1, 1, 7, 3, 1, 1). Based on your analysis (including plot), were these data likely generated from a Poisson or negative binomial distribution?
 
-5. Provide simulation code for generating normally-distributed length data for fish ages 1 (n.1=40, age-1 mean 30, sd 5) and 2 (n.2=25, age-2 mean=50, sd=7). Plot the combined length sample. In multiple simulations using these default values, how frequently is the length distribution visibly bimodal?
+5. Provide simulation code for generating normally distributed length data for fish ages 1 (n.1=40, age-1 mean 30, sd 5) and 2 (n.2=25, age-2 mean=50, sd=7). Plot the combined length sample. In multiple simulations using these default values, how frequently is the length distribution visibly bimodal?

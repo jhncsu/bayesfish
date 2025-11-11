@@ -1,13 +1,13 @@
 \cleardoublepage 
 
 # (APPENDIX) Appendix {-}
-# Real-data examples
+# Empirical Examples
 
 The purpose of this appendix is to show, for a subset of models, the process of model fitting to real values rather than simulated data. Removing the simulation code generally shortens and simplifies the examples. I have included brief comments regarding necessary code modifications. Reported point estimates are medians, which provide a better measure of central tendency when posterior distributions are skewed [@kruschke_2021].
 
 ## Abundance: Removal {#RemovalRealData}
 
-The removal method (Section \@ref(Removal)) is used to estimate abundance in a closed study area, based on a sequence of catches. @otis.etal_1978 provided an example for whitefish (*Coregonus clupeaformis*) in Shakespeare Island Lake, based on gill netting for seven successive weeks [original data from @ricker_1958]. No changes were needed in the R or JAGS code other than replacing the simulation code with the the vector of observed catches and changing the number of removal samples.
+The removal method (Section \@ref(Removal)) is used to estimate abundance in a closed study area, based on a sequence of catches. @otis.etal_1978 provided an example for whitefish (*Coregonus clupeaformis*) in Shakespeare Island Lake, based on gill netting for 7 successive weeks [original data from @ricker_1958]. No changes were needed in the R or JAGS code other than replacing the simulation code with the vector of observed catches and changing the number of removal samples.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -62,7 +62,7 @@ print(jagsfit)
 plot(jagsfit)
 ```
 
-The analysis by @otis.etal_1978 using program CAPTURE indicated that a constant capture probability\index{capture probability} model was appropriate. Their estimate ($\hat{N}$=138.07) was similar to the median estimate I obtained using Bayesian methods (144.4). Their symmetrical 95% confidence interval (109-167) was more narrow than the 95% credible interval\index{credible interval} I obtained using Bayesian methods (121.8-225.3), due to the right-skew of the posterior distribution\index{posterior distribution} for N.est (e.g., try `hist(jagsfit$BUGSoutput$sims.list$N.est)`).
+The analysis by @otis.etal_1978 using program CAPTURE indicated that a constant capture probability\index{capture probability} model was appropriate. Their estimate ($\hat{N}$=138.07) was similar to the median estimate I obtained using Bayesian methods (144.4). Their symmetrical 95% confidence interval (109-167) was narrower than the 95% credible interval\index{credible interval} I obtained using Bayesian methods (121.8-225.3), due to the right-skew of the posterior distribution\index{posterior distribution} for N.est (e.g., try `hist(jagsfit$BUGSoutput$sims.list$N.est)`).
 
 ## Abundance: Mark-recapture {#MarkRecapRealData}
 
@@ -124,11 +124,11 @@ Results using Bayesian methods (N.est median=7569.6, 95% credible interval\index
 
 ## Survival: Age-composition {#AgeCompRealData}
 
-Section \@ref(AgeComp) showed an approach for estimating survival\index{survival rate} using age composition\index{age composition} data. Here I illustrate a different approach: a Bayesian version of a traditional catch curve analysis\index{catch curve analysis}. @quinn.deriso_1999 provided a catch curve analysis for Pacific halibut in the northeastern Pacific Ocean, using fishery catch data for the 1960 year class between ages 10 and 20 (i.e., tracking a single cohort across multiple years).
+Section \@ref(AgeComp) showed an approach for estimating survival\index{survival rate} using age-composition\index{age composition} data. Here I illustrate a different approach: a Bayesian version of a traditional catch curve analysis\index{catch curve analysis}. @quinn.deriso_1999 provided a catch curve analysis for Pacific halibut in the northeastern Pacific Ocean, using fishery catch data for the 1960 year class between ages 10 and 20 (i.e., tracking a single cohort across multiple years).
 
 Unlike the approach in Section \@ref(AgeComp), a traditional catch curve analysis\index{catch curve analysis} uses ln-transformed catches, for the following reason. The equation for population size at time t (Section \@ref(Hearn)) is $N_t = N_0 * exp(-Z*t)$. Multiplying both sides by a time-independent exploitation rate $\mu$ produces $\mu*N_t = \mu*N_0 * exp(-Z*t)$ or $C_t = \mu*N_0 * exp(-Z*t)$ [@quinn.deriso_1999]. Log-transforming that equation produces $ln(C_t) = ln(\mu * N_0) -Z*t$, which is a linear regression equation with intercept $ln(\mu*N_0)$ and slope -Z\index{instantaneous total mortality rate}. Fitting the model to log-transformed catches implies that the catch data are considered to be lognormally distributed\index{lognormal distribution} [@quinn.deriso_1999].
 
-The Bayesian code uses coded ages 1-10 rather than true ages 10-20 and fits the linear regression model using the <code>dnorm()</code> function for the likelihood. Estimated survival is obtained as $exp(-Z)$ and as always the MCMC process provides a complete characterization of that calculated parameter.
+The Bayesian code uses coded ages 1-10 rather than true ages 10-20 and fits the linear regression model using the <code>dnorm()</code> function for the likelihood. Estimated survival is obtained as $exp(-Z)$, and as always the MCMC process provides a complete characterization of that calculated parameter.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -197,11 +197,11 @@ plot(Age, lnC, ylim=y.bounds, xlab="Age", ylab="ln-Catch")
 points(Age, jagsfit$BUGSout$median$lnC.hat, type="l", col="red")
 ```
 
-@quinn.deriso_1999 reported an estimated Z of 0.409 with a 95% confidence interval of 0.359-0.459; our Bayesian median estimate was 0.412, with 95% credible interval\index{credible interval} of 0.353-0.469. @quinn.deriso_1999 estimated survival to be 0.664, with 95% confidence interval of 0.632-0.698. The Bayesian median estimate was 0.663, with 95% credible interval 0.626-0.703. This is yet another example where Bayesian results using uninformative priors\index{uninformative prior distribution} are very similar to frequentist results. The last three lines of R code show the ln-transformed catches and fitted curve. The plot is essentially identical to that shown by @quinn.deriso_1999. The ln-transformed catches are well described by the fitted curve, suggesting that the assumptions of a catch curve analysis\index{catch curve analysis} are reasonable for the period of analysis.
+@quinn.deriso_1999 reported an estimated Z of 0.409 with a 95% confidence interval of 0.359-0.459; our Bayesian median estimate was 0.412, with 95% credible interval\index{credible interval} of 0.353-0.469. @quinn.deriso_1999 estimated survival to be 0.664, with 95% confidence interval of 0.632-0.698. The Bayesian median estimate was 0.663, with 95% credible interval of 0.626-0.703. This is yet another example where Bayesian results using uninformative priors\index{uninformative prior distribution} are very similar to frequentist results. The last three lines of R code show the ln-transformed catches and fitted curve. The plot is essentially identical to that shown by @quinn.deriso_1999. The ln-transformed catches are well described by the fitted curve, suggesting that the assumptions of a catch curve analysis\index{catch curve analysis} are reasonable for the period of analysis.
 
 ## Survival: Tag-based {#BrownieSurvivalRealData}
 
-Section \@ref(BrownieSurvival) showed an approach for estimating survival rate\index{survival rate} using a multi-period tag-return\index{tag-return} study. Here I have replaced the simulation code with a male wood duck (*Aix sponsa*) band-recovery matrix [Table 2.2, @brownie.etal1985]. The band recovery values are entered as a vector, then transformed using an upper diagonal matrix using the <code>matrix()</code> function. Variables were renamed to be more consistent with the band-recovery experiment. The main change to the R code was that banded wood ducks were released for three years (1964-1966) but bands were recovered for five years (1964-1968). This required separate variables for the number of release (RelYears) and recovery years (RecYears), unlike the 3X3 example from Section \@ref(BrownieSurvival). @brownie.etal1985 fitted a model with time-dependent survival and tag-recovery rates but here I estimated time-independent survival and tag-recovery rates for consistency with Section \@ref(BrownieSurvival). The only changes required for the JAGS code were because of the different number of years for release and recovery.
+Section \@ref(BrownieSurvival) showed an approach for estimating survival rate\index{survival rate} using a multi-period tag-return\index{tag-return} study. Here I have replaced the simulation code with a male wood duck (*Aix sponsa*) band-recovery matrix [@brownie.etal_1985; table 2.2]. The band recovery values are entered as a vector, then transformed using an upper diagonal matrix using the <code>matrix()</code> function. Variables were renamed to be more consistent with the band-recovery experiment. The main change to the R code was that banded wood ducks were released for 3 years (1964-1966), but bands were recovered for 5 years (1964-1968). This required separate variables for the number of release (RelYears) and recovery years (RecYears), unlike the 3X3 example from Section \@ref(BrownieSurvival). @brownie.etal_1985 fitted a model with time-dependent survival and tag-recovery rates, but here I estimated time-independent survival and tag-recovery rates for consistency with Section \@ref(BrownieSurvival). The only changes required for the JAGS code were because of the different number of years for release and recovery.
 
 ```{r eval=FALSE}
 rm(list=ls()) # Clear Environment
@@ -278,13 +278,13 @@ jagsfit <- jags(data=jags.data, jags.params, inits=jags.inits,
 print(jagsfit)
 plot(jagsfit)
 ```
-The estimates from the Bayesian analysis (median survival 0.66, 95% credible interval 0.62-0.71; median tag-recovery rate 0.06, 95% credible interval 0.06-0.07) were very similar to maximum-likelihood estimates (mean survival 0.64, 95% confidence interval 0.56-0.71; mean tag-recovery rate 0.06, 95% confidence interval 0.05-0.07) reported by @brownie.etal1985.
+The estimates from the Bayesian analysis (median survival 0.66, 95% credible interval 0.62-0.71; median tag-recovery rate 0.06, 95% credible interval 0.06-0.07) were very similar to maximum-likelihood estimates (mean survival 0.64, 95% confidence interval 0.56-0.71; mean tag-recovery rate 0.06, 95% confidence interval 0.05-0.07) reported by @brownie.etal_1985.
 
-## Growth: age-length {#vonBertRealData}
+## Growth: age:length {#vonBertRealData}
 
 This example data set for fitting a von Bertalanffy growth\index{von Bertalanffy growth} curve is for rougheye rockfish (*Sebastes aleutianus*). The original study was by @nelson.quinnii_1987; @quinn.deriso_1999 fitted the model using nonlinear least squares.
 
-Using real rather than simulated data usually results in simpler code, but here, the values provided by @quinn.deriso_1999 were age-specific sample sizes, averages, and standard deviations. A curve could be fitted to age-specific averages but that gives equal weight to each age, whereas age-specific sample sizes actually varied widely (range from 1 to 31). To approximate the original data set of individual fish age and length observations, I looped over the sample size by age and generated "observed" values using the <code>rnorm()</code> function. Working with individual observations retains the variation in the original length data set. Note that the "observed" data set will vary from run to run so it is helpful to run the code multiple times. The JAGS code was unchanged from the example in Section \@ref(vonBert).
+Using real rather than simulated data usually results in simpler code, but here, the values provided by @quinn.deriso_1999 were age-specific sample sizes, averages, and standard deviations. A curve could be fitted to age-specific averages, but that gives equal weight to each age, whereas age-specific sample sizes actually varied widely (range from 1 to 31). To approximate the original data set of individual fish age and length observations, I looped over the sample size by age and generated "observed" values using the <code>rnorm()</code> function. Working with individual observations retains the variation in the original length data set. Note that the "observed" data set will vary from run to run, so it is helpful to run the code multiple times. The JAGS code was unchanged from the example in Section \@ref(vonBert).
 
 ```{r eval=FALSE}
 # Fitting von Bertalanffy curve
@@ -389,15 +389,15 @@ plot(Age, Len, xlab="Age", ylab="Length (cm)")
 points(Age, Len_hat, type="l", col="red")
 ```
 
-Bayesian median estimates from one run ($L_\infty$=53.761, $k$=0.052, $t_0$=-4.470) were in reasonable agreement with the least-squares estimates reported by @quinn.deriso_1999: $L_\infty$=54.9, $k$=0.0441, and $t_0$=-4.53. The estimated variance of points about the fitted line (Var_L.est=17.910) was similar to the residual mean square reported by @quinn.deriso_1999 (17.13), suggesting that the simulation approach used here was effective in restoring the variability in individual age:length observations.
+Bayesian median estimates from one run ($L_\infty$=53.761, $k$=0.052, $t_0$=$-4.470$) were in reasonable agreement with the least-squares estimates reported by @quinn.deriso_1999: $L_\infty$=54.9, $k$=0.0441, and $t_0$=$-4.53$. The estimated variance of points about the fitted line (Var_L.est=17.910) was similar to the residual mean square of 17.13 reported by @quinn.deriso_1999, suggesting that the simulation approach used here was effective in restoring the variability in individual age:length observations.
 
 ## Recruitment: Beverton-Holt curve {#Recruit-FitRealData}
 
-Section \@ref(Recruit-Fit) used a complex age-structured simulation model to produce spawning stock and recruitment values. It is much simpler to use a real data set, as illustrated here for North Sea plaice [@ricker1975]. Spawning stock and recruitment values are paired in @ricker1975, so no time lag between indices is needed. The only changes from the R and JAGS code used in Section \@ref(Recruit-Fit) were to replace the simulation code with fixed values, remove the time lag in indices, and to use Ricker's notation for spawning stock (P) and recruitment (R).
+Section \@ref(Recruit-Fit) used a complex age-structured simulation model to produce spawning stock and recruitment values. It is much simpler to use a real data set, as illustrated here for North Sea plaice [@ricker_1975]. Spawning stock and recruitment values are paired in @ricker_1975, so no time lag between indices is needed. The only changes from the R and JAGS code used in Section \@ref(Recruit-Fit) were to replace the simulation code with fixed values, remove the time lag in indices, and to use Ricker's notation for spawning stock (P) and recruitment (R).
 
 ```{r eval=FALSE}
 # Fitting Beverton-Holt stock-recruitment curve
-# North Sea plaice. Ricker 1975 Table 11.8
+# North Sea plaice. Ricker 1975, Table 11.8
 # Units arbitrary
 
 # Adult stock biomass (P)
@@ -476,6 +476,6 @@ plot(df.xy[,1],df.xy[,2], ylab="Recruitment index",
 points(df.xy[,1], df.xy[,3], type="l")
 ```
 
-Bayesian estimates of $\alpha$ (median=0.060, 95% credible interval 0.042-0.075) and $\beta$ (0.091, 95% CrI 0.003-0.368) were similar to estimates (0.06312; 0.1606) provided by @ricker1975.
+Bayesian estimates of $\alpha$ (median=0.060, 95% credible interval 0.042-0.075) and $\beta$ (0.091, 95% credible interval 0.003-0.368) were similar to estimates (0.06312; 0.1606) provided by @ricker_1975.
 
-
+\backmatter

@@ -4,49 +4,44 @@ The top-level auxiliary file: bookdown.aux
 The style file: apalike.bst
 Database file #1: book.bib
 Database file #2: packages.bib
-Database file #3: AddRefs.bib
-Warning--there's a number but no volume in otis.etal_1978
-Warning--there's a number but no series in ricker_1958
-Warning--there's a number but no series in ricker1975
 You've used 91 entries,
             1935 wiz_defined-function locations,
-            987 strings with 19847 characters,
-and the built_in function-call counts, 35646 in all, are:
-= -- 3521
-> -- 1464
-< -- 58
-+ -- 508
-- -- 486
-* -- 3166
+            980 strings with 19853 characters,
+and the built_in function-call counts, 35619 in all, are:
+= -- 3507
+> -- 1479
+< -- 59
++ -- 515
+- -- 492
+* -- 3158
 := -- 6264
-add.period$ -- 275
+add.period$ -- 273
 call.type$ -- 91
-change.case$ -- 687
-chr.to.int$ -- 91
-cite$ -- 94
-duplicate$ -- 1263
-empty$ -- 2475
-format.name$ -- 639
-if$ -- 6838
-int.to.chr$ -- 1
+change.case$ -- 688
+chr.to.int$ -- 90
+cite$ -- 91
+duplicate$ -- 1261
+empty$ -- 2464
+format.name$ -- 647
+if$ -- 6822
+int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 106
+missing$ -- 103
 newline$ -- 458
 num.names$ -- 273
-pop$ -- 543
+pop$ -- 547
 preamble$ -- 1
-purify$ -- 698
+purify$ -- 701
 quote$ -- 0
-skip$ -- 935
+skip$ -- 942
 stack$ -- 0
-substring$ -- 2607
-swap$ -- 96
+substring$ -- 2591
+swap$ -- 98
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 504
-warning$ -- 3
-while$ -- 303
+type$ -- 506
+warning$ -- 0
+while$ -- 301
 width$ -- 0
-write$ -- 1195
-(There were 3 warnings)
+write$ -- 1192

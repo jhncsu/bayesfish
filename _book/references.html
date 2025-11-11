@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>References | A Bayesian Introduction to Fish Population Analysis</title>
+  <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="References | A Bayesian Introduction to Fish Population Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="References | A Bayesian Introduction to Fish Population Analysis" />
+  
+  <meta name="twitter:description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
+  
+
+<meta name="author" content="Joseph E. Hightower" />
+
+
+<meta name="date" content="2025-04-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="empirical-examples.html"/>
+
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian fish population analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="R-intro.html"><a href="R-intro.html"><i class="fa fa-check"></i><b>2</b> A Brief Introduction to R and RStudio</a></li>
+<li class="chapter" data-level="3" data-path="Distributions.html"><a href="Distributions.html"><i class="fa fa-check"></i><b>3</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Distributions.html"><a href="Distributions.html#Discrete"><i class="fa fa-check"></i><b>3.1</b> Discrete</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Distributions.html"><a href="Distributions.html#Bernoulli"><i class="fa fa-check"></i><b>3.1.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Distributions.html"><a href="Distributions.html#BinomialDist"><i class="fa fa-check"></i><b>3.1.2</b> Binomial</a></li>
+<li class="chapter" data-level="3.1.3" data-path="Distributions.html"><a href="Distributions.html#Multinomial"><i class="fa fa-check"></i><b>3.1.3</b> Multinomial</a></li>
+<li class="chapter" data-level="3.1.4" data-path="Distributions.html"><a href="Distributions.html#PoissonDist"><i class="fa fa-check"></i><b>3.1.4</b> Poisson</a></li>
+<li class="chapter" data-level="3.1.5" data-path="Distributions.html"><a href="Distributions.html#NegBinom"><i class="fa fa-check"></i><b>3.1.5</b> Negative binomial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Distributions.html"><a href="Distributions.html#Continuous"><i class="fa fa-check"></i><b>3.2</b> Continuous</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Distributions.html"><a href="Distributions.html#Uniform"><i class="fa fa-check"></i><b>3.2.1</b> Uniform</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Distributions.html"><a href="Distributions.html#BetaDist"><i class="fa fa-check"></i><b>3.2.2</b> Beta</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Distributions.html"><a href="Distributions.html#NormalDist"><i class="fa fa-check"></i><b>3.2.3</b> Normal</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Distributions.html"><a href="Distributions.html#LognormalDist"><i class="fa fa-check"></i><b>3.2.4</b> Lognormal</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Distributions.html"><a href="Distributions.html#GammaDist"><i class="fa fa-check"></i><b>3.2.5</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Distributions.html"><a href="Distributions.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Model-fit.html"><a href="Model-fit.html"><i class="fa fa-check"></i><b>4</b> Model Fitting</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-fit.html"><a href="Model-fit.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="Model-fit.html"><a href="Model-fit.html#Model-fit-sim"><i class="fa fa-check"></i><b>4.2</b> Using simulation</a></li>
+<li class="chapter" data-level="4.3" data-path="Model-fit.html"><a href="Model-fit.html#JAGS-model-fit"><i class="fa fa-check"></i><b>4.3</b> Using Bayesian methods</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-fit.html"><a href="Model-fit.html#FirstExampleBayesian"><i class="fa fa-check"></i><b>4.3.1</b> Example: mark-recapture</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-fit.html"><a href="Model-fit.html#Debug"><i class="fa fa-check"></i><b>4.3.2</b> Debugging code</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-fit.html"><a href="Model-fit.html#Convergence"><i class="fa fa-check"></i><b>4.3.3</b> Judging convergence</a></li>
+<li class="chapter" data-level="4.3.4" data-path="Model-fit.html"><a href="Model-fit.html#Likelihood"><i class="fa fa-check"></i><b>4.3.4</b> What is a likelihood?</a></li>
+<li class="chapter" data-level="4.3.5" data-path="Model-fit.html"><a href="Model-fit.html#Deviance"><i class="fa fa-check"></i><b>4.3.5</b> Deviance as a measure of model fit</a></li>
+<li class="chapter" data-level="4.3.6" data-path="Model-fit.html"><a href="Model-fit.html#Model-checking"><i class="fa fa-check"></i><b>4.3.6</b> Model checking</a></li>
+<li class="chapter" data-level="4.3.7" data-path="Model-fit.html"><a href="Model-fit.html#Model-selection"><i class="fa fa-check"></i><b>4.3.7</b> Model selection</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-fit.html"><a href="Model-fit.html#exercises-1"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Abundance.html"><a href="Abundance.html"><i class="fa fa-check"></i><b>5</b> Abundance</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Abundance.html"><a href="Abundance.html#Removal"><i class="fa fa-check"></i><b>5.1</b> Removal</a></li>
+<li class="chapter" data-level="5.2" data-path="Abundance.html"><a href="Abundance.html#MarkRecap"><i class="fa fa-check"></i><b>5.2</b> Mark-recapture</a></li>
+<li class="chapter" data-level="5.3" data-path="Abundance.html"><a href="Abundance.html#NMix"><i class="fa fa-check"></i><b>5.3</b> Binomial-mixture</a></li>
+<li class="chapter" data-level="5.4" data-path="Abundance.html"><a href="Abundance.html#exercises-2"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Survival.html"><a href="Survival.html"><i class="fa fa-check"></i><b>6</b> Survival</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="Survival.html"><a href="Survival.html#AgeComp"><i class="fa fa-check"></i><b>6.1</b> Age-composition</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="Survival.html"><a href="Survival.html#CC_Selectivity"><i class="fa fa-check"></i><b>6.1.1</b> Accounting for gear selectivity</a></li>
+<li class="chapter" data-level="6.1.2" data-path="Survival.html"><a href="Survival.html#Cohort"><i class="fa fa-check"></i><b>6.1.2</b> Cohort model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="Survival.html"><a href="Survival.html#TelemetryBased"><i class="fa fa-check"></i><b>6.2</b> Telemetry-based</a></li>
+<li class="chapter" data-level="6.3" data-path="Survival.html"><a href="Survival.html#BrownieSurvival"><i class="fa fa-check"></i><b>6.3</b> Tag-based</a></li>
+<li class="chapter" data-level="6.4" data-path="Survival.html"><a href="Survival.html#exercises-3"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Mortality.html"><a href="Mortality.html"><i class="fa fa-check"></i><b>7</b> Mortality Components</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Mortality.html"><a href="Mortality.html#ExpRate"><i class="fa fa-check"></i><b>7.1</b> Exploitation rate</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Mortality.html"><a href="Mortality.html#InformativePriors"><i class="fa fa-check"></i><b>7.1.1</b> Informative prior distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Mortality.html"><a href="Mortality.html#Hearn"><i class="fa fa-check"></i><b>7.2</b> Completed tagging study</a></li>
+<li class="chapter" data-level="7.3" data-path="Mortality.html"><a href="Mortality.html#BrownieFandM"><i class="fa fa-check"></i><b>7.3</b> Multi-year tagging study</a></li>
+<li class="chapter" data-level="7.4" data-path="Mortality.html"><a href="Mortality.html#TelemetryFandM"><i class="fa fa-check"></i><b>7.4</b> Telemetry-based</a></li>
+<li class="chapter" data-level="7.5" data-path="Mortality.html"><a href="Mortality.html#exercises-4"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Growth.html"><a href="Growth.html"><i class="fa fa-check"></i><b>8</b> Growth</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Growth.html"><a href="Growth.html#vonBert"><i class="fa fa-check"></i><b>8.1</b> Growth in length</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Growth.html"><a href="Growth.html#Otolith"><i class="fa fa-check"></i><b>8.1.1</b> Age:length</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Growth.html"><a href="Growth.html#GrowthInc"><i class="fa fa-check"></i><b>8.1.2</b> Using tagging data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Growth.html"><a href="Growth.html#LnWgt"><i class="fa fa-check"></i><b>8.2</b> Growth in weight</a></li>
+<li class="chapter" data-level="8.3" data-path="Growth.html"><a href="Growth.html#exercises-5"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Recruit.html"><a href="Recruit.html"><i class="fa fa-check"></i><b>9</b> Recruitment</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Recruit.html"><a href="Recruit.html#Recruit-Fit"><i class="fa fa-check"></i><b>9.1</b> Fitting a stock-recruitment curve</a></li>
+<li class="chapter" data-level="9.2" data-path="Recruit.html"><a href="Recruit.html#Recruit-DIC"><i class="fa fa-check"></i><b>9.2</b> Does spawning stock size affect recruitment?</a></li>
+<li class="chapter" data-level="9.3" data-path="Recruit.html"><a href="Recruit.html#exercises-6"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="PopModels.html"><a href="PopModels.html"><i class="fa fa-check"></i><b>10</b> Integrated Population Models</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="PopModels.html"><a href="PopModels.html#TwoAge"><i class="fa fa-check"></i><b>10.1</b> Two-age model</a></li>
+<li class="chapter" data-level="10.2" data-path="PopModels.html"><a href="PopModels.html#CAGEAN"><i class="fa fa-check"></i><b>10.2</b> Full age-structured model</a></li>
+<li class="chapter" data-level="10.3" data-path="PopModels.html"><a href="PopModels.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="FinalThoughts.html"><a href="FinalThoughts.html"><i class="fa fa-check"></i><b>11</b> Final Thoughts</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="empirical-examples.html"><a href="empirical-examples.html"><i class="fa fa-check"></i><b>A</b> Empirical Examples</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="empirical-examples.html"><a href="empirical-examples.html#RemovalRealData"><i class="fa fa-check"></i><b>A.1</b> Abundance: Removal</a></li>
+<li class="chapter" data-level="A.2" data-path="empirical-examples.html"><a href="empirical-examples.html#MarkRecapRealData"><i class="fa fa-check"></i><b>A.2</b> Abundance: Mark-recapture</a></li>
+<li class="chapter" data-level="A.3" data-path="empirical-examples.html"><a href="empirical-examples.html#AgeCompRealData"><i class="fa fa-check"></i><b>A.3</b> Survival: Age-composition</a></li>
+<li class="chapter" data-level="A.4" data-path="empirical-examples.html"><a href="empirical-examples.html#BrownieSurvivalRealData"><i class="fa fa-check"></i><b>A.4</b> Survival: Tag-based</a></li>
+<li class="chapter" data-level="A.5" data-path="empirical-examples.html"><a href="empirical-examples.html#vonBertRealData"><i class="fa fa-check"></i><b>A.5</b> Growth: age:length</a></li>
+<li class="chapter" data-level="A.6" data-path="empirical-examples.html"><a href="empirical-examples.html#Recruit-FitRealData"><i class="fa fa-check"></i><b>A.6</b> Recruitment: Beverton-Holt curve</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Introduction to Fish Population Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="references" class="section level1 unnumbered hasAnchor">
+<h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Allen, M. S. 1997. <span>“Effects of Variable Recruitment on Catch-Curve Analysis for Crappie Populations.”</span> <em>North American Journal of Fisheries Management</em> 17 (1): 202–5. <a href="https://doi.org/10.1577/1548-8675(1997)017&lt;0202:EOVROC&gt;2.3.CO;2">https://doi.org/10.1577/1548-8675(1997)017&lt;0202:EOVROC&gt;2.3.CO;2</a>.
+</div>
+<div class="csl-entry">
+Banner, Katharine M., Kathryn M. Irvine, and Thomas J. Rodhouse. 2020. <span>“The Use of <span>Bayesian</span> Priors in <span>Ecology</span>: <span>The</span> Good, the Bad and the Not Great.”</span> <em>Methods in Ecology and Evolution</em> 11 (8): 882–89. <a href="https://doi.org/10.1111/2041-210X.13407">https://doi.org/10.1111/2041-210X.13407</a>.
+</div>
+<div class="csl-entry">
+Beverton, Raymond J. H., and Sidney J. Holt. 1993. <em>On the <span>Dynamics</span> of <span>Exploited Fish Populations</span></em>. Dordrecht: Springer Netherlands. <a href="https://doi.org/10.1007/978-94-011-2106-4">https://doi.org/10.1007/978-94-011-2106-4</a>.
+</div>
+<div class="csl-entry">
+Bolker, Benjamin M. 2008. <em>Ecological <span>Models</span> and <span>Data</span> in <span>R</span></em>. 1st ed. Princeton, New Jersey: Princeton University Press.
+</div>
+<div class="csl-entry">
+Brooks, Elizabeth N., and Jonathan J. Deroba. 2015. <span>“When <span>‘Data’</span> Are Not Data: The Pitfalls of Post Hoc Analyses That Use Stock Assessment Model Output.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 72 (4): 634–41. <a href="https://doi.org/10.1139/cjfas-2014-0231">https://doi.org/10.1139/cjfas-2014-0231</a>.
+</div>
+<div class="csl-entry">
+Brooks, Stephen P., and Andrew Gelman. 1998. <span>“General Methods for Monitoring Convergence of Iterative Simulations.”</span> <em>Journal of Computational and Graphical Statistics</em> 7 (4): 434–55. <a href="https://doi.org/10.1080/10618600.1998.10474787">https://doi.org/10.1080/10618600.1998.10474787</a>.
+</div>
+<div class="csl-entry">
+Brownie, Cavell, D. R. Anderson, K. P. Burnham, and D. S. Robson. 1985. <span>“Statistical Inference from Band Recovery Data: A Handbook.”</span> Federal {{Government Series}} 131. Washington, D.C.: <span>U.S. Fish and Wildlife</span>.
+</div>
+<div class="csl-entry">
+Bryant, Mason D. 2000. <span>“Estimating Fish Populations by Removal Methods with Minnow Traps in Southeast <span>Alaska</span> Streams.”</span> <em>North American Journal of Fisheries Management</em> 20 (4): 923–30. <a href="https://doi.org/10.1577/1548-8675(2000)020&lt;0923:EFPBRM&gt;2.0.CO;2">https://doi.org/10.1577/1548-8675(2000)020&lt;0923:EFPBRM&gt;2.0.CO;2</a>.
+</div>
+<div class="csl-entry">
+Burnham, Kenneth P., and David R. Anderson. 1998. <em>Model <span>Selection</span> and <span>Inference</span></em>. New York, NY: Springer. <a href="https://doi.org/10.1007/978-1-4757-2917-7">https://doi.org/10.1007/978-1-4757-2917-7</a>.
+</div>
+<div class="csl-entry">
+Campana, S. E. 2001. <span>“Accuracy, Precision and Quality Control in Age Determination, Including a Review of the Use and Abuse of Age Validation Methods.”</span> <em>Journal of Fish Biology</em> 59 (2): 197–242. <a href="https://doi.org/10.1111/j.1095-8649.2001.tb00127.x">https://doi.org/10.1111/j.1095-8649.2001.tb00127.x</a>.
+</div>
+<div class="csl-entry">
+Chapman, D. G. 1951. <em>Some Properties of the Hypergeometric Distribution with Applications to Zoological Sample Censuses</em>. University of California Press.
+</div>
+<div class="csl-entry">
+Conn, Paul B., Duane R. Diefenbach, Jeffrey L. Laake, Mark A. Ternent, and Gary C. White. 2008. <span>“Bayesian Analysis of Wildlife Age-at-Harvest Data.”</span> <em>Biometrics</em> 64 (4): 1170–77. <a href="https://doi.org/10.1111/j.1541-0420.2008.00987.x">https://doi.org/10.1111/j.1541-0420.2008.00987.x</a>.
+</div>
+<div class="csl-entry">
+Conn, Paul B., Devin S. Johnson, Perry J. Williams, Sharon R. Melin, and Mevin B. Hooten. 2018. <span>“A Guide to <span>Bayesian</span> Model Checking for Ecologists.”</span> <em>Ecological Monographs</em> 88 (4): 526–42. <a href="https://doi.org/10.1002/ecm.1314">https://doi.org/10.1002/ecm.1314</a>.
+</div>
+<div class="csl-entry">
+de Valpine, Perry, Daniel Turek, Christopher J. Paciorek, Clifford Anderson-Bergman, Duncan Temple Lang, and Rastislav Bodik. 2017. <span>“Programming with Models: Writing Statistical Algorithms for General Model Structures with <span>NIMBLE</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (2): 403–13. <a href="https://doi.org/10.1080/10618600.2016.1172487">https://doi.org/10.1080/10618600.2016.1172487</a>.
+</div>
+<div class="csl-entry">
+Deriso, R. B., T. J. Quinn II, and P. R. Neal. 1985. <span>“Catch-Age Analysis with Auxiliary Information.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 42 (4): 815–24. <a href="https://doi.org/10.1139/f85-104">https://doi.org/10.1139/f85-104</a>.
+</div>
+<div class="csl-entry">
+Doll, Jason C., and Stephen J. Jacquemin. 2018. <span>“Introduction to <span>Bayesian</span> Modeling and Inference for Fisheries Scientists.”</span> <em>Fisheries</em> 43 (3): 152–61. <a href="https://doi.org/10.1002/fsh.10038">https://doi.org/10.1002/fsh.10038</a>.
+</div>
+<div class="csl-entry">
+———. 2019. <span>“Bayesian Model Selection in Fisheries Management and Ecology.”</span> <em>Journal of Fish and Wildlife Management</em> 10 (2): 691–707. <a href="https://doi.org/10.3996/042019-JFWM-024">https://doi.org/10.3996/042019-JFWM-024</a>.
+</div>
+<div class="csl-entry">
+Doll, Jason C., Chris J. Wood, David W. Goodfred, and Jacob M. Rash. 2021. <span>“Incorporating Batch Mark–Recapture Data into an Integrated Population Model of Brown Trout.”</span> <em>North American Journal of Fisheries Management</em> 41 (5): 1390–1407. <a href="https://doi.org/10.1002/nafm.10650">https://doi.org/10.1002/nafm.10650</a>.
+</div>
+<div class="csl-entry">
+Dorazio, Robert M. 2016. <span>“Bayesian Data Analysis in Population Ecology: Motivations, Methods, and Benefits.”</span> <em>Population Ecology</em> 58 (1): 31–44. <a href="https://doi.org/10.1007/s10144-015-0503-4">https://doi.org/10.1007/s10144-015-0503-4</a>.
+</div>
+<div class="csl-entry">
+Efron, Bradley, and R. J. Tibshirani. 1993. <em>An <span>Introduction</span> to the <span>Bootstrap</span></em>. 1st ed. Boca Raton, Florida: Chapman &amp; Hall/CRC.
+</div>
+<div class="csl-entry">
+Ellison, Aaron M. 2004. <span>“Bayesian Inference in Ecology.”</span> <em>Ecology Letters</em> 7 (6): 509–20. <a href="https://doi.org/10.1111/j.1461-0248.2004.00603.x">https://doi.org/10.1111/j.1461-0248.2004.00603.x</a>.
+</div>
+<div class="csl-entry">
+Fielder, David G., and James R. Bence. 2014. <span>“Integration of Auxiliary Information in Statistical Catch-at-Age (<span>SCA</span>) Analysis of the <span>Saginaw Bay</span> Stock of Walleye in <span>Lake Huron</span>.”</span> <em>North American Journal of Fisheries Management</em> 34 (5): 970–87. <a href="https://doi.org/10.1080/02755947.2014.938141">https://doi.org/10.1080/02755947.2014.938141</a>.
+</div>
+<div class="csl-entry">
+Flowers, H. Jared, and Joseph E. Hightower. 2013. <span>“A Novel Approach to Surveying Sturgeon Using Side-Scan Sonar and Occupancy Modeling.”</span> Journal {{Article}}. <em>Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science</em> 5 (1): 211–23. <a href="https://doi.org/10.1080/19425120.2013.816396">https://doi.org/10.1080/19425120.2013.816396</a>.
+</div>
+<div class="csl-entry">
+———. 2015. <span>“Estimating Sturgeon Abundance in the <span>Carolinas</span> Using Side-Scan Sonar.”</span> <em>Marine and Coastal Fisheries</em> 7 (1): 1–9. <a href="https://doi.org/10.1080/19425120.2014.982334">https://doi.org/10.1080/19425120.2014.982334</a>.
+</div>
+<div class="csl-entry">
+Fournier, David A., Hans J. Skaug, Johnoel Ancheta, James Ianelli, Arni Magnusson, Mark N. Maunder, Anders Nielsen, and John Sibert. 2012. <span>“<span>AD Model Builder</span>: Using Automatic Differentiation for Statistical Inference of Highly Parameterized Complex Nonlinear Models.”</span> <em>Optimization Methods and Software</em> 27 (2): 233–49. <a href="https://doi.org/10.1080/10556788.2011.597854">https://doi.org/10.1080/10556788.2011.597854</a>.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, and Jennifer Hill. 2007. <em>Data <span>Analysis Using Regression</span> and <span>Multilevel</span>/<span>Hierarchical Models</span></em>. 1st ed. Cambridge: Cambridge University Press.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, Jessica Hwang, and Aki Vehtari. 2014. <span>“Understanding Predictive Information Criteria for <span>Bayesian</span> Models.”</span> <em>Statistics and Computing</em> 24 (6): 997–1016. <a href="https://doi.org/10.1007/s11222-013-9416-2">https://doi.org/10.1007/s11222-013-9416-2</a>.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, Daniel Lee, and Jiqiang Guo. 2015. <span>“Stan: <span>A</span> Probabilistic Programming Language for <span>Bayesian</span> Inference and Optimization.”</span> <em>Journal of Educational and Behavioral Statistics</em> 40 (5): 530–43. <a href="https://www.jstor.org/stable/43966398">https://www.jstor.org/stable/43966398</a>.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, and Donald B. Rubin. 1992. <span>“Inference from Iterative Simulation Using Multiple Sequences.”</span> <em>Statistical Science</em> 7 (January): 457–72. <a href="https://doi.org/10.1214/ss/1177011136">https://doi.org/10.1214/ss/1177011136</a>.
+</div>
+<div class="csl-entry">
+Hayes, D B, and JKT Brodziack. 1997. <span>“Reply: <span>Efficiency</span> and Bias of Estimators and Sampling Designs for Determining Lengthweight Relationships of Fish.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 54 (3): 744–45. <a href="https://doi.org/10.1139/f96-299">https://doi.org/10.1139/f96-299</a>.
+</div>
+<div class="csl-entry">
+Hearn, William S., John M. Hoenig, Kenneth H. Pollock, and Daniel A. Hepworth. 2003. <span>“Tag Reporting Rate Estimation: 3. <span>Use</span> of Planted Tags in One Component of a Multiple-Component Fishery.”</span> <em>North American Journal of Fisheries Management</em> 23 (1): 66–77. <a href="https://doi.org/10.1577/1548-8675(2003)023&lt;0066:TRREUO&gt;2.0.CO;2">https://doi.org/10.1577/1548-8675(2003)023&lt;0066:TRREUO&gt;2.0.CO;2</a>.
+</div>
+<div class="csl-entry">
+Hearn, William S., Ronald L. Sandland, and John Hampton. 1987. <span>“Robust Estimation of the Natural Mortality Rate in a Completed Tagging Experiment with Variable Fishing Intensity.”</span> <em>ICES Journal of Marine Science</em> 43 (2): 107–17. <a href="https://doi.org/10.1093/icesjms/43.2.107">https://doi.org/10.1093/icesjms/43.2.107</a>.
+</div>
+<div class="csl-entry">
+Hewitt, David A., Eric C. Janney, Brian S. Hayes, and Rip S. Shively. 2010. <span>“<span class="nocase">Improving inferences from fisheries capture-recapture studies through remote detection of PIT tags</span>.”</span> <em>Fisheries</em> 35 (5): 217–31. <a href="https://doi.org/10.1577/1548-8446-35.5.217">https://doi.org/10.1577/1548-8446-35.5.217</a>.
+</div>
+<div class="csl-entry">
+Hightower, Joseph E., and Julianne E. Harris. 2017. <span>“Estimating Fish Mortality Rates Using Telemetry and Multistate Models.”</span> <em>Fisheries</em> 42 (4): 210–19. <a href="https://doi.org/10.1080/03632415.2017.1276347">https://doi.org/10.1080/03632415.2017.1276347</a>.
+</div>
+<div class="csl-entry">
+Hightower, Joseph E., Michael Loeffler, William C. Post, and Douglas L. Peterson. 2015. <span>“Estimated Survival of Subadult and Adult <span>Atlantic</span> Sturgeon in Four River Basins in the Southeastern <span>United States</span>.”</span> <em>Marine and Coastal Fisheries</em> 7 (1): 514–22. <a href="https://doi.org/10.1080/19425120.2015.1088491">https://doi.org/10.1080/19425120.2015.1088491</a>.
+</div>
+<div class="csl-entry">
+Hilborn, Ray, and Carl J. Walters. 1992. <em>Quantitative <span>Fisheries Stock Assessment</span></em>. Boston, MA: Springer US. <a href="https://doi.org/10.1007/978-1-4615-3598-0">https://doi.org/10.1007/978-1-4615-3598-0</a>.
+</div>
+<div class="csl-entry">
+Hooten, M. B., and N. T. Hobbs. 2015. <span>“A Guide to <span>Bayesian</span> Model Selection for Ecologists.”</span> <em>Ecological Monographs</em> 85 (1): 3–28. <a href="https://doi.org/10.1890/14-0661.1">https://doi.org/10.1890/14-0661.1</a>.
+</div>
+<div class="csl-entry">
+Jiang, Honghua, Kenneth H. Pollock, Cavell Brownie, John M. Hoenig, Robert J. Latour, Brian K. Wells, and Joseph E. Hightower. 2007. <span>“Tag Return Models Allowing for Harvest and Catch and Release: <span>Evidence</span> of Environmental and Management Impacts on Striped Bass Fishing and Natural Mortality Rates.”</span> <em>North American Journal of Fisheries Management</em> 27 (2): 387–96. <a href="https://doi.org/10.1577/M06-089.1">https://doi.org/10.1577/M06-089.1</a>.
+</div>
+<div class="csl-entry">
+Johnson, Heather E., L. Scott Mills, John D. Wehausen, and Thomas R. Stephenson. 2010. <span>“Combining Ground Count, Telemetry, and Mark–Resight Data to Infer Population Dynamics in an Endangered Species.”</span> <em>Journal of Applied Ecology</em> 47 (5): 1083–93. <a href="https://doi.org/10.1111/j.1365-2664.2010.01846.x">https://doi.org/10.1111/j.1365-2664.2010.01846.x</a>.
+</div>
+<div class="csl-entry">
+Kéry, Marc. 2010. <em>Introduction to <span>WinBUGS</span> for <span>Ecologists</span>: <span>Bayesian</span> Approach to Regression, <span>ANOVA</span>, Mixed Models and Related Analyses</em>. 1st ed. Amsterdam: Academic Press.
+</div>
+<div class="csl-entry">
+Kéry, Marc, and Kenneth Kellner. 2024. <em>Applied <span>Statistical Modelling</span> for <span>Ecologists</span></em>. 1st ed. Amsterdam: Elsevier.
+</div>
+<div class="csl-entry">
+Kéry, Marc, and Michael Schaub. 2012. <em>Bayesian <span>Population Analysis</span> Using <span>WinBUGS</span>: <span>A Hierarchical Perspective</span></em>. 1st ed. Amsterdam: Academic Press.
+</div>
+<div class="csl-entry">
+Kruschke, John K. 2021. <span>“Bayesian <span>Analysis Reporting Guidelines</span>.”</span> <em>Nature Human Behaviour</em> 5 (10): 1282–91. <a href="https://doi.org/10.1038/s41562-021-01177-7">https://doi.org/10.1038/s41562-021-01177-7</a>.
+</div>
+<div class="csl-entry">
+Law, Averill M., and W. David Kelton. 1982. <em>Simulation <span>Modeling</span> and <span>Analysis</span></em>. New York, NY: McGraw-Hill.
+</div>
+<div class="csl-entry">
+Lemoine, Nathan P. 2019. <span>“Moving Beyond Noninformative Priors: Why and How to Choose Weakly Informative Priors in <span>Bayesian</span> Analyses.”</span> <em>Oikos</em> 128 (7): 912–28. <a href="https://doi.org/10.1111/oik.05985">https://doi.org/10.1111/oik.05985</a>.
+</div>
+<div class="csl-entry">
+Link, William A., and Richard J. Barker. 2010. <em>Bayesian <span>Inference</span>: <span>With Ecological Applications</span></em>. 1st ed. London: Academic Press.
+</div>
+<div class="csl-entry">
+Link, William A., Emmanuelle Cam, James D. Nichols, and Evan G. Cooch. 2002. <span>“Of Bugs and Birds: <span>Markov Chain Monte Carlo</span> for Hierarchical Modeling in Wildlife Research.”</span> <em>The Journal of Wildlife Management</em> 66 (2): 277–91. <a href="https://doi.org/10.2307/3803160">https://doi.org/10.2307/3803160</a>.
+</div>
+<div class="csl-entry">
+Link, William A., and Mitchell J. Eaton. 2012. <span>“On Thinning of Chains in <span>MCMC</span>.”</span> <em>Methods in Ecology and Evolution</em> 3 (1): 112–15. <a href="https://doi.org/10.1111/j.2041-210X.2011.00131.x">https://doi.org/10.1111/j.2041-210X.2011.00131.x</a>.
+</div>
+<div class="csl-entry">
+Lorenzen, K. 1996. <span>“The Relationship Between Body Weight and Natural Mortality in Juvenile and Adult Fish: A Comparison of Natural Ecosystems and Aquaculture.”</span> <em>Journal of Fish Biology</em> 49 (4): 627–42. <a href="https://doi.org/10.1111/j.1095-8649.1996.tb00060.x">https://doi.org/10.1111/j.1095-8649.1996.tb00060.x</a>.
+</div>
+<div class="csl-entry">
+Lunn, David J., Andrew Thomas, Nicky Best, and David Spiegelhalter. 2000. <span>“<span>WinBUGS</span> - <span>A Bayesian</span> Modelling Framework: <span>Concepts</span>, Structure, and Extensibility.”</span> <em>Statistics and Computing</em> 10 (4): 325–37. <a href="https://doi.org/10.1023/A:1008929526011">https://doi.org/10.1023/A:1008929526011</a>.
+</div>
+<div class="csl-entry">
+Lunn, David, Chris Jackson, Nicky Best, Andrew Thomas, and David Spiegelhalter. 2012. <em>The <span>BUGS Book</span>: <span>A Practical Introduction</span> to <span>Bayesian Analysis</span></em>. 1st ed. Boca Raton, Florida: Chapman &amp; Hall/CRC.
+</div>
+<div class="csl-entry">
+Lunn, David, David Spiegelhalter, Andrew Thomas, and Nicky Best. 2009. <span>“The <span>BUGS</span> Project: <span>Evolution</span>, Critique and Future Directions.”</span> <em>Statistics in Medicine</em> 28 (25): 3049–67. <a href="https://doi.org/10.1002/sim.3680">https://doi.org/10.1002/sim.3680</a>.
+</div>
+<div class="csl-entry">
+Mäntyniemi, Samu, Atso Romakkaniemi, and Elja Arjas. 2005. <span>“Bayesian Removal Estimation of a Population Size Under Unequal Catchability.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 62 (February): 291–300. <a href="https://doi.org/10.1139/f04-195">https://doi.org/10.1139/f04-195</a>.
+</div>
+<div class="csl-entry">
+Maunder, Mark N., and Andre E. Punt. 2013. <span>“A Review of Integrated Analysis in Fisheries Stock Assessment.”</span> <em>Fisheries Research</em> 142 (May): 61–74. <a href="https://doi.org/10.1016/j.fishres.2012.07.025">https://doi.org/10.1016/j.fishres.2012.07.025</a>.
+</div>
+<div class="csl-entry">
+McCarthy, Michael A. 2007. <em>Bayesian <span>Methods</span> for <span>Ecology</span></em>. 1st ed. Cambridge, UK: Cambridge University Press.
+</div>
+<div class="csl-entry">
+McCarthy, Michael A., and Pip Masters. 2005. <span>“Profiting from Prior Information in <span>Bayesian</span> Analyses of Ecological Data.”</span> <em>Journal of Applied Ecology</em> 42 (6): 1012–19. <a href="https://doi.org/10.1111/j.1365-2664.2005.01101.x">https://doi.org/10.1111/j.1365-2664.2005.01101.x</a>.
+</div>
+<div class="csl-entry">
+Methot, Richard D., Jr., and Chantell R. Wetzell. 2013. <span>“Stock Synthesis: <span>A</span> Biological and Statistical Framework for Fish Stock Assessment and Fishery Management.”</span> <em>Fisheries Research</em> 142: 86–99. https://doi.org/<a href="https://doi-org.prox.lib.ncsu.edu/10.1016/j.fishres.2012.10.012">https://doi-org.prox.lib.ncsu.edu/10.1016/j.fishres.2012.10.012</a>.
+</div>
+<div class="csl-entry">
+Meyer, Renate, and Russell B. Millar. 1999. <span>“<span>BUGS</span> in <span>Bayesian</span> Stock Assessments.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 56 (6): 1078–87.
+</div>
+<div class="csl-entry">
+Millar, Russell B, and Renate Meyer. 2000. <span>“Bayesian State-Space Modeling of Age-Structured Data: Fitting a Model Is Just the Beginning.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 57 (1): 43–50. <a href="https://doi.org/10.1139/f99-169">https://doi.org/10.1139/f99-169</a>.
+</div>
+<div class="csl-entry">
+Nelson, B., and T. J. Quinn II. 1987. <span>“Population Parameters for Rougheye Rockfish (<span>Sebastes</span> Aleutianus).”</span> <em>Proceedings of the International Rockfish Symposium</em>.
+</div>
+<div class="csl-entry">
+Ogle, Derek H. 2016. <em>Introductory <span>Fisheries Analyses</span> with <span>R</span></em>. 1st ed. Boca Raton, Florida: CRC Press.
+</div>
+<div class="csl-entry">
+Otis, David L., Kenneth P. Burnham, Gary C. White, and David R. Anderson. 1978. <span>“Statistical <span>Inference</span> from <span>Capture Data</span> on <span>Closed Animal Populations</span>.”</span> <em>Wildlife Monographs</em> 62: 3–135. <a href="https://www.jstor.org/stable/3830650">https://www.jstor.org/stable/3830650</a>.
+</div>
+<div class="csl-entry">
+Plummer, M. 2003. <span>“<span>JAGS</span>: <span>A</span> Program for Analysis of <span>Bayesian</span> Graphical Models Using <span>Gibbs</span> Sampling.”</span> <em>Proceedings of the 3rd International Workshop on Distributed Statistical Computing</em>. <a href="https://doi.org/10.1023/A:1008929526011">https://doi.org/10.1023/A:1008929526011</a>.
+</div>
+<div class="csl-entry">
+Plummer, Martyn. 2024. <em>Rjags: Bayesian Graphical Models Using MCMC</em>. <a href="https://mcmc-jags.sourceforge.io">https://mcmc-jags.sourceforge.io</a>.
+</div>
+<div class="csl-entry">
+Plummer, Martyn, Nicky Best, Kate Cowles, Karen Vines, Deepayan Sarkar, Douglas Bates, Russell Almond, and Arni Magnusson. 2024. <em>Coda: Output Analysis and Diagnostics for MCMC</em>. <a href="https://CRAN.R-project.org/package=coda">https://CRAN.R-project.org/package=coda</a>.
+</div>
+<div class="csl-entry">
+Pollock, Kenneth H., John M. Hoenig, William S. Hearn, and Brian Calingaert. 2001. <span>“Tag Reporting Rate Estimation: 1. <span>An</span> Evaluation of the High-Reward Tagging Method.”</span> <em>North American Journal of Fisheries Management</em> 21 (3): 521–32. <a href="https://doi.org/10.1577/1548-8675(2001)021&lt;0521:TRREAE&gt;2.0.CO;2">https://doi.org/10.1577/1548-8675(2001)021&lt;0521:TRREAE&gt;2.0.CO;2</a>.
+</div>
+<div class="csl-entry">
+Pollock, Kenneth, and William Pine. 2007. <span>“The Design and Analysis of Field Studies to Estimate Catch-and-Release Mortality.”</span> <em>Fisheries Management and Ecology</em> 14 (April): 123–30. <a href="https://doi.org/10.1111/j.1365-2400.2007.00532.x">https://doi.org/10.1111/j.1365-2400.2007.00532.x</a>.
+</div>
+<div class="csl-entry">
+Quinn, Terrance J., and Richard B. Deriso. 1999. <em>Quantitative <span>Fish Dynamics</span></em>. Oxford, New York: Oxford University Press.
+</div>
+<div class="csl-entry">
+R Core Team. 2024. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div class="csl-entry">
+Regehr, Eric V., Nathan J. Hostetter, Ryan R. Wilson, Karyn D. Rode, Michelle St Martin, and Sarah J. Converse. 2018. <span>“Integrated Population Modeling Provides the First Empirical Estimates of Vital Rates and Abundance for Polar Bears in the <span>Chukchi Sea</span>.”</span> <em>Scientific Reports</em> 8 (November): 16780. <a href="https://doi.org/10.1038/s41598-018-34824-7">https://doi.org/10.1038/s41598-018-34824-7</a>.
+</div>
+<div class="csl-entry">
+Ricker, William Edwin. 1958. <em>Handbook of Computations for Biological Statistics of Fish Populations</em>. Vol. 119. Ottawa: Fisheries Research Board of Canada.
+</div>
+<div class="csl-entry">
+———. 1975. <em>Computation and Interpretation of Biological Statistics of Fish Populations</em>. Vol. 191. Ottawa: <span>Dept. of Fisheries and Oceans : Minister of Supply and Services Canada</span>.
+</div>
+<div class="csl-entry">
+Robson, D. S., and H. A. Regier. 1964. <span>“Sample Size in <span>Petersen</span> Mark–Recapture Experiments.”</span> <em>Transactions of the American Fisheries Society</em> 93 (3): 215–26. <a href="https://doi.org/10.1577/1548-8659(1964)93[215:SSIPME]2.0.CO;2">https://doi.org/10.1577/1548-8659(1964)93[215:SSIPME]2.0.CO;2</a>.
+</div>
+<div class="csl-entry">
+Royle, J. Andrew. 2004. <span>“N-<span>Mixture</span> Models for Estimating Population Size from Spatially Replicated Counts.”</span> <em>Biometrics</em> 60 (1): 108–15. <a href="https://doi.org/10.1111/j.0006-341X.2004.00142.x">https://doi.org/10.1111/j.0006-341X.2004.00142.x</a>.
+</div>
+<div class="csl-entry">
+———. 2008. <span>“Modeling Individual Effects in the <span>Cormack</span>–<span>Jolly</span>–<span>Seber</span> Model: <span>A</span> State–Space Formulation.”</span> <em>Biometrics</em> 64 (2): 364–70. <a href="https://doi.org/10.1111/j.1541-0420.2007.00891.x">https://doi.org/10.1111/j.1541-0420.2007.00891.x</a>.
+</div>
+<div class="csl-entry">
+Royle, J. Andrew, and Robert M. Dorazio. 2008. <em>Hierarchical Modeling and Inference in Ecology: <span>The</span> Analysis of Data from Populations, Metapopulations and Communities</em>. 1st ed. Amsterdam: Academic Press.
+</div>
+<div class="csl-entry">
+Schaub, Michael, Mark N. Maunder, Marc Kéry, James T. Thorson, Eiren K. Jacobson, and André E. Punt. 2024. <span>“Lessons to Be Learned by Comparing Integrated Fisheries Stock Assessment Models (<span>SAMs</span>) with Integrated Population Models (<span>IPMs</span>).”</span> <em>Fisheries Research</em> 272 (April): 106925. <a href="https://doi.org/10.1016/j.fishres.2023.106925">https://doi.org/10.1016/j.fishres.2023.106925</a>.
+</div>
+<div class="csl-entry">
+Scherrer, Stephen R., Donald R. Kobayashi, Kevin C. Weng, Henry Y. Okamoto, Francis G. Oishi, and Erik C. Franklin. 2021. <span>“Estimation of Growth Parameters Integrating Tag-Recapture, Length-Frequency, and Direct Aging Data Using Likelihood and <span>Bayesian</span> Methods for the Tropical Deepwater Snapper <span>Pristipomoides</span> Filamentosus in <span>Hawaii</span>.”</span> <em>Fisheries Research</em> 233 (January): 105753. <a href="https://doi.org/10.1016/j.fishres.2020.105753">https://doi.org/10.1016/j.fishres.2020.105753</a>.
+</div>
+<div class="csl-entry">
+Spiegelhalter, David J., Nicola G. Best, Bradley P. Carlin, and Angelika Van Der Linde. 2002. <span>“Bayesian Measures of Model Complexity and Fit.”</span> <em>Journal of the Royal Statistical Society. Series B, Statistical Methodology</em> 64 (4): 583–639. <a href="https://doi.org/10.1111/1467-9868.00353">https://doi.org/10.1111/1467-9868.00353</a>.
+</div>
+<div class="csl-entry">
+Štrumbelj, Erik, Alexandre Bouchard-Côté, Jukka Corander, Andrew Gelman, Håvard Rue, Lawrence Murray, Henri Pesonen, Martyn Plummer, and Aki Vehtari. 2024. <span>“Past, Present and Future of Software for <span>Bayesian</span> Inference.”</span> <em>Statistical Science</em> 39 (1): 46–61. <a href="https://doi.org/10.1214/23-STS907">https://doi.org/10.1214/23-STS907</a>.
+</div>
+<div class="csl-entry">
+Su, Yu-Sung, and Masanao Yajima. 2024. <em>R2jags: Using r to Run JAGS</em>. <a href="https://CRAN.R-project.org/package=R2jags">https://CRAN.R-project.org/package=R2jags</a>.
+</div>
+<div class="csl-entry">
+Then, Amy Y, John M Hoenig, Norman G Hall, David A Hewitt, and Handling editor: Ernesto Jardim. 2015. <span>“Evaluating the Predictive Performance of Empirical Estimators of Natural Mortality Rate Using Information on over 200 Fish Species.”</span> <em>ICES Journal of Marine Science</em> 72 (1): 82–92. <a href="https://doi.org/10.1093/icesjms/fsu136">https://doi.org/10.1093/icesjms/fsu136</a>.
+</div>
+<div class="csl-entry">
+Vetter, Ef. 1988. <span>“Estimation of Natural Mortality in Fish Stocks - a Review.”</span> <em>Fishery Bulletin</em> 86 (1): 25–43.
+</div>
+<div class="csl-entry">
+Wang, You-Gan, Mervyn R. Thomas, and Ian F. Somers. 1995. <span>“A Maximum Likelihood Approach for Estimating Growth from Tag–Recapture Data.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 52 (2): 252–59. <a href="https://doi.org/10.1139/f95-025">https://doi.org/10.1139/f95-025</a>.
+</div>
+<div class="csl-entry">
+Watanabe, Sumio. 2010. <span>“Asymptotic Equivalence of <span>Bayes</span> Cross Validation and Widely Applicable Information Criterion in Singular Learning Theory.”</span> <em>J. Mach. Learn. Res.</em> 11 (December): 3571–94.
+</div>
+<div class="csl-entry">
+White, Gary C., David R. Anderson, Kenneth P. Burnham, and David L. Otis. 1982. <span>“Capture-Recapture and Removal Methods for Sampling Closed Populations.”</span> Los Alamos National Laboratory.
+</div>
+<div class="csl-entry">
+Williams, Byron K., James D. Nichols, and Michael J. Conroy. 2002. <em>Analysis and <span>Management</span> of <span>Animal Populations</span></em>. 1st ed. Chantilly: Academic Press.
+</div>
+<div class="csl-entry">
+Winker, Henning, Felipe Carvalho, and Maia Kapur. 2018. <span>“<span>JABBA</span>: <span>Just Another Bayesian Biomass Assessment</span>.”</span> <em>Fisheries Research</em> 204 (August): 275–88. <a href="https://doi.org/10.1016/j.fishres.2018.03.010">https://doi.org/10.1016/j.fishres.2018.03.010</a>.
+</div>
+<div class="csl-entry">
+Xie, Yihui. 2025a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.
+</div>
+<div class="csl-entry">
+———. 2025b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
+</div>
+<div class="csl-entry">
+Zhang, Zane, Joanne Lessard, and Alan Campbell. 2009. <span>“Use of <span>Bayesian</span> Hierarchical Models to Estimate Northern Abalone, <span>Haliotis</span> Kamtschatkana, Growth Parameters from Tag-Recapture Data.”</span> <em>Fisheries Research</em> 95 (2): 289–95. <a href="https://doi.org/10.1016/j.fishres.2008.09.035">https://doi.org/10.1016/j.fishres.2008.09.035</a>.
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="empirical-examples.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/yihui/bookdown-crc/edit/master/99-references.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown.pdf", "bookdown.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "none"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Final Thoughts | A Bayesian Introduction to Fish Population Analysis</title>
   <meta name="description" content="This book is intended to be a bridge between traditional fisheries analytical methods and Bayesian statistics. It is a hands-on introduction to models for estimating abundance, survival, growth, and recruitment." />
-  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Final Thoughts | A Bayesian Introduction to Fish Population Analysis" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Joseph E. Hightower" />
 
 
-<meta name="date" content="2025-01-31" />
+<meta name="date" content="2025-04-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,16 +31,16 @@
   
   
 <link rel="prev" href="PopModels.html"/>
-<link rel="next" href="real-data-examples.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link rel="next" href="empirical-examples.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,11 +49,75 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -153,7 +217,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="Survival.html"><a href="Survival.html#AgeComp"><i class="fa fa-check"></i><b>6.1</b> Age-composition</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="Survival.html"><a href="Survival.html#CC_Selectivity"><i class="fa fa-check"></i><b>6.1.1</b> Accounting For Gear Selectivity</a></li>
+<li class="chapter" data-level="6.1.1" data-path="Survival.html"><a href="Survival.html#CC_Selectivity"><i class="fa fa-check"></i><b>6.1.1</b> Accounting for gear selectivity</a></li>
 <li class="chapter" data-level="6.1.2" data-path="Survival.html"><a href="Survival.html#Cohort"><i class="fa fa-check"></i><b>6.1.2</b> Cohort model</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="Survival.html"><a href="Survival.html#TelemetryBased"><i class="fa fa-check"></i><b>6.2</b> Telemetry-based</a></li>
@@ -175,7 +239,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="8.1" data-path="Growth.html"><a href="Growth.html#vonBert"><i class="fa fa-check"></i><b>8.1</b> Growth in length</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="Growth.html"><a href="Growth.html#Otolith"><i class="fa fa-check"></i><b>8.1.1</b> Age-length</a></li>
+<li class="chapter" data-level="8.1.1" data-path="Growth.html"><a href="Growth.html#Otolith"><i class="fa fa-check"></i><b>8.1.1</b> Age:length</a></li>
 <li class="chapter" data-level="8.1.2" data-path="Growth.html"><a href="Growth.html#GrowthInc"><i class="fa fa-check"></i><b>8.1.2</b> Using tagging data</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="Growth.html"><a href="Growth.html#LnWgt"><i class="fa fa-check"></i><b>8.2</b> Growth in weight</a></li>
@@ -195,14 +259,14 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="FinalThoughts.html"><a href="FinalThoughts.html"><i class="fa fa-check"></i><b>11</b> Final Thoughts</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="real-data-examples.html"><a href="real-data-examples.html"><i class="fa fa-check"></i><b>A</b> Real-data examples</a>
+<li class="chapter" data-level="A" data-path="empirical-examples.html"><a href="empirical-examples.html"><i class="fa fa-check"></i><b>A</b> Empirical Examples</a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="real-data-examples.html"><a href="real-data-examples.html#RemovalRealData"><i class="fa fa-check"></i><b>A.1</b> Abundance: Removal</a></li>
-<li class="chapter" data-level="A.2" data-path="real-data-examples.html"><a href="real-data-examples.html#MarkRecapRealData"><i class="fa fa-check"></i><b>A.2</b> Abundance: Mark-recapture</a></li>
-<li class="chapter" data-level="A.3" data-path="real-data-examples.html"><a href="real-data-examples.html#AgeCompRealData"><i class="fa fa-check"></i><b>A.3</b> Survival: Age-composition</a></li>
-<li class="chapter" data-level="A.4" data-path="real-data-examples.html"><a href="real-data-examples.html#BrownieSurvivalRealData"><i class="fa fa-check"></i><b>A.4</b> Survival: Tag-based</a></li>
-<li class="chapter" data-level="A.5" data-path="real-data-examples.html"><a href="real-data-examples.html#vonBertRealData"><i class="fa fa-check"></i><b>A.5</b> Growth: age-length</a></li>
-<li class="chapter" data-level="A.6" data-path="real-data-examples.html"><a href="real-data-examples.html#Recruit-FitRealData"><i class="fa fa-check"></i><b>A.6</b> Recruitment: Beverton-Holt curve</a></li>
+<li class="chapter" data-level="A.1" data-path="empirical-examples.html"><a href="empirical-examples.html#RemovalRealData"><i class="fa fa-check"></i><b>A.1</b> Abundance: Removal</a></li>
+<li class="chapter" data-level="A.2" data-path="empirical-examples.html"><a href="empirical-examples.html#MarkRecapRealData"><i class="fa fa-check"></i><b>A.2</b> Abundance: Mark-recapture</a></li>
+<li class="chapter" data-level="A.3" data-path="empirical-examples.html"><a href="empirical-examples.html#AgeCompRealData"><i class="fa fa-check"></i><b>A.3</b> Survival: Age-composition</a></li>
+<li class="chapter" data-level="A.4" data-path="empirical-examples.html"><a href="empirical-examples.html#BrownieSurvivalRealData"><i class="fa fa-check"></i><b>A.4</b> Survival: Tag-based</a></li>
+<li class="chapter" data-level="A.5" data-path="empirical-examples.html"><a href="empirical-examples.html#vonBertRealData"><i class="fa fa-check"></i><b>A.5</b> Growth: age:length</a></li>
+<li class="chapter" data-level="A.6" data-path="empirical-examples.html"><a href="empirical-examples.html#Recruit-FitRealData"><i class="fa fa-check"></i><b>A.6</b> Recruitment: Beverton-Holt curve</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -228,9 +292,9 @@ div.csl-indent {
 <div id="FinalThoughts" class="section level1 hasAnchor" number="11">
 <h1><span class="header-section-number">Chapter 11</span> Final Thoughts<a href="FinalThoughts.html#FinalThoughts" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>If you made it this far, a few themes should be apparent. The first is the important role of simulation in planning and conducting field research. Even writing the code to simulate a field study forces one to think about the design and parameters such as sample size that are under the investigator’s control. Once the combined code for simulation and analysis is working, runs under different settings can show what is required to obtain useful results, at least for the simulated (ideal) case. The simulations and models used in this book can also be extended to include additional sources of error, such as ageing error or non-reporting or shedding of tags. This planning approach will also require some thought about what <em>is</em> a useful result, for example, a tolerable credible interval width or relative error (<span class="math inline">\(\frac{\hat{\delta}-\delta}{\delta}\)</span>). Upfront simulation and planning improves the odds of a successful field study, or perhaps prevents a waste of time and money conducting a study that would not be address management needs.</p>
-<p>Another theme has been the value of JAGS in constructing and fitting fisheries models. In my experience, BUGS-family code is a valuable teaching tool, helping students visualize the models and how parameter estimates are obtained. Writing and running JAGS code is vastly superior to a black-box analysis from a learning perspective. From a research perspective, JAGS code can be tailored to the specific characteristics of a field study. Examples in this book hopefully have illustrated how auxiliary studies can be folded into a Bayesian analysis to improve parameter estimates. JAGS software is still popular and being actively developed but there are now a number of options for Bayesian analysis <span class="citation">(<a href="#ref-strumbelj.etal_2024">Štrumbelj et al. 2024</a>)</span>. A new book by <span class="citation">Kéry and Kellner (<a href="#ref-kery.kellner_2024">2024</a>)</span> on Bayesian model fitting using JAGS, Nimble, and Stan should be a good resource for exploring the strengths and weaknesses of those software packages. In any case, experience with JAGS should provide a strong foundation for future fisheries modeling, even if Bayesian analyses transition to next-generation software.</p>
-<p>A third theme is the importance of learning by doing. Ideally, this includes not only writing code for simulation and analysis but also carrying out the field work that builds experience and ecological intuition. Within the scope of this book, learning by doing means running and modifying code in order to understand fully how each analysis works. JAGS and especially R code can sometimes be cryptic, so I have encouraged running sections of code or even parts of a line of code in order to gain understanding. One of the best things about recent books on Bayesian analysis is the routine inclusion of code. Seeing, running and modifying the code is a great help in understanding how these models work.</p>
-<p>This is intended to be an introductory text, so some important topics were not covered or only mentioned in passing. The binomial-mixture model (Section <a href="Abundance.html#NMix">5.3</a>) is a simple example of a hierarchical model, but the approach is much broader. Hierarchical modeling can be used to separate the observation process from the underlying ecological process (latent state) that is of primary interest <span class="citation">(<a href="#ref-royle.dorazio_2008">Royle and Dorazio 2008</a>)</span>. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2012">2012</a>)</span> illustrate this approach in a hierarchical population model for ibex (<em>Capra ibex</em>). Annual counts include both process error and observation error so a model that separates the two error sources provides more biologically relevant estimates of population parameters <span class="citation">(<a href="#ref-kéry.schaub_2012">Kéry and Schaub 2012</a>)</span>. Recent publications using Bayesian hierarchical models have often been terrestrial studies <span class="citation">(e.g., <a href="#ref-johnson.etal_2010">Johnson et al. 2010</a>)</span> but the concepts and analytical methods are entirely transferrable to fisheries systems.</p>
+<p>Another theme has been the value of JAGS in constructing and fitting fisheries models. In my experience, BUGS-family code is a valuable teaching tool, helping students visualize the models and how parameter estimates are obtained. Writing and running JAGS code is vastly superior to a black-box analysis from a learning perspective. From a research perspective, JAGS code can be tailored to the specific characteristics of a field study. Examples in this book hopefully have illustrated how auxiliary studies can be folded into a Bayesian analysis to improve parameter estimates. JAGS software is still popular and being actively developed, but there are now a number of options for Bayesian analysis <span class="citation">(<a href="#ref-strumbelj.etal_2024">Štrumbelj et al. 2024</a>)</span>. A new book by <span class="citation">Kéry and Kellner (<a href="#ref-kery.kellner_2024">2024</a>)</span> on Bayesian model fitting using JAGS, Nimble, and Stan should be a good resource for exploring the strengths and weaknesses of those software packages. In any case, experience with JAGS should provide a strong foundation for future fisheries modeling, even if Bayesian analyses transition to next-generation software.</p>
+<p>A third theme is the importance of learning by doing. Ideally, this includes not only writing code for simulation and analysis, but also carrying out the field work that builds experience and ecological intuition. Within the scope of this book, learning by doing means running and modifying code in order to understand fully how each analysis works. JAGS and especially R code can sometimes be cryptic, so I have encouraged running sections of code or even parts of a line of code in order to gain understanding. One of the best things about recent books on Bayesian analysis is the routine inclusion of code. Seeing, running and modifying the code is a great help in understanding how these models work.</p>
+<p>This is intended to be an introductory text, so some important topics were not covered or only mentioned in passing. The binomial-mixture model (Section <a href="Abundance.html#NMix">5.3</a>) is a simple example of a hierarchical model, but the approach is much broader. Hierarchical modeling can be used to separate the observation process from the underlying ecological process (latent state) that is of primary interest <span class="citation">(<a href="#ref-royle.dorazio_2008">Royle and Dorazio 2008</a>)</span>. <span class="citation">Kéry and Schaub (<a href="#ref-kéry.schaub_2012">2012</a>)</span> illustrate this approach in a hierarchical population model for ibex (<em>Capra ibex</em>). Annual counts include both process error and observation error, so a model that separates the two error sources provides more biologically relevant estimates of population parameters <span class="citation">(<a href="#ref-kéry.schaub_2012">Kéry and Schaub 2012</a>)</span>. Recent publications using Bayesian hierarchical models have often been terrestrial studies <span class="citation">(e.g., <a href="#ref-johnson.etal_2010">Johnson et al. 2010</a>)</span>, but the concepts and analytical methods are entirely transferable to fisheries systems.</p>
 <p>I have also not included some traditional fisheries models, such as the biomass dynamic or surplus production models that have been widely used for fish stock assessment <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span>. These models have been popular because they are simple, require limited data, and provide an estimate of maximum sustainable yield. Early versions often assumed equilibrium conditions that were rarely met <span class="citation">(<a href="#ref-hilborn.walters_1992">Hilborn and Walters 1992</a>)</span>. Recent versions using non-equilibrium models <span class="citation">(<a href="#ref-meyer.millar_1999">Meyer and Millar 1999</a>; <a href="#ref-winker.etal_2018">Winker, Carvalho, and Kapur 2018</a>)</span> illustrate the potential of a Bayesian analysis, including a state-space formulation for sorting out observation and process error and use of informative priors.</p>
 <p>Another general fisheries topic not covered is yield or harvest modeling. We have focused on estimating population parameters, so the logical next step would be to use those parameter estimates to explore management options. For example, a yield model might be used to explore the potential benefits of regulation. The yield model would use information about fishing and natural mortality (Chapter <a href="Mortality.html#Mortality">7</a>), growth (Chapter <a href="Growth.html#Growth">8</a>), and possibly recruitment (Chapter <a href="Recruit.html#Recruit">9</a>). The yield model could be constructed within an IPM (Chapter <a href="PopModels.html#PopModels">10</a>), so that the uncertainty associated with the various population parameters would not be lost. For a commercial fishery, the yield model would typically be in terms of weight, corresponding to how income is derived. The model could be used to examine the potential gains and losses from management options such as a quota or seasonal closure. For a recreational fishery, a yield model might focus on numbers (catch rate) rather than weight, or on the proportion of fish within “memorable” and “trophy” size ranges. Management for a recreational fishery is more likely to use creel and size regulations than quotas and could, for example, compare the benefits of various minimum and slot size limits. A recent article by <span class="citation">Doll et al. (<a href="#ref-doll.etal_2021">2021</a>)</span> perfectly illustrates these concepts using a Bayesian IPM fitted with JAGS.</p>
 <p><span class="citation">Kéry (<a href="#ref-kéry_2010">2010</a>)</span> closed his book with a prediction that, for many readers, WinBUGS will have “changed forever the way in which you think about, and conduct, statistical modeling.” WinBUGS certainly started that process for me, followed by other BUGS-family variants including JAGS. It will be interesting to see the future contributions of Bayesian software packages to fisheries science and management.</p>
@@ -278,56 +342,56 @@ Winker, Henning, Felipe Carvalho, and Maia Kapur. 2018. <span>“<span>JABBA</sp
         </div>
       </div>
 <a href="PopModels.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="real-data-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="empirical-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/yihui/bookdown-crc/edit/master/11_FinalThoughts.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["bookdown.pdf", "bookdown.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "none"
-}
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/yihui/bookdown-crc/edit/master/11_FinalThoughts.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown.pdf", "bookdown.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "none"
+  }
 });
 });
 </script>
